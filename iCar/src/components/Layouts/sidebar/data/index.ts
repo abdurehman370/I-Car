@@ -1,6 +1,6 @@
 import * as Icons from "../icons";
 
-export const NAV_DATA = [
+export const ADMIN_NAV_DATA = [
   {
     label: "MAIN MENU",
     items: [
@@ -10,13 +10,13 @@ export const NAV_DATA = [
         items: [
           {
             title: "eCommerce",
-            url: "/",
+            url: "/admin",
           },
         ],
       },
       {
         title: "Profile",
-        url: "/profile",
+        url: "/admin/profile",
         icon: Icons.User,
         items: [],
       },
@@ -26,22 +26,22 @@ export const NAV_DATA = [
         items: [
           {
             title: "Form Elements",
-            url: "/forms/form-elements",
+            url: "/admin/forms/form-elements",
           },
           {
             title: "Form Layout",
-            url: "/forms/form-layout",
+            url: "/admin/forms/form-layout",
           },
         ],
       },
       {
         title: "Tables",
-        url: "/tables",
+        url: "/admin/tables",
         icon: Icons.Table,
         items: [
           {
             title: "Tables",
-            url: "/tables",
+            url: "/admin/tables",
           },
         ],
       },
@@ -51,7 +51,7 @@ export const NAV_DATA = [
         items: [
           {
             title: "Settings",
-            url: "/pages/settings",
+            url: "/admin/pages/settings",
           },
         ],
       },
@@ -66,11 +66,11 @@ export const NAV_DATA = [
         items: [
           {
             title: "Alerts",
-            url: "/ui-elements/alerts",
+            url: "/admin/ui-elements/alerts",
           },
           {
             title: "Buttons",
-            url: "/ui-elements/buttons",
+            url: "/admin/ui-elements/buttons",
           },
         ],
       },
@@ -80,10 +80,44 @@ export const NAV_DATA = [
         items: [
           {
             title: "Authenticate Dealers",
-            url: "/authenticate-dealers",
+            url: "/admin/authenticate-dealers",
           },
         ],
       },
     ],
   },
 ];
+
+export const DEALER_NAV_DATA = [
+  {
+    label: "MAIN MENU",
+    items: [
+      {
+        title: "Dashboard",
+        url: "/dashboard",
+        icon: Icons.HomeIcon,
+        items: [],
+      },
+      {
+        title: "Profile",
+        url: "/profile",
+        icon: Icons.User,
+        items: [],
+      },
+    ],
+  },
+  {
+    label: "SUPPORT",
+    items: [
+      {
+        title: "Settings",
+        url: "/pages/settings",
+        icon: Icons.Alphabet,
+        items: [],
+      },
+    ],
+  },
+];
+
+export const NAV_DATA = ADMIN_NAV_DATA;
+

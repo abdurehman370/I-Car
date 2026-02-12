@@ -36,7 +36,7 @@ export default function SigninWithPassword() {
       });
 
       if (res.ok) {
-        router.push("/");
+        router.push("/admin");
         router.refresh();
       } else {
         const json = await res.json();

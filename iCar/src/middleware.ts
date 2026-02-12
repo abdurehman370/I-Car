@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/api/dealer/auth') || pathname.startsWith('/api/auth');
 
   // ✅ Add public dealer pages here
-  const dealerPublicPaths = ['/login', '/signup', '/forgot-password'];
+  const dealerPublicPaths = ['/', '/login', '/signup', '/forgot-password'];
   const isDealerPublicPage =
     dealerPublicPaths.includes(pathname) ||
     dealerPublicPaths.some((p) => pathname.startsWith(p + '/'));

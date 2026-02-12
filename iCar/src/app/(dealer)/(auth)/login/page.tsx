@@ -26,7 +26,7 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/api/dealer/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,8 +37,8 @@ export default function LoginPage() {
       const json = await res.json();
 
       if (res.ok) {
-        router.push("/");
-        router.refresh();
+        // Use window.location for a hard redirect to ensure middleware processes the new session
+        window.location.href = "/dashboard";
       } else {
         setError(json.message || "Login failed");
         setLoading(false);

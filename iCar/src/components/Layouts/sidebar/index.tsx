@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NAV_DATA } from "./data";
+import { ADMIN_NAV_DATA, DEALER_NAV_DATA } from "./data";
 import { ArrowLeftIcon, ChevronUp } from "./icons";
 import { MenuItem } from "./menu-item";
 import { useSidebarContext } from "./sidebar-context";
@@ -15,13 +15,14 @@ export function Sidebar() {
   const { setIsOpen, isOpen, isMobile, toggleSidebar } = useSidebarContext();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
+  // Detect context
+  const isAdminContext = pathname.startsWith('/admin');
+  const NAV_DATA = isAdminContext ? ADMIN_NAV_DATA : DEALER_NAV_DATA;
+  const portalTitle = isAdminContext ? "Admin Portal" : "Dealer Portal";
+  const homeUrl = isAdminContext ? "/admin" : "/dashboard";
+
   const toggleExpanded = (title: string) => {
     setExpandedItems((prev) => (prev.includes(title) ? [] : [title]));
-
-    // Uncomment the following line to enable multiple expanded items
-    // setExpandedItems((prev) =>
-    //   prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title],
-    // );
   };
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export function Sidebar() {
         });
       });
     });
-  }, [pathname]);
+  }, [pathname, NAV_DATA]);
 
   return (
     <>
@@ -66,11 +67,13 @@ export function Sidebar() {
         <div className="flex h-full flex-col py-10 pl-[25px] pr-[7px]">
           <div className="relative pr-4.5">
             <Link
-              href={"/"}
+              href={homeUrl}
               onClick={() => isMobile && toggleSidebar()}
               className="px-0 py-2.5 min-[850px]:py-0"
             >
-              <span className="text-4xl text-center text-black font-bold dark:text-white">Admin Portal</span>
+              <span className="text-4xl text-center text-black font-bold dark:text-white leading-tight">
+                {portalTitle}
+              </span>
             </Link>
 
             {isMobile && (

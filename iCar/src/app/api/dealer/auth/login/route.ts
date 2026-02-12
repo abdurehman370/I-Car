@@ -1,6 +1,6 @@
 import prisma from '@/lib/db';
 import bcrypt from 'bcryptjs';
-import { login } from '@/lib/auth';
+import { loginDealer } from '@/lib/auth';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -18,8 +18,8 @@ export async function POST(request: Request) {
 
     // Check if dealer is approved
     if (dealer.approvalStatus !== 'approved') {
-      return NextResponse.json({ 
-        message: 'Your account is pending approval. Please wait for admin approval.' 
+      return NextResponse.json({
+        message: 'Your account is pending approval. Please wait for admin approval.'
       }, { status: 403 });
     }
 
@@ -29,11 +29,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 });
     }
 
-    await login({ 
-      id: dealer.id, 
-      email: dealer.email, 
-      dealershipName: dealer.dealershipName,
-      approvalStatus: dealer.approvalStatus 
+    await loginDealer({
+      id: dealer.id,
+      email: dealer.email,
+      dealershipName: dealer.dealershipName
     });
 
     return NextResponse.json({ message: 'Login successful' }, { status: 200 });
