@@ -1,0 +1,1 @@
+INSERT INTO User (username, password, role, createdAt, updatedAt) VALUES ('admin', '$2b$10$74lcGmK17dmzcuxYE58H9uIXaUGKdjGNIFxx4q3lSWYja1WeX8JY2', 'admin', '2026-02-10 18:34:52', '2026-02-10 18:34:52') ON DUPLICATE KEY UPDATE password='$2b$10$74lcGmK17dmzcuxYE58H9uIXaUGKdjGNIFxx4q3lSWYja1WeX8JY2';
