@@ -11,8 +11,17 @@ const COMMON_FEATURES = [
     "Parking Sensors", "Rear Camera", "Navigation System", "Keyless Entry", "Push Start",
 ];
 
-const UAE_CITIES = [
-    "Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah", "Fujairah", "Umm Al Quwain"
+const REGION_CITIES: Record<string, string[]> = {
+    UAE: ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah", "Fujairah", "Umm Al Quwain"],
+    Lebanon: ["Beirut", "Tripoli", "Sidon", "Tyre", "Jounieh", "Byblos", "Zahle"],
+    Europe: [
+        "Berlin", "Munich", "Hamburg", "Madrid", "Barcelona", "Paris", "Lyon",
+        "Amsterdam", "Rotterdam", "Rome", "Milan", "Brussels", "Antwerp", "Vienna"
+    ]
+};
+
+const EUROPE_COUNTRIES = [
+    "Germany", "Spain", "France", "Netherlands", "Italy", "Belgium", "Austria"
 ];
 
 interface ValuationResult {
@@ -312,9 +321,9 @@ export default function ListVehicle() {
                                         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Country *</label>
                                         <select name="country" value={formData.country} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white">
                                             <option value="">Select Country</option>
-                                            <option value="Germany">Germany</option>
-                                            <option value="France">France</option>
-                                            {/* Add other countries as needed */}
+                                            {EUROPE_COUNTRIES.map(c => (
+                                                <option key={c} value={c}>{c}</option>
+                                            ))}
                                         </select>
                                     </div>
                                 )}
@@ -441,7 +450,9 @@ export default function ListVehicle() {
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">City *</label>
                                     <select name="city" value={formData.city} onChange={handleInputChange} className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white">
                                         <option value="">Select City</option>
-                                        {UAE_CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+                                        {(REGION_CITIES[formData.region] || []).map(c => (
+                                            <option key={c} value={c}>{c}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 {/* Description */}

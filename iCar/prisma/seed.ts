@@ -1,16 +1,22 @@
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
+import { PrismaMariaDb } from '@prisma/adapter-mariadb';
+import mariadb from 'mariadb';
 import bcrypt from 'bcryptjs';
 
-console.log('DATABASE_URL:', process.env.DATABASE_URL);
-
-const prisma = new PrismaClient({
-  datasourceUrl: process.env.DATABASE_URL,
-});
-
 async function main() {
+  const dbUrl = new URL(process.env.DATABASE_URL!);
+  const adapter = new PrismaMariaDb({
+    host: dbUrl.hostname,
+    port: parseInt(dbUrl.port || '3306'),
+    user: dbUrl.username,
+    password: dbUrl.password,
+    database: dbUrl.pathname.substring(1),
+  });
+  const prisma = new PrismaClient({ adapter });
+
   const hashedPassword = await bcrypt.hash('admin123', 10);
-  
+
   const user = await prisma.user.upsert({
     where: { username: 'admin' },
     update: {},
@@ -22,14 +28,11 @@ async function main() {
   });
 
   console.log({ user });
+  await prisma.$disconnect();
 }
 
 main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
   .catch(async (e) => {
     console.error(e);
-    await prisma.$disconnect();
     process.exit(1);
   });
