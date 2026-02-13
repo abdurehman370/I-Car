@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -17,8 +16,8 @@ model User {
 }
 
 model Dealer {
-  id             Int      @id @default(autoincrement())
-  email          String   @unique
+  id             Int       @id @default(autoincrement())
+  email          String    @unique
   password       String
   dealershipName String
   contactPerson  String
@@ -26,7 +25,60 @@ model Dealer {
   address        String?
   city           String?
   country        String?
-  approvalStatus String   @default("pending") // pending, approved, rejected
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  approvalStatus String    @default("pending") // pending, approved, rejected
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  listings       Listing[]
 }
+
+model Listing {
+  id          String         @id @default(cuid())
+  dealerId    Int
+  dealer      Dealer         @relation(fields: [dealerId], references: [id], onDelete: Cascade)
+  
+  // Vehicle Information
+  make        String
+  model       String
+  year        Int
+  mileage     Int
+  variant     String?
+  
+  // Listing Details
+  price       Float
+  currency    String         @default("AED")
+  description String         @db.Text
+  features    String         @db.Text // JSON array stored as text
+  condition   String         // NEW, USED, CERTIFIED
+  
+  // Location
+  city        String
+  region      String
+  
+  // Status
+  status      String         @default("DRAFT") // DRAFT, ACTIVE, SOLD, EXPIRED
+  
+  // Images
+  images      ListingImage[]
+  
+  // Metadata
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  publishedAt DateTime?
+  
+  @@index([dealerId])
+  @@index([status])
+  @@index([make, model])
+}
+
+model ListingImage {
+  id        String   @id @default(cuid())
+  listingId String
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  url       String   // URL/Path to the image in public folder
+  isPrimary Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  
+  @@index([listingId])
+}
+

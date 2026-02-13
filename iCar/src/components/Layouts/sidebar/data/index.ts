@@ -99,6 +99,12 @@ export const DEALER_NAV_DATA = [
         items: [],
       },
       {
+        title: "List Vehicle",
+        url: "/list-vehicle",
+        icon: Icons.FourCircle,
+        items: [],
+      },
+      {
         title: "Profile",
         url: "/profile",
         icon: Icons.User,

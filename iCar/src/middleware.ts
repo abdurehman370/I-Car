@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // --- ADMIN ROUTES ---
-  const isAdminRoute = pathname.startsWith('/admin');
+  const isAdminRoute = pathname.startsWith('/admin') || pathname.startsWith('/api/admin');
   const isAdminLoginPage = pathname === '/admin/login';
   const isAdminApiAuth = pathname.startsWith('/api/admin/auth');
 
