@@ -7,12 +7,8 @@ export const ADMIN_NAV_DATA = [
       {
         title: "Dashboard",
         icon: Icons.HomeIcon,
-        items: [
-          {
-            title: "eCommerce",
-            url: "/admin",
-          },
-        ],
+        url: "/admin",
+        items: [],
       },
       {
         title: "Profile",

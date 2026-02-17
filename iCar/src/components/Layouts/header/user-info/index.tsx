@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LogOutIcon, SettingsIcon, UserIcon } from "./icons";
 import { useRouter, usePathname } from "next/navigation";
 
@@ -19,6 +19,32 @@ export function UserInfo() {
 
   // Detect if we're in admin context
   const isAdminContext = pathname.startsWith('/admin');
+
+  const [userData, setUserData] = useState<{ name: string; email: string; img: string } | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const endpoint = isAdminContext ? "/api/admin/profile" : "/api/dealer/profile";
+        const response = await fetch(endpoint);
+        if (response.ok) {
+          const data = await response.json();
+          setUserData({
+            name: data.dealershipName || "User",
+            email: data.email || (isAdminContext ? "Admin" : ""),
+            img: "/images/user/defaultUser.png", // Keep default for now or add to schema if needed
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserProfile();
+  }, [isAdminContext]);
 
   const handleLogout = async () => {
     console.log("logout click");
@@ -48,9 +74,10 @@ export function UserInfo() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const USER = {
-    name: "John Smith",
-    email: "johnson@nextadmin.com",
+  // Fallback while loading or if fetch fails
+  const USER = userData || {
+    name: "Loading...",
+    email: " Please wait",
     img: "/images/user/user-03.png",
   };
 
