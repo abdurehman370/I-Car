@@ -16,11 +16,11 @@ export default function LandingPage() {
 
                     <div className="flex items-center gap-4">
                         <Link
-                            href="/admin/login"
+                            href="/login"
                             className="text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-2"
                         >
                             <UserCircle className="w-4 h-4" />
-                            Admin Portal
+                            Dealer Portal
                         </Link>
                     </div>
                 </div>
