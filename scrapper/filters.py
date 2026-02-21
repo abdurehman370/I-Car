@@ -21,6 +21,7 @@ class QueryBuilder:
         category_path = "motors/used-cars"
         query_text = ""
         
+        
         if args.make:
             category_path += f"/{args.make.lower()}"
         
