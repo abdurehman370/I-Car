@@ -95,24 +95,23 @@ class OlxLbClient:
             query['bool']['filter'].append({"range": {"extraFields.mileage": {"lte": filters.get('mileage_max')}}})
             
         # Text Search (Make/Model)
-        # Using query_string on main fields (title, description, formattedExtraFields)
-        make = (filters.get('make') or '').lower()
-        model = (filters.get('model') or '').lower()
-        variant = (filters.get('variant') or '').lower()
+        # The OLX ES title field does not support text search via query_string or match.
+        # The 'slug' field (e.g., 'honda-civic-2019') supports wildcard search.
+        make = (filters.get('make') or '').strip().lower().replace(' ', '-')
+        model = (filters.get('model') or '').strip().lower().replace(' ', '-')
+        variant = (filters.get('variant') or '').strip().lower().replace(' ', '-')
         
-        # Build query string
-        query_parts = []
-        if make: query_parts.append(make)
-        if model: query_parts.append(model)
-        if variant: query_parts.append(variant)
-        query_string = " ".join(query_parts)
-             
-        if query_string:
-            # Use simple query_string on all fields
+        if make:
             query['bool']['must'].append({
-                "query_string": {
-                    "query": query_string
-                }
+                "wildcard": {"slug": f"*{make}*"}
+            })
+        if model:
+            query['bool']['must'].append({
+                "wildcard": {"slug": f"*{model}*"}
+            })
+        if variant:
+            query['bool']['must'].append({
+                "wildcard": {"slug": f"*{variant}*"}
             })
 
         return {
@@ -198,7 +197,9 @@ class OlxLbClient:
             "mileage": mileage,
             "location": location_text,
             "listing_url": listing_url,
+            "image": image_url,
             "image_url": image_url,
             "currency": self.config["currency"],
-            "scraped_at": datetime.now().isoformat()
+            "scraped_at": datetime.now().isoformat(),
+            "source": "olx_lb"
         }

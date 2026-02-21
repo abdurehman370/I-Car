@@ -40,7 +40,7 @@ class EuropeClient:
         body_map = {
             "avant": 5, "touring": 5, "estate": 5, "kombi": 5, "station": 5, "variant": 5,
             "coupe": 3,
-            "cabrio": 2, "convertible": 2, "spider": 2, "roadster": 2,
+            "cabrio": 2, "convertible": 2, "spider": 2, "roadster": 2, "road": 2,
             "suv": 6, "offroad": 6, "pickup": 6
         }
         
@@ -110,11 +110,21 @@ class EuropeClient:
 
     def _parse_html(self, html, base_url):
         soup = BeautifulSoup(html, "html.parser")
-        articles = soup.find_all("article")
+        # Support both regular and 'decluttered'/sponsored listings
+        articles = soup.find_all("article", {"data-testid": "list-item"})
+        if not articles:
+            articles = soup.find_all("article")
+            
         listings = []
         
         for article in articles:
             try:
+                # 1. Primary data extraction via data- attributes (Strongly robust)
+                guid = article.get("data-guid")
+                d_price = article.get("data-price")
+                d_mileage = article.get("data-mileage")
+                d_year_raw = article.get("data-first-registration", "") # MM-YYYY
+                
                 # Title + Subtitle
                 title_base = article.find(class_=re.compile("ListItemTitle_title", re.I))
                 subtitle = article.find(class_=re.compile("ListItemTitle_subtitle", re.I))
@@ -122,62 +132,70 @@ class EuropeClient:
                 if subtitle:
                     title += " " + subtitle.get_text(strip=True)
                 
-                # Raw text for detailed parsing
-                text_content = article.get_text(separator=" | ")
-                
+                # If title is still N/A, build from components
+                if title == "N/A" and article.get("data-make"):
+                    title = f"{article.get('data-make').capitalize()} {article.get('data-model', '').capitalize()}"
+
                 # Price extraction
-                price_text = "0"
-                price_tag = article.find(class_=lambda x: x and "Price_price" in x)
-                if price_tag:
-                    # EXCLUDE superscripts using a copy to avoid affecting text_content of article
-                    price_tag_copy = BeautifulSoup(str(price_tag), "html.parser")
-                    for sup in price_tag_copy.find_all(class_=re.compile("superscript", re.I)):
-                        sup.decompose()
-                    price_text = price_tag_copy.get_text(strip=True)
+                price = 0
+                if d_price and d_price.isdigit():
+                    price = float(d_price)
                 else:
-                    # Also common pattern with comma or dot
-                    match = re.search(r"€\s*([\d\.\,]+)", text_content)
-                    if match:
-                        price_text = match.group(1)
-                
-                # Clean price string
-                # Remove everything after comma (cents in Europe)
-                price_clean = price_text.split(',')[0].split('-')[0]
-                price_val = re.sub(r'[^\d]', '', price_clean)
-                price = float(price_val) if price_val else 0
+                    price_tag = article.find(class_=lambda x: x and "Price_price" in x)
+                    if price_tag:
+                        price_tag_copy = BeautifulSoup(str(price_tag), "html.parser")
+                        for sup in price_tag_copy.find_all(class_=re.compile("superscript", re.I)):
+                            sup.decompose()
+                        price_text = price_tag_copy.get_text(strip=True)
+                        price_clean = price_text.split(',')[0].split('-')[0]
+                        price_val = re.sub(r'[^\d]', '', price_clean)
+                        price = float(price_val) if price_val else 0
 
                 # Image
                 img = article.find("img")
-                image_url = img.get("src") or img.get("data-src", "N/A") if img else "N/A"
+                image_url = "N/A"
+                if img:
+                    image_url = img.get("src") or img.get("data-src") or "N/A"
                 if image_url.startswith("/"):
                     image_url = base_url + image_url
 
-                # Link
-                link = article.find("a", href=True)
-                listing_url = link['href'] if link else "N/A"
-                if listing_url.startswith("/"):
-                    listing_url = base_url + listing_url
+                # Link - Prioritize building from data-guid for robustness
+                if guid:
+                    listing_url = f"{base_url}/angebote/-{guid}"
+                else:
+                    link = article.select_one('a[class*="overlay_anchor"], a[class*="ListItemTitle_anchor"], a[class*="ListItem_title"], a[href*="/angebote/"]')
+                    listing_url = link['href'] if link and link.has_attr('href') else "N/A"
+                    if listing_url.startswith("/"):
+                        listing_url = base_url + listing_url
 
-                # Year / Mileage from precise Pill classes
+                # Skip if no valid URL found
+                if listing_url == "N/A":
+                    continue
+
+                # Year / Mileage
                 year = "N/A"
-                mileage = "N/A"
+                if d_year_raw and len(d_year_raw) >= 4:
+                    year = d_year_raw.split("-")[-1]
                 
-                pills = article.find_all(class_=re.compile("ListItemPill_text", re.I))
-                for pill in pills:
-                    text = pill.get_text(strip=True)
-                    if "km" in text:
-                        mileage = re.sub(r'[^\d]', '', text)
-                    elif re.search(r"(\d{2}/)?(\d{4})", text):
-                        year_match = re.search(r"(\d{4})", text)
-                        if year_match:
-                            year = year_match.group(1)
+                mileage = "N/A"
+                if d_mileage and d_mileage.isdigit():
+                    mileage = d_mileage
+                
+                # Fallback for Year/Mileage via Pills
+                if year == "N/A" or mileage == "N/A":
+                    pills = article.find_all(class_=re.compile("ListItemPill_text", re.I))
+                    for pill in pills:
+                        text = pill.get_text(strip=True)
+                        if "km" in text and mileage == "N/A":
+                            mileage = re.sub(r'[^\d]', '', text)
+                        elif year == "N/A" and re.search(r"(\d{4})", text):
+                            year_match = re.search(r"(\d{4})", text)
+                            if year_match:
+                                year = year_match.group(1)
 
                 # Location parsing - ListItemSeller_address
                 location_tag = article.find(class_=re.compile("ListItemSeller_address", re.I))
-                if location_tag:
-                    location = location_tag.get_text(strip=True)
-                else:
-                    location = "N/A"
+                location = location_tag.get_text(strip=True) if location_tag else "N/A"
                 
                 listings.append({
                     "title": title,
@@ -186,6 +204,7 @@ class EuropeClient:
                     "mileage": mileage,
                     "location": location,
                     "listing_url": listing_url,
+                    "image": image_url, # Added for consistency
                     "image_url": image_url,
                     "currency": "EUR",
                     "scraped_at": datetime.now().isoformat()
