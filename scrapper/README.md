@@ -1,6 +1,6 @@
-# Dubizzle UAE Car Scraper
+# Car Listings Scraper (Dubizzle UAE, OLX/Autotrader/Wheelers Lebanon, AutoScout24 Europe)
 
-A robust Python scraper for used car listings on Dubizzle UAE.
+A robust Python scraper for used car listings: **UAE** (Dubizzle), **Lebanon** (OLX, Autotrader Lebanon, Wheelers.me), and **Europe** (AutoScout24).
 
 ## Installation
 
@@ -8,7 +8,7 @@ A robust Python scraper for used car listings on Dubizzle UAE.
 2. **Setup Virtual Environment**:
    ```bash
    python3 -m venv venv
-   source venv/bin/activate  # On Linux/Mac
+   source .venv/bin/activate  # On Linux/Mac
    ```
 3. **Install Dependencies**:
    ```bash

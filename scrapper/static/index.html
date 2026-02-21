@@ -519,18 +519,28 @@
 
         function renderResults(cars, currency = 'AED') {
             cars.forEach((car, index) => {
+                // Skip cards with invalid URLs
+                const targetUrl = car.listing_url;
+                if (!targetUrl || targetUrl === 'N/A') return;
+
                 const card = document.createElement('div');
                 card.className = 'car-card';
                 card.style.animationDelay = `${index * 0.05}s`;
 
+                // Handle both image_url and image fields
+                const displayImage = car.image_url || car.image;
+                const imageSrc = (displayImage && displayImage !== 'N/A') 
+                    ? displayImage 
+                    : 'https://via.placeholder.com/400x300?text=No+Image+Available';
+
                 card.innerHTML = `
-                    <div class="card-image-container" onclick="window.open('${car.listing_url}', '_blank')">
-                        <img src="${(car.image_url && car.image_url !== 'N/A') ? car.image_url : 'https://via.placeholder.com/400x300?text=No+Image+Available'}" 
+                    <div class="card-image-container" onclick="window.open('${targetUrl}', '_blank')">
+                        <img src="${imageSrc}" 
                              alt="${car.title}" 
                              class="car-image"
                              onerror="this.src='https://via.placeholder.com/400x300?text=Image+Load+Error'">
                     </div>
-                    <div class="card-content" onclick="window.open('${car.listing_url}', '_blank')">
+                    <div class="card-content" onclick="window.open('${targetUrl}', '_blank')">
                         <div class="card-title">${car.title}</div>
                         <div class="card-price">${typeof car.price === 'number' ? car.price.toLocaleString() : car.price} ${currency}</div>
                         <div class="card-info">

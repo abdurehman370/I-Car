@@ -48,6 +48,7 @@ class Exporter:
             "variant": variant,
             "location": location,
             "listing_url": listing_url,
+            "image": image_url,
             "image_url": image_url,
             "scraped_at": datetime.now().isoformat()
         }

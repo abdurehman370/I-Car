@@ -6,14 +6,30 @@ from pydantic import BaseModel
 from typing import Optional, List
 import logging
 import os
+import re
+import json
 
 from dubizzle_client import DubizzleClient
+from dubicars_client import DubicarsClient
+from yallamotor_client import YallaMotorClient
+from hatla2ee_client import Hatla2eeClient
+from carswitch_client import CarSwitchClient
+from carabiacars_client import CarAbiaClient
 from olx_lb_client import OlxLbClient
+from autotrader_lb_client import AutotraderLbClient
+from wheelers_lb_client import WheelersLbClient
 from europe_client import EuropeClient
 from filters import QueryBuilder
 from exporter import Exporter
 from evaluator import PriceEvaluator
 from config import PRIMARY_INDEX, DEFAULT_HITS_PER_PAGE, REGION_CONFIG
+
+# Lebanon: aggregate from OLX, Autotrader, and Wheelers.me
+LEBANON_CLIENTS = [
+    ("OLX", OlxLbClient),
+    ("Autotrader", AutotraderLbClient),
+    ("Wheelers", WheelersLbClient),
+]
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -70,9 +86,9 @@ async def scrape_listings(req: ScrapeRequest):
     
     proxy = req.proxy if req.use_proxy else None
     
-    # Initialize appropriate client
+    # Initialize appropriate client(s)
     if req.region == "Lebanon":
-        client = OlxLbClient(proxy=proxy)
+        clients = [(name, cls(proxy=proxy)) for name, cls in LEBANON_CLIENTS]
     elif req.region == "Europe": # Added
         client = EuropeClient(proxy=proxy) # Added
     else:
@@ -82,7 +98,120 @@ async def scrape_listings(req: ScrapeRequest):
     evaluation = {} # Initialize evaluation
     
     try:
-        if req.region == "Europe": # Added
+        if req.region == "Lebanon":
+            # Aggregate from OLX and Autotrader
+            filters = {
+                "make": req.make,
+                "model": req.model,
+                "variant": req.variant,
+                "year_min": req.year_min,
+                "year_max": req.year_max,
+                "mileage_max": req.mileage_max,
+                "price_min": req.price_min,
+                "price_max": req.price_max
+            }
+            for source_name, lb_client in clients:
+                try:
+                    for page in range(req.max_pages):
+                        hits, nb_pages, _ = lb_client.get_listings(filters, page=page + 1)
+                        if not hits:
+                            break
+                        
+                        if source_name == "OLX":
+                            logger.debug(f"[DEBUG] OLX Raw Hits: {json.dumps(hits, default=str)}")
+
+                        # Strict filtering to ensure only searching vehicles are shown
+                        make_query = (req.make or "").lower().strip()
+                        model_query = (req.model or "").lower().strip()
+                        
+                        filtered_hits = []
+                        for hit in hits:
+                            title = hit.get("title", "").lower()
+                            # Check if make is in title
+                            if make_query and make_query not in title:
+                                # For Mercedes, sometimes it's just 'Benz' or the title starts with model
+                                if make_query == "mercedes" and "benz" in title:
+                                    pass
+                                else:
+                                    if len(hits) < 5: logger.debug(f"[{source_name}] Rejected '{title}' due to Make mismatch (Query: {make_query})")
+                                    continue
+                            
+                            # Check if model is in title (resilient matching)
+                            if model_query:
+                                if model_query in title:
+                                    pass # Direct match
+                                else:
+                                    # Normalizing model: remove generic words
+                                    stop_words = {"benz", "model", "cars", "car"}
+                                    model_clean = re.sub(r'[^a-zA-Z0-9\s]', ' ', model_query)
+                                    model_parts = [p for p in model_clean.split() if p not in stop_words]
+                                    
+                                    if not model_parts:
+                                         if model_query not in title:
+                                             continue
+                                         
+                                    # Check if ANY significant part is in the title
+                                    match = False
+                                    
+                                    # Categorical matching for BMW/Mercedes
+                                    if make_query == "bmw" and any(p.isdigit() and len(p) >= 3 for p in model_parts):
+                                         # e.g. "320" -> check for "3" + "-series"
+                                         for p in model_parts:
+                                             if p.isdigit() and len(p) >= 3:
+                                                 series_digit = p[0]
+                                                 if f"{series_digit}-series" in title or f"{series_digit} series" in title:
+                                                     match = True; break
+                                    
+                                    if not match and make_query == "mercedes":
+                                         # e.g. "E 300" -> check for "E" + "-class"
+                                         for p in model_parts:
+                                             if len(p) == 1 and p.isalpha():
+                                                 if f"{p.lower()}-class" in title or f"{p.lower()} class" in title:
+                                                     match = True; break
+                                    
+                                    if not match:
+                                        for p in model_parts:
+                                            # For single letters (E, C, S), check if it's a prefix or standalone
+                                            # e.g. "E" in "E300"
+                                            if len(p) == 1:
+                                                if re.search(rf"\b{p}\d+|{p}\s|\s{p}\s", title, re.I):
+                                                    match = True; break
+                                            elif p in title:
+                                                match = True; break
+                                    
+                                    if not match:
+                                        if len(hits) < 5: logger.debug(f"[{source_name}] Rejected '{title}' due to Model mismatch (Query: {model_query})")
+                                        continue
+                                        
+                            # Year filtering
+                            year_val = hit.get("year")
+                            if year_val and str(year_val).isdigit():
+                                year_int = int(year_val)
+                                if req.year_min and year_int < req.year_min:
+                                    if len(hits) < 5: logger.debug(f"[{source_name}] Rejected '{title}' due to Year < Min ({year_int} < {req.year_min})")
+                                    continue
+                                if req.year_max and year_int > req.year_max:
+                                    if len(hits) < 5: logger.debug(f"[{source_name}] Rejected '{title}' due to Year > Max ({year_int} > {req.year_max})")
+                                    continue
+                            
+                            # Mileage filtering
+                            mileage_val = hit.get("mileage")
+                            if mileage_val and str(mileage_val).isdigit() and req.mileage_max:
+                                if int(mileage_val) > req.mileage_max:
+                                    if len(hits) < 5: logger.debug(f"[{source_name}] Rejected '{title}' due to Mileage ({mileage_val} > {req.mileage_max})")
+                                    continue
+                                    
+                            filtered_hits.append(hit)
+                        
+                        logger.info(f"[{source_name}] Page {page + 1}: Found {len(hits)} raw, {len(filtered_hits)} valid")
+                        all_results.extend(filtered_hits)
+                        if page + 1 >= nb_pages:
+                            break
+                except Exception as e:
+                    logger.warning(f"Lebanon source {source_name} failed: {e}")
+            
+            evaluation = PriceEvaluator.calculate_stats(all_results) if all_results else {}
+        elif req.region == "Europe": # Added
             # Europe specific logic
             filters = {
                 "make": req.make,
@@ -103,34 +232,17 @@ async def scrape_listings(req: ScrapeRequest):
             }
             evaluation = EuropeClient.calculate_valuation(all_results, vehicle_input)
         
-        elif req.region == "Lebanon":
-            # Prepare filters dict
-            filters = {
-                "make": req.make,
-                "model": req.model,
-                "variant": req.variant,
-                "year_min": req.year_min,
-                "year_max": req.year_max,
-                "mileage_max": req.mileage_max,
-                "price_min": req.price_min,
-                "price_max": req.price_max
-            }
-            # OLX pagination is 1-based usually, or page index
-            for page in range(req.max_pages):
-                hits, nb_pages, total_hits = client.get_listings(filters, page=page+1)
-                
-                if not hits:
-                    break
-                    
-                all_results.extend(hits)
-                
-                if page + 1 >= nb_pages:
-                    break
+        else: # UAE
+            clients = [
+                ("Dubizzle", DubizzleClient(proxy=proxy)),
+                ("Dubicars", DubicarsClient(proxy=proxy)),
+                ("YallaMotor", YallaMotorClient(proxy=proxy)),
+                ("Hatla2ee", Hatla2eeClient(proxy=proxy)),
+                ("CarSwitch", CarSwitchClient(proxy=proxy)),
+                ("CarAbia", CarAbiaClient(proxy=proxy))
+            ]
             
-            evaluation = PriceEvaluator.calculate_stats(all_results)
-                
-        else: # UAE / Dubizzle
-            # Build payload using QueryBuilder
+            # Build payload for algolia (Dubizzle)
             class MockArgs:
                 pass
             args = MockArgs()
@@ -143,24 +255,78 @@ async def scrape_listings(req: ScrapeRequest):
             args.price_min = req.price_min
             args.price_max = req.price_max
             
-            for page in range(req.max_pages):
-                payload = QueryBuilder.build_payload(
-                    args, 
-                    page=page, 
-                    hits_per_page=DEFAULT_HITS_PER_PAGE,
-                    index_name=PRIMARY_INDEX
-                )
-                
-                hits, nb_pages, total_hits = client.get_listings(payload)
-                
-                if not hits:
-                    break
-                    
-                for hit in hits:
-                    all_results.append(Exporter.format_listing(hit))
-                
-                if page + 1 >= nb_pages:
-                    break
+            for source_name, uae_client in clients:
+                try:
+                    for page in range(req.max_pages):
+                        if source_name == "Dubizzle":
+                            payload = QueryBuilder.build_payload(
+                                args, 
+                                page=page, 
+                                hits_per_page=DEFAULT_HITS_PER_PAGE,
+                                index_name=PRIMARY_INDEX
+                            )
+                            hits, nb_pages, total_hits = uae_client.get_listings(payload)
+                            
+                            if not hits:
+                                break
+                                
+                            for hit in hits:
+                                formatted = Exporter.format_listing(hit)
+                                logger.info(f"[{source_name}] Found: {formatted.get('title')} | {formatted.get('year')} | {formatted.get('price')} {formatted.get('currency')}")
+                                all_results.append(formatted)
+                            
+                            if page + 1 >= nb_pages:
+                                break
+                        else:
+                            # Both Dubicars and YallaMotor use identical filter arguments
+                            filters = {
+                                "year_min": req.year_min,
+                                "year_max": req.year_max,
+                                "mileage_max": req.mileage_max,
+                                "price_min": req.price_min,
+                                "price_max": req.price_max
+                            }
+                            hits, nb_pages, _ = uae_client.get_listings(req.make, req.model, page=page + 1, **filters)
+                            if not hits:
+                                break
+                            
+                            filtered_hits = []
+                            logger.info(f"[{source_name}] get_listings returned {len(hits)} raw hits.")
+                            for hit in hits:
+                                title = hit.get("title", "").lower()
+                                make_query = (req.make or "").lower().strip()
+                                
+                                # Basic make check to avoid totally unrelated cars
+                                if make_query and make_query not in title:
+                                    continue
+
+                                # Year filtering
+                                year_val = hit.get("year")
+                                if year_val and str(year_val).isdigit():
+                                    year_int = int(year_val)
+                                    if req.year_min and year_int < req.year_min:
+                                        continue
+                                    if req.year_max and year_int > req.year_max:
+                                        continue
+                                
+                                # Mileage filter
+                                mileage_val = hit.get("mileage")
+                                if mileage_val and str(mileage_val).isdigit() and req.mileage_max:
+                                    if int(mileage_val) > req.mileage_max:
+                                        continue
+                                filtered_hits.append(hit)
+
+                            for hit in filtered_hits:
+                                logger.info(f"[{source_name}] Found: {hit.get('title')} | {hit.get('year')} | {hit.get('price')} {hit.get('currency')}")
+                            
+                            logger.info(f"[{source_name}] Page {page + 1}: Found {len(hits)} raw, {len(filtered_hits)} valid")
+                            all_results.extend(filtered_hits)
+                            
+                            if page + 1 >= nb_pages:
+                                break
+
+                except Exception as e:
+                    logger.warning(f"UAE source {source_name} failed: {e}")
             
             evaluation = PriceEvaluator.calculate_stats(all_results)
         
@@ -187,9 +353,9 @@ async def evaluate_car(req: ValuationRequest):
     
     proxy = req.proxy if req.use_proxy else None
     
-    # Initialize appropriate client
+    # Initialize appropriate client(s)
     if req.region == "Lebanon":
-        client = OlxLbClient(proxy=proxy)
+        clients = [(name, cls(proxy=proxy)) for name, cls in LEBANON_CLIENTS]
     elif req.region == "Europe":
         client = EuropeClient(proxy=proxy)
     else:
@@ -202,7 +368,28 @@ async def evaluate_car(req: ValuationRequest):
         year_min = req.year - 1
         year_max = req.year + 1
         
-        if req.region == "Europe":
+        if req.region == "Lebanon":
+            filters = {
+                "make": req.make,
+                "model": req.model,
+                "variant": req.variant,
+                "year_min": year_min,
+                "year_max": year_max,
+                "mileage_max": req.mileage + 20000
+            }
+            for source_name, lb_client in clients:
+                try:
+                    for page in range(2):
+                        hits, nb_pages, _ = lb_client.get_listings(filters, page=page + 1)
+                        if not hits:
+                            break
+                        all_results.extend(hits)
+                        if page + 1 >= nb_pages:
+                            break
+                except Exception as e:
+                    logger.warning(f"Lebanon source {source_name} failed: {e}")
+            evaluation = PriceEvaluator.calculate_valuation(all_results, {"year": req.year, "mileage": req.mileage}) if all_results else None
+        elif req.region == "Europe":
             filters = {
                 "make": req.make,
                 "model": req.model,
@@ -218,26 +405,17 @@ async def evaluate_car(req: ValuationRequest):
             all_results = hits
             
             evaluation = EuropeClient.calculate_valuation(all_results, {"year": req.year, "mileage": req.mileage})
-        
-        elif req.region == "Lebanon":
-            filters = {
-                "make": req.make,
-                "model": req.model,
-                "variant": req.variant,
-                "year_min": year_min,
-                "year_max": year_max,
-                "mileage_max": req.mileage + 20000
-            }
-            # Fetch 2 pages for better statistical data
-            for page in range(2):
-                hits, nb_pages, _ = client.get_listings(filters, page=page+1)
-                if not hits: break
-                all_results.extend(hits)
-                if page + 1 >= nb_pages: break
-            
-            evaluation = PriceEvaluator.calculate_valuation(all_results, {"year": req.year, "mileage": req.mileage})
                 
-        else: # UAE / Dubizzle
+        else: # UAE
+            clients = [
+                ("Dubizzle", DubizzleClient(proxy=proxy)),
+                ("Dubicars", DubicarsClient(proxy=proxy)),
+                ("YallaMotor", YallaMotorClient(proxy=proxy)),
+                ("Hatla2ee", Hatla2eeClient(proxy=proxy)),
+                ("CarSwitch", CarSwitchClient(proxy=proxy)),
+                ("CarAbia", CarAbiaClient(proxy=proxy))
+            ]
+
             class MockArgs:
                 pass
             args = MockArgs()
@@ -250,13 +428,31 @@ async def evaluate_car(req: ValuationRequest):
             args.price_min = None
             args.price_max = None
             
-            for page in range(2):
-                payload = QueryBuilder.build_payload(args, page=page)
-                hits, nb_pages, _ = client.get_listings(payload)
-                if not hits: break
-                for hit in hits:
-                    all_results.append(Exporter.format_listing(hit))
-                if page + 1 >= nb_pages: break
+            for source_name, uae_client in clients:
+                try:
+                    for page in range(2):
+                        if source_name == "Dubizzle":
+                            payload = QueryBuilder.build_payload(args, page=page)
+                            hits, nb_pages, _ = uae_client.get_listings(payload)
+                            if not hits: break
+                            for hit in hits:
+                                all_results.append(Exporter.format_listing(hit))
+                            if page + 1 >= nb_pages: break
+                        else:
+                            filters = {
+                                "year_min": year_min,
+                                "year_max": year_max,
+                                "mileage_max": req.mileage + 20000,
+                            }
+                            hits, nb_pages, _ = uae_client.get_listings(req.make, req.model, page=page + 1, **filters)
+                            if not hits: break
+                            # Evaluate requires similar fields
+                            for hit in hits:
+                                all_results.append(hit)
+                            if page + 1 >= nb_pages: break
+
+                except Exception as e:
+                    logger.warning(f"UAE valuation source {source_name} failed: {e}")
             
             evaluation = PriceEvaluator.calculate_valuation(all_results, {"year": req.year, "mileage": req.mileage})
 

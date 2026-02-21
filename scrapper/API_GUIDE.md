@@ -39,16 +39,18 @@ curl -X POST http://localhost:8000/api/evaluate \
      }'
 ```
 
-### 2. Lebanon (OLX)
+### 2. Lebanon (Aggregated)
+**Sources:** OLX, AutoTrader Lebanon, Wheelers.me (new cars from dealers).
+
 ```bash
 curl -X POST http://localhost:8000/api/evaluate \
      -H "Content-Type: application/json" \
      -d '{
        "region": "Lebanon",
-       "make": "Nissan",
-       "model": "Sunny",
-       "year": 2018,
-       "mileage": 90000
+       "make": "Honda",
+       "model": "Civic",
+       "year": 2013,
+       "mileage": 120000
      }'
 ```
 
