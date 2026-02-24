@@ -1,0 +1,12 @@
+[2026-02-24T00:25:01.924Z] [cron-push] Starting alert job enqueue...
+[2026-02-24T00:25:02.092Z] [cron-push] Found 1 alert(s) to enqueue
+[2026-02-24T00:25:02.097Z] [cron-push] Enqueued job alert-1-5906309
+[2026-02-24T00:25:02.097Z] [cron-push] Done — 1 job(s) enqueued
+[2026-02-24T00:30:02.013Z] [cron-push] Starting alert job enqueue...
+[2026-02-24T00:30:02.180Z] [cron-push] Found 1 alert(s) to enqueue
+[2026-02-24T00:30:02.184Z] [cron-push] Enqueued job alert-1-5906310
+[2026-02-24T00:30:02.184Z] [cron-push] Done — 1 job(s) enqueued
+[2026-02-24T00:35:02.121Z] [cron-push] Starting alert job enqueue...
+[2026-02-24T00:35:02.280Z] [cron-push] Found 1 alert(s) to enqueue
+[2026-02-24T00:35:02.284Z] [cron-push] Enqueued job alert-1-5906311
+[2026-02-24T00:35:02.284Z] [cron-push] Done — 1 job(s) enqueued

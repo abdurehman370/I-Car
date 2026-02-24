@@ -1,0 +1,13 @@
+[2026-02-24T00:25:02.096Z] [INFO] [job:alert-1-5906309] Starting — alert #1 (Honda Civic, UAE)
+[2026-02-24T00:25:02.101Z] [INFO] [job:alert-1-5906309] Internal matches: 1
+[2026-02-24T00:25:19.247Z] [INFO] [job:alert-1-5906309] Scraper matches: 46
+[2026-02-24T00:25:23.446Z] [INFO] [job:alert-1-5906309] Done — sent email with 10 matches
+[2026-02-24T00:25:23.448Z] [INFO] [job:alert-1-5906309] Completed successfully
+[2026-02-24T00:30:02.188Z] [INFO] [job:alert-1-5906310] Starting — alert #1 (Honda Civic, UAE)
+[2026-02-24T00:30:02.196Z] [INFO] [job:alert-1-5906310] Alert #1 is within cooldown (freq=every5min, lastRun=2026-02-24T00:25:23.423Z) — skipping
+[2026-02-24T00:30:02.197Z] [INFO] [job:alert-1-5906310] Completed successfully
+[2026-02-24T00:35:02.284Z] [INFO] [job:alert-1-5906311] Starting — alert #1 (Honda Civic, UAE)
+[2026-02-24T00:35:02.295Z] [INFO] [job:alert-1-5906311] Internal matches: 1
+[2026-02-24T00:35:10.427Z] [INFO] [job:alert-1-5906311] Scraper matches: 46
+[2026-02-24T00:35:13.685Z] [INFO] [job:alert-1-5906311] Done — sent email with 10 matches
+[2026-02-24T00:35:13.686Z] [INFO] [job:alert-1-5906311] Completed successfully
