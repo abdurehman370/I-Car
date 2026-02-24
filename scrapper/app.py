@@ -489,4 +489,7 @@ async def evaluate_car(req: ValuationRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # workers=4 allows 4 concurrent scrape requests to be handled in parallel.
+    # Without this, sync requests.Session() calls block the single event loop
+    # and concurrent BullMQ jobs queue up, causing timeouts.
+    uvicorn.run("app:app", host="0.0.0.0", port=8000, workers=4)

@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 TYPESENSE_URL = "https://hd7x32pwz5l1k9frp-1.a1.typesense.net/collections/cars_prod/documents/search"
 API_KEY = "Tv1qKAFwcLU5hFb3W2Y2u4Xirp3IG6Ld"
-IMAGE_BASE_URL = "https://img.carswitch.com"
+IMAGE_CDN_URL = "https://d1esl34bhh6pms.cloudfront.net/cars/used/images/800x600"
 BASE_URL = "https://carswitch.com"
 
 class CarSwitchClient:
@@ -86,10 +86,17 @@ class CarSwitchClient:
                 # However, doc has uuid and id. Usually its https://carswitch.com/uae/used-cars/[make]/[model]/[uuid]
                 make_slug = doc.get("makeName", "").replace(" ", "-").lower()
                 model_slug = doc.get("modelName", "").replace(" ", "-").lower()
-                uuid = doc.get("uuid")
+                year = doc.get("year", "")
+                listing_id = doc.get("id")
                 
-                listing_url = f"{BASE_URL}/uae/used-cars/{make_slug}/{model_slug}/{uuid}"
+                # Actual CarSwitch URL: /{city}/used-car/{make}/{model}/{year}/{id}
+                city_slug = (doc.get("cityName") or "uae").replace(" ", "-").lower()
+                listing_url = f"{BASE_URL}/{city_slug}/used-car/{make_slug}/{model_slug}/{year}/{listing_id}"
                 
+                # Build image URL from coverImage UUID via CloudFront CDN
+                cover_uuid = doc.get("coverImage", "")
+                image_url = f"{IMAGE_CDN_URL}/{cover_uuid}" if cover_uuid else ""
+
                 listings.append({
                     "id": listing_id,
                     "title": f"{doc.get('makeName', '').capitalize()} {doc.get('modelName', '').capitalize()} {doc.get('year')}".strip(),
@@ -103,7 +110,7 @@ class CarSwitchClient:
                     "make": doc.get("makeName", "").lower(),
                     "model": doc.get("modelName", "").lower(),
                     "image": image_url,
-                    "image_url": image_url, # Added image_url alias
+                    "image_url": image_url,
                     "scraped_at": datetime.now().isoformat()
                 })
             

@@ -156,7 +156,7 @@ export async function GET(request: NextRequest) {
 
         const dealer = session.user;
 
-        const listings = await (prisma as any).listing.findMany({
+        const listings = await prisma.listing.findMany({
             where: {
                 dealerId: dealer.id,
             },

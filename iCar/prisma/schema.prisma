@@ -29,6 +29,7 @@ model Dealer {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   listings       Listing[]
+  alerts         Alert[]
 }
 
 model Listing {
@@ -82,3 +83,24 @@ model ListingImage {
   @@index([listingId])
 }
 
+
+// Alert preferences for dealers
+model Alert {
+  id        Int      @id @default(autoincrement())
+  dealerId  Int
+  dealer    Dealer   @relation(fields: [dealerId], references: [id], onDelete: Cascade)
+  
+  make      String
+  model     String
+  yearMin   Int?
+  yearMax   Int?
+  variant   String?
+  region    String
+  
+  frequency String   @default("daily") // daily, weekly, monthly
+  lastRun   DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([dealerId])
+}

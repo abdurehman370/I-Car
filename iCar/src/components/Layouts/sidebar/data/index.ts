@@ -101,6 +101,12 @@ export const DEALER_NAV_DATA = [
         items: [],
       },
       {
+        title: "Alerts",
+        url: "/alerts",
+        icon: Icons.Authentication,
+        items: [],
+      },
+      {
         title: "Profile",
         url: "/profile",
         icon: Icons.User,

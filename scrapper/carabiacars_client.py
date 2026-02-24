@@ -82,13 +82,17 @@ class CarAbiaClient:
                 if id_match:
                     listing_id = id_match.group(1)
                 
-                # Price
-                price_elem = item.select_one('.product-snippet__price, .price, .product-price')
-                price_text = price_elem.get_text(strip=True) if price_elem else "0"
-                price = re.sub(r'[^\d]', '', price_text) or "0"
+                # Price — use span.price__value (most precise) or fallback to full .price text
+                price_value_elem = item.select_one('span.price__value')
+                if price_value_elem:
+                    price = re.sub(r'[^\d]', '', price_value_elem.get_text(strip=True)) or "0"
+                else:
+                    price_elem = item.select_one('.product-snippet__price, .price, .product-price')
+                    price_text = price_elem.get_text(strip=True) if price_elem else "0"
+                    price = re.sub(r'[^\d]', '', price_text) or "0"
                 
-                # Metadata (Year, Mileage) - often in product-snippet__stats
-                specs = item.select('.product-snippet__stats span, .product-spec span, .specs span')
+                # Metadata (Year, Mileage) — in ul.stat-line > li.stat-line__item
+                specs = item.select('ul.stat-line.product-snippet__stats li.stat-line__item')
                 year = ""
                 mileage = "0"
                 
@@ -96,12 +100,16 @@ class CarAbiaClient:
                     text = spec.get_text(strip=True)
                     if re.match(r'^\d{4}$', text):
                         year = text
-                    elif 'km' in text.lower():
+                    elif 'km' in text.lower() or 'mile' in text.lower():
                         mileage = re.sub(r'[^\d]', '', text) or "0"
                 
                 # Image
                 img_elem = item.select_one('img')
                 image_url = img_elem.get('src', '') if img_elem else ""
+                
+                # Prepend base URL if relative
+                if image_url and not image_url.startswith('http'):
+                    image_url = f"{BASE_URL}{image_url}"
                 
                 # Extract make/model from title if not already present
                 # Very simple heuristic
