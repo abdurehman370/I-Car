@@ -25,7 +25,15 @@ export async function PATCH(
         if (error) return NextResponse.json({ message: error }, { status });
 
         const body = await request.json();
-        const { make, model, yearMin, yearMax, variant, region, frequency } = body;
+        const { make, model, yearMin, yearMax, variant, region, frequency, enabled } = body;
+
+        // Partial update: allow toggling enabled without other fields
+        if (typeof enabled === 'boolean') {
+            await prisma.$executeRaw`UPDATE \`Alert\` SET \`enabled\` = ${enabled}, \`updatedAt\` = NOW() WHERE id = ${alertId} AND dealerId = ${session.user.id}`;
+            const updated = await prisma.alert.findUnique({ where: { id: alertId } });
+            if (!updated) return NextResponse.json({ message: "Alert not found" }, { status: 404 });
+            return NextResponse.json({ data: updated }, { status: 200 });
+        }
 
         if (!make || !model || !region) {
             return NextResponse.json({ message: "Missing required fields" }, { status: 400 });

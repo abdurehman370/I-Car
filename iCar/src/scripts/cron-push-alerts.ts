@@ -20,8 +20,9 @@ async function pushAlertJobs(): Promise<void> {
     console.log(`[${new Date().toISOString()}] [cron-push] Starting alert job enqueue...`);
 
     try {
-        // Fetch all alerts with their dealer info
+        // Fetch only enabled alerts (toggle off = cron skips)
         const alerts = await prisma.alert.findMany({
+            where: { enabled: true },
             include: { dealer: true },
         });
 

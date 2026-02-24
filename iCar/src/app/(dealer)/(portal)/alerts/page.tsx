@@ -17,6 +17,7 @@ interface Alert {
     variant: string | null;
     region: string;
     frequency: string;
+    enabled: boolean;
     lastRun: string | null;
     createdAt: string;
 }
@@ -54,6 +55,7 @@ export default function AlertsPage() {
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [togglingId, setTogglingId] = useState<number | null>(null);
     const [editingAlert, setEditingAlert] = useState<Alert | null>(null);
     const [formData, setFormData] = useState<FormData>(BLANK_FORM);
 
@@ -141,6 +143,29 @@ export default function AlertsPage() {
         }
     };
 
+    const handleToggle = async (alert: Alert) => {
+        const newEnabled = !(alert.enabled ?? true);
+        setTogglingId(alert.id);
+        try {
+            const res = await fetch(`/api/dealer/alerts/${alert.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ enabled: newEnabled }),
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setAlerts((prev) => prev.map((a) => (a.id === alert.id ? data.data : a)));
+                toast.success(newEnabled ? "Alert resumed" : "Alert paused");
+            } else {
+                toast.error(data.message || "Failed to update alert");
+            }
+        } catch {
+            toast.error("An error occurred");
+        } finally {
+            setTogglingId(null);
+        }
+    };
+
     const handleDelete = async (id: number) => {
         if (!confirm("Are you sure you want to delete this alert?")) return;
         try {
@@ -206,10 +231,31 @@ export default function AlertsPage() {
                         {alerts.map((alert) => (
                             <div
                                 key={alert.id}
-                                className="bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow relative group"
+                                className={`bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-md transition-all relative group ${
+                                    (alert.enabled ?? true) === false ? "opacity-75" : ""
+                                }`}
                             >
-                                {/* Action buttons */}
-                                <div className="absolute top-4 right-4 flex items-center gap-1">
+                                {/* Toggle + Action buttons */}
+                                <div className="absolute top-4 right-4 flex items-center gap-2">
+                                    <button
+                                        onClick={() => handleToggle(alert)}
+                                        disabled={togglingId === alert.id}
+                                        title={(alert.enabled ?? true) ? "Pause alert (stop cron)" : "Resume alert"}
+                                        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
+                                            (alert.enabled ?? true)
+                                                ? "bg-indigo-600"
+                                                : "bg-gray-300 dark:bg-gray-600"
+                                        }`}
+                                        role="switch"
+                                        aria-checked={alert.enabled ?? true}
+                                    >
+                                        <span
+                                            className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition ${
+                                                (alert.enabled ?? true) ? "translate-x-5" : "translate-x-1"
+                                            }`}
+                                        />
+                                    </button>
+
                                     <button
                                         onClick={() => openEditModal(alert)}
                                         className="p-2 text-gray-400 hover:text-indigo-500 transition-colors"
@@ -230,10 +276,17 @@ export default function AlertsPage() {
                                     <div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl">
                                         <Car className="size-6 text-indigo-600 dark:text-indigo-400" />
                                     </div>
-                                    <div>
-                                        <h3 className="font-bold text-gray-900 dark:text-white text-lg">
-                                            {alert.make} {alert.model}
-                                        </h3>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-2">
+                                            <h3 className="font-bold text-gray-900 dark:text-white text-lg truncate">
+                                                {alert.make} {alert.model}
+                                            </h3>
+                                            {(alert.enabled ?? true) === false && (
+                                                <span className="shrink-0 absolute -top-2 left-2 rounded-full bg-green-200 px-2 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-700">
+                                                    Paused
+                                                </span>
+                                            )}
+                                        </div>
                                         <p className="text-sm text-gray-500 dark:text-gray-400">
                                             {alert.yearMin || alert.yearMax
                                                 ? `${alert.yearMin || "Any"} - ${alert.yearMax || "Any"}`

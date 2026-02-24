@@ -104,6 +104,10 @@ async function processAlertJob(job: Job<AlertJobData>): Promise<void> {
         log('WARN', job.id, `Alert #${alertId} no longer exists — skipping`);
         return;
     }
+    if (!freshAlert.enabled) {
+        log('INFO', job.id, `Alert #${alertId} is disabled (toggle off) — skipping`);
+        return;
+    }
 
     const freshLastRun = freshAlert.lastRun ? freshAlert.lastRun.toISOString() : null;
     if (isWithinCooldown(freshAlert.frequency, freshLastRun)) {
