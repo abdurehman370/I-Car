@@ -374,12 +374,6 @@
                         <label for="country">Country</label>
                         <select id="country">
                             <option value="Germany">Germany</option>
-                            <option value="France">France</option>
-                            <option value="Netherlands">Netherlands</option>
-                            <option value="Italy">Italy</option>
-                            <option value="Belgium">Belgium</option>
-                            <option value="Austria">Austria</option>
-                            <option value="Spain">Spain</option>
                         </select>
                     </div>
                     <div class="input-group">
@@ -529,8 +523,8 @@
 
                 // Handle both image_url and image fields
                 const displayImage = car.image_url || car.image;
-                const imageSrc = (displayImage && displayImage !== 'N/A') 
-                    ? displayImage 
+                const imageSrc = (displayImage && displayImage !== 'N/A')
+                    ? displayImage
                     : 'https://via.placeholder.com/400x300?text=No+Image+Available';
 
                 card.innerHTML = `

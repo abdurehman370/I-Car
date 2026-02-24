@@ -15,13 +15,12 @@ const REGION_CITIES: Record<string, string[]> = {
     UAE: ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah", "Fujairah", "Umm Al Quwain"],
     Lebanon: ["Beirut", "Tripoli", "Sidon", "Tyre", "Jounieh", "Byblos", "Zahle"],
     Europe: [
-        "Berlin", "Munich", "Hamburg", "Madrid", "Barcelona", "Paris", "Lyon",
-        "Amsterdam", "Rotterdam", "Rome", "Milan", "Brussels", "Antwerp", "Vienna"
+        "Berlin", "Munich", "Hamburg"
     ]
 };
 
 const EUROPE_COUNTRIES = [
-    "Germany", "Spain", "France", "Netherlands", "Italy", "Belgium", "Austria"
+    "Germany"
 ];
 
 interface ValuationResult {

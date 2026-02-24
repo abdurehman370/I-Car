@@ -107,6 +107,12 @@ export const DEALER_NAV_DATA = [
         items: [],
       },
       {
+        title: "Dealer Tools",
+        url: "/dealer-tools",
+        icon: Icons.PieChart,
+        items: [],
+      },
+      {
         title: "Profile",
         url: "/profile",
         icon: Icons.User,
