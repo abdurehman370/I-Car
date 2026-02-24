@@ -17,59 +17,22 @@ export const ADMIN_NAV_DATA = [
         items: [],
       },
       {
-        title: "Forms",
-        icon: Icons.Alphabet,
-        items: [
-          {
-            title: "Form Elements",
-            url: "/admin/forms/form-elements",
-          },
-          {
-            title: "Form Layout",
-            url: "/admin/forms/form-layout",
-          },
-        ],
-      },
-      {
-        title: "Tables",
-        url: "/admin/tables",
+        title: "Dealers",
+        url: "/admin/dealers",
         icon: Icons.Table,
-        items: [
-          {
-            title: "Tables",
-            url: "/admin/tables",
-          },
-        ],
+        items: [],
       },
       {
-        title: "Pages",
-        icon: Icons.Alphabet,
-        items: [
-          {
-            title: "Settings",
-            url: "/admin/pages/settings",
-          },
-        ],
+        title: "Listings",
+        url: "/admin/listings",
+        icon: Icons.FourCircle,
+        items: [],
       },
     ],
   },
   {
     label: "OTHERS",
     items: [
-      {
-        title: "UI Elements",
-        icon: Icons.FourCircle,
-        items: [
-          {
-            title: "Alerts",
-            url: "/admin/ui-elements/alerts",
-          },
-          {
-            title: "Buttons",
-            url: "/admin/ui-elements/buttons",
-          },
-        ],
-      },
       {
         title: "Authentication",
         icon: Icons.Authentication,
