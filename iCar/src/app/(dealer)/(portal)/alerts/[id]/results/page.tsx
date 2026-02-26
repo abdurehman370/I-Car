@@ -105,9 +105,9 @@ export default function AlertResultsPage() {
             <div className="flex items-center justify-between gap-4">
                 <button
                     onClick={() => router.push('/alerts')}
-                    className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors py-2"
+                    className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-white transition-colors py-2"
                 >
-                    <div className="p-1.5 rounded-lg bg-white/5 group-hover:bg-white/10 border border-white/5 transition-colors">
+                    <div className="p-1.5 rounded-lg bg-gray-100 dark:bg-white/5 group-hover:bg-indigo-50 dark:group-hover:bg-white/10 border border-gray-200 dark:border-white/5 transition-colors">
                         <ChevronLeft className="size-4" />
                     </div>
                     <span className="text-sm font-medium">Back to Alerts</span>
@@ -115,7 +115,7 @@ export default function AlertResultsPage() {
                 <button
                     onClick={fetchResults}
                     disabled={loading}
-                    className="flex items-center gap-2 px-4 py-2 text-sm bg-white/5 hover:bg-white/10 text-white rounded-xl border border-white/10 transition-all font-medium active:scale-95 disabled:opacity-50"
+                    className="flex items-center gap-2 px-4 py-2 text-sm bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-900 dark:text-white rounded-xl border border-gray-200 dark:border-white/10 transition-all font-medium active:scale-95 disabled:opacity-50"
                 >
                     <RefreshCw className={`size-4 ${loading ? 'animate-spin' : ''}`} />
                     Refresh
@@ -124,29 +124,29 @@ export default function AlertResultsPage() {
 
             {/* Alert Detail Hero */}
             {alert && (
-                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600/20 to-purple-600/20 rounded-[2.5rem] p-8 md:p-10 border border-white/10 shadow-2xl">
-                    <div className="absolute top-0 right-0 -m-8 size-64 bg-indigo-500/10 blur-[100px] rounded-full" />
-                    <div className="absolute bottom-0 left-0 -m-8 size-64 bg-purple-500/10 blur-[100px] rounded-full" />
+                <div className="relative overflow-hidden bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-600/20 dark:to-purple-600/20 rounded-[2.5rem] p-8 md:p-10 border border-gray-200 dark:border-white/10 shadow-2xl">
+                    <div className="absolute top-0 right-0 -m-8 size-64 bg-indigo-500/20 dark:bg-indigo-500/10 blur-[100px] rounded-full" />
+                    <div className="absolute bottom-0 left-0 -m-8 size-64 bg-purple-500/20 dark:bg-purple-500/10 blur-[100px] rounded-full" />
 
                     <div className="relative flex flex-col md:flex-row md:items-end justify-between gap-6">
                         <div className="space-y-4">
                             <div className="flex items-center gap-3">
-                                <div className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
-                                    <Bell className="size-6 text-indigo-400" />
+                                <div className="p-3 bg-white dark:bg-white/10 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-white/20 shadow-sm">
+                                    <Bell className="size-6 text-indigo-600 dark:text-indigo-400" />
                                 </div>
-                                <span className="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-400/10 px-3 py-1 rounded-full">Active Search</span>
+                                <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 dark:bg-indigo-400/10 px-3 py-1 rounded-full">Active Search</span>
                             </div>
                             <div>
-                                <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+                                <h1 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white tracking-tight">
                                     {alert.make} {alert.model}
-                                    {alert.variant && <span className="block text-xl md:text-2xl text-gray-400 font-medium mt-1">{alert.variant}</span>}
+                                    {alert.variant && <span className="block text-xl md:text-2xl text-gray-500 dark:text-gray-400 font-medium mt-1">{alert.variant}</span>}
                                 </h1>
-                                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-4 text-gray-400 text-sm md:text-base">
-                                    <span className="flex items-center gap-1.5"><MapPin className="size-4 text-indigo-400" /> {alert.region}</span>
-                                    <span className="text-white/10">|</span>
-                                    <span className="flex items-center gap-1.5"><Calendar className="size-4 text-indigo-400" /> {(alert.yearMin || alert.yearMax) ? `${alert.yearMin ?? 'Any'} – ${alert.yearMax ?? 'Any'}` : 'All Years'}</span>
-                                    <span className="text-white/10">|</span>
-                                    <span className="font-bold text-white">{results.length} Matches Found</span>
+                                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-4 text-gray-500 dark:text-gray-400 text-sm md:text-base font-medium">
+                                    <span className="flex items-center gap-1.5"><MapPin className="size-4 text-indigo-500 dark:text-indigo-400" /> {alert.region}</span>
+                                    <span className="hidden md:block bg-gray-300 dark:bg-white/10 w-px h-4" />
+                                    <span className="flex items-center gap-1.5"><Calendar className="size-4 text-indigo-500 dark:text-indigo-400" /> {(alert.yearMin || alert.yearMax) ? `${alert.yearMin ?? 'Any'} – ${alert.yearMax ?? 'Any'}` : 'All Years'}</span>
+                                    <span className="hidden md:block bg-gray-300 dark:bg-white/10 w-px h-4" />
+                                    <span className="font-bold text-indigo-600 dark:text-indigo-400">{results.length} Matches Found</span>
                                 </div>
                             </div>
                         </div>
@@ -156,27 +156,27 @@ export default function AlertResultsPage() {
 
             {/* Toolbar */}
             {!loading && results.length > 0 && (
-                <div className="flex flex-col lg:flex-row items-center gap-4 bg-white/5 backdrop-blur-md p-3 rounded-3xl border border-white/10 shadow-lg">
+                <div className="flex flex-col lg:flex-row items-center gap-4 bg-white dark:bg-white/5 backdrop-blur-md p-3 rounded-3xl border border-gray-200 dark:border-white/10 shadow-lg">
                     <div className="relative flex-1 w-full group">
                         <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                            <Search className="size-4 text-gray-500 group-focus-within:text-indigo-400 transition-colors" />
+                            <Search className="size-4 text-gray-400 dark:text-gray-500 group-focus-within:text-indigo-500 dark:group-focus-within:text-indigo-400 transition-colors" />
                         </div>
                         <input
                             type="text"
                             placeholder="Search results by title or location..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/5 focus:border-indigo-500/50 rounded-2xl text-white placeholder:text-gray-500 outline-none transition-all"
+                            className="w-full pl-11 pr-4 py-3 bg-gray-100 dark:bg-white/5 border border-transparent focus:border-indigo-500/50 rounded-2xl text-gray-900 dark:text-white placeholder:text-gray-500 outline-none transition-all"
                         />
                     </div>
 
                     <div className="flex items-center gap-4 w-full lg:w-auto">
                         <div className="flex items-center gap-2 flex-1 lg:flex-initial">
-                            <Filter className="size-4 text-gray-500 ml-2" />
+                            <Filter className="size-4 text-gray-400 dark:text-gray-500 ml-2" />
                             <select
                                 value={filterSource}
                                 onChange={(e) => setFilterSource(e.target.value as any)}
-                                className="flex-1 lg:w-32 py-2.5 px-3 bg-white/5 border border-white/5 rounded-2xl text-sm text-gray-300 outline-none hover:bg-white/10 transition-colors"
+                                className="flex-1 lg:w-32 py-2.5 px-3 bg-gray-100 dark:bg-white/5 border border-transparent dark:border-white/5 rounded-2xl text-sm text-gray-700 dark:text-gray-300 outline-none hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
                             >
                                 <option value="all">All Sources</option>
                                 <option value="iCar">iCar Only</option>
@@ -185,11 +185,11 @@ export default function AlertResultsPage() {
                         </div>
 
                         <div className="flex items-center gap-2 flex-1 lg:flex-initial">
-                            <ArrowUpDown className="size-4 text-gray-500" />
+                            <ArrowUpDown className="size-4 text-gray-400 dark:text-gray-500" />
                             <select
                                 value={sortBy}
                                 onChange={(e) => setSortBy(e.target.value as any)}
-                                className="flex-1 lg:w-40 py-2.5 px-3 bg-white/5 border border-white/5 rounded-2xl text-sm text-gray-300 outline-none hover:bg-white/10 transition-colors"
+                                className="flex-1 lg:w-40 py-2.5 px-3 bg-gray-100 dark:bg-white/5 border border-transparent dark:border-white/5 rounded-2xl text-sm text-gray-700 dark:text-gray-300 outline-none hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
                             >
                                 <option value="year-desc">Newest Year</option>
                                 <option value="price-asc">Lowest Price</option>
@@ -237,9 +237,9 @@ export default function AlertResultsPage() {
 
             {/* Info Footer */}
             {!loading && results.length > 0 && (
-                <div className="flex items-center gap-3 p-4 bg-indigo-500/5 border border-indigo-500/10 rounded-2xl">
-                    <Info className="size-5 text-indigo-400 flex-shrink-0" />
-                    <p className="text-xs text-indigo-300/80 uppercase font-bold tracking-widest leading-relaxed">
+                <div className="flex items-center gap-3 p-4 bg-indigo-500/5 dark:bg-indigo-500/10 border border-indigo-500/10 dark:border-indigo-500/20 rounded-2xl">
+                    <Info className="size-5 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
+                    <p className="text-xs text-indigo-600/80 dark:text-indigo-300/80 uppercase font-bold tracking-widest leading-relaxed">
                         Data is aggregated in real-time. Prices may vary based on merchant updates and market fluctuations.
                     </p>
                 </div>
@@ -255,7 +255,7 @@ function ResultCard({ result }: { result: MatchResult }) {
     const [imgSrc, setImgSrc] = useState<string>(result.image || '/car-placeholder.png');
 
     return (
-        <div className="group relative bg-[#0a1526] rounded-[2rem] overflow-hidden border border-white/5 hover:border-indigo-500/30 shadow-lg hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col h-full">
+        <div className="group relative bg-white dark:bg-[#0a1526] rounded-[2rem] overflow-hidden border border-gray-200 dark:border-white/5 hover:border-indigo-500/30 shadow-lg hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col h-full">
             {/* Image Section */}
             <div className="relative aspect-[16/10] overflow-hidden bg-[#020d1a]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -267,10 +267,10 @@ function ResultCard({ result }: { result: MatchResult }) {
                 />
 
                 {/* Source Overlay */}
-                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-[#0a1526]/90 to-transparent">
+                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-white/90 dark:from-[#0a1526]/90 to-transparent">
                     <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter backdrop-blur-md border ${isInternal
-                        ? 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30'
-                        : 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30'
+                        ? 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-500/30'
+                        : 'bg-yellow-500/10 dark:bg-yellow-500/20 text-yellow-600 dark:text-yellow-500 border-yellow-200 dark:border-yellow-500/30'
                         }`}>
                         {result.source} Listing
                     </div>
@@ -280,29 +280,29 @@ function ResultCard({ result }: { result: MatchResult }) {
             {/* Body */}
             <div className="p-6 flex flex-col flex-1">
                 <div className="mb-4">
-                    <h3 className="font-bold text-white text-lg leading-tight line-clamp-2 h-12 group-hover:text-indigo-400 transition-colors">
+                    <h3 className="font-bold text-gray-900 dark:text-white text-lg leading-tight line-clamp-2 h-12 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                         {result.title}
                     </h3>
                 </div>
 
                 <div className="flex items-baseline gap-2 mb-6">
-                    <span className="text-2xl font-black text-white">
+                    <span className="text-2xl font-black text-gray-900 dark:text-white">
                         {result.price ? `${result.currency} ${Number(result.price).toLocaleString()}` : 'Price N/A'}
                     </span>
-                    {result.price && <span className="text-xs text-gray-500 font-medium">Est. Total</span>}
+                    {result.price && <span className="text-xs text-gray-500 font-medium font-bold">Est. Total</span>}
                 </div>
 
-                <div className="grid grid-cols-2 gap-y-3 gap-x-2 mb-8 border-y border-white/5 py-4">
-                    <div className="flex items-center gap-2 text-gray-400">
-                        <Calendar className="size-4 text-indigo-400" />
+                <div className="grid grid-cols-2 gap-y-3 gap-x-2 mb-8 border-y border-gray-100 dark:border-white/5 py-4">
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                        <Calendar className="size-4 text-indigo-500 dark:text-indigo-400" />
                         <span className="text-xs font-bold tracking-tight">{result.year || 'N/A'}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-gray-400">
-                        <Gauge className="size-4 text-indigo-400" />
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                        <Gauge className="size-4 text-indigo-500 dark:text-indigo-400" />
                         <span className="text-xs font-bold tracking-tight">{result.mileage ? `${Number(result.mileage).toLocaleString()} KM` : 'N/A'}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-gray-400 col-span-2">
-                        <MapPin className="size-4 text-indigo-400" />
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 col-span-2">
+                        <MapPin className="size-4 text-indigo-500 dark:text-indigo-400" />
                         <span className="text-xs font-bold tracking-tight line-clamp-1 italic">{result.location || 'Unknown Location'}</span>
                     </div>
                 </div>
@@ -334,17 +334,17 @@ function ResultCard({ result }: { result: MatchResult }) {
 
 function SkeletonCard() {
     return (
-        <div className="bg-[#0a1526] rounded-[2rem] overflow-hidden border border-white/5 shadow-lg flex flex-col h-full animate-pulse">
-            <div className="aspect-[16/10] bg-white/5" />
+        <div className="bg-white dark:bg-[#0a1526] rounded-[2rem] overflow-hidden border border-gray-100 dark:border-white/5 shadow-lg flex flex-col h-full animate-pulse">
+            <div className="aspect-[16/10] bg-gray-100 dark:bg-white/5" />
             <div className="p-6 space-y-4">
-                <div className="h-6 w-3/4 bg-white/5 rounded-lg" />
-                <div className="h-8 w-1/2 bg-white/5 rounded-lg" />
-                <div className="grid grid-cols-2 gap-4 py-4 border-y border-white/5">
-                    <div className="h-4 bg-white/5 rounded" />
-                    <div className="h-4 bg-white/5 rounded" />
-                    <div className="h-4 w-full bg-white/5 rounded col-span-2" />
+                <div className="h-6 w-3/4 bg-gray-100 dark:bg-white/5 rounded-lg" />
+                <div className="h-8 w-1/2 bg-gray-100 dark:bg-white/5 rounded-lg" />
+                <div className="grid grid-cols-2 gap-4 py-4 border-y border-gray-100 dark:border-white/5">
+                    <div className="h-4 bg-gray-100 dark:bg-white/5 rounded" />
+                    <div className="h-4 bg-gray-100 dark:bg-white/5 rounded" />
+                    <div className="h-4 w-full bg-gray-100 dark:bg-white/5 rounded col-span-2" />
                 </div>
-                <div className="h-12 bg-white/5 rounded-2xl" />
+                <div className="h-12 bg-gray-100 dark:bg-white/5 rounded-2xl" />
             </div>
         </div>
     );

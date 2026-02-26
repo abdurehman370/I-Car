@@ -87,7 +87,7 @@ class AutotraderLbClient:
                     logger.warning(f"Autotrader LB 404 for {url}, trying next fallback...")
                     continue
                 response.raise_for_status()
-                return self._parse_html(response.text, page)
+                return self._parse_html(response.text, page, filters)
             except requests.exceptions.RequestException as e:
                 last_error = e
                 logger.warning(f"Autotrader LB request failed for {url}: {e}")
@@ -97,9 +97,12 @@ class AutotraderLbClient:
              logger.error(f"Autotrader LB all fallbacks failed. Last error: {last_error}")
         return [], 0, 0
 
-    def _parse_html(self, html, current_page):
+    def _parse_html(self, html, current_page, filters):
         soup = BeautifulSoup(html, "html.parser")
         listings = []
+        
+        year_min = filters.get("year_min")
+        year_max = filters.get("year_max")
 
         # Use the specific listing-item class identified via browser
         for item in soup.select(".listing-item"):
@@ -117,6 +120,13 @@ class AutotraderLbClient:
 
                 listing = self._parse_listing_block(item, href)
                 if listing and (listing.get("price") or listing.get("title") != "N/A"):
+                    # Local Filtering
+                    lyear_str = str(listing.get("year", ""))
+                    if lyear_str.isdigit():
+                        y = int(lyear_str)
+                        if year_min and y < year_min: continue
+                        if year_max and y > year_max: continue
+                        
                     listing["currency"] = self.currency
                     listing["scraped_at"] = datetime.now().isoformat()
                     listing["source"] = "autotrader_lb"

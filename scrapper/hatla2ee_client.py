@@ -178,6 +178,16 @@ class Hatla2eeClient:
                 if not title:
                      title = f"{item.get('make', {}).get('slug', '').capitalize()} {item.get('model', {}).get('slug', '').capitalize()} {item.get('year', '')}".strip()
 
+                item_make = item.get("make", {}).get("slug", "").lower()
+                expected_make = make.lower().replace(" ", "-") if make else ""
+                
+                # Check for Mercedes shorthand (sometimes 'mercedes' instead of 'mercedes-benz')
+                if expected_make == "mercedes-benz":
+                     expected_make = "mercedes"
+                     
+                if expected_make and expected_make not in item_make:
+                    continue
+
                 # Construct the listing dictionary
                 listing = {
                     "id": listing_id,

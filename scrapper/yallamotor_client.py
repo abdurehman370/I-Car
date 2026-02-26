@@ -65,7 +65,7 @@ class YallaMotorClient:
                     continue
                     
                 response.raise_for_status()
-                return self._parse_json_ld(response.text, page, url)
+                return self._parse_json_ld(response.text, page, url, **kwargs)
                 
             except Exception as e:
                 logger.warning(f"YallaMotor request failed for {url} (Attempt {attempt+1}): {e}")
@@ -74,8 +74,8 @@ class YallaMotorClient:
         logger.error(f"YallaMotor all retries failed for {url}.")
         return [], 0, 0
 
-    def _parse_json_ld(self, html, current_page, current_url):
-        """Parse HTML to extract JSON-LD listings."""
+    def _parse_json_ld(self, html, current_page, current_url, **kwargs):
+        """Parse HTML to extract JSON-LD listings with local filtering."""
         soup = BeautifulSoup(html, "html.parser")
         listings = []
         
@@ -139,6 +139,21 @@ class YallaMotorClient:
                     "image": data.get("image", ""),
                     "image_url": data.get("image", "")
                 }
+                
+                # Apply Filters
+                year_min = kwargs.get("year_min")
+                year_max = kwargs.get("year_max")
+                price_min = kwargs.get("price_min")
+                price_max = kwargs.get("price_max")
+                
+                if year_val and str(year_val).isdigit():
+                    y = int(year_val)
+                    if year_min and y < year_min: continue
+                    if year_max and y > year_max: continue
+                
+                if price:
+                    if price_min and price < price_min: continue
+                    if price_max and price > price_max: continue
                 
                 listings.append(listing)
                 

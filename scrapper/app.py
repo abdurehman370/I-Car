@@ -8,6 +8,7 @@ import logging
 import os
 import re
 import json
+import asyncio
 
 from dubizzle_client import DubizzleClient
 from dubicars_client import DubicarsClient
@@ -110,7 +111,8 @@ async def scrape_listings(req: ScrapeRequest):
                 "price_min": req.price_min,
                 "price_max": req.price_max
             }
-            for source_name, lb_client in clients:
+            def fetch_lebanon(source_name, lb_client):
+                client_results = []
                 try:
                     for page in range(req.max_pages):
                         hits, nb_pages, _ = lb_client.get_listings(filters, page=page + 1)
@@ -183,6 +185,16 @@ async def scrape_listings(req: ScrapeRequest):
                                         if len(hits) < 5: logger.debug(f"[{source_name}] Rejected '{title}' due to Model mismatch (Query: {model_query})")
                                         continue
                                         
+                            # Variant filtering
+                            variant_query = (req.variant or "").lower().strip()
+                            if variant_query:
+                                var_clean = re.sub(r'[^a-zA-Z0-9]', '', variant_query)
+                                title_clean = re.sub(r'[^a-zA-Z0-9]', '', title)
+                                hit_var_clean = re.sub(r'[^a-zA-Z0-9]', '', str(hit.get("variant", "")).lower())
+                                if var_clean and var_clean not in title_clean and var_clean not in hit_var_clean:
+                                    if len(hits) < 5: logger.debug(f"[{source_name}] Rejected '{title}' due to Variant mismatch")
+                                    continue
+                                        
                             # Year filtering
                             year_val = hit.get("year")
                             if year_val and str(year_val).isdigit():
@@ -204,11 +216,17 @@ async def scrape_listings(req: ScrapeRequest):
                             filtered_hits.append(hit)
                         
                         logger.info(f"[{source_name}] Page {page + 1}: Found {len(hits)} raw, {len(filtered_hits)} valid")
-                        all_results.extend(filtered_hits)
+                        client_results.extend(filtered_hits)
                         if page + 1 >= nb_pages:
                             break
                 except Exception as e:
                     logger.warning(f"Lebanon source {source_name} failed: {e}")
+                return client_results
+            
+            tasks = [asyncio.to_thread(fetch_lebanon, name, c) for name, c in clients]
+            results_lists = await asyncio.gather(*tasks)
+            for lst in results_lists:
+                all_results.extend(lst)
             
             evaluation = PriceEvaluator.calculate_stats(all_results) if all_results else {}
         elif req.region == "Europe": # Added
@@ -255,7 +273,8 @@ async def scrape_listings(req: ScrapeRequest):
             args.price_min = req.price_min
             args.price_max = req.price_max
             
-            for source_name, uae_client in clients:
+            def fetch_uae(source_name, uae_client):
+                client_results = []
                 try:
                     for page in range(req.max_pages):
                         if source_name == "Dubizzle":
@@ -272,8 +291,16 @@ async def scrape_listings(req: ScrapeRequest):
                                 
                             for hit in hits:
                                 formatted = Exporter.format_listing(hit)
+                                
+                                if req.variant:
+                                    var_clean = re.sub(r'[^a-zA-Z0-9]', '', str(req.variant).lower())
+                                    title_clean = re.sub(r'[^a-zA-Z0-9]', '', str(formatted.get("title", "")).lower())
+                                    hit_var_clean = re.sub(r'[^a-zA-Z0-9]', '', str(formatted.get("variant", "")).lower())
+                                    if var_clean and var_clean not in title_clean and var_clean not in hit_var_clean:
+                                        continue
+                                        
                                 logger.info(f"[{source_name}] Found: {formatted.get('title')} | {formatted.get('year')} | {formatted.get('price')} {formatted.get('currency')}")
-                                all_results.append(formatted)
+                                client_results.append(formatted)
                             
                             if page + 1 >= nb_pages:
                                 break
@@ -299,6 +326,15 @@ async def scrape_listings(req: ScrapeRequest):
                                 # Basic make check to avoid totally unrelated cars
                                 if make_query and make_query not in title:
                                     continue
+                                
+                                # Variant filtering
+                                variant_query = (req.variant or "").lower().strip()
+                                if variant_query:
+                                    var_clean = re.sub(r'[^a-zA-Z0-9]', '', variant_query)
+                                    title_clean = re.sub(r'[^a-zA-Z0-9]', '', title)
+                                    hit_var_clean = re.sub(r'[^a-zA-Z0-9]', '', str(hit.get("variant", "")).lower())
+                                    if var_clean and var_clean not in title_clean and var_clean not in hit_var_clean:
+                                        continue
 
                                 # Year filtering
                                 year_val = hit.get("year")
@@ -320,13 +356,19 @@ async def scrape_listings(req: ScrapeRequest):
                                 logger.info(f"[{source_name}] Found: {hit.get('title')} | {hit.get('year')} | {hit.get('price')} {hit.get('currency')}")
                             
                             logger.info(f"[{source_name}] Page {page + 1}: Found {len(hits)} raw, {len(filtered_hits)} valid")
-                            all_results.extend(filtered_hits)
+                            client_results.extend(filtered_hits)
                             
                             if page + 1 >= nb_pages:
                                 break
 
                 except Exception as e:
                     logger.warning(f"UAE source {source_name} failed: {e}")
+                return client_results
+                
+            tasks = [asyncio.to_thread(fetch_uae, name, c) for name, c in clients]
+            results_lists = await asyncio.gather(*tasks)
+            for lst in results_lists:
+                all_results.extend(lst)
             
             evaluation = PriceEvaluator.calculate_stats(all_results)
         
@@ -377,17 +419,33 @@ async def evaluate_car(req: ValuationRequest):
                 "year_max": year_max,
                 "mileage_max": req.mileage + 20000
             }
-            for source_name, lb_client in clients:
+            def eval_lebanon(source_name, lb_client):
+                client_results = []
                 try:
                     for page in range(2):
                         hits, nb_pages, _ = lb_client.get_listings(filters, page=page + 1)
                         if not hits:
                             break
-                        all_results.extend(hits)
+                        for hit in hits:
+                            title_clean = re.sub(r'[^a-zA-Z0-9]', '', str(hit.get("title", "")).lower())
+                            make_clean = re.sub(r'[^a-zA-Z0-9]', '', (req.make or "")).lower()
+                            if make_clean and make_clean not in title_clean and make_clean not in re.sub(r'[^a-zA-Z0-9]', '', str(hit.get("make", "")).lower()):
+                                continue
+                            variant_clean = re.sub(r'[^a-zA-Z0-9]', '', (req.variant or "")).lower()
+                            hit_var_clean = re.sub(r'[^a-zA-Z0-9]', '', str(hit.get("variant", "")).lower())
+                            if variant_clean and variant_clean not in title_clean and variant_clean not in hit_var_clean:
+                                continue
+                            client_results.append(hit)
                         if page + 1 >= nb_pages:
                             break
                 except Exception as e:
                     logger.warning(f"Lebanon source {source_name} failed: {e}")
+                return client_results
+                
+            tasks = [asyncio.to_thread(eval_lebanon, name, c) for name, c in clients]
+            results_lists = await asyncio.gather(*tasks)
+            for lst in results_lists:
+                all_results.extend(lst)
             evaluation = PriceEvaluator.calculate_valuation(all_results, {"year": req.year, "mileage": req.mileage}) if all_results else None
         elif req.region == "Europe":
             filters = {
@@ -428,7 +486,8 @@ async def evaluate_car(req: ValuationRequest):
             args.price_min = None
             args.price_max = None
             
-            for source_name, uae_client in clients:
+            def eval_uae(source_name, uae_client):
+                client_results = []
                 try:
                     for page in range(2):
                         if source_name == "Dubizzle":
@@ -436,7 +495,16 @@ async def evaluate_car(req: ValuationRequest):
                             hits, nb_pages, _ = uae_client.get_listings(payload)
                             if not hits: break
                             for hit in hits:
-                                all_results.append(Exporter.format_listing(hit))
+                                formatted = Exporter.format_listing(hit)
+                                title_clean = re.sub(r'[^a-zA-Z0-9]', '', str(formatted.get("title", "")).lower())
+                                make_clean = re.sub(r'[^a-zA-Z0-9]', '', (req.make or "")).lower()
+                                if make_clean and make_clean not in title_clean and make_clean not in re.sub(r'[^a-zA-Z0-9]', '', str(formatted.get("make", "")).lower()):
+                                    continue
+                                variant_clean = re.sub(r'[^a-zA-Z0-9]', '', (req.variant or "")).lower()
+                                hit_var_clean = re.sub(r'[^a-zA-Z0-9]', '', str(formatted.get("variant", "")).lower())
+                                if variant_clean and variant_clean not in title_clean and variant_clean not in hit_var_clean:
+                                    continue
+                                client_results.append(formatted)
                             if page + 1 >= nb_pages: break
                         else:
                             filters = {
@@ -448,11 +516,25 @@ async def evaluate_car(req: ValuationRequest):
                             if not hits: break
                             # Evaluate requires similar fields
                             for hit in hits:
-                                all_results.append(hit)
+                                title_clean = re.sub(r'[^a-zA-Z0-9]', '', str(hit.get("title", "")).lower())
+                                make_clean = re.sub(r'[^a-zA-Z0-9]', '', (req.make or "")).lower()
+                                if make_clean and make_clean not in title_clean and make_clean not in re.sub(r'[^a-zA-Z0-9]', '', str(hit.get("make", "")).lower()):
+                                    continue
+                                variant_clean = re.sub(r'[^a-zA-Z0-9]', '', (req.variant or "")).lower()
+                                hit_var_clean = re.sub(r'[^a-zA-Z0-9]', '', str(hit.get("variant", "")).lower())
+                                if variant_clean and variant_clean not in title_clean and variant_clean not in hit_var_clean:
+                                    continue
+                                client_results.append(hit)
                             if page + 1 >= nb_pages: break
 
                 except Exception as e:
                     logger.warning(f"UAE valuation source {source_name} failed: {e}")
+                return client_results
+                
+            tasks = [asyncio.to_thread(eval_uae, name, c) for name, c in clients]
+            results_lists = await asyncio.gather(*tasks)
+            for lst in results_lists:
+                all_results.extend(lst)
             
             evaluation = PriceEvaluator.calculate_valuation(all_results, {"year": req.year, "mileage": req.mileage})
 

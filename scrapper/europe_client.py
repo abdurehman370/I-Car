@@ -32,6 +32,11 @@ class EuropeClient:
         model_input = (filters.get('model') or '').lower()
         variant_input = (filters.get('variant') or '').lower()
         
+        # AutoScout24 normalization for Mercedes classes (e.g. c class -> c klasse)
+        if make == "mercedes-benz" or make == "mercedes":
+            model_input = model_input.replace("class", "klasse").replace(" ", "-")
+        
+        
         # Combine model and variant words for body style detection and slugification
         search_words = (model_input + " " + variant_input).split()
         

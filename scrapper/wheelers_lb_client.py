@@ -315,17 +315,29 @@ class WheelersLbClient:
         # Strict Model Token Matching
         model_query = (filters.get("model") or "").lower()
         if model_query:
-            # Normalize query: "Land Rover" -> ["land", "rover"]
-            query_tokens = set(re.findall(r"\w+", model_query))
+            stop_words = {"class", "series", "model", "cars", "car"}
+            query_tokens = set([w for w in re.findall(r"\w+", model_query) if w not in stop_words])
             
-            # Normalize title: "Land Rover Defender 110" -> ["land", "rover", "defender", "110"]
             title_tokens = set(re.findall(r"\w+", title_lower))
             
-            # All query tokens must be present in title
-            # e.g. Query "Civic" -> Title "Honda Civic" (Match)
-            # e.g. Query "CT4" -> Title "Cadillac CT4" (Match)
-            # e.g. Query "CT" -> Title "Cadillac CT4" (No Match, "ct" is not in title_tokens)
-            if not query_tokens.issubset(title_tokens):
+            # Sub-token matching for models like S500 matching "s" 
+            match_found = True
+            for q_tok in query_tokens:
+                 found_tok = False
+                 for t_tok in title_tokens:
+                     if q_tok == t_tok:
+                         found_tok = True
+                         break
+                     # e.g., 's' matches 's500'
+                     if t_tok.startswith(q_tok) and len(t_tok) > len(q_tok) and t_tok[len(q_tok)].isdigit():
+                         found_tok = True
+                         break
+                 
+                 if not found_tok:
+                     match_found = False
+                     break
+            
+            if not match_found:
                 return False
 
         # Year

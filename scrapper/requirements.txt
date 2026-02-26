@@ -5,3 +5,4 @@ uvicorn
 jinja2
 python-dotenv
 beautifulsoup4
+cloudscraper
