@@ -426,6 +426,19 @@
     </div>
 
     <script>
+        let SCRAPER_API_KEY = '';
+
+        // Automatically load the API key from the server on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const r = await fetch('/api/config');
+                const data = await r.json();
+                SCRAPER_API_KEY = data.api_key || '';
+            } catch (e) {
+                console.warn('Could not load API config:', e);
+            }
+        });
+
         const form = document.getElementById('scrape-form');
         const resultsGrid = document.getElementById('results-grid');
         const loader = document.getElementById('loading');
@@ -467,7 +480,10 @@
             try {
                 const response = await fetch('/api/scrape', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': SCRAPER_API_KEY
+                    },
                     body: JSON.stringify(formData)
                 });
 

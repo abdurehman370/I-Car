@@ -1,0 +1,260 @@
+{
+    "porsche": {
+        "models": {
+            "911": [
+                "Carrera",
+                "Carrera S",
+                "Turbo",
+                "Turbo S",
+                "GT3",
+                "GT3 RS",
+                "Targa 4"
+            ],
+            "cayenne": [
+                "Base",
+                "S",
+                "GTS",
+                "Turbo",
+                "Turbo S E-Hybrid",
+                "Coupe"
+            ],
+            "panamera": [
+                "Base",
+                "4",
+                "4S",
+                "GTS",
+                "Turbo S"
+            ],
+            "taycan": [
+                "Base",
+                "4S",
+                "Turbo",
+                "Turbo S"
+            ],
+            "macan": [
+                "Base",
+                "S",
+                "GTS"
+            ]
+        }
+    },
+    "mercedes-benz": {
+        "models": {
+            "c-class": [
+                "C200",
+                "C250",
+                "C300",
+                "C43 AMG",
+                "C63 AMG"
+            ],
+            "e-class": [
+                "E200",
+                "E250",
+                "E300",
+                "E350",
+                "E53 AMG",
+                "E63 AMG"
+            ],
+            "s-class": [
+                "S350",
+                "S400",
+                "S450",
+                "S500",
+                "S560",
+                "S580",
+                "S63 AMG"
+            ],
+            "g-class": [
+                "G500",
+                "G63 AMG"
+            ],
+            "gle-class": [
+                "GLE350",
+                "GLE450",
+                "GLE53 AMG",
+                "GLE63 AMG"
+            ]
+        }
+    },
+    "bmw": {
+        "models": {
+            "3-series": [
+                "320i",
+                "330i",
+                "M340i",
+                "M3"
+            ],
+            "5-series": [
+                "520i",
+                "530i",
+                "540i",
+                "M550i",
+                "M5"
+            ],
+            "7-series": [
+                "730i",
+                "740i",
+                "750i",
+                "M760Li"
+            ],
+            "x5": [
+                "xDrive40i",
+                "xDrive45e",
+                "M50i",
+                "X5 M"
+            ],
+            "m4": [
+                "Base",
+                "Competition",
+                "CS"
+            ]
+        }
+    },
+    "audi": {
+        "models": {
+            "a4": [
+                "35 TFSI",
+                "40 TFSI",
+                "45 TFSI",
+                "S4",
+                "RS4"
+            ],
+            "a6": [
+                "40 TFSI",
+                "45 TFSI",
+                "55 TFSI",
+                "S6",
+                "RS6"
+            ],
+            "q7": [
+                "45 TFSI",
+                "55 TFSI",
+                "SQ7"
+            ],
+            "r8": [
+                "V10 Performance",
+                "V10 Spyder"
+            ],
+            "e-tron": [
+                "50",
+                "55",
+                "S",
+                "GT"
+            ]
+        }
+    },
+    "aston-martin": {
+        "models": {
+            "db12": [
+                "Coupe",
+                "Volante"
+            ],
+            "vantage": [
+                "Base",
+                "F1 Edition",
+                "Roadster",
+                "V12 Vantage"
+            ],
+            "dbx": [
+                "Base",
+                "707"
+            ],
+            "dbs": [
+                "Superleggera",
+                "Volante"
+            ]
+        }
+    },
+    "ferrari": {
+        "models": {
+            "296": [
+                "GTB",
+                "GTS"
+            ],
+            "sf90": [
+                "Stradale",
+                "Spider"
+            ],
+            "f8": [
+                "Tributo",
+                "Spider"
+            ],
+            "roma": [
+                "Base",
+                "Spider"
+            ],
+            "purosangue": [
+                "Base"
+            ]
+        }
+    },
+    "lamborghini": {
+        "models": {
+            "urus": [
+                "Base",
+                "S",
+                "Performante"
+            ],
+            "huracan": [
+                "Evo",
+                "Tecnica",
+                "Sto",
+                "Sterrato"
+            ],
+            "revuelto": [
+                "Base"
+            ]
+        }
+    },
+    "toyota": {
+        "models": {
+            "land-cruiser": [
+                "GXR",
+                "VXR",
+                "GR Sport",
+                "lc300"
+            ],
+            "camry": [
+                "LE",
+                "SE",
+                "XLE",
+                "V6"
+            ],
+            "hilux": [
+                "Single Cab",
+                "Double Cab",
+                "Adventure"
+            ],
+            "supra": [
+                "2.0",
+                "3.0",
+                "A90 Edition"
+            ]
+        }
+    },
+    "land-rover": {
+        "models": {
+            "range-rover": [
+                "HSE",
+                "Autobiography",
+                "SV",
+                "Vogue"
+            ],
+            "defender": [
+                "90",
+                "110",
+                "130"
+            ],
+            "range-rover-sport": [
+                "Dynamic",
+                "Autobiography",
+                "SVR"
+            ],
+            "velar": [
+                "S",
+                "SE",
+                "R-Dynamic"
+            ]
+        }
+    }
+}

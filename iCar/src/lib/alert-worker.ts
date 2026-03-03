@@ -31,10 +31,10 @@ function isWithinCooldown(frequency: string, lastRun: string | null): boolean {
     const diffMinutes = diffMs / (1000 * 60);
     const diffDays = diffMs / (1000 * 60 * 60 * 24);
 
-    if (frequency === 'every5min' && diffMinutes < 5)  return true;
-    if (frequency === 'daily'     && diffDays < 1)     return true;
-    if (frequency === 'weekly'    && diffDays < 7)     return true;
-    if (frequency === 'monthly'   && diffDays < 30)    return true;
+    if (frequency === 'every5min' && diffMinutes < 5) return true;
+    if (frequency === 'daily' && diffDays < 1) return true;
+    if (frequency === 'weekly' && diffDays < 7) return true;
+    if (frequency === 'monthly' && diffDays < 30) return true;
 
     return false;
 }
@@ -53,7 +53,10 @@ async function fetchScraperMatches(data: AlertJobData): Promise<any[]> {
     try {
         const res = await fetch('http://localhost:8000/api/scrape', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'X-API-Key': process.env.SCRAPER_API_KEY || 'default_dev_key'
+            },
             body: JSON.stringify({
                 make: data.make,
                 model: data.model,
@@ -104,10 +107,6 @@ async function processAlertJob(job: Job<AlertJobData>): Promise<void> {
         log('WARN', job.id, `Alert #${alertId} no longer exists — skipping`);
         return;
     }
-    if (!freshAlert.enabled) {
-        log('INFO', job.id, `Alert #${alertId} is disabled (toggle off) — skipping`);
-        return;
-    }
 
     const freshLastRun = freshAlert.lastRun ? freshAlert.lastRun.toISOString() : null;
     if (isWithinCooldown(freshAlert.frequency, freshLastRun)) {
@@ -120,8 +119,8 @@ async function processAlertJob(job: Job<AlertJobData>): Promise<void> {
     // ------------------------------------------------------------------
     const internalMatches = await prisma.listing.findMany({
         where: {
-            make:   { contains: freshAlert.make },
-            model:  { contains: freshAlert.model },
+            make: { contains: freshAlert.make },
+            model: { contains: freshAlert.model },
             region: freshAlert.region,
             status: 'ACTIVE',
             ...(freshAlert.yearMin ? { year: { gte: freshAlert.yearMin } } : {}),

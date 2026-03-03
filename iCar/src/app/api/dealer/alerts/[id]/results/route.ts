@@ -59,7 +59,10 @@ export async function GET(
         try {
             const scraperRes = await fetch("http://localhost:8000/api/scrape", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-API-Key": process.env.SCRAPER_API_KEY || "default_dev_key"
+                },
                 body: JSON.stringify({
                     make: alert.make,
                     model: alert.model,

@@ -28,6 +28,12 @@ export const ADMIN_NAV_DATA = [
         icon: Icons.FourCircle,
         items: [],
       },
+      {
+        title: "Taxonomy",
+        url: "/admin/taxonomy",
+        icon: Icons.Table,
+        items: [],
+      },
     ],
   },
   {

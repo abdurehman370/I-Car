@@ -1,11 +1,15 @@
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Security, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security.api_key import APIKeyHeader
+from starlette.status import HTTP_403_FORBIDDEN
 from pydantic import BaseModel
 from typing import Optional, List
 import logging
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import re
 import json
 import asyncio
@@ -25,6 +29,23 @@ from exporter import Exporter
 from evaluator import PriceEvaluator
 from config import PRIMARY_INDEX, DEFAULT_HITS_PER_PAGE, REGION_CONFIG
 
+# Core Modules
+from core.normalization import normalize_make, normalize_model, normalize_variant
+from core.matching import match_model, match_variant
+from core.deduplication import deduplicate_listings
+from core.analytics import compute_price_analytics
+from core.cache import cache
+from core.network import get_request_session
+
+# Load Taxonomy
+TAXONOMY_PATH = "data/car_taxonomy.json"
+try:
+    with open(TAXONOMY_PATH, "r") as f:
+        CAR_TAXONOMY = json.load(f)
+except Exception as e:
+    logger.error(f"Failed to load taxonomy: {e}")
+    CAR_TAXONOMY = {}
+
 # Lebanon: aggregate from OLX, Autotrader, and Wheelers.me
 LEBANON_CLIENTS = [
     ("OLX", OlxLbClient),
@@ -32,11 +53,25 @@ LEBANON_CLIENTS = [
     ("Wheelers", WheelersLbClient),
 ]
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Dubizzle Scraper API")
+
+# API Key Security
+api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
+
+def get_api_key(api_key: str = Security(api_key_header)):
+    # Default key for development, overridden by environment variable in production
+    expected_key = os.environ.get("SCRAPER_API_KEY", "default_dev_key")
+    # Also strip quotes just in case python-dotenv included them
+    expected_key = expected_key.strip('"').strip("'")
+    if api_key == expected_key:
+        return api_key
+    print(f"AUTH FAILED - received: '{api_key}', expected: '{expected_key}'")
+    raise HTTPException(
+        status_code=HTTP_403_FORBIDDEN, detail="Could not validate credentials"
+    )
 
 # Add CORS middleware to allow requests from Next.js frontend
 app.add_middleware(
@@ -81,10 +116,54 @@ class ValuationRequest(BaseModel):
 async def read_index():
     return FileResponse("static/index.html")
 
+@app.get("/api/config")
+async def get_config():
+    """Returns the API key for the embedded web UI. Only expose to localhost."""
+    key = os.environ.get("SCRAPER_API_KEY", "default_dev_key").strip('"').strip("'")
+    return {"api_key": key}
+
+# Taxonomy Endpoints
+@app.get("/taxonomy/makes")
+async def get_makes(api_key: str = Depends(get_api_key)):
+    return sorted(list(CAR_TAXONOMY.keys()))
+
+@app.get("/taxonomy/models")
+async def get_models(make: str, api_key: str = Depends(get_api_key)):
+    norm_make = normalize_make(make)
+    if norm_make not in CAR_TAXONOMY:
+        return []
+    return sorted(list(CAR_TAXONOMY[norm_make]["models"].keys()))
+
+@app.get("/taxonomy/variants")
+async def get_variants(make: str, model: str, api_key: str = Depends(get_api_key)):
+    norm_make = normalize_make(make)
+    norm_model = normalize_model(norm_make, model)
+    if norm_make not in CAR_TAXONOMY:
+        return []
+    models = CAR_TAXONOMY[norm_make]["models"]
+    if norm_model not in models:
+        # Try finding the model via partial match if normalized slug didn't work directly
+        for m_name in models:
+            if norm_model in m_name.lower() or m_name.lower() in norm_model:
+                return models[m_name]
+        return []
+    return models[norm_model]
+
 @app.post("/api/scrape")
-async def scrape_listings(req: ScrapeRequest):
+async def scrape_listings(req: ScrapeRequest, api_key: str = Depends(get_api_key)):
     logger.info(f"Received scrape request: {req}")
     
+    # 1. Normalization
+    req.make = normalize_make(req.make)
+    req.model = normalize_model(req.make, req.model)
+    req.variant = normalize_variant(req.make, req.model, req.variant)
+    
+    # 2. Check Cache
+    cache_key = req.dict()
+    cached_res = cache.get(cache_key)
+    if cached_res:
+        return cached_res
+
     proxy = req.proxy if req.use_proxy else None
     
     # Initialize appropriate client(s)
@@ -369,30 +448,46 @@ async def scrape_listings(req: ScrapeRequest):
             results_lists = await asyncio.gather(*tasks)
             for lst in results_lists:
                 all_results.extend(lst)
-            
-            evaluation = PriceEvaluator.calculate_stats(all_results)
+        
+        # 3. Post-Aggregation Processing
+        # Deduplication
+        all_results = deduplicate_listings(all_results)
+        
+        # Analytics
+        analytics = compute_price_analytics(all_results)
         
         # Determine currency for response metadata if needed
         currency = REGION_CONFIG.get(req.region, {}).get("currency", "AED")
                 
-        return {
+        response = {
             "status": "success",
             "region": req.region,
-            "country": req.country if req.region == "Europe" else None, # Added
+            "country": req.country if req.region == "Europe" else None,
             "currency": currency,
             "total_results": len(all_results),
             "data": all_results,
-            "evaluation": evaluation
+            "analytics": analytics,
+            "evaluation": analytics # Keep evaluation for backward compatibility
         }
+        
+        # 4. Cache Result
+        cache.set(cache_key, response)
+        
+        return response
         
     except Exception as e:
         logger.error(f"Scrape error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/evaluate")
-async def evaluate_car(req: ValuationRequest):
+async def evaluate_car(req: ValuationRequest, api_key: str = Depends(get_api_key)):
     logger.info(f"Received valuation request: {req}")
     
+    # 1. Normalization
+    req.make = normalize_make(req.make)
+    req.model = normalize_model(req.make, req.model)
+    req.variant = normalize_variant(req.make, req.model, req.variant)
+
     proxy = req.proxy if req.use_proxy else None
     
     # Initialize appropriate client(s)
@@ -536,7 +631,12 @@ async def evaluate_car(req: ValuationRequest):
             for lst in results_lists:
                 all_results.extend(lst)
             
-            evaluation = PriceEvaluator.calculate_valuation(all_results, {"year": req.year, "mileage": req.mileage})
+            # Deduplicate and calculate valuation
+            all_results = deduplicate_listings(all_results)
+            analytics = compute_price_analytics(all_results)
+            
+            # Use analytics for valuation
+            evaluation = analytics
 
         currency = REGION_CONFIG.get(req.region, {}).get("currency", "AED")
         

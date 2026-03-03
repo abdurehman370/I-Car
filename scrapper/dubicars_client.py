@@ -2,12 +2,14 @@
 Dubicars UAE (www.dubicars.com) scraper client.
 Fetches used car listings via HTML scraping. Uses data-mixpanel-detail JSON payloads for robust data extraction.
 """
-import requests
-from bs4 import BeautifulSoup
 import json
 import logging
 from datetime import datetime
+from bs4 import BeautifulSoup
+
 from config import REGION_CONFIG, DEFAULT_TIMEOUT
+from core.network import get_request_session, random_delay
+from core.matching import match_model, match_variant
 
 logger = logging.getLogger(__name__)
 
@@ -17,40 +19,23 @@ TIMEOUT = min(20, DEFAULT_TIMEOUT)
 class DubicarsClient:
     def __init__(self, proxy=None):
         self.config = REGION_CONFIG["UAE"]
-        self.session = requests.Session()
-        # Essential headers to avoid blocking
-        self.session.headers.update({
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-            "Accept-Language": "en-US,en;q=0.9",
-        })
+        self.session = get_request_session(proxy=proxy)
         self.currency = self.config["currency"]
         
-        if proxy:
-            self.session.proxies = {"http": proxy, "https": proxy}
-            logger.info(f"DubicarsClient initialized with proxy: {proxy}")
-
     def _build_candidate_urls(self, make, model, **kwargs):
-        """
-        Builds URL(s) to try based on the make, model, and other filters.
-        Dubicars uses /uae/used/make-slug/model-slug
-        """
-        # Mapping for makes if needed, but lowercasing and replacing spaces with dashes usually works
+        """Builds URL(s) to try based on the make, model, and other filters."""
         make_slug = make.lower().replace(" ", "-") if make else ""
         model_slug = model.lower().replace(" ", "-") if model else ""
         
-        # Base Path configuration
         base_paths = []
         if make_slug and model_slug:
              base_paths.append(f"{BASE_URL}/uae/used/{make_slug}/{model_slug}")
         if make_slug:
              base_paths.append(f"{BASE_URL}/uae/used/{make_slug}")
         
-        # Fallback to general UAE used search if neither make nor model is provided (unlikely in this context, but safe)
         if not base_paths:
              base_paths.append(f"{BASE_URL}/uae/used")
 
-        # Query Parameters Setup
         params = []
         year_min = kwargs.get('year_min')
         year_max = kwargs.get('year_max')
@@ -72,31 +57,40 @@ class DubicarsClient:
         return urls
 
     def get_listings(self, make, model, page=1, **kwargs):
-        """Fetches listings from Dubicars."""
+        """Fetches listings from Dubicars with post-scrape validation."""
         urls_to_try = self._build_candidate_urls(make, model, **kwargs)
+        variant = kwargs.get("variant")
         
         last_error = None
         for base_url in urls_to_try:
-            # Handle pagination
-            # Dubicars uses direct page path? (No, wait - Dubicars pagination: ?page=2 or /page-2)
-            # Actually, let's just append `page=X` to query params or check if `?` is already there
             if page > 1:
-                if '?' in base_url:
-                    url = f"{base_url}&page={page}"
-                else:
-                    url = f"{base_url}?page={page}"
+                url = f"{base_url}&page={page}" if '?' in base_url else f"{base_url}?page={page}"
             else:
                 url = base_url
                 
             try:
+                random_delay()
                 logger.info(f"Fetching Dubicars UAE: {url}")
                 response = self.session.get(url, timeout=TIMEOUT)
                 if response.status_code == 404:
                     logger.warning(f"Dubicars 404 for {url}, trying next fallback...")
                     continue
                 response.raise_for_status()
-                return self._parse_html(response.text, page)
-            except requests.exceptions.RequestException as e:
+                
+                raw_listings, nb_pages, total_hits = self._parse_html(response.text, page)
+                
+                # Strict Model/Variant Validation
+                valid_listings = []
+                for item in raw_listings:
+                    if not match_model(model, item.get("title", "")):
+                        continue
+                    if variant and not match_variant(variant, item.get("title", ""), item.get("variant", "")):
+                        continue
+                    valid_listings.append(item)
+                
+                return valid_listings, nb_pages, total_hits
+                
+            except Exception as e:
                 last_error = e
                 logger.warning(f"Dubicars request failed for {url}: {e}")
                 continue
@@ -105,32 +99,27 @@ class DubicarsClient:
              logger.error(f"Dubicars all fallbacks failed. Last error: {last_error}")
         return [], 0, 0
 
-    def _parse_html(self, html, current_page):
+    def _parse_html(self, html_content, current_page):
         """Parse HTML to extract listings."""
-        soup = BeautifulSoup(html, "html.parser")
+        soup = BeautifulSoup(html_content, "html.parser")
         listings = []
-        
-        # Select the item blocks
         items = soup.select("li.serp-list-item")
         
         for item in items:
             try:
-                # Extract URL from anchor tag
                 link_el = item.select_one("a.image-container") or item.select_one("a.title")
                 listing_url = link_el.get("href") if link_el else ""
                 
-                # Extract Mixpanel JSON payload
                 mixpanel_data_raw = item.get("data-mixpanel-detail")
                 if not mixpanel_data_raw:
                     continue
                     
-                import html
+                import html as html_parser
                 try:
-                    mixpanel_data = json.loads(html.unescape(mixpanel_data_raw))
+                    mixpanel_data = json.loads(html_parser.unescape(mixpanel_data_raw))
                 except json.JSONDecodeError:
                     mixpanel_data = {}
                 
-                # Safe mapping
                 if mixpanel_data:
                     listing = {
                         "id": str(mixpanel_data.get("item_id", "")),
@@ -148,10 +137,8 @@ class DubicarsClient:
                         "scraped_at": datetime.now().isoformat()
                     }
                     
-                    # Extract image
                     image_url = mixpanel_data.get("image_url")
                     if not image_url:
-                        # Fallback to parsing image from HTML
                         img_el = item.select_one("img.object-cover")
                         image_url = img_el.get("src") or img_el.get("data-src") if img_el else ""
                     
@@ -162,7 +149,6 @@ class DubicarsClient:
                 logger.debug(f"Dubicars parse item skip: {e}")
                 continue
 
-        # Try to find pagination to determine nbPages
         nb_pages = current_page
         pagination = soup.select_one(".pagination")
         if pagination:
@@ -175,7 +161,5 @@ class DubicarsClient:
                  except ValueError:
                      pass
 
-        # Since we don't strictly have a total count from HTML directly accessible, we estimate total_hits
         total_hits = len(listings) * nb_pages if len(listings) > 0 else 0
-        
         return listings, nb_pages, total_hits

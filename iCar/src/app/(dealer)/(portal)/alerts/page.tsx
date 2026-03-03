@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { CarTaxonomyDropdowns } from "@/components/FormElements/CarTaxonomyDropdowns";
 
 interface Alert {
     id: number;
@@ -231,9 +232,8 @@ export default function AlertsPage() {
                         {alerts.map((alert) => (
                             <div
                                 key={alert.id}
-                                className={`bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-md transition-all relative group ${
-                                    (alert.enabled ?? true) === false ? "opacity-75" : ""
-                                }`}
+                                className={`bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-md transition-all relative group ${(alert.enabled ?? true) === false ? "opacity-75" : ""
+                                    }`}
                             >
                                 {/* Toggle + Action buttons */}
                                 <div className="absolute top-4 right-4 flex items-center gap-2">
@@ -241,18 +241,16 @@ export default function AlertsPage() {
                                         onClick={() => handleToggle(alert)}
                                         disabled={togglingId === alert.id}
                                         title={(alert.enabled ?? true) ? "Pause alert (stop cron)" : "Resume alert"}
-                                        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
-                                            (alert.enabled ?? true)
-                                                ? "bg-indigo-600"
-                                                : "bg-gray-300 dark:bg-gray-600"
-                                        }`}
+                                        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${(alert.enabled ?? true)
+                                            ? "bg-indigo-600"
+                                            : "bg-gray-300 dark:bg-gray-600"
+                                            }`}
                                         role="switch"
                                         aria-checked={alert.enabled ?? true}
                                     >
                                         <span
-                                            className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition ${
-                                                (alert.enabled ?? true) ? "translate-x-5" : "translate-x-1"
-                                            }`}
+                                            className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition ${(alert.enabled ?? true) ? "translate-x-5" : "translate-x-1"
+                                                }`}
                                         />
                                     </button>
 
@@ -335,31 +333,13 @@ export default function AlertsPage() {
                             </div>
 
                             <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Make *</label>
-                                        <input
-                                            type="text"
-                                            name="make"
-                                            value={formData.make}
-                                            onChange={handleInputChange}
-                                            required
-                                            className="w-full px-4 py-2.5 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                            placeholder="e.g. BMW"
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Model *</label>
-                                        <input
-                                            type="text"
-                                            name="model"
-                                            value={formData.model}
-                                            onChange={handleInputChange}
-                                            required
-                                            className="w-full px-4 py-2.5 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                            placeholder="e.g. M3"
-                                        />
-                                    </div>
+                                <div className="space-y-4">
+                                    <CarTaxonomyDropdowns
+                                        selectedMake={formData.make}
+                                        selectedModel={formData.model}
+                                        selectedVariant={formData.variant}
+                                        onChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
+                                    />
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
@@ -385,18 +365,6 @@ export default function AlertsPage() {
                                             placeholder="e.g. 2024"
                                         />
                                     </div>
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Variant</label>
-                                    <input
-                                        type="text"
-                                        name="variant"
-                                        value={formData.variant}
-                                        onChange={handleInputChange}
-                                        className="w-full px-4 py-2.5 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                        placeholder="e.g. M3 Competition"
-                                    />
                                 </div>
 
                                 <div className="space-y-2">

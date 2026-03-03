@@ -32,8 +32,8 @@ export async function POST(request: NextRequest) {
         const whereClause: any = {
             status: 'ACTIVE',
             region,
-            ...(make    ? { make:  { contains: make  } } : {}),
-            ...(model   ? { model: { contains: model } } : {}),
+            ...(make ? { make: { contains: make } } : {}),
+            ...(model ? { model: { contains: model } } : {}),
             ...(variant ? { variant: { contains: variant } } : {}),
             ...(yearMin || yearMax ? {
                 year: {
@@ -86,19 +86,35 @@ export async function POST(request: NextRequest) {
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 120_000);
 
+            const scraperPayload = {
+                make: make || null,
+                model: model || null,
+                variant: variant || null,
+                region,
+                year_min: yearMin ? parseInt(yearMin) : null,
+                year_max: yearMax ? parseInt(yearMax) : null,
+                mileage_max: mileageMax ? parseInt(mileageMax) : null,
+                price_min: priceMin ? parseFloat(priceMin) : null,
+                price_max: priceMax ? parseFloat(priceMax) : null,
+                max_pages: 2,
+            };
+
             const scraperRes = await fetch("http://localhost:8000/api/scrape", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-API-Key": process.env.SCRAPER_API_KEY || "default_dev_key"
+                },
                 body: JSON.stringify({
-                    make:        make    || null,
-                    model:       model   || null,
-                    variant:     variant || null,
+                    make: make || null,
+                    model: model || null,
+                    variant: variant || null,
                     region,
-                    year_min:    yearMin    ? parseInt(yearMin)    : null,
-                    year_max:    yearMax    ? parseInt(yearMax)    : null,
+                    year_min: yearMin ? parseInt(yearMin) : null,
+                    year_max: yearMax ? parseInt(yearMax) : null,
                     mileage_max: mileageMax ? parseInt(mileageMax) : null,
-                    price_min:   priceMin   ? parseFloat(priceMin) : null,
-                    price_max:   priceMax   ? parseFloat(priceMax) : null,
+                    price_min: priceMin ? parseFloat(priceMin) : null,
+                    price_max: priceMax ? parseFloat(priceMax) : null,
                     max_pages: 2,
                 }),
                 signal: controller.signal,
@@ -112,17 +128,17 @@ export async function POST(request: NextRequest) {
                     source: 'External' as const,
                     id: null,
                     title: m.title || `${make ?? ''} ${model ?? ''}`.trim() || 'Unknown',
-                    make:     make  ?? null,
-                    model:    model ?? null,
-                    year:     m.year     ?? null,
-                    mileage:  m.mileage  ?? null,
-                    price:    m.price    ?? null,
+                    make: make ?? null,
+                    model: model ?? null,
+                    year: m.year ?? null,
+                    mileage: m.mileage ?? null,
+                    price: m.price ?? null,
                     currency: m.currency ?? scraperData.currency ?? 'AED',
                     location: m.location ?? region,
-                    image:    m.image_url || m.image || null,
-                    url:      m.url || m.listing_url || null,
-                    dealer:   null,
-                    phone:    null,
+                    image: m.image_url || m.image || null,
+                    url: m.url || m.listing_url || null,
+                    dealer: null,
+                    phone: null,
                     condition: null,
                 }));
             }

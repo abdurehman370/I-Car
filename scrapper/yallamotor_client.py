@@ -3,19 +3,20 @@ YallaMotor UAE (uae.yallamotor.com) scraper client.
 Fetches used car listings safely bypassing Cloudflare, parsing standard JSON-LD Schema.org data for robustness.
 """
 import cloudscraper
-from bs4 import BeautifulSoup
 import json
 import logging
-import time
 from datetime import datetime
+from bs4 import BeautifulSoup
+
 from config import REGION_CONFIG, DEFAULT_TIMEOUT
+from core.network import random_delay
+from core.matching import match_model, match_variant
 
 logger = logging.getLogger(__name__)
 
 BASE_URL = "https://uae.yallamotor.com"
 TIMEOUT = min(20, DEFAULT_TIMEOUT)
 MAX_RETRIES = 3
-RETRY_DELAY = 1.0
 
 class YallaMotorClient:
     def __init__(self, proxy=None):
@@ -29,10 +30,7 @@ class YallaMotorClient:
             logger.info(f"YallaMotorClient initialized with proxy: {proxy}")
 
     def _build_candidate_url(self, make, model, page=1, **kwargs):
-        """
-        Builds URL to try based on the make, model, and pagination.
-        YallaMotor uses /used-cars/make-slug/model-slug
-        """
+        """Builds URL to try based on the make, model, and pagination."""
         make_slug = make.lower().replace(" ", "-") if make else ""
         model_slug = model.lower().replace(" ", "-") if model else ""
         
@@ -48,12 +46,14 @@ class YallaMotorClient:
         return path
 
     def get_listings(self, make, model, page=1, **kwargs):
-        """Fetches listings from YallaMotor."""
+        """Fetches listings from YallaMotor with post-scrape validation."""
         url = self._build_candidate_url(make, model, page, **kwargs)
+        variant = kwargs.get("variant")
         
         for attempt in range(MAX_RETRIES):
             try:
-                logger.info(f"Fetching YallaMotor UAE: {url}")
+                random_delay()
+                logger.info(f"Fetching YallaMotor UAE: {url} (Attempt {attempt+1})")
                 response = self.scraper.get(url, timeout=TIMEOUT)
                 
                 if response.status_code == 404:
@@ -61,25 +61,33 @@ class YallaMotorClient:
                     return [], 0, 0
                 elif response.status_code in [403, 503]:
                     logger.warning(f"YallaMotor anti-bot block ({response.status_code}) on attempt {attempt+1}/{MAX_RETRIES}.")
-                    time.sleep(RETRY_DELAY)
                     continue
                     
                 response.raise_for_status()
-                return self._parse_json_ld(response.text, page, url, **kwargs)
+                raw_listings, nb_pages, total_hits = self._parse_json_ld(response.text, page, url, **kwargs)
+                
+                # Strict Model/Variant Validation
+                valid_listings = []
+                for item in raw_listings:
+                    if not match_model(model, item.get("title", "")):
+                        continue
+                    if variant and not match_variant(variant, item.get("title", ""), item.get("variant", "")):
+                        continue
+                    valid_listings.append(item)
+                
+                return valid_listings, nb_pages, total_hits
                 
             except Exception as e:
                 logger.warning(f"YallaMotor request failed for {url} (Attempt {attempt+1}): {e}")
-                time.sleep(RETRY_DELAY)
                 
         logger.error(f"YallaMotor all retries failed for {url}.")
         return [], 0, 0
 
     def _parse_json_ld(self, html, current_page, current_url, **kwargs):
-        """Parse HTML to extract JSON-LD listings with local filtering."""
+        """Parse HTML to extract JSON-LD listings."""
         soup = BeautifulSoup(html, "html.parser")
         listings = []
         
-        # Select JSON-LD scripts
         scripts = soup.find_all("script", type="application/ld+json")
         for script in scripts:
             try:
@@ -87,15 +95,12 @@ class YallaMotorClient:
                 if not isinstance(data, dict):
                     continue
                 
-                # Verify it's a Car
                 t = data.get("@type", [])
                 if "Car" not in t and t != "Car":
                     continue
                     
-                # Extract listing data
                 title = data.get("name", "")
                 
-                # Price Extraction
                 price = 0
                 offers = data.get("offers", {})
                 if isinstance(offers, dict):
@@ -106,7 +111,6 @@ class YallaMotorClient:
                         except ValueError:
                             pass
                 
-                # Deal properties
                 year_val = data.get("vehicleModelDate") or data.get("modelDate", "")
                 mileage_val = ""
                 mileage_node = data.get("mileageFromOdometer")
@@ -117,13 +121,12 @@ class YallaMotorClient:
                 if isinstance(offers, dict) and "availableAtOrFrom" in offers:
                     location_val = offers["availableAtOrFrom"].get("name", location_val)
 
-                # Link extraction
                 listing_url = current_url
                 if isinstance(offers, dict) and offers.get("url"):
                     listing_url = offers["url"]
 
                 listing = {
-                    "id": "", # Hard to get exact numerical ID reliably from JSON-LD
+                    "id": "", 
                     "title": title,
                     "price": price,
                     "year": str(year_val),
@@ -140,28 +143,12 @@ class YallaMotorClient:
                     "image_url": data.get("image", "")
                 }
                 
-                # Apply Filters
-                year_min = kwargs.get("year_min")
-                year_max = kwargs.get("year_max")
-                price_min = kwargs.get("price_min")
-                price_max = kwargs.get("price_max")
-                
-                if year_val and str(year_val).isdigit():
-                    y = int(year_val)
-                    if year_min and y < year_min: continue
-                    if year_max and y > year_max: continue
-                
-                if price:
-                    if price_min and price < price_min: continue
-                    if price_max and price > price_max: continue
-                
                 listings.append(listing)
                 
             except Exception as e:
                 logger.debug(f"YallaMotor parse item skip: {e}")
                 continue
 
-        # Find pagination
         nb_pages = current_page
         pagination = soup.find(class_="pagination")
         if pagination:

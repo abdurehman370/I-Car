@@ -11,6 +11,8 @@ const COMMON_FEATURES = [
     "Parking Sensors", "Rear Camera", "Navigation System", "Keyless Entry", "Push Start",
 ];
 
+import { CarTaxonomyDropdowns } from "@/components/FormElements/CarTaxonomyDropdowns";
+
 const REGION_CITIES: Record<string, string[]> = {
     UAE: ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah", "Fujairah", "Umm Al Quwain"],
     Lebanon: ["Beirut", "Tripoli", "Sidon", "Tyre", "Jounieh", "Byblos", "Zahle"],
@@ -127,7 +129,7 @@ export default function ListVehicle() {
                 payload.country = formData.country;
             }
 
-            const response = await fetch("http://localhost:8000/api/evaluate", {
+            const response = await fetch("/api/dealer/evaluate", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
@@ -326,13 +328,13 @@ export default function ListVehicle() {
                                         </select>
                                     </div>
                                 )}
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Make *</label>
-                                    <input type="text" name="make" value={formData.make} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. Toyota" />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Model *</label>
-                                    <input type="text" name="model" value={formData.model} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. Camry" />
+                                <div className="col-span-1 md:col-span-2">
+                                    <CarTaxonomyDropdowns
+                                        selectedMake={formData.make}
+                                        selectedModel={formData.model}
+                                        selectedVariant={formData.variant}
+                                        onChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
+                                    />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Year *</label>
@@ -341,10 +343,6 @@ export default function ListVehicle() {
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Mileage (KM) *</label>
                                     <input type="number" name="mileage" value={formData.mileage} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. 50000" />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Variant</label>
-                                    <input type="text" name="variant" value={formData.variant} onChange={handleInputChange} className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. SE" />
                                 </div>
 
                                 {/* Image Upload Step 1 (Optional) */}

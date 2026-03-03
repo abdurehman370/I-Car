@@ -105,3 +105,37 @@ model Alert {
 
   @@index([dealerId])
 }
+
+// Car Taxonomy Models
+model CarMake {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  models    CarModel[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CarModel {
+  id        Int          @id @default(autoincrement())
+  name      String
+  makeId    Int
+  make      CarMake      @relation(fields: [makeId], references: [id], onDelete: Cascade)
+  variants  CarVariant[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@unique([makeId, name])
+  @@index([makeId])
+}
+
+model CarVariant {
+  id        Int      @id @default(autoincrement())
+  name      String
+  modelId   Int
+  model     CarModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([modelId, name])
+  @@index([modelId])
+}
