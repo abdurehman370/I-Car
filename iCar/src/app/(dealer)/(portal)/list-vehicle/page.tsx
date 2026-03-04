@@ -399,7 +399,7 @@ export default function ListVehicle() {
                                 <div className="bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden">
                                     <div className="flex items-center gap-2 mb-4">
                                         <DollarSign className="size-5 text-indigo-500" />
-                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">AI Dealer Valuation Report</h3>
+                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Evaluation Report</h3>
                                     </div>
                                     <div className="prose prose-sm dark:prose-invert max-w-none max-h-[60vh] overflow-y-auto">
                                         <ReactMarkdown
