@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Upload, X, PlusCircle, Save, Send, Car, DollarSign, MapPin, FileText, ChevronRight, ArrowLeft } from "lucide-react";
+import { Upload, X, PlusCircle, Save, Send, Car, DollarSign, FileText, ChevronRight, ArrowLeft } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 // --- Types & Constants ---
 const COMMON_FEATURES = [
@@ -10,8 +11,6 @@ const COMMON_FEATURES = [
     "Alloy Wheels", "Bluetooth", "Cruise Control", "Leather Seats", "Sunroof",
     "Parking Sensors", "Rear Camera", "Navigation System", "Keyless Entry", "Push Start",
 ];
-
-import { CarTaxonomyDropdowns } from "@/components/FormElements/CarTaxonomyDropdowns";
 
 const REGION_CITIES: Record<string, string[]> = {
     UAE: ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah", "Fujairah", "Umm Al Quwain"],
@@ -29,13 +28,7 @@ interface ValuationResult {
     status: string;
     region: string;
     currency: string;
-    valuation?: {
-        estimated_valuation: number;
-        price_range: { min: number; max: number };
-        market_average: number;
-        market_median: number;
-        listings_count: number;
-    } | null;
+    markdown?: string;
 }
 
 // --- Main Component ---
@@ -58,6 +51,8 @@ export default function ListVehicle() {
         year: "",
         mileage: "",
         variant: "",
+        specs: "Unknown",
+        notes: "",
         price: "",
         currency: "AED",
         description: "",
@@ -79,11 +74,11 @@ export default function ListVehicle() {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    // Step 1: Valuation Logic
+    // Step 1: Valuation Logic (1-5 images mandatory)
     const handleValuationImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
-        if (valuationImages.length + files.length > 8) {
-            setError("Maximum 8 images allowed");
+        if (valuationImages.length + files.length > 5) {
+            setError("Maximum 5 images allowed");
             return;
         }
         setValuationImages(prev => [...prev, ...files]);
@@ -111,23 +106,40 @@ export default function ListVehicle() {
 
     const handleGetValuation = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (valuationImages.length < 1 || valuationImages.length > 5) {
+            setError("Please upload 1 to 5 vehicle photos (mandatory)");
+            return;
+        }
         setLoading(true);
         setError("");
         setValuationResult(null);
 
         try {
-            const payload: any = {
-                region: formData.region,
+            const imageBase64 = await Promise.all(
+                valuationImages.map(file =>
+                    new Promise<string>((resolve) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result as string);
+                        reader.readAsDataURL(file);
+                    })
+                )
+            );
+
+            const regionValue = formData.region === "Europe" && formData.country
+                ? `${formData.country}`
+                : formData.region;
+
+            const payload = {
+                region: regionValue,
                 make: formData.make,
                 model: formData.model,
                 year: parseInt(formData.year),
                 mileage: parseInt(formData.mileage),
+                variant: formData.variant || undefined,
+                specs: formData.specs,
+                notes: formData.notes || undefined,
+                images: imageBase64,
             };
-
-            if (formData.variant) payload.variant = formData.variant;
-            if (formData.region === "Europe" && formData.country) {
-                payload.country = formData.country;
-            }
 
             const response = await fetch("/api/dealer/evaluate", {
                 method: "POST",
@@ -139,18 +151,11 @@ export default function ListVehicle() {
 
             if (response.ok) {
                 setValuationResult(data);
-                // Pre-fill price with estimated valuation
-                if (data.valuation?.estimated_valuation) {
-                    setFormData(prev => ({
-                        ...prev,
-                        price: Math.round(data.valuation.estimated_valuation).toString()
-                    }));
-                }
             } else {
                 setError(data.message || "Failed to get valuation");
             }
         } catch (err) {
-            setError("Failed to connect to valuation service. Please ensure the Python API is running.");
+            setError("Failed to connect to valuation service. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -182,8 +187,8 @@ export default function ListVehicle() {
 
     const handleListingImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
-        if (listingImages.length + files.length > 8) {
-            setError("Maximum 8 images allowed");
+        if (listingImages.length + files.length > 5) {
+            setError("Maximum 5 images allowed");
             return;
         }
         setListingImages(prev => [...prev, ...files]);
@@ -260,14 +265,7 @@ export default function ListVehicle() {
         }
     };
 
-    const formatCurrency = (value: number, currency: string) => {
-        return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: currency,
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(value);
-    };
+    const canGetValuation = valuationImages.length >= 1 && valuationImages.length <= 5;
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-[#020d1a] p-4 md:p-8">
@@ -328,13 +326,17 @@ export default function ListVehicle() {
                                         </select>
                                     </div>
                                 )}
-                                <div className="col-span-1 md:col-span-2">
-                                    <CarTaxonomyDropdowns
-                                        selectedMake={formData.make}
-                                        selectedModel={formData.model}
-                                        selectedVariant={formData.variant}
-                                        onChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
-                                    />
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Make *</label>
+                                    <input type="text" name="make" value={formData.make} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. Toyota" />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Model *</label>
+                                    <input type="text" name="model" value={formData.model} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. Camry" />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Variant/Trim</label>
+                                    <input type="text" name="variant" value={formData.variant} onChange={handleInputChange} className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. XLE 2.5" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Year *</label>
@@ -344,10 +346,22 @@ export default function ListVehicle() {
                                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Mileage (KM) *</label>
                                     <input type="number" name="mileage" value={formData.mileage} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. 50000" />
                                 </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Specs</label>
+                                    <select name="specs" value={formData.specs} onChange={handleInputChange} className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white">
+                                        <option value="GCC">GCC</option>
+                                        <option value="Import">Import</option>
+                                        <option value="Unknown">Unknown</option>
+                                    </select>
+                                </div>
+                                <div className="space-y-2 col-span-1 md:col-span-2">
+                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Notes (optional)</label>
+                                    <textarea name="notes" value={formData.notes} onChange={handleInputChange} rows={2} className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="Service history, warranty, accidents, repaint, owners, etc." />
+                                </div>
 
-                                {/* Image Upload Step 1 (Optional) */}
+                                {/* Image Upload Step 1 (Mandatory 1-5) */}
                                 <div className="col-span-1 md:col-span-2 space-y-2 mt-4">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Initial Photos (Optional)</label>
+                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Vehicle Photos * (1-5 required)</label>
                                     <div className="grid grid-cols-4 gap-2">
                                         {valuationPreviews.map((p, i) => (
                                             <div key={i} className="relative group">
@@ -355,7 +369,7 @@ export default function ListVehicle() {
                                                 <button type="button" onClick={() => removeValuationImage(i)} className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"><X className="size-3" /></button>
                                             </div>
                                         ))}
-                                        {valuationPreviews.length < 8 && (
+                                        {valuationPreviews.length < 5 && (
                                             <label className="w-full h-20 flex items-center justify-center border-2 border-dashed rounded-lg cursor-pointer hover:border-indigo-500">
                                                 <PlusCircle className="size-6 text-gray-400" />
                                                 <input type="file" onChange={handleValuationImageUpload} className="hidden" multiple accept="image/*" />
@@ -367,31 +381,42 @@ export default function ListVehicle() {
                                 <div className="col-span-1 md:col-span-2 pt-4">
                                     <button
                                         type="submit"
-                                        disabled={loading}
+                                        disabled={loading || !canGetValuation}
                                         className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold transition-colors disabled:opacity-50"
                                     >
-                                        {loading ? "Analyzing..." : "Get Valuation"}
+                                        {loading ? "Analyzing with AI..." : "Get Valuation"}
                                     </button>
+                                    {valuationImages.length === 0 && (
+                                        <p className="text-sm text-amber-600 dark:text-amber-400 mt-2">Upload 1–5 photos to enable valuation</p>
+                                    )}
                                 </div>
                             </form>
                         </div>
 
-                        {/* Valuation Results */}
-                        {valuationResult && valuationResult.valuation && (
-                            <div className="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-3xl p-8 shadow-xl text-white">
-                                <div className="flex items-center gap-2 mb-4">
-                                    <DollarSign className="size-6 text-white" />
-                                    <h3 className="text-lg font-semibold">Estimated Value</h3>
+                        {/* Valuation Results (AI Markdown Report) */}
+                        {valuationResult && valuationResult.markdown && (
+                            <div className="space-y-4">
+                                <div className="bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <DollarSign className="size-5 text-indigo-500" />
+                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">AI Dealer Valuation Report</h3>
+                                    </div>
+                                    <div className="prose prose-sm dark:prose-invert max-w-none max-h-[60vh] overflow-y-auto">
+                                        <ReactMarkdown
+                                            components={{
+                                                h2: ({ children }) => <h2 className="text-base font-semibold mt-6 mb-2 text-indigo-600 dark:text-indigo-400">{children}</h2>,
+                                                ul: ({ children }) => <ul className="list-disc pl-5 space-y-1 my-2">{children}</ul>,
+                                                strong: ({ children }) => <strong className="text-gray-900 dark:text-white font-semibold">{children}</strong>,
+                                                p: ({ children }) => <p className="my-1 text-gray-700 dark:text-gray-300">{children}</p>,
+                                            }}
+                                        >
+                                            {valuationResult.markdown}
+                                        </ReactMarkdown>
+                                    </div>
                                 </div>
-                                <div className="text-4xl font-bold mb-2">
-                                    {formatCurrency(valuationResult.valuation.estimated_valuation, valuationResult.currency)}
-                                </div>
-                                <p className="text-indigo-100 text-sm mb-6">
-                                    Range: {formatCurrency(valuationResult.valuation.price_range.min, valuationResult.currency)} - {formatCurrency(valuationResult.valuation.price_range.max, valuationResult.currency)}
-                                </p>
                                 <button
                                     onClick={proceedToStep2}
-                                    className="w-full py-3 bg-white text-indigo-600 rounded-xl font-bold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2"
+                                    className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold hover:from-indigo-700 transition-colors flex items-center justify-center gap-2"
                                 >
                                     Proceed to List Vehicle <ChevronRight className="size-5" />
                                 </button>
@@ -419,10 +444,11 @@ export default function ListVehicle() {
                                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Listing Details</h2>
                             </div>
 
-                            {/* Read-only / Editable recap of Step 1 */}
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-gray-50 dark:bg-gray-900 rounded-xl">
+                            {/* Read-only recap of Step 1 */}
+                            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6 p-4 bg-gray-50 dark:bg-gray-900 rounded-xl">
                                 <div><span className="text-xs text-gray-500">Make</span><p className="font-semibold dark:text-white">{formData.make}</p></div>
                                 <div><span className="text-xs text-gray-500">Model</span><p className="font-semibold dark:text-white">{formData.model}</p></div>
+                                <div><span className="text-xs text-gray-500">Variant</span><p className="font-semibold dark:text-white">{formData.variant || "—"}</p></div>
                                 <div><span className="text-xs text-gray-500">Year</span><p className="font-semibold dark:text-white">{formData.year}</p></div>
                                 <div><span className="text-xs text-gray-500">Mileage</span><p className="font-semibold dark:text-white">{formData.mileage} KM</p></div>
                             </div>
@@ -483,7 +509,7 @@ export default function ListVehicle() {
                                                 <button type="button" onClick={() => removeListingImage(i)} className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"><X className="size-4" /></button>
                                             </div>
                                         ))}
-                                        {listingPreviews.length < 8 && (
+                                        {listingPreviews.length < 5 && (
                                             <label className="w-full h-32 flex flex-col items-center justify-center border-2 border-dashed rounded-xl cursor-pointer hover:border-indigo-500">
                                                 <Upload className="size-8 text-gray-400 mb-2" />
                                                 <span className="text-xs text-gray-500">Upload Images</span>

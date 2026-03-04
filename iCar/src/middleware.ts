@@ -5,14 +5,17 @@ import { updateAdminSession, updateDealerSession } from '@/lib/auth';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Static files and assets - allow through
+  // Static files, assets, and API routes - allow through
   const isStatic =
     pathname.startsWith('/_next') ||
     pathname.startsWith('/images') ||
     pathname.startsWith('/favicon.ico') ||
     pathname.startsWith('/api/webhook'); // public webhooks
 
-  if (isStatic) {
+  // API routes bypass middleware; handlers verify auth where needed
+  const isApi = pathname.startsWith('/api/');
+
+  if (isStatic || isApi) {
     return NextResponse.next();
   }
 
