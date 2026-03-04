@@ -5142,3 +5142,7 @@ Invalid `prisma.alert.findMany()` invocation in
          })
 
 Unknown argument `enabled`. Available options are marked with ?.
+[2026-03-04T21:05:01.880Z] [cron-push] Starting alert job enqueue...
+[2026-03-04T21:05:02.119Z] [cron-push] Found 1 alert(s) to enqueue
+[2026-03-04T21:05:02.129Z] [cron-push] Enqueued job alert-1-5908861
+[2026-03-04T21:05:02.130Z] [cron-push] Done — 1 job(s) enqueued
