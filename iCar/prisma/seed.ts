@@ -24,16 +24,20 @@ async function main() {
   const taxonomyPath = path.resolve(__dirname, '../../scrapper/data/car_taxonomy.json');
   if (fs.existsSync(taxonomyPath)) {
     const taxonomyData = JSON.parse(fs.readFileSync(taxonomyPath, 'utf8'));
+    const makesData = taxonomyData.makes || {};
 
-    for (const [makeName, makeData] of Object.entries(taxonomyData)) {
+    for (const [makeName, makeData] of Object.entries(makesData)) {
+      const data = makeData as { models?: Record<string, string[]>; special_labels?: unknown };
+      const models = data.models || {};
+
       const make = await prisma.carMake.upsert({
         where: { name: makeName },
         update: {},
         create: { name: makeName },
       });
 
-      const models = (makeData as any).models || {};
       for (const [modelName, variants] of Object.entries(models)) {
+        const variantList = Array.isArray(variants) ? variants : [];
         const model = await prisma.carModel.upsert({
           where: {
             makeId_name: {
@@ -48,7 +52,6 @@ async function main() {
           },
         });
 
-        const variantList = variants as string[];
         for (const variantName of variantList) {
           await prisma.carVariant.upsert({
             where: {
