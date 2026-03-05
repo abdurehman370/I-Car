@@ -31,6 +31,31 @@ interface ValuationResult {
     markdown?: string;
 }
 
+// Parse price ranges from AI markdown for card display
+function parsePriceRanges(markdown: string): { label: string; range: string }[] {
+    const patterns = [
+        { label: "Fair Market Retail", regex: /\*\*Fair Market Retail[^:*]*:\*\*\s*([^\n]+)/i },
+        { label: "Dealer Retail Asking", regex: /\*\*Dealer Retail Asking[^:*]*:\*\*\s*([^\n]+)/i },
+        { label: "Dealer Buy Price", regex: /\*\*Dealer Buy Price[^:*]*:\*\*\s*([^\n]+)/i },
+    ];
+    const results: { label: string; range: string }[] = [];
+    for (const { label, regex } of patterns) {
+        const m = markdown.match(regex);
+        if (m) results.push({ label, range: m[1].trim() });
+    }
+    return results;
+}
+
+// Markdown without price range lines (for Summary section)
+function markdownWithoutPriceRanges(markdown: string): string {
+    return markdown
+        .replace(/\*\*Fair Market Retail[^:*]*:\*\*\s*[^\n]+/gi, "")
+        .replace(/\*\*Dealer Retail Asking[^:*]*:\*\*\s*[^\n]+/gi, "")
+        .replace(/\*\*Dealer Buy Price[^:*]*:\*\*\s*[^\n]+/gi, "")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+}
+
 // --- Main Component ---
 export default function ListVehicle() {
     const router = useRouter();
@@ -401,18 +426,41 @@ export default function ListVehicle() {
                                         <DollarSign className="size-5 text-indigo-500" />
                                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Evaluation Report</h3>
                                     </div>
-                                    <div className="prose prose-sm dark:prose-invert max-w-none max-h-[60vh] overflow-y-auto">
+                                    <div className="prose prose-sm dark:prose-invert max-w-none max-h-[60vh] overflow-y-auto space-y-4">
                                         <ReactMarkdown
                                             components={{
-                                                h2: ({ children }) => <h2 className="text-base font-semibold mt-6 mb-2 text-indigo-600 dark:text-indigo-400">{children}</h2>,
+                                                h2: ({ children }) => <h2 className="text-base font-semibold mt-6 mb-2 text-indigo-600 dark:text-indigo-400 first:mt-0">{children}</h2>,
                                                 ul: ({ children }) => <ul className="list-disc pl-5 space-y-1 my-2">{children}</ul>,
                                                 strong: ({ children }) => <strong className="text-gray-900 dark:text-white font-semibold">{children}</strong>,
                                                 p: ({ children }) => <p className="my-1 text-gray-700 dark:text-gray-300">{children}</p>,
                                             }}
                                         >
-                                            {valuationResult.markdown}
+                                            {markdownWithoutPriceRanges(valuationResult.markdown)}
                                         </ReactMarkdown>
                                     </div>
+                                    {/* Price Ranges in Cards */}
+                                    {parsePriceRanges(valuationResult.markdown).length > 0 && (
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-200 dark:border-white/10">
+                                            {parsePriceRanges(valuationResult.markdown).map(({ label, range }) => {
+                                                const isDealerBuy = label === "Dealer Buy Price";
+                                                return (
+                                                    <div
+                                                        key={label}
+                                                        className={`rounded-xl border p-4 shadow-sm ${
+                                                            isDealerBuy
+                                                                ? "border-indigo-300 dark:border-indigo-500 bg-indigo-50/50 dark:bg-indigo-500/10 ring-1 ring-indigo-200 dark:ring-indigo-500/30"
+                                                                : "border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5"
+                                                        }`}
+                                                    >
+                                                        <p className={`text-xs font-medium uppercase tracking-wide mb-1 ${
+                                                            isDealerBuy ? "text-indigo-600 dark:text-indigo-400" : "text-gray-500 dark:text-gray-400"
+                                                        }`}>{label}</p>
+                                                        <p className="text-lg font-bold text-gray-900 dark:text-white">{range}</p>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
                                 </div>
                                 <button
                                     onClick={proceedToStep2}
