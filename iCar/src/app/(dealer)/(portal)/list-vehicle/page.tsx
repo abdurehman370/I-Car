@@ -33,16 +33,38 @@ interface ValuationResult {
 
 // Parse price ranges from AI markdown for card display
 function parsePriceRanges(markdown: string): { label: string; range: string }[] {
-    const patterns = [
-        { label: "Fair Market Retail", regex: /\*\*Fair Market Retail[^:*]*:\*\*\s*([^\n]+)/i },
-        { label: "Dealer Retail Asking", regex: /\*\*Dealer Retail Asking[^:*]*:\*\*\s*([^\n]+)/i },
-        { label: "Dealer Buy Price", regex: /\*\*Dealer Buy Price[^:*]*:\*\*\s*([^\n]+)/i },
-    ];
+    const fmrMatch = markdown.match(/\*\*Fair Market Retail[^:*]*:\*\*\s*([^\n]+)/i);
+    const dbpMatch = markdown.match(/\*\*Dealer Buy Price[^:*]*:\*\*\s*([^\n]+)/i);
+
     const results: { label: string; range: string }[] = [];
-    for (const { label, regex } of patterns) {
-        const m = markdown.match(regex);
-        if (m) results.push({ label, range: m[1].trim() });
+
+    if (fmrMatch) {
+        const fmr = fmrMatch[1].trim();
+        results.push({ label: "Fair Market Retail", range: fmr });
+
+        const numbers = fmr.replace(/,/g, '').match(/\d+(\.\d+)?/g);
+        let avgRange = fmr;
+        if (numbers && numbers.length >= 2) {
+            const n1 = parseFloat(numbers[0]);
+            const n2 = parseFloat(numbers[numbers.length - 1]);
+            const avg = Math.round((n1 + n2) / 2);
+
+            const currencyMatch = fmr.match(/[A-Za-z$€£]+/);
+            const currency = currencyMatch ? currencyMatch[0] : "";
+
+            if (currency.match(/^[$€£]/)) {
+                avgRange = `${currency}${avg.toLocaleString()}`;
+            } else {
+                avgRange = `${avg.toLocaleString()} ${currency}`.trim();
+            }
+        }
+        results.push({ label: "Average Fair Market Price", range: avgRange });
     }
+
+    if (dbpMatch) {
+        results.push({ label: "Dealer Buy Price", range: dbpMatch[1].trim() });
+    }
+
     return results;
 }
 
@@ -446,15 +468,13 @@ export default function ListVehicle() {
                                                 return (
                                                     <div
                                                         key={label}
-                                                        className={`rounded-xl border p-4 shadow-sm ${
-                                                            isDealerBuy
+                                                        className={`rounded-xl border p-4 shadow-sm ${isDealerBuy
                                                                 ? "border-indigo-300 dark:border-indigo-500 bg-indigo-50/50 dark:bg-indigo-500/10 ring-1 ring-indigo-200 dark:ring-indigo-500/30"
                                                                 : "border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5"
-                                                        }`}
+                                                            }`}
                                                     >
-                                                        <p className={`text-xs font-medium uppercase tracking-wide mb-1 ${
-                                                            isDealerBuy ? "text-indigo-600 dark:text-indigo-400" : "text-gray-500 dark:text-gray-400"
-                                                        }`}>{label}</p>
+                                                        <p className={`text-xs font-medium uppercase tracking-wide mb-1 ${isDealerBuy ? "text-indigo-600 dark:text-indigo-400" : "text-gray-500 dark:text-gray-400"
+                                                            }`}>{label}</p>
                                                         <p className="text-lg font-bold text-gray-900 dark:text-white">{range}</p>
                                                     </div>
                                                 );
