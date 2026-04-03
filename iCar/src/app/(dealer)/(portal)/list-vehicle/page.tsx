@@ -357,9 +357,9 @@ export default function ListVehicle() {
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Region *</label>
                                     <select name="region" value={formData.region} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white">
-                                        <option value="UAE">UAE (Dubizzle)</option>
-                                        <option value="Lebanon">Lebanon (OLX)</option>
-                                        <option value="Europe">Europe (AutoScout24)</option>
+                                        <option value="UAE">UAE</option>
+                                        <option value="Lebanon">Lebanon</option>
+                                        <option value="Europe">Europe</option>
                                     </select>
                                 </div>
                                 {formData.region === "Europe" && (
@@ -469,8 +469,8 @@ export default function ListVehicle() {
                                                     <div
                                                         key={label}
                                                         className={`rounded-xl border p-4 shadow-sm ${isDealerBuy
-                                                                ? "border-indigo-300 dark:border-indigo-500 bg-indigo-50/50 dark:bg-indigo-500/10 ring-1 ring-indigo-200 dark:ring-indigo-500/30"
-                                                                : "border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5"
+                                                            ? "border-indigo-300 dark:border-indigo-500 bg-indigo-50/50 dark:bg-indigo-500/10 ring-1 ring-indigo-200 dark:ring-indigo-500/30"
+                                                            : "border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5"
                                                             }`}
                                                     >
                                                         <p className={`text-xs font-medium uppercase tracking-wide mb-1 ${isDealerBuy ? "text-indigo-600 dark:text-indigo-400" : "text-gray-500 dark:text-gray-400"
