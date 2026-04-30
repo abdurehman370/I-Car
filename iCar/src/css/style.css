@@ -9,17 +9,20 @@
 }
 
 @layer utilities {
+
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
 
   .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 
-   .custom-scrollbar {
+  .custom-scrollbar {
     @apply overflow-auto;
   }
 
@@ -35,7 +38,7 @@
     @apply relative flex-1 rounded-full bg-neutral-200/40 dark:bg-stroke-dark;
   }
 
-  
+
   .chat-height {
     @apply h-[calc(100vh_-_8.125rem)] lg:h-[calc(100vh_-_5.625rem)];
   }
@@ -47,11 +50,11 @@
 
 /* third-party libraries CSS */
 
-.tableCheckbox:checked ~ div span {
+.tableCheckbox:checked~div span {
   @apply opacity-100;
 }
 
-.tableCheckbox:checked ~ div {
+.tableCheckbox:checked~div {
   @apply border-primary bg-primary;
 }
 
@@ -228,9 +231,9 @@ span.flatpickr-weekday,
   @apply !border-primary !bg-primary hover:!border-primary hover:!bg-primary;
 }
 
-.flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n + 1)),
-.flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
-.flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
+.flatpickr-day.selected.startRange+.endRange:not(:nth-child(7n + 1)),
+.flatpickr-day.startRange.startRange+.endRange:not(:nth-child(7n + 1)),
+.flatpickr-day.endRange.startRange+.endRange:not(:nth-child(7n + 1)) {
   box-shadow: -10px 0 0 #3c50e0;
 }
 
@@ -262,15 +265,15 @@ span.flatpickr-weekday,
   @apply !left-10;
 }
 
-.taskCheckbox:checked ~ .box span {
+.taskCheckbox:checked~.box span {
   @apply opacity-100;
 }
 
-.taskCheckbox:checked ~ p {
+.taskCheckbox:checked~p {
   @apply line-through;
 }
 
-.taskCheckbox:checked ~ .box {
+.taskCheckbox:checked~.box {
   @apply border-primary bg-primary dark:border-primary;
 }
 
@@ -370,37 +373,37 @@ span.flatpickr-weekday,
   @apply before:hidden after:hidden;
 }
 
-.datatable-table > thead > tr:first-child > th {
+.datatable-table>thead>tr:first-child>th {
   @apply border-transparent px-2.5 pb-2.5 pt-9 font-medium;
 }
 
-.data-table-common .datatable-table > tbody > tr > td:first-child,
-.data-table-common .datatable-table > thead > tr > th:first-child {
+.data-table-common .datatable-table>tbody>tr>td:first-child,
+.data-table-common .datatable-table>thead>tr>th:first-child {
   @apply pl-8;
 }
 
-.data-table-common .datatable-table > tbody > tr > td:last-child,
-.data-table-common .datatable-table > thead > tr > th:last-child {
+.data-table-common .datatable-table>tbody>tr>td:last-child,
+.data-table-common .datatable-table>thead>tr>th:last-child {
   @apply pr-8;
 }
 
-.data-table-common .datatable-table > thead > tr:last-child > th {
+.data-table-common .datatable-table>thead>tr:last-child>th {
   @apply !border-b border-stroke pb-6 dark:border-dark-3;
 }
 
-.data-table-common .datatable-table > thead > tr:last-child > th input {
+.data-table-common .datatable-table>thead>tr:last-child>th input {
   @apply h-[34px] w-full rounded border border-stroke bg-transparent px-3 text-sm outline-none focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary;
 }
 
-.data-table-common .datatable-table > tbody > tr {
+.data-table-common .datatable-table>tbody>tr {
   @apply hover:bg-primary hover:bg-opacity-5;
 }
 
-.data-table-one .datatable-table > tbody > tr > td:first-child {
+.data-table-one .datatable-table>tbody>tr>td:first-child {
   @apply text-primary dark:text-white;
 }
 
-.data-table-common .datatable-table > tbody > tr > td {
+.data-table-common .datatable-table>tbody>tr>td {
   @apply border-b border-stroke py-5 font-medium dark:border-dark-3;
 }
 
@@ -477,4 +480,22 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .custom-gradient-1 {
   background-image: linear-gradient(145deg, #eef 0%, #fff8fc 100%);
+}
+
+
+
+.left-main-wrapper::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.left-main-wrapper .bottom-content,
+.left-main-wrapper .left-logo {
+  z-index: 2;
 }

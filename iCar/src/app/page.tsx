@@ -1,149 +1,259 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
-import { MoveRight, Car, BarChart3, ShieldCheck, Building2, UserCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, BarChart3, Shield, ShieldCheck, Store, Building2 } from "lucide-react";
+
+type RoleCardProps = {
+  href: string;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  title: string;
+  tagline: string;
+  accent: string;
+  delay: number;
+};
+
+function RoleCard({ href, icon: Icon, title, tagline, accent, delay }: RoleCardProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+      className="h-full"
+    >
+      <Link
+        href={href}
+        className="group relative flex h-full flex-col overflow-hidden rounded-[28px] bg-[#071423]/65 p-[1px] transition-all duration-500 hover:-translate-y-1"
+      >
+        {/* luminous border (always visible) */}
+        <div
+          className="pointer-events-none absolute inset-0 rounded-[28px] opacity-60 transition-opacity duration-500 group-hover:opacity-100"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(45, 212, 191, 0.55), rgba(59, 130, 246, 0.25), rgba(244, 63, 94, 0.18))",
+          }}
+          aria-hidden
+        />
+        {/* crisp outline like screenshot */}
+        <div
+          className="pointer-events-none absolute inset-[1px] rounded-[27px] ring-1 ring-cyan-200/25 transition-all duration-500 group-hover:ring-cyan-200/45"
+          aria-hidden
+        />
+        {/* ambient hover glow */}
+        <div
+          className="pointer-events-none absolute -inset-2 opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-100"
+          style={{ background: accent }}
+          aria-hidden
+        />
+        {/* inner surface */}
+        <div className="relative flex h-full flex-col rounded-[27px] border border-white/10 bg-[#081a2c]/70 p-8 backdrop-blur-xl">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.06] via-transparent to-transparent opacity-80" aria-hidden />
+          <div className="mb-8 flex items-center justify-between">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-400/10 shadow-[0_0_0_1px_rgba(34,211,238,0.08)]">
+              <Icon className="h-6 w-6 text-cyan-200" strokeWidth={2.25} />
+            </div>
+            <span className="font-mono text-[10px] tracking-[0.3em] text-white/55">
+              ACCESS · 0{title === "Admin" ? "1" : "2"}
+            </span>
+          </div>
+
+          <h3 className="mb-2 text-3xl font-semibold tracking-tight text-white">{title}</h3>
+          <p className="mb-10 flex-grow leading-relaxed text-white/75">{tagline}</p>
+
+          <div className="mt-auto flex items-center justify-between text-sm">
+            <span className="text-cyan-200/90 transition-colors group-hover:text-cyan-100">Continue</span>
+            <ArrowRight className="h-4 w-4 text-cyan-200/90 transition-all group-hover:translate-x-1 group-hover:text-cyan-100" />
+          </div>
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
+
+function BadgeCard({
+  icon: Icon,
+  title,
+  text,
+  tint,
+  delay,
+}: {
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  title: string;
+  text: string;
+  tint: "indigo" | "violet" | "rose";
+  delay: number;
+}) {
+  const tintClasses =
+    tint === "indigo"
+      ? "bg-cyan-400/10 border-cyan-300/20 text-cyan-200"
+      : tint === "violet"
+        ? "bg-teal-400/10 border-teal-300/20 text-teal-200"
+        : "bg-rose-400/10 border-rose-300/20 text-rose-200";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
+      className="group"
+    >
+      <div className="group relative overflow-hidden rounded-[26px] bg-[#071423]/60 p-[1px] transition-all duration-500 hover:-translate-y-1">
+        {/* luminous border + crisp outline */}
+        <div
+          className="pointer-events-none absolute inset-0 rounded-[26px] opacity-55 transition-opacity duration-500 group-hover:opacity-100"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(45, 212, 191, 0.45), rgba(34, 211, 238, 0.25), rgba(59, 130, 246, 0.18))",
+          }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-[1px] rounded-[25px] ring-1 ring-cyan-200/20 transition-all duration-500 group-hover:ring-cyan-200/40"
+          aria-hidden
+        />
+        <div className="relative overflow-hidden rounded-[25px] border border-white/10 bg-[#081a2c]/65 p-7 backdrop-blur-xl">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.06] to-transparent opacity-80" aria-hidden />
+
+          <div className={`mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl border ${tintClasses}`}>
+            <Icon className="h-6 w-6" strokeWidth={2.25} />
+          </div>
+          <h3 className="mb-2 text-base font-semibold text-white">{title}</h3>
+          <p className="text-sm leading-relaxed text-white/72">{text}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function LandingPage() {
-    return (
-        <div className="min-h-screen bg-[#020d1a] text-white selection:bg-indigo-500/30">
-            {/* Navigation */}
-            <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#020d1a]/80 backdrop-blur-xl">
-                <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                            <Car className="text-white w-6 h-6" />
-                        </div>
-                        <span className="text-2xl font-bold tracking-tight">iCar<span className="text-indigo-500">.</span></span>
-                    </div>
+  return (
+    <div className="relative min-h-screen overflow-hidden bg-[#020d1a] text-white selection:bg-cyan-500/30">
+      <Image
+        src="/images/auth-hero.jpg"
+        alt=""
+        aria-hidden
+        fill
+        priority
+        className="object-cover opacity-40 saturate-125"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#020d1a]/40 via-[#020d1a]/75 to-[#020d1a]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(34,211,238,0.12),transparent_55%)]" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 opacity-30"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)",
+          backgroundSize: "72px 72px",
+          maskImage: "radial-gradient(circle at 50% 30%, black 0%, transparent 70%)",
+        }}
+        aria-hidden
+      />
 
-                    <div className="flex items-center gap-4">
-                        <Link
-                            href="/login"
-                            className="text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-2"
-                        >
-                            <UserCircle className="w-4 h-4" />
-                            Dealer Portal
-                        </Link>
-                    </div>
-                </div>
-            </nav>
+      <div className="relative z-10 flex min-h-screen flex-col">
+        {/* Top bar */}
+        <header className="flex items-center justify-between px-6 py-6 md:px-12">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-2">
+            <div className="h-2.5 w-2.5 rounded-full bg-cyan-300 shadow-[0_0_24px_rgba(34,211,238,0.35)]" />
+            <span className="text-lg font-semibold tracking-tight">iCar</span>
+            <span className="ml-2 hidden font-mono text-[10px] tracking-[0.2em] text-white/55 sm:block">
+              INTELLIGENCE
+            </span>
+          </motion.div>
 
-            {/* Hero Section */}
-            <main className="pt-32 pb-20 px-6">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid lg:grid-cols-2 gap-16 items-center">
-                        <div className="space-y-8">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider">
-                                <span className="relative flex h-2 w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
-                                </span>
-                                Live Market Analysis
-                            </div>
+          <span className="hidden font-mono text-[10px] tracking-[0.3em] text-white/55 md:block">
+            v2.4 · SECURE CHANNEL
+          </span>
+        </header>
 
-                            <h1 className="text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
-                                Evaluate Cars with <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
-                                    Precision AI.
-                                </span>
-                            </h1>
+        {/* Main */}
+        <main className="flex flex-1 items-center justify-center px-6 py-12">
+          <div className="w-full max-w-5xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="mb-12 text-center"
+            >
+              <span className="mb-7 inline-flex items-center gap-2 rounded-full border border-cyan-200/35 bg-cyan-500/5 px-4 py-1.5 text-[11px] font-mono tracking-[0.28em] text-cyan-100/90 shadow-[0_0_0_1px_rgba(34,211,238,0.06)] backdrop-blur-xl">
+                <span className="h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.55)]" />
+                AUTHENTICATION GATEWAY
+              </span>
+              <h1 className="mb-5 text-5xl font-extrabold tracking-tight text-white md:text-7xl">
+                Welcome to <span className="text-cyan-300">iCar</span>
+              </h1>
+              <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/60 md:text-lg">
+                AI-powered automotive intelligence. Choose your access channel to enter the command center.
+              </p>
+            </motion.div>
 
-                            <p className="text-xl text-gray-400 max-w-lg leading-relaxed">
-                                Connect your dealership to real-time market data across UAE, Lebanon, and Europe. Get accurate valuations in seconds.
-                            </p>
+            <div className="grid gap-6 md:grid-cols-2">
+              <RoleCard
+                href="/admin/login"
+                icon={Shield}
+                title="Admin"
+                tagline="Platform oversight, dealer approvals, and global market intelligence."
+                accent="radial-gradient(circle at center, rgba(34, 211, 238, 0.22), transparent 70%)"
+                delay={0.15}
+              />
+              <RoleCard
+                href="/login"
+                icon={Store}
+                title="Dealer"
+                tagline="Inventory workspace, AI valuations, and live market alerts."
+                accent="radial-gradient(circle at center, rgba(52, 211, 153, 0.22), transparent 70%)"
+                delay={0.25}
+              />
+            </div>
 
-                            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                                <Link
-                                    href="/login"
-                                    className="group px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-xl shadow-indigo-500/20 active:scale-[0.98]"
-                                >
-                                    Dealer Login
-                                    <MoveRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                </Link>
-                                <Link
-                                    href="/signup"
-                                    className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center active:scale-[0.98]"
-                                >
-                                    Join as Dealer
-                                </Link>
-                            </div>
-                        </div>
+            {/* Secondary actions */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.35, duration: 0.6 }}
+              className="mt-8 flex flex-col items-center justify-center gap-3 text-sm text-white/60 sm:flex-row"
+            >
+              <span>New dealership?</span>
+              <Link
+                href="/signup"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 font-semibold text-white/85 backdrop-blur-xl transition-colors hover:border-cyan-200/30 hover:bg-white/[0.06]"
+              >
+                Apply for dealer access <ArrowRight className="h-4 w-4" />
+              </Link>
+            </motion.div>
 
-                        <div className="relative group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-                            <div className="relative bg-[#0a1526] border border-white/10 rounded-[2.5rem] overflow-hidden aspect-video shadow-2xl">
-                                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent"></div>
-                                <div className="p-8 h-full flex flex-col justify-between">
-                                    <div className="flex justify-between items-start">
-                                        <div className="space-y-2">
-                                            <div className="h-4 w-32 bg-white/5 rounded-full animate-pulse"></div>
-                                            <div className="h-8 w-48 bg-white/10 rounded-full animate-pulse delay-75"></div>
-                                        </div>
-                                        <div className="w-12 h-12 bg-indigo-600/20 rounded-2xl flex items-center justify-center">
-                                            <BarChart3 className="text-indigo-400 w-6 h-6" />
-                                        </div>
-                                    </div>
+            {/* Badges (ported from your current landing page, restyled) */}
+            <div className="mt-14 grid gap-5 md:grid-cols-3">
+              <BadgeCard
+                icon={BarChart3}
+                title="Live Market Data"
+                text="Access fresh listings from Dubizzle, AutoScout24 and more instantly."
+                tint="indigo"
+                delay={0.45}
+              />
+              <BadgeCard
+                icon={ShieldCheck}
+                title="Verified Dealers"
+                text="Secure portal dedicated to approved dealership networks."
+                tint="violet"
+                delay={0.55}
+              />
+              <BadgeCard
+                icon={Building2}
+                title="Global Regions"
+                text="Specialized clients for UAE, Lebanon, and European markets."
+                tint="rose"
+                delay={0.65}
+              />
+            </div>
+          </div>
+        </main>
 
-                                    <div className="space-y-4">
-                                        <div className="grid grid-cols-3 gap-4">
-                                            <div className="h-24 bg-white/5 rounded-3xl p-4 flex flex-col justify-end gap-2 border border-white/5">
-                                                <div className="h-2 w-full bg-indigo-500/50 rounded-full"></div>
-                                                <div className="h-2 w-2/3 bg-white/10 rounded-full"></div>
-                                            </div>
-                                            <div className="h-24 bg-white/5 rounded-3xl p-4 flex flex-col justify-end gap-2 border border-white/5">
-                                                <div className="h-2 w-full bg-purple-500/50 rounded-full"></div>
-                                                <div className="h-2 w-1/2 bg-white/10 rounded-full"></div>
-                                            </div>
-                                            <div className="h-24 bg-indigo-600/20 rounded-3xl p-4 flex flex-col justify-end gap-2 border border-indigo-500/20">
-                                                <div className="h-2 w-full bg-indigo-400 rounded-full"></div>
-                                                <div className="h-2 w-3/4 bg-white/20 rounded-full"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="mt-32 grid md:grid-cols-3 gap-8">
-                        <div className="p-8 bg-white/5 rounded-[2rem] border border-white/10 hover:border-indigo-500/30 transition-colors group">
-                            <div className="w-14 h-14 bg-indigo-600/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                                <BarChart3 className="text-indigo-500 w-7 h-7" />
-                            </div>
-                            <h3 className="text-xl font-bold mb-3">Live Market Data</h3>
-                            <p className="text-gray-400 leading-relaxed">Access fresh listings from Dubizzle, AutoScout24 and more instantly.</p>
-                        </div>
-
-                        <div className="p-8 bg-white/5 rounded-[2rem] border border-white/10 hover:border-indigo-500/30 transition-colors group">
-                            <div className="w-14 h-14 bg-purple-600/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                                <ShieldCheck className="text-purple-500 w-7 h-7" />
-                            </div>
-                            <h3 className="text-xl font-bold mb-3">Verified Dealers</h3>
-                            <p className="text-gray-400 leading-relaxed">Secure portal dedicated to approved dealership networks.</p>
-                        </div>
-
-                        <div className="p-8 bg-white/5 rounded-[2rem] border border-white/10 hover:border-indigo-500/30 transition-colors group">
-                            <div className="w-14 h-14 bg-pink-600/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                                <Building2 className="text-pink-500 w-7 h-7" />
-                            </div>
-                            <h3 className="text-xl font-bold mb-3">Global Regions</h3>
-                            <p className="text-gray-400 leading-relaxed">Specialized clients for UAE, Lebanon, and European markets.</p>
-                        </div>
-                    </div>
-                </div>
-            </main>
-
-            {/* Footer */}
-            <footer className="border-t border-white/5 py-12">
-                <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div className="text-gray-500 text-sm">
-                        © 2024 iCar Evaluation Systems. All rights reserved.
-                    </div>
-                    <div className="flex gap-8 text-sm font-medium text-gray-500">
-                        <a href="#" className="hover:text-white transition-colors">Privacy</a>
-                        <a href="#" className="hover:text-white transition-colors">Terms</a>
-                        <a href="#" className="hover:text-white transition-colors">Contact</a>
-                    </div>
-                </div>
-            </footer>
-        </div>
-    );
+        <footer className="flex items-center justify-between px-6 py-6 text-xs font-mono tracking-widest text-white/50 md:px-12">
+          <span>© 2026 ICAR SYSTEMS</span>
+          <span className="hidden md:block">PROTOCOL · TLS 1.3</span>
+        </footer>
+      </div>
+    </div>
+  );
 }

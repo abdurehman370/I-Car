@@ -1,7 +1,6 @@
 import prisma from "@/lib/db";
 import { getDealerSession } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
-
 export async function GET(request: NextRequest) {
     try {
         const session = await getDealerSession();
@@ -20,7 +19,6 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
 }
-
 export async function POST(request: NextRequest) {
     try {
         const session = await getDealerSession();
@@ -47,7 +45,6 @@ export async function POST(request: NextRequest) {
                 frequency: frequency || 'daily',
             },
         });
-
         return NextResponse.json({ data: alert }, { status: 201 });
     } catch (error: any) {
         console.error("Create alert error:", error);

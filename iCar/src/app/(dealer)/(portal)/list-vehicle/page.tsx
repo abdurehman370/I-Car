@@ -4,14 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Upload, X, PlusCircle, Save, Send, Car, DollarSign, FileText, ChevronRight, ArrowLeft } from "lucide-react";
 import ReactMarkdown from "react-markdown";
-
 // --- Types & Constants ---
 const COMMON_FEATURES = [
     "Air Conditioning", "Power Steering", "Power Windows", "ABS", "Airbags",
     "Alloy Wheels", "Bluetooth", "Cruise Control", "Leather Seats", "Sunroof",
     "Parking Sensors", "Rear Camera", "Navigation System", "Keyless Entry", "Push Start",
 ];
-
 const REGION_CITIES: Record<string, string[]> = {
     UAE: ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah", "Fujairah", "Umm Al Quwain"],
     Lebanon: ["Beirut", "Tripoli", "Sidon", "Tyre", "Jounieh", "Byblos", "Zahle"],

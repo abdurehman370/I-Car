@@ -101,7 +101,7 @@ export default function SignupPage() {
     return (
         <div className="flex min-h-screen w-full flex-col lg:flex-row">
             {/* Left side: Hero Image */}
-            <div className="relative hidden w-full lg:block lg:w-[40%] xl:w-[45%]">
+            <div className="relative hidden w-full lg:block lg:w-[40%] xl:w-[45%] left-main-wrapper">
                 <Image
                     src="/images/auth/login_img.jpg"
                     alt="Join the Network"
@@ -110,7 +110,7 @@ export default function SignupPage() {
                     priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                <div className="absolute bottom-12 left-12 right-12 text-white">
+                <div className="absolute bottom-12 left-12 right-12 text-white" style={{ zIndex: 3 }}>
                     <h2 className="text-4xl font-bold tracking-tight xl:text-5xl">
                         Join the iCar Network
                     </h2>
@@ -118,13 +118,13 @@ export default function SignupPage() {
                         Expand your reach, streamline operations, and grow your dealership with our intelligent platform.
                     </p>
                 </div>
-                <div className="absolute left-12 top-12">
-                    <div className="flex items-center gap-2">
+                <div className="absolute left-12 top-12 left-logo">
+                    <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-105">
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
                             <span className="text-xl font-bold text-white italic">iC</span>
                         </div>
-                        <span className="text-2xl font-bold tracking-tight text-white">iCar<span className="text-blue-500">.</span></span>
-                    </div>
+                        <span className="text-2xl font-bold tracking-tight text-white ">iCar<span className="text-blue-500">.</span></span>
+                    </Link>
                 </div>
             </div>
 
@@ -132,14 +132,14 @@ export default function SignupPage() {
             <div className="flex flex-1 items-center justify-center bg-gray-50 px-6 py-12 dark:bg-[#020d1a] lg:px-12">
                 <div className="w-full max-w-[640px] animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <div className="mb-8 flex justify-center lg:hidden">
-                        <div className="flex items-center gap-2">
+                        <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-105">
                             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 font-bold text-white italic">iC</div>
                             <span className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">iCar<span className="text-blue-500">.</span></span>
-                        </div>
+                        </Link>
                     </div>
 
                     <div className="mb-10 text-center lg:text-left">
-                        <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white bottom-content">
                             Dealer Registration
                         </h1>
                         <p className="mt-2 text-gray-500 dark:text-gray-400">

@@ -1,0 +1,940 @@
+[2026-04-03T13:59:03.293Z] [INFO] [job:alert-1-5915176] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:03.296Z] [INFO] [job:alert-1-5915177] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:03.297Z] [INFO] [job:alert-1-5915178] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:03.297Z] [INFO] [job:alert-1-5915179] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:03.298Z] [INFO] [job:alert-1-5915180] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:03.466Z] [INFO] [job:alert-1-5915177] Internal matches: 1
+[2026-04-03T13:59:03.502Z] [INFO] [job:alert-1-5915176] Internal matches: 1
+[2026-04-03T13:59:03.505Z] [INFO] [job:alert-1-5915179] Internal matches: 1
+[2026-04-03T13:59:03.507Z] [INFO] [job:alert-1-5915178] Internal matches: 1
+[2026-04-03T13:59:03.511Z] [INFO] [job:alert-1-5915180] Internal matches: 1
+[2026-04-03T13:59:07.163Z] [INFO] [job:alert-1-5915177] Scraper matches: 45
+[2026-04-03T13:59:07.273Z] [INFO] [job:alert-1-5915179] Scraper matches: 45
+[2026-04-03T13:59:07.322Z] [INFO] [job:alert-1-5915176] Scraper matches: 45
+[2026-04-03T13:59:07.402Z] [INFO] [job:alert-1-5915180] Scraper matches: 45
+[2026-04-03T13:59:07.626Z] [INFO] [job:alert-1-5915178] Scraper matches: 45
+[2026-04-03T13:59:09.917Z] [INFO] [job:alert-1-5915176] Done — sent email with 10 matches
+[2026-04-03T13:59:09.924Z] [INFO] [job:alert-1-5915176] Completed successfully
+[2026-04-03T13:59:09.924Z] [INFO] [job:alert-1-5915365] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:09.929Z] [INFO] [job:alert-1-5915365] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.867Z) — skipping
+[2026-04-03T13:59:09.931Z] [INFO] [job:alert-1-5915365] Completed successfully
+[2026-04-03T13:59:09.932Z] [INFO] [job:alert-1-5915366] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:09.935Z] [INFO] [job:alert-1-5915366] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.867Z) — skipping
+[2026-04-03T13:59:09.939Z] [INFO] [job:alert-1-5915366] Completed successfully
+[2026-04-03T13:59:09.939Z] [INFO] [job:alert-1-5915367] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:09.944Z] [INFO] [job:alert-1-5915367] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.867Z) — skipping
+[2026-04-03T13:59:09.946Z] [INFO] [job:alert-1-5915367] Completed successfully
+[2026-04-03T13:59:09.946Z] [INFO] [job:alert-1-5915368] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:09.950Z] [INFO] [job:alert-1-5915368] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.867Z) — skipping
+[2026-04-03T13:59:09.951Z] [INFO] [job:alert-1-5915368] Completed successfully
+[2026-04-03T13:59:09.951Z] [INFO] [job:alert-1-5915369] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:09.954Z] [INFO] [job:alert-1-5915369] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.867Z) — skipping
+[2026-04-03T13:59:09.955Z] [INFO] [job:alert-1-5915369] Completed successfully
+[2026-04-03T13:59:09.955Z] [INFO] [job:alert-1-5915370] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:09.957Z] [INFO] [job:alert-1-5915370] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.867Z) — skipping
+[2026-04-03T13:59:09.958Z] [INFO] [job:alert-1-5915178] Done — sent email with 10 matches
+[2026-04-03T13:59:09.959Z] [INFO] [job:alert-1-5915370] Completed successfully
+[2026-04-03T13:59:09.959Z] [INFO] [job:alert-1-5915178] Completed successfully
+[2026-04-03T13:59:09.959Z] [INFO] [job:alert-1-5915371] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:09.960Z] [INFO] [job:alert-1-5915372] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.009Z] [INFO] [job:alert-1-5915371] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.009Z] [INFO] [job:alert-1-5915372] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.011Z] [INFO] [job:alert-1-5915371] Completed successfully
+[2026-04-03T13:59:10.011Z] [INFO] [job:alert-1-5915372] Completed successfully
+[2026-04-03T13:59:10.011Z] [INFO] [job:alert-1-5915373] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.011Z] [INFO] [job:alert-1-5915374] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.014Z] [INFO] [job:alert-1-5915373] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.014Z] [INFO] [job:alert-1-5915374] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.015Z] [INFO] [job:alert-1-5915373] Completed successfully
+[2026-04-03T13:59:10.015Z] [INFO] [job:alert-1-5915374] Completed successfully
+[2026-04-03T13:59:10.016Z] [INFO] [job:alert-1-5915375] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.016Z] [INFO] [job:alert-1-5915376] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.018Z] [INFO] [job:alert-1-5915375] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.018Z] [INFO] [job:alert-1-5915376] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.019Z] [INFO] [job:alert-1-5915375] Completed successfully
+[2026-04-03T13:59:10.019Z] [INFO] [job:alert-1-5915376] Completed successfully
+[2026-04-03T13:59:10.020Z] [INFO] [job:alert-1-5915377] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.020Z] [INFO] [job:alert-1-5915378] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.022Z] [INFO] [job:alert-1-5915377] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.022Z] [INFO] [job:alert-1-5915378] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.023Z] [INFO] [job:alert-1-5915377] Completed successfully
+[2026-04-03T13:59:10.024Z] [INFO] [job:alert-1-5915378] Completed successfully
+[2026-04-03T13:59:10.024Z] [INFO] [job:alert-1-5915379] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.024Z] [INFO] [job:alert-1-5915380] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.026Z] [INFO] [job:alert-1-5915379] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.026Z] [INFO] [job:alert-1-5915380] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.027Z] [INFO] [job:alert-1-5915379] Completed successfully
+[2026-04-03T13:59:10.027Z] [INFO] [job:alert-1-5915380] Completed successfully
+[2026-04-03T13:59:10.027Z] [INFO] [job:alert-1-5915381] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.027Z] [INFO] [job:alert-1-5915382] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.029Z] [INFO] [job:alert-1-5915381] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.029Z] [INFO] [job:alert-1-5915382] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.030Z] [INFO] [job:alert-1-5915381] Completed successfully
+[2026-04-03T13:59:10.031Z] [INFO] [job:alert-1-5915383] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.032Z] [INFO] [job:alert-1-5915382] Completed successfully
+[2026-04-03T13:59:10.032Z] [INFO] [job:alert-1-5915384] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.033Z] [INFO] [job:alert-1-5915383] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.034Z] [INFO] [job:alert-1-5915384] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.035Z] [INFO] [job:alert-1-5915383] Completed successfully
+[2026-04-03T13:59:10.036Z] [INFO] [job:alert-1-5915385] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.037Z] [INFO] [job:alert-1-5915384] Completed successfully
+[2026-04-03T13:59:10.037Z] [INFO] [job:alert-1-5915386] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.038Z] [INFO] [job:alert-1-5915385] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.039Z] [INFO] [job:alert-1-5915386] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.039Z] [INFO] [job:alert-1-5915385] Completed successfully
+[2026-04-03T13:59:10.040Z] [INFO] [job:alert-1-5915387] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.041Z] [INFO] [job:alert-1-5915386] Completed successfully
+[2026-04-03T13:59:10.041Z] [INFO] [job:alert-1-5915388] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.042Z] [INFO] [job:alert-1-5915387] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.043Z] [INFO] [job:alert-1-5915388] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.044Z] [INFO] [job:alert-1-5915387] Completed successfully
+[2026-04-03T13:59:10.044Z] [INFO] [job:alert-1-5915389] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.045Z] [INFO] [job:alert-1-5915388] Completed successfully
+[2026-04-03T13:59:10.045Z] [INFO] [job:alert-1-5915390] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.047Z] [INFO] [job:alert-1-5915389] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.048Z] [INFO] [job:alert-1-5915390] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.048Z] [INFO] [job:alert-1-5915389] Completed successfully
+[2026-04-03T13:59:10.049Z] [INFO] [job:alert-1-5915390] Completed successfully
+[2026-04-03T13:59:10.049Z] [INFO] [job:alert-1-5915391] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.049Z] [INFO] [job:alert-1-5915392] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.054Z] [INFO] [job:alert-1-5915391] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.054Z] [INFO] [job:alert-1-5915392] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.056Z] [INFO] [job:alert-1-5915391] Completed successfully
+[2026-04-03T13:59:10.057Z] [INFO] [job:alert-1-5915392] Completed successfully
+[2026-04-03T13:59:10.057Z] [INFO] [job:alert-1-5915393] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.057Z] [INFO] [job:alert-1-5915394] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.060Z] [INFO] [job:alert-1-5915393] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.062Z] [INFO] [job:alert-1-5915394] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.067Z] [INFO] [job:alert-1-5915393] Completed successfully
+[2026-04-03T13:59:10.068Z] [INFO] [job:alert-1-5915394] Completed successfully
+[2026-04-03T13:59:10.069Z] [INFO] [job:alert-1-5915395] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.069Z] [INFO] [job:alert-1-5915396] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.085Z] [INFO] [job:alert-1-5915395] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.085Z] [INFO] [job:alert-1-5915396] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.087Z] [INFO] [job:alert-1-5915395] Completed successfully
+[2026-04-03T13:59:10.087Z] [INFO] [job:alert-1-5915396] Completed successfully
+[2026-04-03T13:59:10.088Z] [INFO] [job:alert-1-5915397] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.088Z] [INFO] [job:alert-1-5915398] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.091Z] [INFO] [job:alert-1-5915397] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.091Z] [INFO] [job:alert-1-5915398] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.096Z] [INFO] [job:alert-1-5915397] Completed successfully
+[2026-04-03T13:59:10.097Z] [INFO] [job:alert-1-5915398] Completed successfully
+[2026-04-03T13:59:10.097Z] [INFO] [job:alert-1-5915399] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.097Z] [INFO] [job:alert-1-5915400] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.099Z] [INFO] [job:alert-1-5915399] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.099Z] [INFO] [job:alert-1-5915400] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.101Z] [INFO] [job:alert-1-5915399] Completed successfully
+[2026-04-03T13:59:10.101Z] [INFO] [job:alert-1-5915400] Completed successfully
+[2026-04-03T13:59:10.101Z] [INFO] [job:alert-1-5915401] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.102Z] [INFO] [job:alert-1-5915402] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.103Z] [INFO] [job:alert-1-5915401] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.104Z] [INFO] [job:alert-1-5915402] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.106Z] [INFO] [job:alert-1-5915401] Completed successfully
+[2026-04-03T13:59:10.106Z] [INFO] [job:alert-1-5915402] Completed successfully
+[2026-04-03T13:59:10.106Z] [INFO] [job:alert-1-5915403] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.106Z] [INFO] [job:alert-1-5915404] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.109Z] [INFO] [job:alert-1-5915403] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.109Z] [INFO] [job:alert-1-5915404] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.110Z] [INFO] [job:alert-1-5915403] Completed successfully
+[2026-04-03T13:59:10.111Z] [INFO] [job:alert-1-5915404] Completed successfully
+[2026-04-03T13:59:10.111Z] [INFO] [job:alert-1-5915405] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.111Z] [INFO] [job:alert-1-5915406] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.113Z] [INFO] [job:alert-1-5915405] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.113Z] [INFO] [job:alert-1-5915406] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.115Z] [INFO] [job:alert-1-5915405] Completed successfully
+[2026-04-03T13:59:10.115Z] [INFO] [job:alert-1-5915406] Completed successfully
+[2026-04-03T13:59:10.115Z] [INFO] [job:alert-1-5915407] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.116Z] [INFO] [job:alert-1-5915408] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.118Z] [INFO] [job:alert-1-5915407] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.118Z] [INFO] [job:alert-1-5915408] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.120Z] [INFO] [job:alert-1-5915407] Completed successfully
+[2026-04-03T13:59:10.120Z] [INFO] [job:alert-1-5915408] Completed successfully
+[2026-04-03T13:59:10.120Z] [INFO] [job:alert-1-5915409] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.120Z] [INFO] [job:alert-1-5915410] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.123Z] [INFO] [job:alert-1-5915409] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.123Z] [INFO] [job:alert-1-5915410] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:09.937Z) — skipping
+[2026-04-03T13:59:10.124Z] [INFO] [job:alert-1-5915409] Completed successfully
+[2026-04-03T13:59:10.124Z] [INFO] [job:alert-1-5915410] Completed successfully
+[2026-04-03T13:59:10.125Z] [INFO] [job:alert-1-5915411] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.125Z] [INFO] [job:alert-1-5915412] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.127Z] [INFO] [job:alert-1-5915180] Done — sent email with 10 matches
+[2026-04-03T13:59:10.128Z] [INFO] [job:alert-1-5915411] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.128Z] [INFO] [job:alert-1-5915412] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.130Z] [INFO] [job:alert-1-5915180] Completed successfully
+[2026-04-03T13:59:10.130Z] [INFO] [job:alert-1-5915411] Completed successfully
+[2026-04-03T13:59:10.130Z] [INFO] [job:alert-1-5915412] Completed successfully
+[2026-04-03T13:59:10.130Z] [INFO] [job:alert-1-5915413] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.130Z] [INFO] [job:alert-1-5915414] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.131Z] [INFO] [job:alert-1-5915415] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.136Z] [INFO] [job:alert-1-5915413] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.137Z] [INFO] [job:alert-1-5915414] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.137Z] [INFO] [job:alert-1-5915415] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.144Z] [INFO] [job:alert-1-5915413] Completed successfully
+[2026-04-03T13:59:10.145Z] [INFO] [job:alert-1-5915414] Completed successfully
+[2026-04-03T13:59:10.146Z] [INFO] [job:alert-1-5915415] Completed successfully
+[2026-04-03T13:59:10.147Z] [INFO] [job:alert-1-5915416] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.148Z] [INFO] [job:alert-1-5915417] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.149Z] [INFO] [job:alert-1-5915418] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.152Z] [INFO] [job:alert-1-5915416] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.152Z] [INFO] [job:alert-1-5915417] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.153Z] [INFO] [job:alert-1-5915418] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.155Z] [INFO] [job:alert-1-5915416] Completed successfully
+[2026-04-03T13:59:10.155Z] [INFO] [job:alert-1-5915417] Completed successfully
+[2026-04-03T13:59:10.156Z] [INFO] [job:alert-1-5915419] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.156Z] [INFO] [job:alert-1-5915420] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.157Z] [INFO] [job:alert-1-5915418] Completed successfully
+[2026-04-03T13:59:10.157Z] [INFO] [job:alert-1-5915421] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.159Z] [INFO] [job:alert-1-5915419] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.159Z] [INFO] [job:alert-1-5915420] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.160Z] [INFO] [job:alert-1-5915421] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.161Z] [INFO] [job:alert-1-5915419] Completed successfully
+[2026-04-03T13:59:10.163Z] [INFO] [job:alert-1-5915420] Completed successfully
+[2026-04-03T13:59:10.163Z] [INFO] [job:alert-1-5915421] Completed successfully
+[2026-04-03T13:59:10.163Z] [INFO] [job:alert-1-5915422] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.163Z] [INFO] [job:alert-1-5915423] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.164Z] [INFO] [job:alert-1-5915424] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.166Z] [INFO] [job:alert-1-5915422] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.166Z] [INFO] [job:alert-1-5915423] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.166Z] [INFO] [job:alert-1-5915424] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.167Z] [INFO] [job:alert-1-5915422] Completed successfully
+[2026-04-03T13:59:10.168Z] [INFO] [job:alert-1-5915425] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.169Z] [INFO] [job:alert-1-5915423] Completed successfully
+[2026-04-03T13:59:10.169Z] [INFO] [job:alert-1-5915424] Completed successfully
+[2026-04-03T13:59:10.169Z] [INFO] [job:alert-1-5915426] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.169Z] [INFO] [job:alert-1-5915427] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.171Z] [INFO] [job:alert-1-5915425] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.173Z] [INFO] [job:alert-1-5915426] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.173Z] [INFO] [job:alert-1-5915427] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.174Z] [INFO] [job:alert-1-5915425] Completed successfully
+[2026-04-03T13:59:10.174Z] [INFO] [job:alert-1-5915426] Completed successfully
+[2026-04-03T13:59:10.174Z] [INFO] [job:alert-1-5915427] Completed successfully
+[2026-04-03T13:59:10.174Z] [INFO] [job:alert-1-5915428] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.175Z] [INFO] [job:alert-1-5915429] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.175Z] [INFO] [job:alert-1-5915430] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.177Z] [INFO] [job:alert-1-5915428] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.178Z] [INFO] [job:alert-1-5915429] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.178Z] [INFO] [job:alert-1-5915430] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.181Z] [INFO] [job:alert-1-5915428] Completed successfully
+[2026-04-03T13:59:10.182Z] [INFO] [job:alert-1-5915429] Completed successfully
+[2026-04-03T13:59:10.182Z] [INFO] [job:alert-1-5915430] Completed successfully
+[2026-04-03T13:59:10.182Z] [INFO] [job:alert-1-5915431] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.182Z] [INFO] [job:alert-1-5915432] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.183Z] [INFO] [job:alert-1-5915433] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.185Z] [INFO] [job:alert-1-5915431] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.185Z] [INFO] [job:alert-1-5915432] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.185Z] [INFO] [job:alert-1-5915433] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.186Z] [INFO] [job:alert-1-5915431] Completed successfully
+[2026-04-03T13:59:10.186Z] [INFO] [job:alert-1-5915434] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.188Z] [INFO] [job:alert-1-5915432] Completed successfully
+[2026-04-03T13:59:10.188Z] [INFO] [job:alert-1-5915433] Completed successfully
+[2026-04-03T13:59:10.188Z] [INFO] [job:alert-1-5915435] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.188Z] [INFO] [job:alert-1-5915436] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.191Z] [INFO] [job:alert-1-5915434] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.192Z] [INFO] [job:alert-1-5915435] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.192Z] [INFO] [job:alert-1-5915436] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.193Z] [INFO] [job:alert-1-5915434] Completed successfully
+[2026-04-03T13:59:10.193Z] [INFO] [job:alert-1-5915435] Completed successfully
+[2026-04-03T13:59:10.193Z] [INFO] [job:alert-1-5915437] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.194Z] [INFO] [job:alert-1-5915438] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.195Z] [INFO] [job:alert-1-5915436] Completed successfully
+[2026-04-03T13:59:10.196Z] [INFO] [job:alert-1-5915439] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.201Z] [INFO] [job:alert-1-5915437] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.201Z] [INFO] [job:alert-1-5915438] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.203Z] [INFO] [job:alert-1-5915437] Completed successfully
+[2026-04-03T13:59:10.203Z] [INFO] [job:alert-1-5915438] Completed successfully
+[2026-04-03T13:59:10.203Z] [INFO] [job:alert-1-5915440] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.203Z] [INFO] [job:alert-1-5916230] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.208Z] [INFO] [job:alert-1-5915439] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.209Z] [INFO] [job:alert-1-5915440] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.209Z] [INFO] [job:alert-1-5916230] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.210Z] [INFO] [job:alert-1-5915439] Completed successfully
+[2026-04-03T13:59:10.210Z] [INFO] [job:alert-1-5915440] Completed successfully
+[2026-04-03T13:59:10.210Z] [INFO] [job:alert-1-5916230] Completed successfully
+[2026-04-03T13:59:10.210Z] [INFO] [job:alert-1-5916231] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.211Z] [INFO] [job:alert-1-5916232] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.211Z] [INFO] [job:alert-1-5916233] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.212Z] [INFO] [job:alert-1-5916231] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.212Z] [INFO] [job:alert-1-5916232] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.212Z] [INFO] [job:alert-1-5916233] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.213Z] [INFO] [job:alert-1-5916231] Completed successfully
+[2026-04-03T13:59:10.213Z] [INFO] [job:alert-1-5916234] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.214Z] [INFO] [job:alert-1-5916232] Completed successfully
+[2026-04-03T13:59:10.215Z] [INFO] [job:alert-1-5916233] Completed successfully
+[2026-04-03T13:59:10.215Z] [INFO] [job:alert-1-5916235] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.215Z] [INFO] [job:alert-1-5916236] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.216Z] [INFO] [job:alert-1-5916234] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.217Z] [INFO] [job:alert-1-5916235] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.217Z] [INFO] [job:alert-1-5916236] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.218Z] [INFO] [job:alert-1-5916234] Completed successfully
+[2026-04-03T13:59:10.218Z] [INFO] [job:alert-1-5916235] Completed successfully
+[2026-04-03T13:59:10.218Z] [INFO] [job:alert-1-5916237] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.218Z] [INFO] [job:alert-1-5916238] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.219Z] [INFO] [job:alert-1-5916236] Completed successfully
+[2026-04-03T13:59:10.220Z] [INFO] [job:alert-1-5916239] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.220Z] [INFO] [job:alert-1-5916237] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.221Z] [INFO] [job:alert-1-5916238] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.221Z] [INFO] [job:alert-1-5916239] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.222Z] [INFO] [job:alert-1-5916237] Completed successfully
+[2026-04-03T13:59:10.222Z] [INFO] [job:alert-1-5916238] Completed successfully
+[2026-04-03T13:59:10.222Z] [INFO] [job:alert-1-5916240] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.222Z] [INFO] [job:alert-1-5916241] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.223Z] [INFO] [job:alert-1-5916239] Completed successfully
+[2026-04-03T13:59:10.223Z] [INFO] [job:alert-1-5916242] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.225Z] [INFO] [job:alert-1-5916240] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.225Z] [INFO] [job:alert-1-5916241] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.226Z] [INFO] [job:alert-1-5916242] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.227Z] [INFO] [job:alert-1-5916240] Completed successfully
+[2026-04-03T13:59:10.228Z] [INFO] [job:alert-1-5916241] Completed successfully
+[2026-04-03T13:59:10.228Z] [INFO] [job:alert-1-5916242] Completed successfully
+[2026-04-03T13:59:10.228Z] [INFO] [job:alert-1-5916243] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.228Z] [INFO] [job:alert-1-5916244] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.228Z] [INFO] [job:alert-1-5916245] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.230Z] [INFO] [job:alert-1-5916243] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.231Z] [INFO] [job:alert-1-5916244] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.231Z] [INFO] [job:alert-1-5916245] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.232Z] [INFO] [job:alert-1-5916243] Completed successfully
+[2026-04-03T13:59:10.232Z] [INFO] [job:alert-1-5916246] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.233Z] [INFO] [job:alert-1-5916244] Completed successfully
+[2026-04-03T13:59:10.234Z] [INFO] [job:alert-1-5916245] Completed successfully
+[2026-04-03T13:59:10.234Z] [INFO] [job:alert-1-5916247] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.234Z] [INFO] [job:alert-1-5916248] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.235Z] [INFO] [job:alert-1-5916246] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.236Z] [INFO] [job:alert-1-5916247] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.236Z] [INFO] [job:alert-1-5916248] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.237Z] [INFO] [job:alert-1-5916246] Completed successfully
+[2026-04-03T13:59:10.237Z] [INFO] [job:alert-1-5916247] Completed successfully
+[2026-04-03T13:59:10.237Z] [INFO] [job:alert-1-5916249] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.238Z] [INFO] [job:alert-1-5916250] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.239Z] [INFO] [job:alert-1-5916248] Completed successfully
+[2026-04-03T13:59:10.239Z] [INFO] [job:alert-1-5916251] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.240Z] [INFO] [job:alert-1-5916249] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.240Z] [INFO] [job:alert-1-5916250] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.241Z] [INFO] [job:alert-1-5916251] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.242Z] [INFO] [job:alert-1-5916249] Completed successfully
+[2026-04-03T13:59:10.242Z] [INFO] [job:alert-1-5916250] Completed successfully
+[2026-04-03T13:59:10.242Z] [INFO] [job:alert-1-5916251] Completed successfully
+[2026-04-03T13:59:10.242Z] [INFO] [job:alert-1-5916252] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.242Z] [INFO] [job:alert-1-5916253] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.243Z] [INFO] [job:alert-1-5916254] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.245Z] [INFO] [job:alert-1-5916252] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.245Z] [INFO] [job:alert-1-5916253] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.245Z] [INFO] [job:alert-1-5916254] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.246Z] [INFO] [job:alert-1-5916252] Completed successfully
+[2026-04-03T13:59:10.246Z] [INFO] [job:alert-1-5916255] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.247Z] [INFO] [job:alert-1-5916253] Completed successfully
+[2026-04-03T13:59:10.248Z] [INFO] [job:alert-1-5916254] Completed successfully
+[2026-04-03T13:59:10.248Z] [INFO] [job:alert-1-5916256] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.248Z] [INFO] [job:alert-1-5916257] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.250Z] [INFO] [job:alert-1-5916255] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.251Z] [INFO] [job:alert-1-5916256] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.251Z] [INFO] [job:alert-1-5916257] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.252Z] [INFO] [job:alert-1-5916255] Completed successfully
+[2026-04-03T13:59:10.252Z] [INFO] [job:alert-1-5916256] Completed successfully
+[2026-04-03T13:59:10.252Z] [INFO] [job:alert-1-5916258] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.253Z] [INFO] [job:alert-1-5916259] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.254Z] [INFO] [job:alert-1-5916257] Completed successfully
+[2026-04-03T13:59:10.254Z] [INFO] [job:alert-1-5916260] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.255Z] [INFO] [job:alert-1-5916258] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.255Z] [INFO] [job:alert-1-5916259] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.256Z] [INFO] [job:alert-1-5916260] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.256Z] [INFO] [job:alert-1-5916258] Completed successfully
+[2026-04-03T13:59:10.256Z] [INFO] [job:alert-1-5916259] Completed successfully
+[2026-04-03T13:59:10.256Z] [INFO] [job:alert-1-5916260] Completed successfully
+[2026-04-03T13:59:10.256Z] [INFO] [job:alert-1-5916261] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.257Z] [INFO] [job:alert-1-5916262] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.257Z] [INFO] [job:alert-1-5916263] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.258Z] [INFO] [job:alert-1-5916261] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.258Z] [INFO] [job:alert-1-5916262] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.258Z] [INFO] [job:alert-1-5916263] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.259Z] [INFO] [job:alert-1-5916261] Completed successfully
+[2026-04-03T13:59:10.259Z] [INFO] [job:alert-1-5916262] Completed successfully
+[2026-04-03T13:59:10.259Z] [INFO] [job:alert-1-5916264] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.260Z] [INFO] [job:alert-1-5916265] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.261Z] [INFO] [job:alert-1-5916263] Completed successfully
+[2026-04-03T13:59:10.261Z] [INFO] [job:alert-1-5916266] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.262Z] [INFO] [job:alert-1-5916264] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.262Z] [INFO] [job:alert-1-5916265] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.263Z] [INFO] [job:alert-1-5916266] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.263Z] [INFO] [job:alert-1-5916264] Completed successfully
+[2026-04-03T13:59:10.264Z] [INFO] [job:alert-1-5916265] Completed successfully
+[2026-04-03T13:59:10.264Z] [INFO] [job:alert-1-5916266] Completed successfully
+[2026-04-03T13:59:10.264Z] [INFO] [job:alert-1-5916267] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.264Z] [INFO] [job:alert-1-5916268] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.265Z] [INFO] [job:alert-1-5916269] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.266Z] [INFO] [job:alert-1-5916267] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.266Z] [INFO] [job:alert-1-5916268] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.266Z] [INFO] [job:alert-1-5916269] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.267Z] [INFO] [job:alert-1-5916267] Completed successfully
+[2026-04-03T13:59:10.267Z] [INFO] [job:alert-1-5916270] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.268Z] [INFO] [job:alert-1-5916268] Completed successfully
+[2026-04-03T13:59:10.268Z] [INFO] [job:alert-1-5916269] Completed successfully
+[2026-04-03T13:59:10.268Z] [INFO] [job:alert-1-5916271] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.268Z] [INFO] [job:alert-1-5916272] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.269Z] [INFO] [job:alert-1-5916270] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.269Z] [INFO] [job:alert-1-5916271] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.269Z] [INFO] [job:alert-1-5916272] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.270Z] [INFO] [job:alert-1-5916270] Completed successfully
+[2026-04-03T13:59:10.270Z] [INFO] [job:alert-1-5916271] Completed successfully
+[2026-04-03T13:59:10.270Z] [INFO] [job:alert-1-5916273] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.270Z] [INFO] [job:alert-1-5916274] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.271Z] [INFO] [job:alert-1-5916272] Completed successfully
+[2026-04-03T13:59:10.271Z] [INFO] [job:alert-1-5916275] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.272Z] [INFO] [job:alert-1-5916273] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.272Z] [INFO] [job:alert-1-5916274] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.273Z] [INFO] [job:alert-1-5916275] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.273Z] [INFO] [job:alert-1-5916273] Completed successfully
+[2026-04-03T13:59:10.273Z] [INFO] [job:alert-1-5916274] Completed successfully
+[2026-04-03T13:59:10.273Z] [INFO] [job:alert-1-5916275] Completed successfully
+[2026-04-03T13:59:10.273Z] [INFO] [job:alert-1-5916276] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.274Z] [INFO] [job:alert-1-5916277] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.274Z] [INFO] [job:alert-1-5916278] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.276Z] [INFO] [job:alert-1-5916276] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.276Z] [INFO] [job:alert-1-5916277] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.276Z] [INFO] [job:alert-1-5916278] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.276Z] [INFO] [job:alert-1-5916276] Completed successfully
+[2026-04-03T13:59:10.277Z] [INFO] [job:alert-1-5916279] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.277Z] [INFO] [job:alert-1-5916277] Completed successfully
+[2026-04-03T13:59:10.277Z] [INFO] [job:alert-1-5916278] Completed successfully
+[2026-04-03T13:59:10.277Z] [INFO] [job:alert-1-5916280] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.278Z] [INFO] [job:alert-1-5916281] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.278Z] [INFO] [job:alert-1-5916279] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.279Z] [INFO] [job:alert-1-5916280] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.279Z] [INFO] [job:alert-1-5916281] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.279Z] [INFO] [job:alert-1-5916279] Completed successfully
+[2026-04-03T13:59:10.280Z] [INFO] [job:alert-1-5916282] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.281Z] [INFO] [job:alert-1-5916280] Completed successfully
+[2026-04-03T13:59:10.281Z] [INFO] [job:alert-1-5916281] Completed successfully
+[2026-04-03T13:59:10.281Z] [INFO] [job:alert-1-5916283] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.281Z] [INFO] [job:alert-1-5916284] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.282Z] [INFO] [job:alert-1-5916282] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.283Z] [INFO] [job:alert-1-5916283] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.283Z] [INFO] [job:alert-1-5916284] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.283Z] [INFO] [job:alert-1-5916282] Completed successfully
+[2026-04-03T13:59:10.283Z] [INFO] [job:alert-1-5916283] Completed successfully
+[2026-04-03T13:59:10.283Z] [INFO] [job:alert-1-5916285] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.283Z] [INFO] [job:alert-1-5916286] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.284Z] [INFO] [job:alert-1-5916284] Completed successfully
+[2026-04-03T13:59:10.284Z] [INFO] [job:alert-1-5916287] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.285Z] [INFO] [job:alert-1-5916285] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.285Z] [INFO] [job:alert-1-5916286] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.285Z] [INFO] [job:alert-1-5916287] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.286Z] [INFO] [job:alert-1-5916285] Completed successfully
+[2026-04-03T13:59:10.286Z] [INFO] [job:alert-1-5916286] Completed successfully
+[2026-04-03T13:59:10.286Z] [INFO] [job:alert-1-5916287] Completed successfully
+[2026-04-03T13:59:10.286Z] [INFO] [job:alert-1-5916288] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.286Z] [INFO] [job:alert-1-5916289] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.286Z] [INFO] [job:alert-1-5916290] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.287Z] [INFO] [job:alert-1-5916288] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.287Z] [INFO] [job:alert-1-5916289] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.287Z] [INFO] [job:alert-1-5916290] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.288Z] [INFO] [job:alert-1-5916288] Completed successfully
+[2026-04-03T13:59:10.288Z] [INFO] [job:alert-1-5916291] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.289Z] [INFO] [job:alert-1-5916289] Completed successfully
+[2026-04-03T13:59:10.289Z] [INFO] [job:alert-1-5916290] Completed successfully
+[2026-04-03T13:59:10.289Z] [INFO] [job:alert-1-5916292] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.289Z] [INFO] [job:alert-1-5916293] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.290Z] [INFO] [job:alert-1-5916291] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.291Z] [INFO] [job:alert-1-5916292] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.291Z] [INFO] [job:alert-1-5916293] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.292Z] [INFO] [job:alert-1-5916291] Completed successfully
+[2026-04-03T13:59:10.292Z] [INFO] [job:alert-1-5916294] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.293Z] [INFO] [job:alert-1-5916292] Completed successfully
+[2026-04-03T13:59:10.293Z] [INFO] [job:alert-1-5916293] Completed successfully
+[2026-04-03T13:59:10.293Z] [INFO] [job:alert-1-5916295] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.293Z] [INFO] [job:alert-1-5916296] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.294Z] [INFO] [job:alert-1-5916294] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.294Z] [INFO] [job:alert-1-5916295] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.294Z] [INFO] [job:alert-1-5916296] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.295Z] [INFO] [job:alert-1-5916294] Completed successfully
+[2026-04-03T13:59:10.295Z] [INFO] [job:alert-1-5916295] Completed successfully
+[2026-04-03T13:59:10.295Z] [INFO] [job:alert-1-5916297] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.295Z] [INFO] [job:alert-1-5916298] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.297Z] [INFO] [job:alert-1-5916296] Completed successfully
+[2026-04-03T13:59:10.297Z] [INFO] [job:alert-1-5916299] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.299Z] [INFO] [job:alert-1-5916297] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.299Z] [INFO] [job:alert-1-5916298] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.299Z] [INFO] [job:alert-1-5916299] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.300Z] [INFO] [job:alert-1-5916297] Completed successfully
+[2026-04-03T13:59:10.300Z] [INFO] [job:alert-1-5916298] Completed successfully
+[2026-04-03T13:59:10.300Z] [INFO] [job:alert-1-5916299] Completed successfully
+[2026-04-03T13:59:10.300Z] [INFO] [job:alert-1-5916300] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.301Z] [INFO] [job:alert-1-5916301] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.301Z] [INFO] [job:alert-1-5916302] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.302Z] [INFO] [job:alert-1-5916300] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.302Z] [INFO] [job:alert-1-5916301] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.303Z] [INFO] [job:alert-1-5916302] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.303Z] [INFO] [job:alert-1-5916300] Completed successfully
+[2026-04-03T13:59:10.303Z] [INFO] [job:alert-1-5916303] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.304Z] [INFO] [job:alert-1-5916301] Completed successfully
+[2026-04-03T13:59:10.304Z] [INFO] [job:alert-1-5916302] Completed successfully
+[2026-04-03T13:59:10.304Z] [INFO] [job:alert-1-5916304] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.304Z] [INFO] [job:alert-1-5916305] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.305Z] [INFO] [job:alert-1-5916303] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.306Z] [INFO] [job:alert-1-5916304] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.306Z] [INFO] [job:alert-1-5916305] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.306Z] [INFO] [job:alert-1-5916303] Completed successfully
+[2026-04-03T13:59:10.306Z] [INFO] [job:alert-1-5916304] Completed successfully
+[2026-04-03T13:59:10.306Z] [INFO] [job:alert-1-5916306] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.307Z] [INFO] [job:alert-1-5916307] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.307Z] [INFO] [job:alert-1-5916305] Completed successfully
+[2026-04-03T13:59:10.308Z] [INFO] [job:alert-1-5916308] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.308Z] [INFO] [job:alert-1-5916306] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.308Z] [INFO] [job:alert-1-5916307] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.309Z] [INFO] [job:alert-1-5916308] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.310Z] [INFO] [job:alert-1-5916306] Completed successfully
+[2026-04-03T13:59:10.310Z] [INFO] [job:alert-1-5916307] Completed successfully
+[2026-04-03T13:59:10.311Z] [INFO] [job:alert-1-5916309] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.311Z] [INFO] [job:alert-1-5916310] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.312Z] [INFO] [job:alert-1-5916308] Completed successfully
+[2026-04-03T13:59:10.312Z] [INFO] [job:alert-1-5916311] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.313Z] [INFO] [job:alert-1-5916309] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.313Z] [INFO] [job:alert-1-5916310] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.314Z] [INFO] [job:alert-1-5916311] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.315Z] [INFO] [job:alert-1-5916309] Completed successfully
+[2026-04-03T13:59:10.315Z] [INFO] [job:alert-1-5916310] Completed successfully
+[2026-04-03T13:59:10.315Z] [INFO] [job:alert-1-5916311] Completed successfully
+[2026-04-03T13:59:10.315Z] [INFO] [job:alert-1-5916312] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.315Z] [INFO] [job:alert-1-5916313] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.315Z] [INFO] [job:alert-1-5916314] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.317Z] [INFO] [job:alert-1-5916312] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.317Z] [INFO] [job:alert-1-5916313] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.317Z] [INFO] [job:alert-1-5916314] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.317Z] [INFO] [job:alert-1-5916312] Completed successfully
+[2026-04-03T13:59:10.318Z] [INFO] [job:alert-1-5916315] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.318Z] [INFO] [job:alert-1-5916313] Completed successfully
+[2026-04-03T13:59:10.318Z] [INFO] [job:alert-1-5916314] Completed successfully
+[2026-04-03T13:59:10.318Z] [INFO] [job:alert-1-5916316] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.319Z] [INFO] [job:alert-1-5916317] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.320Z] [INFO] [job:alert-1-5916315] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.321Z] [INFO] [job:alert-1-5916316] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.321Z] [INFO] [job:alert-1-5916317] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.094Z) — skipping
+[2026-04-03T13:59:10.321Z] [INFO] [job:alert-1-5916315] Completed successfully
+[2026-04-03T13:59:10.322Z] [INFO] [job:alert-1-5916316] Completed successfully
+[2026-04-03T13:59:10.322Z] [INFO] [job:alert-1-5916318] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.322Z] [INFO] [job:alert-1-5916319] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.323Z] [INFO] [job:alert-1-5916317] Completed successfully
+[2026-04-03T13:59:10.323Z] [INFO] [job:alert-1-5916805] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.323Z] [INFO] [job:alert-1-5915177] Done — sent email with 10 matches
+[2026-04-03T13:59:10.325Z] [INFO] [job:alert-1-5916318] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.325Z] [INFO] [job:alert-1-5916319] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.325Z] [INFO] [job:alert-1-5915177] Completed successfully
+[2026-04-03T13:59:10.326Z] [INFO] [job:alert-1-5916318] Completed successfully
+[2026-04-03T13:59:10.326Z] [INFO] [job:alert-1-5916319] Completed successfully
+[2026-04-03T13:59:10.326Z] [INFO] [job:alert-1-5916806] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.326Z] [INFO] [job:alert-1-5916807] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.326Z] [INFO] [job:alert-1-5916808] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.327Z] [INFO] [job:alert-1-5916805] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.328Z] [INFO] [job:alert-1-5916806] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.328Z] [INFO] [job:alert-1-5916807] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.328Z] [INFO] [job:alert-1-5916808] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.329Z] [INFO] [job:alert-1-5916805] Completed successfully
+[2026-04-03T13:59:10.329Z] [INFO] [job:alert-1-5916806] Completed successfully
+[2026-04-03T13:59:10.329Z] [INFO] [job:alert-1-5916807] Completed successfully
+[2026-04-03T13:59:10.329Z] [INFO] [job:alert-1-5916809] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.329Z] [INFO] [job:alert-1-5916810] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.330Z] [INFO] [job:alert-1-5916811] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.331Z] [INFO] [job:alert-1-5916808] Completed successfully
+[2026-04-03T13:59:10.331Z] [INFO] [job:alert-1-5916812] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.332Z] [INFO] [job:alert-1-5916809] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.332Z] [INFO] [job:alert-1-5916810] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.332Z] [INFO] [job:alert-1-5916811] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.333Z] [INFO] [job:alert-1-5916812] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.334Z] [INFO] [job:alert-1-5916809] Completed successfully
+[2026-04-03T13:59:10.334Z] [INFO] [job:alert-1-5916810] Completed successfully
+[2026-04-03T13:59:10.334Z] [INFO] [job:alert-1-5916811] Completed successfully
+[2026-04-03T13:59:10.334Z] [INFO] [job:alert-1-5916812] Completed successfully
+[2026-04-03T13:59:10.334Z] [INFO] [job:alert-1-5916813] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.335Z] [INFO] [job:alert-1-5916814] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.335Z] [INFO] [job:alert-1-5916815] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.335Z] [INFO] [job:alert-1-5916816] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.337Z] [INFO] [job:alert-1-5916813] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.337Z] [INFO] [job:alert-1-5916814] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.337Z] [INFO] [job:alert-1-5916815] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.337Z] [INFO] [job:alert-1-5916816] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.338Z] [INFO] [job:alert-1-5916813] Completed successfully
+[2026-04-03T13:59:10.338Z] [INFO] [job:alert-1-5916817] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.339Z] [INFO] [job:alert-1-5916814] Completed successfully
+[2026-04-03T13:59:10.339Z] [INFO] [job:alert-1-5916815] Completed successfully
+[2026-04-03T13:59:10.339Z] [INFO] [job:alert-1-5916816] Completed successfully
+[2026-04-03T13:59:10.339Z] [INFO] [job:alert-1-5916818] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.339Z] [INFO] [job:alert-1-5916819] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.340Z] [INFO] [job:alert-1-5916820] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.341Z] [INFO] [job:alert-1-5916817] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.342Z] [INFO] [job:alert-1-5916818] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.342Z] [INFO] [job:alert-1-5916819] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.342Z] [INFO] [job:alert-1-5916820] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.343Z] [INFO] [job:alert-1-5916817] Completed successfully
+[2026-04-03T13:59:10.343Z] [INFO] [job:alert-1-5916821] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.344Z] [INFO] [job:alert-1-5916818] Completed successfully
+[2026-04-03T13:59:10.344Z] [INFO] [job:alert-1-5916819] Completed successfully
+[2026-04-03T13:59:10.344Z] [INFO] [job:alert-1-5916820] Completed successfully
+[2026-04-03T13:59:10.344Z] [INFO] [job:alert-1-5916822] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.344Z] [INFO] [job:alert-1-5916823] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.344Z] [INFO] [job:alert-1-5916824] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.345Z] [INFO] [job:alert-1-5916821] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.346Z] [INFO] [job:alert-1-5916822] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.346Z] [INFO] [job:alert-1-5916823] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.346Z] [INFO] [job:alert-1-5916824] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.347Z] [INFO] [job:alert-1-5916821] Completed successfully
+[2026-04-03T13:59:10.347Z] [INFO] [job:alert-1-5916822] Completed successfully
+[2026-04-03T13:59:10.347Z] [INFO] [job:alert-1-5916825] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.347Z] [INFO] [job:alert-1-5916826] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.349Z] [INFO] [job:alert-1-5916823] Completed successfully
+[2026-04-03T13:59:10.349Z] [INFO] [job:alert-1-5916824] Completed successfully
+[2026-04-03T13:59:10.349Z] [INFO] [job:alert-1-5916827] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.350Z] [INFO] [job:alert-1-5916828] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.351Z] [INFO] [job:alert-1-5916825] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.351Z] [INFO] [job:alert-1-5916826] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.351Z] [INFO] [job:alert-1-5916827] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.352Z] [INFO] [job:alert-1-5916828] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.352Z] [INFO] [job:alert-1-5916825] Completed successfully
+[2026-04-03T13:59:10.352Z] [INFO] [job:alert-1-5916826] Completed successfully
+[2026-04-03T13:59:10.352Z] [INFO] [job:alert-1-5916827] Completed successfully
+[2026-04-03T13:59:10.353Z] [INFO] [job:alert-1-5916829] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.353Z] [INFO] [job:alert-1-5916830] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.353Z] [INFO] [job:alert-1-5916831] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.354Z] [INFO] [job:alert-1-5916828] Completed successfully
+[2026-04-03T13:59:10.354Z] [INFO] [job:alert-1-5916832] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.359Z] [INFO] [job:alert-1-5916829] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.359Z] [INFO] [job:alert-1-5916830] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.359Z] [INFO] [job:alert-1-5916831] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.360Z] [INFO] [job:alert-1-5916832] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.361Z] [INFO] [job:alert-1-5916829] Completed successfully
+[2026-04-03T13:59:10.361Z] [INFO] [job:alert-1-5916830] Completed successfully
+[2026-04-03T13:59:10.361Z] [INFO] [job:alert-1-5916831] Completed successfully
+[2026-04-03T13:59:10.361Z] [INFO] [job:alert-1-5916832] Completed successfully
+[2026-04-03T13:59:10.361Z] [INFO] [job:alert-1-5916833] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.361Z] [INFO] [job:alert-1-5916834] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.362Z] [INFO] [job:alert-1-5916835] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.362Z] [INFO] [job:alert-1-5916836] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.364Z] [INFO] [job:alert-1-5916833] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.364Z] [INFO] [job:alert-1-5916834] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.364Z] [INFO] [job:alert-1-5916835] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.364Z] [INFO] [job:alert-1-5916836] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.365Z] [INFO] [job:alert-1-5916833] Completed successfully
+[2026-04-03T13:59:10.365Z] [INFO] [job:alert-1-5916837] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.366Z] [INFO] [job:alert-1-5916834] Completed successfully
+[2026-04-03T13:59:10.366Z] [INFO] [job:alert-1-5916835] Completed successfully
+[2026-04-03T13:59:10.366Z] [INFO] [job:alert-1-5916836] Completed successfully
+[2026-04-03T13:59:10.367Z] [INFO] [job:alert-1-5916838] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.367Z] [INFO] [job:alert-1-5916839] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.367Z] [INFO] [job:alert-1-5916840] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.368Z] [INFO] [job:alert-1-5916837] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.369Z] [INFO] [job:alert-1-5916838] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.369Z] [INFO] [job:alert-1-5916839] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.369Z] [INFO] [job:alert-1-5916840] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.369Z] [INFO] [job:alert-1-5916837] Completed successfully
+[2026-04-03T13:59:10.370Z] [INFO] [job:alert-1-5916841] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.371Z] [INFO] [job:alert-1-5916838] Completed successfully
+[2026-04-03T13:59:10.371Z] [INFO] [job:alert-1-5916839] Completed successfully
+[2026-04-03T13:59:10.372Z] [INFO] [job:alert-1-5916840] Completed successfully
+[2026-04-03T13:59:10.372Z] [INFO] [job:alert-1-5916842] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.372Z] [INFO] [job:alert-1-5916843] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.372Z] [INFO] [job:alert-1-5916844] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.373Z] [INFO] [job:alert-1-5916841] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.374Z] [INFO] [job:alert-1-5916842] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.374Z] [INFO] [job:alert-1-5916843] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.374Z] [INFO] [job:alert-1-5916844] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.375Z] [INFO] [job:alert-1-5916841] Completed successfully
+[2026-04-03T13:59:10.375Z] [INFO] [job:alert-1-5916845] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.376Z] [INFO] [job:alert-1-5916842] Completed successfully
+[2026-04-03T13:59:10.376Z] [INFO] [job:alert-1-5916843] Completed successfully
+[2026-04-03T13:59:10.377Z] [INFO] [job:alert-1-5916844] Completed successfully
+[2026-04-03T13:59:10.377Z] [INFO] [job:alert-1-5916846] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.377Z] [INFO] [job:alert-1-5916847] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.377Z] [INFO] [job:alert-1-5916848] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.378Z] [INFO] [job:alert-1-5916845] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.378Z] [INFO] [job:alert-1-5916846] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.378Z] [INFO] [job:alert-1-5916847] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.379Z] [INFO] [job:alert-1-5916848] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.379Z] [INFO] [job:alert-1-5916845] Completed successfully
+[2026-04-03T13:59:10.379Z] [INFO] [job:alert-1-5916846] Completed successfully
+[2026-04-03T13:59:10.379Z] [INFO] [job:alert-1-5916849] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.380Z] [INFO] [job:alert-1-5916850] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.381Z] [INFO] [job:alert-1-5916847] Completed successfully
+[2026-04-03T13:59:10.381Z] [INFO] [job:alert-1-5916848] Completed successfully
+[2026-04-03T13:59:10.381Z] [INFO] [job:alert-1-5916851] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.381Z] [INFO] [job:alert-1-5916852] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.382Z] [INFO] [job:alert-1-5916849] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.382Z] [INFO] [job:alert-1-5916850] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.383Z] [INFO] [job:alert-1-5916851] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.383Z] [INFO] [job:alert-1-5916852] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.384Z] [INFO] [job:alert-1-5916849] Completed successfully
+[2026-04-03T13:59:10.384Z] [INFO] [job:alert-1-5916850] Completed successfully
+[2026-04-03T13:59:10.384Z] [INFO] [job:alert-1-5916851] Completed successfully
+[2026-04-03T13:59:10.384Z] [INFO] [job:alert-1-5916853] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.384Z] [INFO] [job:alert-1-5916854] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.384Z] [INFO] [job:alert-1-5916855] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.385Z] [INFO] [job:alert-1-5916852] Completed successfully
+[2026-04-03T13:59:10.385Z] [INFO] [job:alert-1-5916856] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.386Z] [INFO] [job:alert-1-5916853] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.386Z] [INFO] [job:alert-1-5916854] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.386Z] [INFO] [job:alert-1-5916855] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.386Z] [INFO] [job:alert-1-5916856] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.387Z] [INFO] [job:alert-1-5916853] Completed successfully
+[2026-04-03T13:59:10.387Z] [INFO] [job:alert-1-5916854] Completed successfully
+[2026-04-03T13:59:10.387Z] [INFO] [job:alert-1-5916855] Completed successfully
+[2026-04-03T13:59:10.387Z] [INFO] [job:alert-1-5916856] Completed successfully
+[2026-04-03T13:59:10.387Z] [INFO] [job:alert-1-5916857] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.387Z] [INFO] [job:alert-1-5916858] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.388Z] [INFO] [job:alert-1-5916859] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.388Z] [INFO] [job:alert-1-5916860] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.389Z] [INFO] [job:alert-1-5916857] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.389Z] [INFO] [job:alert-1-5916858] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.389Z] [INFO] [job:alert-1-5916859] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.389Z] [INFO] [job:alert-1-5916860] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.390Z] [INFO] [job:alert-1-5916857] Completed successfully
+[2026-04-03T13:59:10.390Z] [INFO] [job:alert-1-5916861] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.391Z] [INFO] [job:alert-1-5916858] Completed successfully
+[2026-04-03T13:59:10.391Z] [INFO] [job:alert-1-5916859] Completed successfully
+[2026-04-03T13:59:10.391Z] [INFO] [job:alert-1-5916860] Completed successfully
+[2026-04-03T13:59:10.391Z] [INFO] [job:alert-1-5916862] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.391Z] [INFO] [job:alert-1-5916863] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.392Z] [INFO] [job:alert-1-5916864] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.393Z] [INFO] [job:alert-1-5916861] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.393Z] [INFO] [job:alert-1-5916862] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.393Z] [INFO] [job:alert-1-5916863] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.393Z] [INFO] [job:alert-1-5916864] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.394Z] [INFO] [job:alert-1-5916861] Completed successfully
+[2026-04-03T13:59:10.394Z] [INFO] [job:alert-1-5916862] Completed successfully
+[2026-04-03T13:59:10.394Z] [INFO] [job:alert-1-5916865] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.395Z] [INFO] [job:alert-1-5916866] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.395Z] [INFO] [job:alert-1-5916863] Completed successfully
+[2026-04-03T13:59:10.395Z] [INFO] [job:alert-1-5916864] Completed successfully
+[2026-04-03T13:59:10.396Z] [INFO] [job:alert-1-5916867] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.396Z] [INFO] [job:alert-1-5916868] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.397Z] [INFO] [job:alert-1-5916865] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.397Z] [INFO] [job:alert-1-5916866] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.397Z] [INFO] [job:alert-1-5916867] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.398Z] [INFO] [job:alert-1-5916868] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.398Z] [INFO] [job:alert-1-5916865] Completed successfully
+[2026-04-03T13:59:10.399Z] [INFO] [job:alert-1-5916866] Completed successfully
+[2026-04-03T13:59:10.399Z] [INFO] [job:alert-1-5916867] Completed successfully
+[2026-04-03T13:59:10.399Z] [INFO] [job:alert-1-5916868] Completed successfully
+[2026-04-03T13:59:10.399Z] [INFO] [job:alert-1-5916869] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.399Z] [INFO] [job:alert-1-5916870] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.399Z] [INFO] [job:alert-1-5916871] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.399Z] [INFO] [job:alert-1-5916872] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.401Z] [INFO] [job:alert-1-5916869] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.401Z] [INFO] [job:alert-1-5916870] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.401Z] [INFO] [job:alert-1-5916871] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.401Z] [INFO] [job:alert-1-5916872] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.402Z] [INFO] [job:alert-1-5916869] Completed successfully
+[2026-04-03T13:59:10.402Z] [INFO] [job:alert-1-5916873] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.403Z] [INFO] [job:alert-1-5916870] Completed successfully
+[2026-04-03T13:59:10.403Z] [INFO] [job:alert-1-5916871] Completed successfully
+[2026-04-03T13:59:10.403Z] [INFO] [job:alert-1-5916872] Completed successfully
+[2026-04-03T13:59:10.403Z] [INFO] [job:alert-1-5916874] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.403Z] [INFO] [job:alert-1-5916875] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.404Z] [INFO] [job:alert-1-5916876] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.405Z] [INFO] [job:alert-1-5916873] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.406Z] [INFO] [job:alert-1-5916874] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.406Z] [INFO] [job:alert-1-5916875] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.406Z] [INFO] [job:alert-1-5916876] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.407Z] [INFO] [job:alert-1-5916873] Completed successfully
+[2026-04-03T13:59:10.407Z] [INFO] [job:alert-1-5916874] Completed successfully
+[2026-04-03T13:59:10.407Z] [INFO] [job:alert-1-5916875] Completed successfully
+[2026-04-03T13:59:10.407Z] [INFO] [job:alert-1-5916876] Completed successfully
+[2026-04-03T13:59:10.407Z] [INFO] [job:alert-1-5916877] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.408Z] [INFO] [job:alert-1-5916878] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.408Z] [INFO] [job:alert-1-5916879] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.408Z] [INFO] [job:alert-1-5916880] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.410Z] [INFO] [job:alert-1-5916877] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.410Z] [INFO] [job:alert-1-5916878] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.410Z] [INFO] [job:alert-1-5916879] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.410Z] [INFO] [job:alert-1-5916880] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.411Z] [INFO] [job:alert-1-5916877] Completed successfully
+[2026-04-03T13:59:10.411Z] [INFO] [job:alert-1-5916881] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.412Z] [INFO] [job:alert-1-5916878] Completed successfully
+[2026-04-03T13:59:10.412Z] [INFO] [job:alert-1-5916879] Completed successfully
+[2026-04-03T13:59:10.412Z] [INFO] [job:alert-1-5916880] Completed successfully
+[2026-04-03T13:59:10.412Z] [INFO] [job:alert-1-5916882] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.413Z] [INFO] [job:alert-1-5916883] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.413Z] [INFO] [job:alert-1-5916884] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.414Z] [INFO] [job:alert-1-5916881] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.415Z] [INFO] [job:alert-1-5916882] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.415Z] [INFO] [job:alert-1-5916883] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.415Z] [INFO] [job:alert-1-5916884] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.416Z] [INFO] [job:alert-1-5916881] Completed successfully
+[2026-04-03T13:59:10.416Z] [INFO] [job:alert-1-5916882] Completed successfully
+[2026-04-03T13:59:10.416Z] [INFO] [job:alert-1-5916885] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.417Z] [INFO] [job:alert-1-5916886] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.418Z] [INFO] [job:alert-1-5916883] Completed successfully
+[2026-04-03T13:59:10.418Z] [INFO] [job:alert-1-5916884] Completed successfully
+[2026-04-03T13:59:10.418Z] [INFO] [job:alert-1-5916887] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.418Z] [INFO] [job:alert-1-5916888] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.419Z] [INFO] [job:alert-1-5916885] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.420Z] [INFO] [job:alert-1-5916886] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.420Z] [INFO] [job:alert-1-5916887] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.420Z] [INFO] [job:alert-1-5916888] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.421Z] [INFO] [job:alert-1-5916885] Completed successfully
+[2026-04-03T13:59:10.421Z] [INFO] [job:alert-1-5916886] Completed successfully
+[2026-04-03T13:59:10.421Z] [INFO] [job:alert-1-5916889] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.422Z] [INFO] [job:alert-1-5916890] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.423Z] [INFO] [job:alert-1-5916887] Completed successfully
+[2026-04-03T13:59:10.423Z] [INFO] [job:alert-1-5916888] Completed successfully
+[2026-04-03T13:59:10.423Z] [INFO] [job:alert-1-5916891] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.423Z] [INFO] [job:alert-1-5916892] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.425Z] [INFO] [job:alert-1-5916889] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.425Z] [INFO] [job:alert-1-5916890] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.426Z] [INFO] [job:alert-1-5916891] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.426Z] [INFO] [job:alert-1-5916892] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.427Z] [INFO] [job:alert-1-5916889] Completed successfully
+[2026-04-03T13:59:10.427Z] [INFO] [job:alert-1-5916890] Completed successfully
+[2026-04-03T13:59:10.427Z] [INFO] [job:alert-1-5916891] Completed successfully
+[2026-04-03T13:59:10.427Z] [INFO] [job:alert-1-5916893] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.428Z] [INFO] [job:alert-1-5916894] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.428Z] [INFO] [job:alert-1-5916895] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.429Z] [INFO] [job:alert-1-5916892] Completed successfully
+[2026-04-03T13:59:10.429Z] [INFO] [job:alert-1-5916896] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.430Z] [INFO] [job:alert-1-5916893] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.430Z] [INFO] [job:alert-1-5916894] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.430Z] [INFO] [job:alert-1-5916895] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.431Z] [INFO] [job:alert-1-5916896] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.432Z] [INFO] [job:alert-1-5916893] Completed successfully
+[2026-04-03T13:59:10.432Z] [INFO] [job:alert-1-5916894] Completed successfully
+[2026-04-03T13:59:10.432Z] [INFO] [job:alert-1-5916895] Completed successfully
+[2026-04-03T13:59:10.432Z] [INFO] [job:alert-1-5916897] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.432Z] [INFO] [job:alert-1-5917379] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.433Z] [INFO] [job:alert-1-5917380] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.434Z] [INFO] [job:alert-1-5916896] Completed successfully
+[2026-04-03T13:59:10.434Z] [INFO] [job:alert-1-5917381] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.435Z] [INFO] [job:alert-1-5916897] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.435Z] [INFO] [job:alert-1-5917379] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.436Z] [INFO] [job:alert-1-5917380] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.436Z] [INFO] [job:alert-1-5917381] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.437Z] [INFO] [job:alert-1-5916897] Completed successfully
+[2026-04-03T13:59:10.437Z] [INFO] [job:alert-1-5917379] Completed successfully
+[2026-04-03T13:59:10.437Z] [INFO] [job:alert-1-5917380] Completed successfully
+[2026-04-03T13:59:10.437Z] [INFO] [job:alert-1-5917381] Completed successfully
+[2026-04-03T13:59:10.438Z] [INFO] [job:alert-1-5917382] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.438Z] [INFO] [job:alert-1-5917383] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.438Z] [INFO] [job:alert-1-5917384] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.438Z] [INFO] [job:alert-1-5917385] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.440Z] [INFO] [job:alert-1-5917382] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.440Z] [INFO] [job:alert-1-5917383] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.440Z] [INFO] [job:alert-1-5917384] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.440Z] [INFO] [job:alert-1-5917385] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.441Z] [INFO] [job:alert-1-5917382] Completed successfully
+[2026-04-03T13:59:10.441Z] [INFO] [job:alert-1-5917386] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.443Z] [INFO] [job:alert-1-5917383] Completed successfully
+[2026-04-03T13:59:10.443Z] [INFO] [job:alert-1-5917384] Completed successfully
+[2026-04-03T13:59:10.443Z] [INFO] [job:alert-1-5917385] Completed successfully
+[2026-04-03T13:59:10.443Z] [INFO] [job:alert-1-5917387] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.443Z] [INFO] [job:alert-1-5917388] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.444Z] [INFO] [job:alert-1-5917389] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.445Z] [INFO] [job:alert-1-5917386] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.446Z] [INFO] [job:alert-1-5917387] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.446Z] [INFO] [job:alert-1-5917388] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.446Z] [INFO] [job:alert-1-5917389] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.447Z] [INFO] [job:alert-1-5917386] Completed successfully
+[2026-04-03T13:59:10.447Z] [INFO] [job:alert-1-5917387] Completed successfully
+[2026-04-03T13:59:10.448Z] [INFO] [job:alert-1-5917390] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.448Z] [INFO] [job:alert-1-5917391] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.450Z] [INFO] [job:alert-1-5917388] Completed successfully
+[2026-04-03T13:59:10.450Z] [INFO] [job:alert-1-5917389] Completed successfully
+[2026-04-03T13:59:10.450Z] [INFO] [job:alert-1-5917392] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.450Z] [INFO] [job:alert-1-5917393] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.452Z] [INFO] [job:alert-1-5917390] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.452Z] [INFO] [job:alert-1-5917391] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.453Z] [INFO] [job:alert-1-5917392] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.453Z] [INFO] [job:alert-1-5917393] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.454Z] [INFO] [job:alert-1-5917390] Completed successfully
+[2026-04-03T13:59:10.454Z] [INFO] [job:alert-1-5917391] Completed successfully
+[2026-04-03T13:59:10.454Z] [INFO] [job:alert-1-5917392] Completed successfully
+[2026-04-03T13:59:10.454Z] [INFO] [job:alert-1-5917394] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.454Z] [INFO] [job:alert-1-5917395] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.455Z] [INFO] [job:alert-1-5917396] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.456Z] [INFO] [job:alert-1-5917393] Completed successfully
+[2026-04-03T13:59:10.456Z] [INFO] [job:alert-1-5917397] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.458Z] [INFO] [job:alert-1-5917394] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.458Z] [INFO] [job:alert-1-5917395] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.458Z] [INFO] [job:alert-1-5917396] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.459Z] [INFO] [job:alert-1-5917397] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.460Z] [INFO] [job:alert-1-5917394] Completed successfully
+[2026-04-03T13:59:10.460Z] [INFO] [job:alert-1-5917395] Completed successfully
+[2026-04-03T13:59:10.460Z] [INFO] [job:alert-1-5917396] Completed successfully
+[2026-04-03T13:59:10.460Z] [INFO] [job:alert-1-5917397] Completed successfully
+[2026-04-03T13:59:10.460Z] [INFO] [job:alert-1-5917398] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.460Z] [INFO] [job:alert-1-5917399] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.461Z] [INFO] [job:alert-1-5917400] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.461Z] [INFO] [job:alert-1-5917401] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.463Z] [INFO] [job:alert-1-5917398] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.463Z] [INFO] [job:alert-1-5917399] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.463Z] [INFO] [job:alert-1-5917400] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.464Z] [INFO] [job:alert-1-5917401] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.466Z] [INFO] [job:alert-1-5917398] Completed successfully
+[2026-04-03T13:59:10.466Z] [INFO] [job:alert-1-5917402] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.468Z] [INFO] [job:alert-1-5917399] Completed successfully
+[2026-04-03T13:59:10.469Z] [INFO] [job:alert-1-5917400] Completed successfully
+[2026-04-03T13:59:10.469Z] [INFO] [job:alert-1-5917401] Completed successfully
+[2026-04-03T13:59:10.469Z] [INFO] [job:alert-1-5917403] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.469Z] [INFO] [job:alert-1-5917404] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.470Z] [INFO] [job:alert-1-5917405] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.472Z] [INFO] [job:alert-1-5917402] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.474Z] [INFO] [job:alert-1-5917403] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.474Z] [INFO] [job:alert-1-5917404] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.474Z] [INFO] [job:alert-1-5917405] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.488Z] [INFO] [job:alert-1-5917402] Completed successfully
+[2026-04-03T13:59:10.489Z] [INFO] [job:alert-1-5917403] Completed successfully
+[2026-04-03T13:59:10.489Z] [INFO] [job:alert-1-5917404] Completed successfully
+[2026-04-03T13:59:10.489Z] [INFO] [job:alert-1-5917405] Completed successfully
+[2026-04-03T13:59:10.489Z] [INFO] [job:alert-1-5917406] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.489Z] [INFO] [job:alert-1-5917407] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.490Z] [INFO] [job:alert-1-5917408] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.490Z] [INFO] [job:alert-1-5917409] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.493Z] [INFO] [job:alert-1-5917406] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.493Z] [INFO] [job:alert-1-5917407] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.493Z] [INFO] [job:alert-1-5917408] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.494Z] [INFO] [job:alert-1-5917409] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.496Z] [INFO] [job:alert-1-5917406] Completed successfully
+[2026-04-03T13:59:10.497Z] [INFO] [job:alert-1-5917407] Completed successfully
+[2026-04-03T13:59:10.497Z] [INFO] [job:alert-1-5917408] Completed successfully
+[2026-04-03T13:59:10.497Z] [INFO] [job:alert-1-5917409] Completed successfully
+[2026-04-03T13:59:10.497Z] [INFO] [job:alert-1-5917410] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.498Z] [INFO] [job:alert-1-5917411] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.498Z] [INFO] [job:alert-1-5917412] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.498Z] [INFO] [job:alert-1-5917413] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.501Z] [INFO] [job:alert-1-5917410] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.501Z] [INFO] [job:alert-1-5917411] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.502Z] [INFO] [job:alert-1-5917412] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.502Z] [INFO] [job:alert-1-5917413] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.503Z] [INFO] [job:alert-1-5917410] Completed successfully
+[2026-04-03T13:59:10.503Z] [INFO] [job:alert-1-5917411] Completed successfully
+[2026-04-03T13:59:10.503Z] [INFO] [job:alert-1-5917412] Completed successfully
+[2026-04-03T13:59:10.504Z] [INFO] [job:alert-1-5917414] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.504Z] [INFO] [job:alert-1-5917415] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T13:59:10.511Z] [INFO] [job:alert-1-5917413] Completed successfully
+[2026-04-03T13:59:10.513Z] [INFO] [job:alert-1-5917414] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.513Z] [INFO] [job:alert-1-5917415] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.309Z) — skipping
+[2026-04-03T13:59:10.515Z] [INFO] [job:alert-1-5917414] Completed successfully
+[2026-04-03T13:59:10.515Z] [INFO] [job:alert-1-5917415] Completed successfully
+[2026-04-03T13:59:10.541Z] [INFO] [job:alert-1-5915179] Done — sent email with 10 matches
+[2026-04-03T13:59:10.546Z] [INFO] [job:alert-1-5915179] Completed successfully
+[2026-04-03T14:00:02.054Z] [INFO] [job:alert-1-5917416] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T14:00:02.057Z] [INFO] [job:alert-1-5917416] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.491Z) — skipping
+[2026-04-03T14:00:02.058Z] [INFO] [job:alert-1-5917416] Completed successfully
+[2026-04-03T14:05:02.149Z] [INFO] [job:alert-1-5917417] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T14:05:02.151Z] [INFO] [job:alert-1-5917417] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.491Z) — skipping
+[2026-04-03T14:05:02.152Z] [INFO] [job:alert-1-5917417] Completed successfully
+[2026-04-03T14:10:02.493Z] [INFO] [job:alert-1-5917418] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T14:10:02.497Z] [INFO] [job:alert-1-5917418] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.491Z) — skipping
+[2026-04-03T14:10:02.506Z] [INFO] [job:alert-1-5917418] Completed successfully
+[2026-04-03T14:15:02.613Z] [INFO] [job:alert-1-5917419] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T14:15:02.614Z] [INFO] [job:alert-1-5917419] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.491Z) — skipping
+[2026-04-03T14:15:02.615Z] [INFO] [job:alert-1-5917419] Completed successfully
+[2026-04-03T14:20:02.675Z] [INFO] [job:alert-1-5917420] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T14:20:02.677Z] [INFO] [job:alert-1-5917420] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.491Z) — skipping
+[2026-04-03T14:20:02.677Z] [INFO] [job:alert-1-5917420] Completed successfully
+[2026-04-03T14:25:02.464Z] [INFO] [job:alert-1-5917421] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T14:25:02.474Z] [INFO] [job:alert-1-5917421] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.491Z) — skipping
+[2026-04-03T14:25:02.474Z] [INFO] [job:alert-1-5917421] Completed successfully
+[2026-04-03T14:30:02.234Z] [INFO] [job:alert-1-5917422] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T14:30:02.235Z] [INFO] [job:alert-1-5917422] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.491Z) — skipping
+[2026-04-03T14:30:02.236Z] [INFO] [job:alert-1-5917422] Completed successfully
+[2026-04-03T14:35:01.965Z] [INFO] [job:alert-1-5917423] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T14:35:01.966Z] [INFO] [job:alert-1-5917423] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.491Z) — skipping
+[2026-04-03T14:35:01.967Z] [INFO] [job:alert-1-5917423] Completed successfully
+[2026-04-03T14:40:01.746Z] [INFO] [job:alert-1-5917424] Starting — alert #1 (Honda Civic, UAE)
+[2026-04-03T14:40:01.747Z] [INFO] [job:alert-1-5917424] Alert #1 is within cooldown (freq=daily, lastRun=2026-04-03T13:59:10.491Z) — skipping
+[2026-04-03T14:40:01.748Z] [INFO] [job:alert-1-5917424] Completed successfully
