@@ -138,28 +138,29 @@ export default function DealerToolsPage() {
     const externalCount = results.filter((r) => r.source === "External").length;
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-[#020d1a] p-4 md:p-8 space-y-8">
+        <div className="min-h-screen p-4 md:p-8 space-y-8 animate-in fade-in duration-500">
             <div className="max-w-7xl mx-auto space-y-8">
 
                 {/* ── Header ── */}
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                        <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl">
-                            <Search className="size-7 text-indigo-600 dark:text-indigo-400" />
-                        </div>
-                        Dealer Tools
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-cyan-400/30 text-[10px] font-mono tracking-[0.25em] text-cyan-400 mb-4">
+                        <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-glow" />
+                        GLOBAL SEARCH · DEALER TOOLS
+                    </span>
+                    <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
+                        Market <span className="text-gradient">Intelligence</span>
                     </h1>
-                    <p className="text-gray-500 dark:text-gray-400 mt-1">
-                        Search car listings across iCar inventory and live market sources
+                    <p className="text-gray-400 mt-2 max-w-lg text-sm">
+                        Search vehicle listings across iCar inventory and aggregated live market sources worldwide.
                     </p>
                 </div>
 
                 {/* ── Search Form ── */}
                 <form
                     onSubmit={handleSearch}
-                    className="bg-white dark:bg-[#0a1526] rounded-3xl border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden"
+                    className="panel p-8 border-white/5 space-y-6"
                 >
-                    <div className="p-6">
+                    <div className="space-y-6">
                         <CarTaxonomyDropdowns
                             selectedMake={form.make}
                             selectedModel={form.model}
@@ -167,17 +168,17 @@ export default function DealerToolsPage() {
                             onChange={(field, value) => setForm(prev => ({ ...prev, [field]: value }))}
                         />
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {/* Region */}
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-mono uppercase tracking-[0.15em] text-gray-500 ml-1">
                                     Region *
                                 </label>
                                 <select
                                     name="region"
                                     value={form.region}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-[#020d1a] text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                    className="w-full h-12 px-4 rounded-xl glass border border-white/10 text-white outline-none focus:border-cyan-400/30 transition-all"
                                 >
                                     {REGIONS.map((r) => <option key={r} value={r}>{r}</option>)}
                                 </select>
@@ -262,23 +263,23 @@ export default function DealerToolsPage() {
                     )}
 
                     {/* Actions */}
-                    <div className="px-6 pb-6 flex items-center gap-3">
+                    <div className="flex items-center gap-4 pt-4">
                         <button
                             type="submit"
                             disabled={loading}
-                            className="flex items-center gap-2 px-8 py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white rounded-2xl font-bold transition-all shadow-lg shadow-indigo-500/20"
+                            className="flex items-center justify-center gap-2 px-10 h-14 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-2xl font-bold transition-all hover:scale-[1.02] disabled:opacity-50 shadow-lg shadow-cyan-500/20"
                         >
                             {loading ? <Loader2 className="size-5 animate-spin" /> : <Search className="size-5" />}
-                            {loading ? "Searching…" : "Search"}
+                            {loading ? "SEARCHING…" : "SEARCH MARKET"}
                         </button>
                         {searched && (
                             <button
                                 type="button"
                                 onClick={handleReset}
-                                className="flex items-center gap-2 px-5 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-2xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                className="flex items-center justify-center gap-2 px-6 h-14 glass border border-white/10 text-white rounded-2xl font-bold hover:bg-white/5 transition-all"
                             >
                                 <RotateCcw className="size-4" />
-                                Reset
+                                RESET
                             </button>
                         )}
                     </div>

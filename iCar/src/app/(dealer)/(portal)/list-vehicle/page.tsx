@@ -313,20 +313,28 @@ export default function ListVehicle() {
     const canGetValuation = valuationImages.length >= 1 && valuationImages.length <= 5;
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-[#020d1a] p-4 md:p-8">
+        <div className="min-h-screen p-4 md:p-8">
             <div className="max-w-5xl mx-auto space-y-8">
                 {/* Header with Progress */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">List Your Vehicle</h1>
-                        <p className="text-gray-500 dark:text-gray-400">
-                            {step === 1 ? "Step 1: Vehicle Valuation" : "Step 2: Listing Details"}
-                        </p>
+                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-cyan-400/30 text-[10px] font-mono tracking-[0.25em] text-cyan-400 mb-4">
+                            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-glow" />
+                            NEW ASSET · VALUATION
+                        </span>
+                        <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
+                            List Your <span className="text-gradient">Vehicle</span>
+                        </h1>
                     </div>
                     {/* Progress Indicator */}
-                    <div className="flex items-center gap-2">
-                        <div className={`h-2 w-16 rounded-full transition-all ${step === 1 ? 'bg-indigo-600' : 'bg-green-500'}`} />
-                        <div className={`h-2 w-16 rounded-full transition-all ${step === 2 ? 'bg-indigo-600' : 'bg-gray-200 dark:bg-gray-700'}`} />
+                    <div className="flex items-center gap-3">
+                        <div className="flex flex-col items-end gap-1">
+                            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Progress</span>
+                            <div className="flex gap-1.5">
+                                <div className={`h-1.5 w-12 rounded-full transition-all duration-500 ${step >= 1 ? 'bg-cyan-400 shadow-[0_0_8px_#22d3ee]' : 'bg-white/5'}`} />
+                                <div className={`h-1.5 w-12 rounded-full transition-all duration-500 ${step >= 2 ? 'bg-cyan-400 shadow-[0_0_8px_#22d3ee]' : 'bg-white/5'}`} />
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -344,17 +352,19 @@ export default function ListVehicle() {
 
                 {/* --- Step 1: Valuation --- */}
                 {step === 1 && (
-                    <div className="space-y-6 animate-in slide-in-from-right fade-in duration-300">
-                        <div className="bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm">
-                            <div className="flex items-center gap-2 mb-6">
-                                <Car className="size-5 text-indigo-500" />
-                                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Vehicle Details</h2>
+                    <div className="space-y-6 animate-in slide-in-from-right fade-in duration-500">
+                        <div className="panel p-8 border-white/5">
+                            <div className="flex items-center gap-3 mb-8">
+                                <div className="h-10 w-10 rounded-xl bg-cyan-400/10 flex items-center justify-center border border-cyan-400/20">
+                                    <Car className="size-5 text-cyan-400" />
+                                </div>
+                                <h2 className="text-xl font-bold text-white tracking-tight">Vehicle Details</h2>
                             </div>
 
-                            <form onSubmit={handleGetValuation} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <form onSubmit={handleGetValuation} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Region *</label>
-                                    <select name="region" value={formData.region} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white">
+                                    <label className="text-xs font-mono uppercase tracking-[0.1em] text-gray-400 ml-1">Region *</label>
+                                    <select name="region" value={formData.region} onChange={handleInputChange} required className="w-full h-12 px-4 rounded-xl glass border border-white/10 text-white outline-none focus:border-cyan-400/30 transition-all">
                                         <option value="UAE">UAE</option>
                                         <option value="Lebanon">Lebanon</option>
                                         <option value="Europe">Europe</option>
@@ -423,16 +433,17 @@ export default function ListVehicle() {
                                     </div>
                                 </div>
 
-                                <div className="col-span-1 md:col-span-2 pt-4">
+                                <div className="col-span-1 md:col-span-2 pt-6">
                                     <button
                                         type="submit"
                                         disabled={loading || !canGetValuation}
-                                        className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold transition-colors disabled:opacity-50"
+                                        className="w-full h-14 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-2xl font-bold transition-all hover:scale-[1.01] disabled:opacity-50 shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2"
                                     >
+                                        {loading ? <Loader2 className="animate-spin" /> : null}
                                         {loading ? "Analyzing with AI..." : "Get Valuation"}
                                     </button>
                                     {valuationImages.length === 0 && (
-                                        <p className="text-sm text-amber-600 dark:text-amber-400 mt-2">Upload 1–5 photos to enable valuation</p>
+                                        <p className="text-[10px] font-mono text-amber-400/70 mt-3 text-center tracking-widest uppercase">Upload 1–5 photos to enable valuation</p>
                                     )}
                                 </div>
                             </form>

@@ -74,145 +74,109 @@ export default function Page() {
     }
 
     return (
-        <div className="mx-auto w-full max-w-[970px]">
-            <Breadcrumb pageName="Profile Settings" />
+        <div className="mx-auto w-full max-w-4xl space-y-8 animate-in fade-in duration-500">
+            <div className="flex flex-col gap-2">
+                <span className="text-[10px] font-mono text-cyan-400/70 tracking-widest uppercase">Management</span>
+                <h1 className="text-3xl font-bold text-white tracking-tight">Profile Settings</h1>
+            </div>
 
-            <div className="grid grid-cols-1 gap-8">
-                <div className="col-span-5 xl:col-span-3">
-                    <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
-                        <div className="border-b border-stroke px-7 py-4 dark:border-dark-3">
-                            <h3 className="font-medium text-dark dark:text-white">
-                                Dealership Information
-                            </h3>
+            <div className="panel border-white/5 overflow-hidden">
+                <div className="border-b border-white/10 px-8 py-5 bg-white/[0.02]">
+                    <h3 className="font-bold text-white flex items-center gap-2">
+                        <span className="h-2 w-2 rounded-full bg-cyan-400" />
+                        Dealership Information
+                    </h3>
+                </div>
+                <div className="p-8">
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label className="text-xs font-mono text-gray-400 uppercase tracking-wider ml-1">Dealership Name</label>
+                                <input
+                                    className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all"
+                                    type="text"
+                                    name="dealershipName"
+                                    value={formData.dealershipName}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs font-mono text-gray-400 uppercase tracking-wider ml-1">Contact Person</label>
+                                <input
+                                    className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all"
+                                    type="text"
+                                    name="contactPerson"
+                                    value={formData.contactPerson}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
                         </div>
-                        <div className="p-7">
-                            <form onSubmit={handleSubmit}>
-                                <div className="mb-5.5 grid grid-cols-1 gap-4.5 sm:grid-cols-2">
-                                    <div className="w-full">
-                                        <label
-                                            className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
-                                            htmlFor="dealershipName"
-                                        >
-                                            Dealership Name
-                                        </label>
-                                        <input
-                                            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-white py-2.5 px-4.5 text-dark outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
-                                            type="text"
-                                            name="dealershipName"
-                                            id="dealershipName"
-                                            value={formData.dealershipName}
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="w-full">
-                                        <label
-                                            className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
-                                            htmlFor="contactPerson"
-                                        >
-                                            Contact Person
-                                        </label>
-                                        <input
-                                            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-white py-2.5 px-4.5 text-dark outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
-                                            type="text"
-                                            name="contactPerson"
-                                            id="contactPerson"
-                                            value={formData.contactPerson}
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                    </div>
-                                </div>
 
-                                <div className="mb-5.5">
-                                    <label
-                                        className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
-                                        htmlFor="phoneNumber"
-                                    >
-                                        Phone Number
-                                    </label>
-                                    <input
-                                        className="w-full rounded-[7px] border-[1.5px] border-stroke bg-white py-2.5 px-4.5 text-dark outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
-                                        type="text"
-                                        name="phoneNumber"
-                                        id="phoneNumber"
-                                        value={formData.phoneNumber}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="mb-5.5">
-                                    <label
-                                        className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
-                                        htmlFor="address"
-                                    >
-                                        Address
-                                    </label>
-                                    <input
-                                        className="w-full rounded-[7px] border-[1.5px] border-stroke bg-white py-2.5 px-4.5 text-dark outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
-                                        type="text"
-                                        name="address"
-                                        id="address"
-                                        value={formData.address}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-
-                                <div className="mb-5.5 grid grid-cols-1 gap-4.5 sm:grid-cols-2">
-                                    <div className="w-full">
-                                        <label
-                                            className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
-                                            htmlFor="city"
-                                        >
-                                            City
-                                        </label>
-                                        <input
-                                            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-white py-2.5 px-4.5 text-dark outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
-                                            type="text"
-                                            name="city"
-                                            id="city"
-                                            value={formData.city}
-                                            onChange={handleChange}
-                                        />
-                                    </div>
-                                    <div className="w-full">
-                                        <label
-                                            className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
-                                            htmlFor="country"
-                                        >
-                                            Country
-                                        </label>
-                                        <input
-                                            className="w-full rounded-[7px] border-[1.5px] border-stroke bg-white py-2.5 px-4.5 text-dark outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
-                                            type="text"
-                                            name="country"
-                                            id="country"
-                                            value={formData.country}
-                                            onChange={handleChange}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="flex justify-end gap-4.5">
-                                    <button
-                                        className="flex justify-center rounded-[7px] border border-stroke px-6 py-[7px] font-medium text-dark hover:shadow-1 dark:border-dark-3 dark:text-white"
-                                        type="button"
-                                        onClick={() => window.history.back()}
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        className="flex justify-center rounded-[7px] bg-primary px-6 py-[7px] font-medium text-white hover:bg-opacity-90"
-                                        type="submit"
-                                        disabled={updating}
-                                    >
-                                        {updating ? "Saving..." : "Save Changes"}
-                                    </button>
-                                </div>
-                            </form>
+                        <div className="space-y-2">
+                            <label className="text-xs font-mono text-gray-400 uppercase tracking-wider ml-1">Phone Number</label>
+                            <input
+                                className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all"
+                                type="text"
+                                name="phoneNumber"
+                                value={formData.phoneNumber}
+                                onChange={handleChange}
+                                required
+                            />
                         </div>
-                    </div>
+
+                        <div className="space-y-2">
+                            <label className="text-xs font-mono text-gray-400 uppercase tracking-wider ml-1">Address</label>
+                            <input
+                                className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all"
+                                type="text"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label className="text-xs font-mono text-gray-400 uppercase tracking-wider ml-1">City</label>
+                                <input
+                                    className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all"
+                                    type="text"
+                                    name="city"
+                                    value={formData.city}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs font-mono text-gray-400 uppercase tracking-wider ml-1">Country</label>
+                                <input
+                                    className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all"
+                                    type="text"
+                                    name="country"
+                                    value={formData.country}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex justify-end gap-4 pt-4">
+                            <button
+                                className="px-6 py-3 rounded-xl glass border border-white/10 text-white font-bold hover:bg-white/5 transition-all"
+                                type="button"
+                                onClick={() => window.history.back()}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 text-black font-bold hover:scale-[1.02] transition-all disabled:opacity-50 shadow-lg shadow-cyan-500/20"
+                                type="submit"
+                                disabled={updating}
+                            >
+                                {updating ? "Saving..." : "Save Changes"}
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

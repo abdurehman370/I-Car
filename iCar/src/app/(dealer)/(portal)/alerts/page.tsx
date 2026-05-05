@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react";
 import {
     Bell, Plus, Trash2, Calendar, Car, MapPin,
-    AlertCircle, Loader2, X, Pencil, Search,
+    AlertCircle, Loader2, X, Pencil, Search, ArrowUpRight
 } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { cn } from "@/lib/utils";
 import { CarTaxonomyDropdowns } from "@/components/FormElements/CarTaxonomyDropdowns";
 
 interface Alert {
@@ -183,25 +184,28 @@ export default function AlertsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-[#020d1a] p-4 md:p-8">
-            <div className="max-w-6xl mx-auto space-y-8">
+        <div className="min-h-screen p-4 md:p-8">
+            <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in duration-500">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                            <Bell className="size-8 text-indigo-600" />
-                            Car Alerts
+                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-cyan-400/30 text-[10px] font-mono tracking-[0.25em] text-cyan-400 mb-4">
+                            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-glow" />
+                            MARKET MONITOR · ALERTS
+                        </span>
+                        <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
+                            Car <span className="text-gradient">Alerts</span>
                         </h1>
-                        <p className="text-gray-500 dark:text-gray-400">
-                            Get notified when cars matching your criteria are found
+                        <p className="text-gray-400 mt-2 max-w-lg text-sm">
+                            Get real-time notifications when vehicles matching your criteria hit the market.
                         </p>
                     </div>
                     <button
                         onClick={openCreateModal}
-                        className="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold transition-all shadow-lg shadow-indigo-500/20"
+                        className="h-12 px-8 rounded-2xl bg-gradient-to-r from-cyan-500 to-teal-500 text-black font-bold flex items-center gap-2 transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(34,211,238,0.3)]"
                     >
                         <Plus className="size-5" />
-                        Create Alert
+                        Create New Alert
                     </button>
                 </div>
 
@@ -228,64 +232,40 @@ export default function AlertsPage() {
                         </button>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {alerts.map((alert) => (
                             <div
                                 key={alert.id}
-                                className={`bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-md transition-all relative group ${(alert.enabled ?? true) === false ? "opacity-75" : ""
+                                className={`panel p-6 border-white/5 hover:border-cyan-400/30 transition-all relative group bg-white/[0.02] hover:bg-white/[0.04] shadow-xl shadow-black/20 ${(alert.enabled ?? true) === false ? "opacity-60 saturate-50" : ""
                                     }`}
                             >
                                 {/* Toggle + Action buttons */}
-                                <div className="absolute top-4 right-4 flex items-center gap-2">
-                                    <button
-                                        onClick={() => handleToggle(alert)}
-                                        disabled={togglingId === alert.id}
-                                        title={(alert.enabled ?? true) ? "Pause alert (stop cron)" : "Resume alert"}
-                                        className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${(alert.enabled ?? true)
-                                            ? "bg-indigo-600"
-                                            : "bg-gray-300 dark:bg-gray-600"
-                                            }`}
-                                        role="switch"
-                                        aria-checked={alert.enabled ?? true}
-                                    >
-                                        <span
-                                            className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition ${(alert.enabled ?? true) ? "translate-x-5" : "translate-x-1"
-                                                }`}
-                                        />
-                                    </button>
-
+                                <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <button
                                         onClick={() => openEditModal(alert)}
-                                        className="p-2 text-gray-400 hover:text-indigo-500 transition-colors"
+                                        className="p-2 h-9 w-9 rounded-xl glass border border-white/10 text-gray-400 hover:text-cyan-400 transition-all"
                                         title="Edit alert"
                                     >
                                         <Pencil className="size-4" />
                                     </button>
                                     <button
                                         onClick={() => handleDelete(alert.id)}
-                                        className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                                        className="p-2 h-9 w-9 rounded-xl glass border border-white/10 text-gray-400 hover:text-red-400 transition-all"
                                         title="Delete alert"
                                     >
                                         <Trash2 className="size-4" />
                                     </button>
                                 </div>
 
-                                <div className="flex items-center gap-4 mb-6">
-                                    <div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl">
-                                        <Car className="size-6 text-indigo-600 dark:text-indigo-400" />
+                                <div className="flex items-center gap-4 mb-8">
+                                    <div className="h-12 w-12 rounded-2xl bg-cyan-400/10 flex items-center justify-center border border-cyan-400/20 shadow-[0_0_15px_rgba(34,211,238,0.1)]">
+                                        <Car className="size-6 text-cyan-400" />
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <div className="flex items-center gap-2">
-                                            <h3 className="font-bold text-gray-900 dark:text-white text-lg truncate">
-                                                {alert.make} {alert.model}
-                                            </h3>
-                                            {(alert.enabled ?? true) === false && (
-                                                <span className="shrink-0 absolute -top-2 left-2 rounded-full bg-green-200 px-2 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-700">
-                                                    Paused
-                                                </span>
-                                            )}
-                                        </div>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                                        <h3 className="font-bold text-white text-lg tracking-tight truncate">
+                                            {alert.make} {alert.model}
+                                        </h3>
+                                        <p className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mt-0.5">
                                             {alert.yearMin || alert.yearMax
                                                 ? `${alert.yearMin || "Any"} - ${alert.yearMax || "Any"}`
                                                 : "Any Year"} • {alert.variant || "Any Variant"}
@@ -293,25 +273,37 @@ export default function AlertsPage() {
                                     </div>
                                 </div>
 
-                                <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-white/5">
-                                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                                        <MapPin className="size-4 text-gray-400" />
-                                        <span>Region: <strong>{alert.region}</strong></span>
+                                <div className="grid grid-cols-2 gap-3 mb-6">
+                                    <div className="flex flex-col gap-1 p-3 rounded-xl bg-white/5 border border-white/5">
+                                        <span className="text-[9px] font-mono text-gray-500 uppercase tracking-wider">Region</span>
+                                        <span className="text-xs font-bold text-gray-200">{alert.region}</span>
                                     </div>
-                                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                                        <Calendar className="size-4 text-gray-400" />
-                                        <span>Frequency: <strong>{FREQUENCIES.find(f => f.value === alert.frequency)?.label ?? alert.frequency}</strong></span>
+                                    <div className="flex flex-col gap-1 p-3 rounded-xl bg-white/5 border border-white/5">
+                                        <span className="text-[9px] font-mono text-gray-500 uppercase tracking-wider">Frequency</span>
+                                        <span className="text-xs font-bold text-gray-200">{FREQUENCIES.find(f => f.value === alert.frequency)?.label ?? alert.frequency}</span>
                                     </div>
-                                    <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                                        <AlertCircle className="size-4 text-gray-400" />
-                                        <span>Last run: {alert.lastRun ? new Date(alert.lastRun).toLocaleDateString() : "Never"}</span>
-                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-between gap-4 pt-4 border-t border-white/5">
+                                    <button
+                                        onClick={() => handleToggle(alert)}
+                                        disabled={togglingId === alert.id}
+                                        className={cn(
+                                            "flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all",
+                                            (alert.enabled ?? true) 
+                                                ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_10px_rgba(34,211,238,0.1)]" 
+                                                : "bg-white/5 text-gray-500 border border-white/5"
+                                        )}
+                                    >
+                                        <div className={cn("h-1.5 w-1.5 rounded-full", (alert.enabled ?? true) ? "bg-cyan-400 animate-pulse" : "bg-gray-600")} />
+                                        {(alert.enabled ?? true) ? "Active" : "Paused"}
+                                    </button>
+
                                     <Link
                                         href={`/alerts/${alert.id}/results`}
-                                        className="mt-2 flex items-center justify-center gap-2 w-full py-2.5 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 rounded-2xl text-sm font-semibold transition-colors"
+                                        className="text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1.5 group/link"
                                     >
-                                        <Search className="size-4" />
-                                        View Matches
+                                        View Matches <ArrowUpRight className="size-3.5 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
                                     </Link>
                                 </div>
                             </div>
