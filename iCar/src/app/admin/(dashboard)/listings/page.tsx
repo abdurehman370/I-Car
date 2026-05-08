@@ -74,7 +74,7 @@ export default function AdminListingsPage() {
       <>
         <Breadcrumb pageName="Active Listings" />
         <div className="flex items-center justify-center py-24">
-          <Loader2 className="h-10 w-10 animate-spin text-indigo-500" />
+          <Loader2 className="h-10 w-10 animate-spin text-cyan-500" />
         </div>
       </>
     );
@@ -126,7 +126,7 @@ function AdminListingCard({ listing }: { listing: Listing }) {
   return (
     <Link
       href={`/admin/listings/${listing.id}`}
-      className="group flex flex-col overflow-hidden rounded-[2rem] border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:border-indigo-500/30 dark:border-white/5 dark:bg-gray-800 dark:shadow-lg cursor-pointer"
+      className="group flex flex-col overflow-hidden rounded-[2rem] border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:border-cyan-500/30 dark:border-white/5 dark:bg-gray-800 dark:shadow-lg cursor-pointer"
     >
       {/* Image */}
       <div className="relative aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
@@ -160,7 +160,7 @@ function AdminListingCard({ listing }: { listing: Listing }) {
             </span>
           )}
         </h3>
-        <p className="mt-1 text-lg font-bold text-indigo-600 dark:text-indigo-400">
+        <p className="mt-1 text-lg font-bold text-cyan-500 dark:text-cyan-400">
           {listing.currency} {listing.price.toLocaleString()}
         </p>
 
@@ -178,7 +178,7 @@ function AdminListingCard({ listing }: { listing: Listing }) {
         </div>
 
         <div className="mt-auto flex items-center pt-3">
-          <span className="flex items-center gap-1 text-xs font-semibold text-indigo-600 transition-colors group-hover:text-indigo-700 dark:text-indigo-400 dark:group-hover:text-indigo-300">
+          <span className="flex items-center gap-1 text-xs font-semibold text-cyan-500 transition-colors group-hover:text-cyan-600 dark:text-cyan-400 dark:group-hover:text-cyan-300">
             View listing
             <ChevronRight className="h-3.5 w-3.5" />
           </span>

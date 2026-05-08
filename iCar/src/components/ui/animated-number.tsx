@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+ import { useEffect, useState } from "react";
 
 export function AnimatedNumber({ value, duration = 1200, prefix = "", suffix = "", decimals = 0 }: {
   value: number; duration?: number; prefix?: string; suffix?: string; decimals?: number;

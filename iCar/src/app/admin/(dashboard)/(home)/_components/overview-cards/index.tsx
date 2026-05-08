@@ -15,11 +15,11 @@ export async function OverviewCardsGroup() {
         className="group relative cursor-pointer overflow-hidden bg-white rounded-2xl px-6 pt-12 pb-10 shadow-2xl ring-1 ring-gray-900/5 transition-all duration-500 transform hover:scale-105 hover:shadow-3xl w-full sm:px-12 dark:bg-gray-800 dark:ring-gray-700"
       >
         <span
-          className="absolute top-0 left-0 z-0 h-32 w-32 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 opacity-75 transition-all duration-500 transform group-hover:scale-[20]"
+          className="absolute top-0 left-0 z-0 h-32 w-32 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 opacity-75 transition-all duration-500 transform group-hover:scale-[20]"
         ></span>
         <div className="relative z-10 mx-auto max-w-md">
           <span
-            className="grid h-24 w-24 place-items-center rounded-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-500 transform group-hover:bg-gradient-to-r group-hover:from-pink-500 group-hover:to-yellow-500"
+            className="grid h-24 w-24 place-items-center rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 transition-all duration-500 transform group-hover:bg-gradient-to-r group-hover:from-cyan-600 group-hover:to-teal-600"
           >
             <IoCarSportSharp className="h-12 w-12 text-white transition-all" />
           </span>
@@ -33,7 +33,7 @@ export async function OverviewCardsGroup() {
           <div className="pt-6 text-lg font-semibold leading-7">
             <p>
               <span
-                className="text-purple-500 transition-all duration-500 group-hover:text-white"
+                className="text-cyan-500 transition-all duration-500 group-hover:text-white"
               >Explore →</span
               >
             </p>
@@ -45,9 +45,9 @@ export async function OverviewCardsGroup() {
         href="/admin/dealers"
         className="group relative block overflow-hidden rounded-2xl bg-white px-6 pt-12 pb-10 shadow-2xl ring-1 ring-gray-900/5 transition-all duration-500 hover:scale-105 hover:shadow-3xl dark:bg-gray-800 dark:ring-gray-700 sm:px-12"
       >
-        <span className="absolute top-0 left-0 z-0 h-32 w-32 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 opacity-75 transition-all duration-500 group-hover:scale-[20]"></span>
+        <span className="absolute top-0 left-0 z-0 h-32 w-32 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 opacity-75 transition-all duration-500 group-hover:scale-[20]"></span>
         <div className="relative z-10 mx-auto max-w-md">
-          <span className="grid h-24 w-24 place-items-center rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 transition-all duration-500 group-hover:bg-gradient-to-r group-hover:from-indigo-600 group-hover:to-cyan-600">
+          <span className="grid h-24 w-24 place-items-center rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 transition-all duration-500 group-hover:bg-gradient-to-r group-hover:from-cyan-600 group-hover:to-teal-600">
             <Building2 className="h-12 w-12 text-white transition-all" />
           </span>
           <div className="space-y-6 pt-6 text-lg leading-8 text-gray-700 transition-all duration-500 group-hover:text-white">
@@ -55,7 +55,7 @@ export async function OverviewCardsGroup() {
           </div>
           <div className="pt-6 text-lg font-semibold leading-7">
             <p>
-              <span className="text-indigo-500 transition-all duration-500 group-hover:text-white">
+              <span className="text-cyan-500 transition-all duration-500 group-hover:text-white">
                 View all dealers →
               </span>
             </p>

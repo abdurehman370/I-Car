@@ -191,25 +191,25 @@ export default function AdminTaxonomyPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Makes Column */}
-                <div className="flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-white/5 overflow-hidden">
-                    <div className="p-5 border-b border-gray-50 dark:border-white/5 bg-gray-50/50 dark:bg-white/5 flex items-center justify-between">
-                        <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                            <Package className="size-5 text-indigo-500" />
+                <div className="flex flex-col panel border-white/5 bg-white/[0.02] shadow-xl shadow-black/20 overflow-hidden">
+                    <div className="p-5 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
+                        <h3 className="font-bold text-white flex items-center gap-2 tracking-tight">
+                            <Package className="size-5 text-cyan-400" />
                             Makes
                         </h3>
-                        <span className="text-xs text-gray-500">{makes.length} items</span>
+                        <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">{makes.length} items</span>
                     </div>
 
-                    <div className="p-4 border-b border-gray-50 dark:border-white/5">
+                    <div className="p-4 border-b border-white/5">
                         <form onSubmit={handleAddMake} className="flex gap-2">
                             <input
                                 type="text"
                                 placeholder="New Make..."
                                 value={newMake}
                                 onChange={(e) => setNewMake(e.target.value)}
-                                className="flex-1 px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-900 border dark:border-white/10 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                                className="flex-1 px-3 py-2 rounded-lg bg-white/[0.05] border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-400/50 outline-none"
                             />
-                            <button disabled={submitting} className="p-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                            <button disabled={submitting} className="p-2 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-lg hover:scale-105 transition-all">
                                 <Plus className="size-5" />
                             </button>
                         </form>
@@ -224,8 +224,8 @@ export default function AdminTaxonomyPage() {
                                     key={make.id}
                                     onClick={() => setSelectedMake(make)}
                                     className={`w-full flex items-center justify-between p-3 rounded-xl transition-all ${selectedMake?.id === make.id
-                                            ? "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-500/20"
-                                            : "hover:bg-gray-50 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300 border border-transparent"
+                                            ? "bg-cyan-500/10 text-cyan-400 border border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.1)]"
+                                            : "hover:bg-white/5 text-gray-400 border border-transparent"
                                         }`}
                                 >
                                     <span className="font-medium text-sm capitalize">{make.name}</span>
@@ -243,16 +243,16 @@ export default function AdminTaxonomyPage() {
                 </div>
 
                 {/* Models Column */}
-                <div className="flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-white/5 overflow-hidden">
-                    <div className="p-5 border-b border-gray-50 dark:border-white/5 bg-gray-50/50 dark:bg-white/5 flex items-center justify-between">
-                        <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                            <Layers className="size-5 text-purple-500" />
-                            Models {selectedMake && <span className="text-gray-400 font-normal">for {selectedMake.name}</span>}
+                <div className="flex flex-col panel border-white/5 bg-white/[0.02] shadow-xl shadow-black/20 overflow-hidden">
+                    <div className="p-5 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
+                        <h3 className="font-bold text-white flex items-center gap-2 tracking-tight">
+                            <Layers className="size-5 text-cyan-400" />
+                            Models {selectedMake && <span className="text-gray-500 font-normal">for {selectedMake.name}</span>}
                         </h3>
-                        <span className="text-xs text-gray-500">{models.length} items</span>
+                        <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">{models.length} items</span>
                     </div>
 
-                    <div className="p-4 border-b border-gray-50 dark:border-white/5">
+                    <div className="p-4 border-b border-white/5">
                         <form onSubmit={handleAddModel} className="flex gap-2">
                             <input
                                 type="text"
@@ -260,9 +260,9 @@ export default function AdminTaxonomyPage() {
                                 disabled={!selectedMake}
                                 value={newModel}
                                 onChange={(e) => setNewModel(e.target.value)}
-                                className="flex-1 px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-900 border dark:border-white/10 text-sm focus:ring-2 focus:ring-indigo-500 outline-none disabled:opacity-50"
+                                className="flex-1 px-3 py-2 rounded-lg bg-white/[0.05] border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-400/50 outline-none disabled:opacity-30"
                             />
-                            <button disabled={submitting || !selectedMake} className="p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50">
+                            <button disabled={submitting || !selectedMake} className="p-2 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-lg hover:scale-105 transition-all disabled:opacity-30">
                                 <Plus className="size-5" />
                             </button>
                         </form>
@@ -282,8 +282,8 @@ export default function AdminTaxonomyPage() {
                                     key={model.id}
                                     onClick={() => setSelectedModel(model)}
                                     className={`w-full flex items-center justify-between p-3 rounded-xl transition-all ${selectedModel?.id === model.id
-                                            ? "bg-purple-50 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-100 dark:border-purple-500/20"
-                                            : "hover:bg-gray-50 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300 border border-transparent"
+                                            ? "bg-cyan-500/10 text-cyan-400 border border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.1)]"
+                                            : "hover:bg-white/5 text-gray-400 border border-transparent"
                                         }`}
                                 >
                                     <span className="font-medium text-sm">{model.name}</span>
@@ -301,16 +301,16 @@ export default function AdminTaxonomyPage() {
                 </div>
 
                 {/* Variants Column */}
-                <div className="flex flex-col bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-white/5 overflow-hidden">
-                    <div className="p-5 border-b border-gray-50 dark:border-white/5 bg-gray-50/50 dark:bg-white/5 flex items-center justify-between">
-                        <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                            <Type className="size-5 text-emerald-500" />
-                            Variants {selectedModel && <span className="text-gray-400 font-normal">for {selectedModel.name}</span>}
+                <div className="flex flex-col panel border-white/5 bg-white/[0.02] shadow-xl shadow-black/20 overflow-hidden">
+                    <div className="p-5 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
+                        <h3 className="font-bold text-white flex items-center gap-2 tracking-tight">
+                            <Type className="size-5 text-cyan-400" />
+                            Variants {selectedModel && <span className="text-gray-500 font-normal">for {selectedModel.name}</span>}
                         </h3>
-                        <span className="text-xs text-gray-500">{variants.length} items</span>
+                        <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">{variants.length} items</span>
                     </div>
 
-                    <div className="p-4 border-b border-gray-50 dark:border-white/5">
+                    <div className="p-4 border-b border-white/5">
                         <form onSubmit={handleAddVariant} className="flex gap-2">
                             <input
                                 type="text"
@@ -318,9 +318,9 @@ export default function AdminTaxonomyPage() {
                                 disabled={!selectedModel}
                                 value={newVariant}
                                 onChange={(e) => setNewVariant(e.target.value)}
-                                className="flex-1 px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-900 border dark:border-white/10 text-sm focus:ring-2 focus:ring-indigo-500 outline-none disabled:opacity-50"
+                                className="flex-1 px-3 py-2 rounded-lg bg-white/[0.05] border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-400/50 outline-none disabled:opacity-30"
                             />
-                            <button disabled={submitting || !selectedModel} className="p-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors disabled:opacity-50">
+                            <button disabled={submitting || !selectedModel} className="p-2 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-lg hover:scale-105 transition-all disabled:opacity-30">
                                 <Plus className="size-5" />
                             </button>
                         </form>
@@ -338,7 +338,7 @@ export default function AdminTaxonomyPage() {
                             variants.map((variant) => (
                                 <div
                                     key={variant.id}
-                                    className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300 transition-all border border-transparent"
+                                    className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-white/5 text-gray-400 transition-all border border-transparent"
                                 >
                                     <span className="font-medium text-sm">{variant.name}</span>
                                     <Trash2

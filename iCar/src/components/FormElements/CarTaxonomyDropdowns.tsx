@@ -105,93 +105,93 @@ export function CarTaxonomyDropdowns({
     }, [selectedModel, models]);
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Make */}
             <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label className="text-xs font-mono text-gray-400 uppercase tracking-[0.15em] ml-1">
                     Make *
                 </label>
-                <div className="relative">
+                <div className="relative group">
                     <select
                         name="make"
                         value={selectedMake}
                         onChange={(e) => {
                             onChange("make", e.target.value);
-                            onChange("model", ""); // Reset model and variant
+                            onChange("model", "");
                             onChange("variant", "");
                         }}
                         required
-                        className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white appearance-none focus:ring-2 focus:ring-indigo-500 outline-none"
+                        className="w-full h-12 pl-4 pr-10 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white appearance-none focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all cursor-pointer group-hover:bg-white/[0.08]"
                     >
-                        <option value="">{loadingMakes ? "Loading..." : "Select Make"}</option>
+                        <option value="" className="bg-[#050b14]">{loadingMakes ? "Loading..." : "Select Make"}</option>
                         {makes.map((make) => (
-                            <option key={make.id} value={make.name}>
+                            <option key={make.id} value={make.name} className="bg-[#050b14]">
                                 {make.name.charAt(0).toUpperCase() + make.name.slice(1)}
                             </option>
                         ))}
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
-                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                    <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400 group-focus-within:text-cyan-400 transition-colors">
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                     </div>
                 </div>
             </div>
 
             {/* Model */}
             <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label className="text-xs font-mono text-gray-400 uppercase tracking-[0.15em] ml-1">
                     Model *
                 </label>
-                <div className="relative">
+                <div className="relative group">
                     <select
                         name="model"
                         value={selectedModel}
                         onChange={(e) => {
                             onChange("model", e.target.value);
-                            onChange("variant", ""); // Reset variant
+                            onChange("variant", "");
                         }}
                         required
                         disabled={!selectedMake || loadingModels}
-                        className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white appearance-none focus:ring-2 focus:ring-indigo-500 outline-none disabled:opacity-50"
+                        className="w-full h-12 pl-4 pr-10 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white appearance-none focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all cursor-pointer group-hover:bg-white/[0.08] disabled:opacity-30 disabled:cursor-not-allowed"
                     >
-                        <option value="">
+                        <option value="" className="bg-[#050b14]">
                             {!selectedMake ? "Select Make First" : loadingModels ? "Loading..." : "Select Model"}
                         </option>
                         {models.map((model) => (
-                            <option key={model.id} value={model.name}>
+                            <option key={model.id} value={model.name} className="bg-[#050b14]">
                                 {model.name}
                             </option>
                         ))}
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
-                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                    <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400 group-focus-within:text-cyan-400 transition-colors">
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                     </div>
                 </div>
             </div>
 
             {/* Variant */}
-            <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <div className="space-y-2 sm:col-span-2">
+                <label className="text-xs font-mono text-gray-400 uppercase tracking-[0.15em] ml-1">
                     Variant
                 </label>
-                <div className="relative">
+                <div className="relative group">
                     <select
                         name="variant"
                         value={selectedVariant}
                         onChange={(e) => onChange("variant", e.target.value)}
                         disabled={!selectedModel || loadingVariants}
-                        className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white appearance-none focus:ring-2 focus:ring-indigo-500 outline-none disabled:opacity-50"
+                        className="w-full h-12 pl-4 pr-10 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white appearance-none focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all cursor-pointer group-hover:bg-white/[0.08] disabled:opacity-30 disabled:cursor-not-allowed"
                     >
-                        <option value="">
+                        <option value="" className="bg-[#050b14]">
                             {!selectedModel ? "Select Model First" : loadingVariants ? "Loading..." : "Select Variant (Optional)"}
                         </option>
                         {variants.map((variant) => (
-                            <option key={variant.id} value={variant.name}>
+                            <option key={variant.id} value={variant.name} className="bg-[#050b14]">
                                 {variant.name}
                             </option>
                         ))}
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
-                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                    <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400 group-focus-within:text-cyan-400 transition-colors">
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Upload, X, PlusCircle, Save, Send, Car, DollarSign, FileText, ChevronRight, ArrowLeft } from "lucide-react";
+import { Upload, X, PlusCircle, Save, Send, Car, DollarSign, FileText, ChevronRight, ArrowLeft, Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 // --- Types & Constants ---
 const COMMON_FEATURES = [
@@ -425,7 +425,7 @@ export default function ListVehicle() {
                                             </div>
                                         ))}
                                         {valuationPreviews.length < 5 && (
-                                            <label className="w-full h-20 flex items-center justify-center border-2 border-dashed rounded-lg cursor-pointer hover:border-indigo-500">
+                                            <label className="w-full h-20 flex items-center justify-center border-2 border-dashed rounded-lg cursor-pointer hover:border-cyan-500">
                                                 <PlusCircle className="size-6 text-gray-400" />
                                                 <input type="file" onChange={handleValuationImageUpload} className="hidden" multiple accept="image/*" />
                                             </label>
@@ -454,13 +454,13 @@ export default function ListVehicle() {
                             <div className="space-y-4">
                                 <div className="bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden">
                                     <div className="flex items-center gap-2 mb-4">
-                                        <DollarSign className="size-5 text-indigo-500" />
+                                        <DollarSign className="size-5 text-cyan-500" />
                                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Evaluation Report</h3>
                                     </div>
                                     <div className="prose prose-sm dark:prose-invert max-w-none max-h-[60vh] overflow-y-auto space-y-4">
                                         <ReactMarkdown
                                             components={{
-                                                h2: ({ children }) => <h2 className="text-base font-semibold mt-6 mb-2 text-indigo-600 dark:text-indigo-400 first:mt-0">{children}</h2>,
+                                                h2: ({ children }) => <h2 className="text-base font-semibold mt-6 mb-2 text-cyan-500 dark:text-cyan-400 first:mt-0">{children}</h2>,
                                                 ul: ({ children }) => <ul className="list-disc pl-5 space-y-1 my-2">{children}</ul>,
                                                 strong: ({ children }) => <strong className="text-gray-900 dark:text-white font-semibold">{children}</strong>,
                                                 p: ({ children }) => <p className="my-1 text-gray-700 dark:text-gray-300">{children}</p>,
@@ -478,11 +478,11 @@ export default function ListVehicle() {
                                                     <div
                                                         key={label}
                                                         className={`rounded-xl border p-4 shadow-sm ${isDealerBuy
-                                                            ? "border-indigo-300 dark:border-indigo-500 bg-indigo-50/50 dark:bg-indigo-500/10 ring-1 ring-indigo-200 dark:ring-indigo-500/30"
+                                                            ? "border-cyan-300 dark:border-cyan-500 bg-cyan-50/50 dark:bg-cyan-500/10 ring-1 ring-cyan-200 dark:ring-cyan-500/30"
                                                             : "border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5"
                                                             }`}
                                                     >
-                                                        <p className={`text-xs font-medium uppercase tracking-wide mb-1 ${isDealerBuy ? "text-indigo-600 dark:text-indigo-400" : "text-gray-500 dark:text-gray-400"
+                                                        <p className={`text-xs font-medium uppercase tracking-wide mb-1 ${isDealerBuy ? "text-cyan-500 dark:text-cyan-400" : "text-gray-500 dark:text-gray-400"
                                                             }`}>{label}</p>
                                                         <p className="text-lg font-bold text-gray-900 dark:text-white">{range}</p>
                                                     </div>
@@ -493,7 +493,7 @@ export default function ListVehicle() {
                                 </div>
                                 <button
                                     onClick={proceedToStep2}
-                                    className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-bold hover:from-indigo-700 transition-colors flex items-center justify-center gap-2"
+                                    className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-xl font-bold transition-all hover:scale-[1.02] flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20"
                                 >
                                     Proceed to List Vehicle <ChevronRight className="size-5" />
                                 </button>
@@ -501,7 +501,7 @@ export default function ListVehicle() {
                         )}
                         {/* Skip Valuation Link */}
                         <div className="text-center">
-                            <button onClick={proceedToStep2} className="text-sm text-gray-500 hover:text-indigo-600 underline">
+                            <button onClick={proceedToStep2} className="text-sm text-gray-500 hover:text-cyan-400 underline">
                                 Skip valuation and list directly
                             </button>
                         </div>
@@ -517,7 +517,7 @@ export default function ListVehicle() {
 
                         <div className="bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm">
                             <div className="flex items-center gap-2 mb-6">
-                                <FileText className="size-5 text-indigo-500" />
+                                <FileText className="size-5 text-cyan-500" />
                                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Listing Details</h2>
                             </div>
 
@@ -566,14 +566,14 @@ export default function ListVehicle() {
                                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
                                         {COMMON_FEATURES.map(f => (
                                             <label key={f} className="flex items-center gap-2 cursor-pointer">
-                                                <input type="checkbox" checked={selectedFeatures.includes(f)} onChange={() => toggleFeature(f)} className="w-4 h-4 text-indigo-600 rounded" />
+                                                <input type="checkbox" checked={selectedFeatures.includes(f)} onChange={() => toggleFeature(f)} className="w-4 h-4 text-cyan-500 rounded" />
                                                 <span className="text-sm text-gray-700 dark:text-gray-300">{f}</span>
                                             </label>
                                         ))}
                                     </div>
                                     <div className="flex gap-2">
                                         <input type="text" value={customFeature} onChange={(e) => setCustomFeature(e.target.value)} onKeyPress={(e) => e.key === "Enter" && addCustomFeature()} className="flex-1 px-4 py-2 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="Add custom feature..." />
-                                        <button type="button" onClick={addCustomFeature} className="px-4 py-2 bg-indigo-600 text-white rounded-xl"><PlusCircle className="size-5" /></button>
+                                        <button type="button" onClick={addCustomFeature} className="px-4 py-2 bg-cyan-500 text-black font-bold rounded-xl"><PlusCircle className="size-5" /></button>
                                     </div>
                                 </div>
                                 {/* Images */}
@@ -587,7 +587,7 @@ export default function ListVehicle() {
                                             </div>
                                         ))}
                                         {listingPreviews.length < 5 && (
-                                            <label className="w-full h-32 flex flex-col items-center justify-center border-2 border-dashed rounded-xl cursor-pointer hover:border-indigo-500">
+                                            <label className="w-full h-32 flex flex-col items-center justify-center border-2 border-dashed rounded-xl cursor-pointer hover:border-cyan-500">
                                                 <Upload className="size-8 text-gray-400 mb-2" />
                                                 <span className="text-xs text-gray-500">Upload Images</span>
                                                 <input type="file" onChange={handleListingImageUpload} className="hidden" multiple accept="image/*" />
@@ -602,7 +602,7 @@ export default function ListVehicle() {
                             <button type="button" onClick={() => handleSubmitListing("DRAFT")} disabled={loading} className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-2xl font-semibold hover:bg-gray-300 transition-colors disabled:opacity-50">
                                 <Save className="size-5" /> {loading ? "Saving..." : "Save Draft"}
                             </button>
-                            <button type="button" onClick={() => handleSubmitListing("ACTIVE")} disabled={loading} className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-semibold hover:from-indigo-700 transition-colors disabled:opacity-50">
+                            <button type="button" onClick={() => handleSubmitListing("ACTIVE")} disabled={loading} className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-2xl font-bold hover:from-indigo-700 transition-colors disabled:opacity-50">
                                 <Send className="size-5" /> {loading ? "Publishing..." : "Publish Listing"}
                             </button>
                         </div>

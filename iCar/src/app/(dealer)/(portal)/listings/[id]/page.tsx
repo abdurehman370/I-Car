@@ -80,7 +80,7 @@ export default function ListingDetailPage() {
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-[60vh]">
-                <Loader2 className="size-10 text-indigo-600 animate-spin" />
+                <Loader2 className="size-10 text-cyan-500 animate-spin" />
             </div>
         );
     }
@@ -93,7 +93,7 @@ export default function ListingDetailPage() {
                 <p className="text-gray-500 dark:text-gray-400">This listing may have been removed or the link is invalid.</p>
                 <button
                     onClick={() => router.back()}
-                    className="mt-2 flex items-center gap-2 px-5 py-2.5 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
+                    className="mt-2 flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-xl font-bold transition-all hover:scale-[1.02] shadow-[0_0_15px_rgba(34,211,238,0.2)]"
                 >
                     <ChevronLeft className="size-4" /> Go Back
                 </button>
@@ -118,7 +118,7 @@ export default function ListingDetailPage() {
             {/* Back button */}
             <button
                 onClick={() => router.back()}
-                className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium"
+                className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-cyan-400 transition-colors font-medium"
             >
                 <ChevronLeft className="size-5" />
                 Back
@@ -147,7 +147,7 @@ export default function ListingDetailPage() {
                                                 onClick={() => setActiveImage(idx)}
                                                 className={`flex-shrink-0 w-20 h-14 rounded-xl overflow-hidden border-2 transition-all ${
                                                     activeImage === idx
-                                                        ? "border-indigo-500 shadow-md"
+                                                        ? "border-cyan-500 shadow-md shadow-cyan-500/20"
                                                         : "border-transparent opacity-60 hover:opacity-100"
                                                 }`}
                                             >
@@ -194,22 +194,22 @@ export default function ListingDetailPage() {
                         {/* Key specs */}
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-gray-100 dark:border-white/5">
                             <div className="flex flex-col items-center gap-1 p-3 bg-gray-50 dark:bg-[#020d1a] rounded-2xl">
-                                <Calendar className="size-5 text-indigo-500" />
+                                <Calendar className="size-5 text-cyan-500" />
                                 <span className="text-xs text-gray-500 dark:text-gray-400">Year</span>
                                 <span className="font-bold text-gray-900 dark:text-white">{listing.year}</span>
                             </div>
                             <div className="flex flex-col items-center gap-1 p-3 bg-gray-50 dark:bg-[#020d1a] rounded-2xl">
-                                <Gauge className="size-5 text-indigo-500" />
+                                <Gauge className="size-5 text-cyan-500" />
                                 <span className="text-xs text-gray-500 dark:text-gray-400">Mileage</span>
                                 <span className="font-bold text-gray-900 dark:text-white">{listing.mileage.toLocaleString()} KM</span>
                             </div>
                             <div className="flex flex-col items-center gap-1 p-3 bg-gray-50 dark:bg-[#020d1a] rounded-2xl">
-                                <Settings2 className="size-5 text-indigo-500" />
+                                <Settings2 className="size-5 text-cyan-500" />
                                 <span className="text-xs text-gray-500 dark:text-gray-400">Condition</span>
                                 <span className="font-bold text-gray-900 dark:text-white capitalize">{listing.condition.toLowerCase()}</span>
                             </div>
                             <div className="flex flex-col items-center gap-1 p-3 bg-gray-50 dark:bg-[#020d1a] rounded-2xl">
-                                <MapPin className="size-5 text-indigo-500" />
+                                <MapPin className="size-5 text-cyan-500" />
                                 <span className="text-xs text-gray-500 dark:text-gray-400">Region</span>
                                 <span className="font-bold text-gray-900 dark:text-white">{listing.region}</span>
                             </div>
@@ -229,7 +229,7 @@ export default function ListingDetailPage() {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 {features.map((feature, i) => (
                                     <div key={i} className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-                                        <CheckCircle className="size-4 text-indigo-500 flex-shrink-0" />
+                                        <CheckCircle className="size-4 text-cyan-500 flex-shrink-0" />
                                         {feature}
                                     </div>
                                 ))}
@@ -243,7 +243,7 @@ export default function ListingDetailPage() {
                     {/* Price card */}
                     <div className="bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm sticky top-6">
                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Asking Price</p>
-                        <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
+                        <p className="text-3xl font-bold text-cyan-500 dark:text-cyan-400">
                             {listing.currency} {listing.price.toLocaleString()}
                         </p>
 
@@ -256,7 +256,7 @@ export default function ListingDetailPage() {
                         {/* Dealer info */}
                         <div className="mt-6 pt-6 border-t border-gray-100 dark:border-white/5 space-y-3">
                             <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                                <Building2 className="size-4 text-indigo-500" />
+                                <Building2 className="size-4 text-cyan-500" />
                                 {listing.dealer.dealershipName}
                             </h3>
                             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
@@ -271,7 +271,7 @@ export default function ListingDetailPage() {
                             )}
                             <a
                                 href={`tel:${listing.dealer.phoneNumber}`}
-                                className="mt-2 flex items-center justify-center gap-2 w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-semibold transition-colors shadow-lg shadow-indigo-500/20"
+                                className="mt-2 flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-2xl font-bold transition-all hover:scale-[1.02] shadow-lg shadow-cyan-500/20"
                             >
                                 <Phone className="size-4" />
                                 {listing.dealer.phoneNumber}

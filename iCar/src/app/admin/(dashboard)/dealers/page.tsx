@@ -102,26 +102,29 @@ export default function AdminDealersPage() {
     <>
       <Breadcrumb pageName="Dealers" />
 
-      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
+      <div className="panel p-4 border-white/5 bg-white/[0.02] shadow-xl shadow-black/20 sm:p-6 space-y-6">
         {/* Search */}
-        <div className="mb-6">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="relative group max-w-md w-full">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500 group-focus-within:text-cyan-400 transition-colors" />
             <input
               type="text"
               placeholder="Search dealers by name, email, city..."
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-4 text-gray-900 outline-none focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              className="w-full h-11 pl-10 pr-4 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all placeholder:text-gray-600"
             />
+          </div>
+          <div className="text-xs font-mono text-gray-500 uppercase tracking-widest bg-black/20 px-3 py-1.5 rounded-lg border border-white/5">
+            Total Results: <span className="text-cyan-400 font-bold">{total}</span>
           </div>
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="overflow-hidden rounded-2xl border border-white/5 bg-black/20">
           {loading ? (
-            <div className="flex items-center justify-center py-16">
-              <Loader2 className="h-8 w-8 animate-spin text-indigo-500" />
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="h-8 w-8 animate-spin text-cyan-500" />
             </div>
           ) : dealers.length === 0 ? (
             <div className="py-16 text-center">
@@ -131,25 +134,25 @@ export default function AdminDealersPage() {
               </p>
             </div>
           ) : (
-            <table className="w-full">
-              <thead className="bg-gray-50 dark:bg-gray-900">
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-white/5 bg-white/[0.02]">
+                  <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
                     Dealership
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
                     Contact
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
                     Email
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
                     Location
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
                     Status
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
                     Registered
                   </th>
                 </tr>
@@ -158,40 +161,40 @@ export default function AdminDealersPage() {
                 {dealers.map((d) => (
                   <tr
                     key={d.id}
-                    className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                    className="group hover:bg-white/[0.04] transition-all"
                   >
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/30">
-                          <Building2 className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-4">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10 border border-cyan-400/20">
+                          <Building2 className="h-5 w-5 text-cyan-400" />
                         </div>
                         <div>
-                          <p className="font-medium text-gray-900 dark:text-white">
+                          <p className="font-bold text-white tracking-tight">
                             {d.dealershipName}
                           </p>
-                          <p className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+                          <p className="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 uppercase tracking-wider mt-0.5">
                             <Phone className="h-3 w-3" />
                             {d.phoneNumber}
                           </p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                    <td className="px-6 py-4 text-sm text-gray-300 font-medium">
                       {d.contactPerson}
                     </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-                        <Mail className="h-4 w-4 text-gray-400" />
-                        {d.email}
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2 text-sm text-gray-300">
+                        <Mail className="h-4 w-4 text-gray-500" />
+                        <span className="text-[10px] font-mono lowercase">{d.email}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">
+                    <td className="px-6 py-4 text-sm text-gray-400">
                       {[d.city, d.country].filter(Boolean).join(", ") || "—"}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-6 py-4">
                       {getStatusBadge(d.approvalStatus)}
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-wider">
                       {formatDate(d.createdAt)}
                     </td>
                   </tr>

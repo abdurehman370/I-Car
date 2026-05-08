@@ -15,6 +15,7 @@ import {
     RefreshCw,
     AlertCircle,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 // =====================
 // Types
@@ -224,27 +225,30 @@ const AuthenticateDealers: React.FC = () => {
     const rejectedCount = dealers.filter((d) => d.approvalStatus === "rejected").length;
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
-            <div className="max-w-7xl mx-auto">
+        <div className="min-h-screen p-4 md:p-8">
+            <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
                 {/* Header */}
-                <div className="mb-8 flex items-start justify-between gap-4">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                            Dealer Registrations
+                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-cyan-400/30 text-[10px] font-mono tracking-[0.25em] text-cyan-400 mb-4">
+                            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-glow" />
+                            ADMIN · MASTER WORKSPACE
+                        </span>
+                        <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
+                            Dealer <span className="text-gradient">Registrations</span>
                         </h1>
-                        <p className="text-gray-600 dark:text-gray-400">
-                            Review and approve dealer registration requests
+                        <p className="text-gray-400 mt-2 max-w-lg text-sm">
+                            Review and approve dealer registration requests to maintain platform integrity.
                         </p>
                     </div>
 
                     <button
                         onClick={() => fetchDealers({ silent: true })}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                        className="h-12 px-6 rounded-2xl glass border border-white/10 text-gray-300 hover:text-white hover:bg-white/5 transition-all flex items-center gap-2 text-sm font-bold"
                         disabled={refreshing}
-                        title="Refresh"
                     >
-                        <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
-                        Refresh
+                        <RefreshCw className={cn("size-4", refreshing && "animate-spin")} />
+                        Refresh Data
                     </button>
                 </div>
 
@@ -280,150 +284,112 @@ const AuthenticateDealers: React.FC = () => {
                 ) : (
                     <>
                         {/* Stats Cards */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div className="panel p-6 border-white/5 bg-white/[0.02] shadow-xl shadow-black/20">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                                        <p className="text-[10px] font-mono text-gray-500 uppercase tracking-wider mb-1">
                                             Pending Requests
                                         </p>
-                                        <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-500 mt-2">
+                                        <p className="text-3xl font-bold text-yellow-500 tracking-tight">
                                             {pendingCount}
                                         </p>
                                     </div>
-                                    <div className="bg-yellow-100 dark:bg-yellow-900/30 rounded-full p-3">
-                                        <Clock className="w-6 h-6 text-yellow-600 dark:text-yellow-500" />
+                                    <div className="h-12 w-12 rounded-2xl bg-yellow-500/10 flex items-center justify-center border border-yellow-500/20">
+                                        <Clock className="w-6 h-6 text-yellow-500" />
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                            <div className="panel p-6 border-white/5 bg-white/[0.02] shadow-xl shadow-black/20">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                                            Approved
+                                        <p className="text-[10px] font-mono text-gray-500 uppercase tracking-wider mb-1">
+                                            Approved Dealers
                                         </p>
-                                        <p className="text-3xl font-bold text-green-600 dark:text-green-500 mt-2">
+                                        <p className="text-3xl font-bold text-cyan-400 tracking-tight">
                                             {approvedCount}
                                         </p>
                                     </div>
-                                    <div className="bg-green-100 dark:bg-green-900/30 rounded-full p-3">
-                                        <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-500" />
+                                    <div className="h-12 w-12 rounded-2xl bg-cyan-400/10 flex items-center justify-center border border-cyan-400/20">
+                                        <CheckCircle className="w-6 h-6 text-cyan-400" />
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                            <div className="panel p-6 border-white/5 bg-white/[0.02] shadow-xl shadow-black/20">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                                            Rejected
+                                        <p className="text-[10px] font-mono text-gray-500 uppercase tracking-wider mb-1">
+                                            Rejected Requests
                                         </p>
-                                        <p className="text-3xl font-bold text-red-600 dark:text-red-500 mt-2">
+                                        <p className="text-3xl font-bold text-red-500 tracking-tight">
                                             {rejectedCount}
                                         </p>
                                     </div>
-                                    <div className="bg-red-100 dark:bg-red-900/30 rounded-full p-3">
-                                        <XCircle className="w-6 h-6 text-red-600 dark:text-red-500" />
+                                    <div className="h-12 w-12 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                                        <XCircle className="w-6 h-6 text-red-500" />
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Filters and Search */}
-                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 mb-6">
-                            <div className="flex flex-col md:flex-row gap-4">
+                        <div className="panel p-4 border-white/5 bg-white/[0.02] shadow-xl shadow-black/20">
+                            <div className="flex flex-col lg:flex-row gap-4">
                                 {/* Search */}
-                                <div className="flex-1 relative">
-                                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
+                                <div className="flex-1 relative group">
+                                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 group-focus-within:text-cyan-400 transition-colors w-4 h-4" />
                                     <input
                                         type="text"
                                         placeholder="Search by dealership, email, or contact person..."
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
-                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+                                        className="w-full h-11 pl-10 pr-4 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all placeholder:text-gray-600"
                                     />
                                 </div>
 
                                 {/* Status Filter */}
-                                <div className="flex gap-2 flex-wrap">
-                                    <button
-                                        onClick={() => setFilterStatus("all")}
-                                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${filterStatus === "all"
-                                            ? "bg-indigo-600 text-white"
-                                            : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-                                            }`}
-                                    >
-                                        All
-                                    </button>
-                                    <button
-                                        onClick={() => setFilterStatus("pending")}
-                                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${filterStatus === "pending"
-                                            ? "bg-yellow-600 text-white"
-                                            : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-                                            }`}
-                                    >
-                                        Pending
-                                    </button>
-                                    <button
-                                        onClick={() => setFilterStatus("approved")}
-                                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${filterStatus === "approved"
-                                            ? "bg-green-600 text-white"
-                                            : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-                                            }`}
-                                    >
-                                        Approved
-                                    </button>
-                                    <button
-                                        onClick={() => setFilterStatus("rejected")}
-                                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${filterStatus === "rejected"
-                                            ? "bg-red-600 text-white"
-                                            : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-                                            }`}
-                                    >
-                                        Rejected
-                                    </button>
+                                <div className="flex gap-2 p-1 rounded-2xl bg-black/20 border border-white/5 overflow-x-auto no-scrollbar">
+                                    {(["all", "pending", "approved", "rejected"] as const).map((status) => (
+                                        <button
+                                            key={status}
+                                            onClick={() => setFilterStatus(status)}
+                                            className={cn(
+                                                "px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap",
+                                                filterStatus === status
+                                                    ? "bg-cyan-500/10 text-cyan-400 border border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.1)]"
+                                                    : "text-gray-500 hover:text-gray-300 hover:bg-white/5"
+                                            )}
+                                        >
+                                            {status}
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
                         </div>
 
                         {/* Dealers Table */}
-                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-                            <div className="overflow-x-auto">
-                                <table className="w-full">
-                                    <thead className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
-                                        <tr>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                                Dealership
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                                Contact Person
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                                Email
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                                Location
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                                Status
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                                Registered
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                                Actions
-                                            </th>
+                        <div className="panel overflow-hidden border-white/5 bg-white/[0.02] shadow-xl shadow-black/20">
+                            <div className="overflow-x-auto custom-scrollbar">
+                                <table className="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr className="border-b border-white/5 bg-white/[0.02]">
+                                            <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">Dealership</th>
+                                            <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">Contact</th>
+                                            <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">Location</th>
+                                            <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">Status</th>
+                                            <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest text-right">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <tbody className="divide-y divide-white/5">
                                         {filteredDealers.length === 0 ? (
                                             <tr>
-                                                <td colSpan={7} className="px-6 py-12 text-center">
-                                                    <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
-                                                        <Building2 className="w-12 h-12 mb-3 opacity-50" />
-                                                        <p className="text-lg font-medium">No dealers found</p>
-                                                        <p className="text-sm">Try adjusting your search or filters</p>
+                                                <td colSpan={5} className="px-6 py-20 text-center">
+                                                    <div className="flex flex-col items-center justify-center text-gray-500">
+                                                        <Building2 className="w-12 h-12 mb-4 opacity-20" />
+                                                        <p className="text-lg font-bold text-gray-400">No dealers found</p>
+                                                        <p className="text-xs uppercase tracking-widest font-mono mt-1">Try adjusting your filters</p>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -431,57 +397,39 @@ const AuthenticateDealers: React.FC = () => {
                                             filteredDealers.map((dealer) => (
                                                 <tr
                                                     key={dealer.id}
-                                                    className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                                                    className="group hover:bg-white/[0.04] transition-all"
                                                 >
                                                     <td className="px-6 py-4">
-                                                        <div className="flex items-center">
-                                                            <div className="flex-shrink-0 h-10 w-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center">
-                                                                <Building2 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                                                        <div className="flex items-center gap-4">
+                                                            <div className="h-10 w-10 rounded-xl bg-cyan-400/10 flex items-center justify-center border border-cyan-400/20">
+                                                                <Building2 className="w-5 h-5 text-cyan-400" />
                                                             </div>
-                                                            <div className="ml-4">
-                                                                <div className="text-sm font-medium text-gray-900 dark:text-white">
+                                                            <div>
+                                                                <div className="text-sm font-bold text-white tracking-tight">
                                                                     {dealer.dealershipName}
                                                                 </div>
-                                                                <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                                                                    <Phone className="w-3 h-3" />
-                                                                    {dealer.phoneNumber}
+                                                                <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mt-0.5">
+                                                                    ID: #{dealer.id} · {dealer.phoneNumber}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-4">
-                                                        <div className="flex items-center gap-2">
-                                                            <User className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-                                                            <span className="text-sm text-gray-900 dark:text-white">
-                                                                {dealer.contactPerson}
-                                                            </span>
-                                                        </div>
+                                                        <div className="text-sm text-gray-300 font-medium">{dealer.contactPerson}</div>
+                                                        <div className="text-[10px] font-mono text-gray-500 lowercase mt-0.5">{dealer.email}</div>
                                                     </td>
                                                     <td className="px-6 py-4">
-                                                        <div className="flex items-center gap-2">
-                                                            <Mail className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-                                                            <span className="text-sm text-gray-900 dark:text-white">
-                                                                {dealer.email}
-                                                            </span>
-                                                        </div>
+                                                        <div className="text-sm text-gray-300">{dealer.city}</div>
+                                                        <div className="text-[10px] font-mono text-gray-500 uppercase tracking-wider mt-0.5">{dealer.country}</div>
                                                     </td>
                                                     <td className="px-6 py-4">
-                                                        <div className="flex items-center gap-2">
-                                                            <MapPin className="w-4 h-4 text-gray-400 dark:text-gray-500" />
-                                                            <span className="text-sm text-gray-900 dark:text-white">
-                                                                {dealer.city}, {dealer.country}
-                                                            </span>
-                                                        </div>
+                                                        {getStatusBadge(dealer.approvalStatus)}
                                                     </td>
-                                                    <td className="px-6 py-4">{getStatusBadge(dealer.approvalStatus)}</td>
-                                                    <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
-                                                        {formatDate(dealer.createdAt)}
-                                                    </td>
-                                                    <td className="px-6 py-4">
-                                                        <div className="flex items-center gap-2">
+                                                    <td className="px-6 py-4 text-right">
+                                                        <div className="flex items-center justify-end gap-2">
                                                             <button
                                                                 onClick={() => viewDetails(dealer)}
-                                                                className="p-2 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors"
+                                                                className="h-9 w-9 rounded-xl glass border border-white/10 text-gray-400 hover:text-cyan-400 transition-all flex items-center justify-center"
                                                                 title="View Details"
                                                             >
                                                                 <Eye className="w-4 h-4" />
@@ -491,24 +439,24 @@ const AuthenticateDealers: React.FC = () => {
                                                                 <>
                                                                     <button
                                                                         onClick={() => handleApprove(dealer.id)}
-                                                                        className="p-2 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-lg transition-colors disabled:opacity-50"
+                                                                        className="h-9 w-9 rounded-xl glass border border-white/10 text-gray-400 hover:text-cyan-400 transition-all flex items-center justify-center disabled:opacity-50"
                                                                         title="Approve"
                                                                         disabled={actionLoading !== null}
                                                                     >
                                                                         {actionLoading === dealer.id ? (
-                                                                            <RefreshCw className="w-4 h-4 animate-spin" />
+                                                                            <RefreshCw className="w-4 h-4 animate-spin text-cyan-400" />
                                                                         ) : (
                                                                             <CheckCircle className="w-4 h-4" />
                                                                         )}
                                                                     </button>
                                                                     <button
                                                                         onClick={() => handleReject(dealer.id)}
-                                                                        className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors disabled:opacity-50"
+                                                                        className="h-9 w-9 rounded-xl glass border border-white/10 text-gray-400 hover:text-red-400 transition-all flex items-center justify-center disabled:opacity-50"
                                                                         title="Reject"
                                                                         disabled={actionLoading !== null}
                                                                     >
                                                                         {actionLoading === dealer.id ? (
-                                                                            <RefreshCw className="w-4 h-4 animate-spin" />
+                                                                            <RefreshCw className="w-4 h-4 animate-spin text-red-400" />
                                                                         ) : (
                                                                             <XCircle className="w-4 h-4" />
                                                                         )}
@@ -527,137 +475,78 @@ const AuthenticateDealers: React.FC = () => {
 
                         {/* Detail Modal */}
                         {showDetailModal && selectedDealer && (
-                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-                                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-all duration-300">
+                                <div className="panel-elevated glass-strong w-full max-w-lg animate-in zoom-in-95 duration-300 border-cyan-400/20 shadow-[0_0_50px_rgba(34,211,238,0.15)] flex flex-col max-h-[90vh]">
                                     {/* Modal Header */}
-                                    <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
-                                        <div className="flex items-center justify-between">
-                                            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                                                Dealer Details
-                                            </h3>
-                                            <button
-                                                onClick={() => setShowDetailModal(false)}
-                                                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                                            >
-                                                <XCircle className="w-6 h-6" />
-                                            </button>
+                                    <div className="p-6 border-b border-white/5 flex items-center justify-between bg-white/[0.02] shrink-0">
+                                        <div className="flex items-center gap-3">
+                                            <div className="h-9 w-9 rounded-xl bg-cyan-400/10 flex items-center justify-center border border-cyan-400/20">
+                                                <Building2 className="size-4 text-cyan-400" />
+                                            </div>
+                                            <div>
+                                                <h2 className="text-lg font-bold text-white tracking-tight">
+                                                    Dealer Details
+                                                </h2>
+                                                <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest mt-0.5">
+                                                    Review registration documents
+                                                </p>
+                                            </div>
                                         </div>
+                                        <button 
+                                            onClick={() => setShowDetailModal(false)} 
+                                            className="h-9 w-9 rounded-xl flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/5 transition-all"
+                                        >
+                                            <XCircle className="size-5" />
+                                        </button>
                                     </div>
 
                                     {/* Modal Body */}
-                                    <div className="p-6 space-y-6">
-                                        {/* Status Badge */}
-                                        <div className="flex items-center justify-between">
-                                            <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                                Registration Status
-                                            </h4>
+                                    <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
+                                        <div className="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+                                            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Current Status</span>
                                             {getStatusBadge(selectedDealer.approvalStatus)}
                                         </div>
 
-                                        {/* Dealership Info */}
-                                        <div className="space-y-4">
-                                            <div className="flex items-start gap-3">
-                                                <Building2 className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5" />
-                                                <div>
-                                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                                        Dealership Name
-                                                    </p>
-                                                    <p className="text-base text-gray-900 dark:text-white font-semibold">
-                                                        {selectedDealer.dealershipName}
-                                                    </p>
+                                        <div className="space-y-6">
+                                            {[
+                                                { icon: Building2, label: "Dealership Name", value: selectedDealer.dealershipName, bold: true },
+                                                { icon: User, label: "Contact Person", value: selectedDealer.contactPerson },
+                                                { icon: Mail, label: "Email Address", value: selectedDealer.email },
+                                                { icon: Phone, label: "Phone Number", value: selectedDealer.phoneNumber },
+                                                { icon: MapPin, label: "Location", value: `${selectedDealer.address}, ${selectedDealer.city}, ${selectedDealer.country}` },
+                                                { icon: Clock, label: "Registered On", value: formatDate(selectedDealer.createdAt) },
+                                            ].map((item, idx) => (
+                                                <div key={idx} className="flex gap-4">
+                                                    <div className="h-10 w-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/5 shrink-0">
+                                                        <item.icon className="size-4 text-gray-400" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">{item.label}</p>
+                                                        <p className={cn("text-sm text-gray-200", item.bold && "font-bold text-white")}>{item.value}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-
-                                            <div className="flex items-start gap-3">
-                                                <User className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5" />
-                                                <div>
-                                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                                        Contact Person
-                                                    </p>
-                                                    <p className="text-base text-gray-900 dark:text-white">
-                                                        {selectedDealer.contactPerson}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div className="flex items-start gap-3">
-                                                <Mail className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5" />
-                                                <div>
-                                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                                        Email
-                                                    </p>
-                                                    <p className="text-base text-gray-900 dark:text-white">
-                                                        {selectedDealer.email}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div className="flex items-start gap-3">
-                                                <Phone className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5" />
-                                                <div>
-                                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                                        Phone Number
-                                                    </p>
-                                                    <p className="text-base text-gray-900 dark:text-white">
-                                                        {selectedDealer.phoneNumber}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div className="flex items-start gap-3">
-                                                <MapPin className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5" />
-                                                <div>
-                                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                                        Address
-                                                    </p>
-                                                    <p className="text-base text-gray-900 dark:text-white">
-                                                        {selectedDealer.address}
-                                                        <br />
-                                                        {selectedDealer.city}, {selectedDealer.country}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div className="flex items-start gap-3">
-                                                <Clock className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5" />
-                                                <div>
-                                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                                        Registered On
-                                                    </p>
-                                                    <p className="text-base text-gray-900 dark:text-white">
-                                                        {formatDate(selectedDealer.createdAt)}
-                                                    </p>
-                                                </div>
-                                            </div>
+                                            ))}
                                         </div>
                                     </div>
 
                                     {/* Modal Footer */}
                                     {selectedDealer.approvalStatus === "pending" && (
-                                        <div className="sticky bottom-0 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 px-6 py-4 flex justify-end gap-3">
+                                        <div className="p-6 border-t border-white/5 flex gap-3 bg-white/[0.02] shrink-0">
                                             <button
                                                 onClick={() => handleReject(selectedDealer.id)}
-                                                className="px-6 py-2.5 border border-red-300 dark:border-red-700 text-red-700 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 font-medium transition-colors flex items-center gap-2 disabled:opacity-50"
+                                                className="flex-1 h-12 glass border border-white/5 text-red-400 rounded-xl font-bold hover:bg-red-500/10 transition-all flex items-center justify-center gap-2 text-sm"
                                                 disabled={actionLoading !== null}
                                             >
-                                                {actionLoading === selectedDealer.id ? (
-                                                    <RefreshCw className="w-4 h-4 animate-spin" />
-                                                ) : (
-                                                    <XCircle className="w-4 h-4" />
-                                                )}
+                                                {actionLoading === selectedDealer.id ? <RefreshCw className="size-4 animate-spin" /> : <XCircle className="size-4" />}
                                                 Reject
                                             </button>
                                             <button
                                                 onClick={() => handleApprove(selectedDealer.id)}
-                                                className="px-6 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-colors flex items-center gap-2 disabled:opacity-50"
+                                                className="flex-[2] h-12 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-xl font-bold transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(34,211,238,0.3)] flex items-center justify-center gap-2 text-sm"
                                                 disabled={actionLoading !== null}
                                             >
-                                                {actionLoading === selectedDealer.id ? (
-                                                    <RefreshCw className="w-4 h-4 animate-spin" />
-                                                ) : (
-                                                    <CheckCircle className="w-4 h-4" />
-                                                )}
-                                                Approve
+                                                {actionLoading === selectedDealer.id ? <RefreshCw className="size-4 animate-spin" /> : <CheckCircle className="size-4" />}
+                                                Approve Dealer
                                             </button>
                                         </div>
                                     )}

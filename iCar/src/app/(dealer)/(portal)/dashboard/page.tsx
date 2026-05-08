@@ -295,7 +295,7 @@ export default function DealerDashboard() {
 
         {loading ? (
           <div className="flex items-center justify-center py-24">
-            <Loader2 className="size-10 text-indigo-500 animate-spin" />
+            <Loader2 className="size-10 text-cyan-500 animate-spin" />
           </div>
         ) : listings.length === 0 ? (
           <div className="panel border-luminous p-12 text-center">
@@ -370,7 +370,7 @@ export default function DealerDashboard() {
                 <select
                   value={editForm.currency}
                   onChange={e => setEditForm(f => ({ ...f!, currency: e.target.value }))}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-indigo-500"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-cyan-500"
                 >
                   <option value="AED">AED</option>
                   <option value="USD">USD</option>
@@ -383,7 +383,7 @@ export default function DealerDashboard() {
                 <select
                   value={editForm.condition}
                   onChange={e => setEditForm(f => ({ ...f!, condition: e.target.value }))}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-indigo-500"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-cyan-500"
                 >
                   <option value="USED">Used</option>
                   <option value="NEW">New</option>
@@ -397,7 +397,7 @@ export default function DealerDashboard() {
                 <select
                   value={editForm.status}
                   onChange={e => setEditForm(f => ({ ...f!, status: e.target.value }))}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-indigo-500"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-cyan-500"
                 >
                   <option value="ACTIVE">Active</option>
                   <option value="DRAFT">Draft</option>
@@ -409,7 +409,7 @@ export default function DealerDashboard() {
                   value={editForm.description}
                   onChange={e => setEditForm(f => ({ ...f!, description: e.target.value }))}
                   rows={4}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-indigo-500 resize-none placeholder:text-gray-600"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-cyan-500 resize-none placeholder:text-gray-600"
                 />
               </div>
             </div>
@@ -533,7 +533,7 @@ function Field({ label, value, onChange, type = "text" }: { label: string; value
         type={type}
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-indigo-500 placeholder:text-gray-600"
+        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-cyan-500 placeholder:text-gray-600"
       />
     </div>
   );

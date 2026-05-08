@@ -99,7 +99,7 @@ export default function AdminListingDetailPage() {
       <>
         <Breadcrumb pageName="Listing Details" />
         <div className="flex min-h-[60vh] items-center justify-center">
-          <Loader2 className="size-10 animate-spin text-indigo-600" />
+          <Loader2 className="size-10 animate-spin text-cyan-500" />
         </div>
       </>
     );
@@ -119,7 +119,7 @@ export default function AdminListingDetailPage() {
           </p>
           <Link
             href="/admin/listings"
-            className="mt-2 flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 font-semibold text-white transition-colors hover:bg-indigo-700"
+            className="mt-2 flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 px-5 py-2.5 font-semibold text-black transition-all hover:scale-[1.02] shadow-[0_0_15px_rgba(34,211,238,0.2)]"
           >
             <ChevronLeft className="size-4" /> Back to Listings
           </Link>
@@ -154,7 +154,7 @@ export default function AdminListingDetailPage() {
       <div className="max-w-6xl space-y-8 pb-12">
         <Link
           href="/admin/listings"
-          className="flex items-center gap-2 font-medium text-gray-500 transition-colors hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
+          className="flex items-center gap-2 font-medium text-gray-500 transition-colors hover:text-cyan-500 dark:text-gray-400 dark:hover:text-cyan-400"
         >
           <ChevronLeft className="size-5" />
           Back to Listings
@@ -183,7 +183,7 @@ export default function AdminListingDetailPage() {
                           onClick={() => setActiveImage(idx)}
                           className={`flex-shrink-0 overflow-hidden rounded-xl border-2 transition-all ${
                             activeImage === idx
-                              ? "border-indigo-500 shadow-md"
+                              ? "border-cyan-500 shadow-md shadow-cyan-500/20"
                               : "border-transparent opacity-60 hover:opacity-100"
                           } h-14 w-20`}
                         >
@@ -245,7 +245,7 @@ export default function AdminListingDetailPage() {
               {/* Key specs */}
               <div className="grid grid-cols-2 gap-4 border-t border-gray-100 pt-4 dark:border-white/5 sm:grid-cols-4">
                 <div className="flex flex-col items-center gap-1 rounded-2xl bg-gray-50 p-3 dark:bg-gray-900/50">
-                  <Calendar className="size-5 text-indigo-500" />
+                  <Calendar className="size-5 text-cyan-500" />
                   <span className="text-xs text-gray-500 dark:text-gray-400">
                     Year
                   </span>
@@ -254,7 +254,7 @@ export default function AdminListingDetailPage() {
                   </span>
                 </div>
                 <div className="flex flex-col items-center gap-1 rounded-2xl bg-gray-50 p-3 dark:bg-gray-900/50">
-                  <Gauge className="size-5 text-indigo-500" />
+                  <Gauge className="size-5 text-cyan-500" />
                   <span className="text-xs text-gray-500 dark:text-gray-400">
                     Mileage
                   </span>
@@ -263,7 +263,7 @@ export default function AdminListingDetailPage() {
                   </span>
                 </div>
                 <div className="flex flex-col items-center gap-1 rounded-2xl bg-gray-50 p-3 dark:bg-gray-900/50">
-                  <Settings2 className="size-5 text-indigo-500" />
+                  <Settings2 className="size-5 text-cyan-500" />
                   <span className="text-xs text-gray-500 dark:text-gray-400">
                     Condition
                   </span>
@@ -272,7 +272,7 @@ export default function AdminListingDetailPage() {
                   </span>
                 </div>
                 <div className="flex flex-col items-center gap-1 rounded-2xl bg-gray-50 p-3 dark:bg-gray-900/50">
-                  <MapPin className="size-5 text-indigo-500" />
+                  <MapPin className="size-5 text-cyan-500" />
                   <span className="text-xs text-gray-500 dark:text-gray-400">
                     Region
                   </span>
@@ -305,7 +305,7 @@ export default function AdminListingDetailPage() {
                       key={i}
                       className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"
                     >
-                      <CheckCircle className="size-4 flex-shrink-0 text-indigo-500" />
+                      <CheckCircle className="size-4 flex-shrink-0 text-cyan-500" />
                       {feature}
                     </div>
                   ))}
@@ -320,7 +320,7 @@ export default function AdminListingDetailPage() {
               <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
                 Asking Price
               </p>
-              <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
+              <p className="text-3xl font-bold text-cyan-500 dark:text-cyan-400">
                 {listing.currency} {listing.price.toLocaleString()}
               </p>
 
@@ -338,7 +338,7 @@ export default function AdminListingDetailPage() {
               {/* Dealer info */}
               <div className="mt-6 space-y-3 border-t border-gray-100 pt-6 dark:border-white/5">
                 <h3 className="flex items-center gap-2 font-semibold text-gray-900 dark:text-white">
-                  <Building2 className="size-4 text-indigo-500" />
+                  <Building2 className="size-4 text-cyan-500" />
                   {listing.dealer.dealershipName}
                 </h3>
                 <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
@@ -361,7 +361,7 @@ export default function AdminListingDetailPage() {
                 )}
                 <a
                   href={`tel:${listing.dealer.phoneNumber}`}
-                  className="mt-2 flex w-full items-center justify-center gap-2 rounded-2xl bg-indigo-600 py-3 font-semibold text-white shadow-lg shadow-indigo-500/20 transition-colors hover:bg-indigo-700"
+                  className="mt-2 flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-cyan-500 to-teal-500 py-3 font-semibold text-black shadow-lg shadow-cyan-500/20 transition-all hover:scale-[1.02]"
                 >
                   <Phone className="size-4" />
                   {listing.dealer.phoneNumber}

@@ -212,7 +212,7 @@ export default function AlertsPage() {
                 {/* Alerts Grid */}
                 {loading ? (
                     <div className="flex justify-center items-center py-20">
-                        <Loader2 className="size-10 text-indigo-600 animate-spin" />
+                        <Loader2 className="size-10 text-cyan-500 animate-spin" />
                     </div>
                 ) : alerts.length === 0 ? (
                     <div className="bg-white dark:bg-[#0a1526] rounded-3xl p-12 border border-gray-200 dark:border-white/5 shadow-sm text-center">
@@ -225,7 +225,7 @@ export default function AlertsPage() {
                         </p>
                         <button
                             onClick={openCreateModal}
-                            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-2xl font-bold transition-all shadow-lg shadow-indigo-500/20"
+                            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white rounded-2xl font-bold transition-all shadow-lg shadow-cyan-500/20"
                         >
                             <Plus className="size-5" />
                             Add Your First Alert
@@ -313,108 +313,131 @@ export default function AlertsPage() {
 
                 {/* Create / Edit Modal */}
                 {showModal && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-                        <div className="bg-white dark:bg-[#0a1526] w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-                            <div className="p-6 border-b border-gray-100 dark:border-white/5 flex items-center justify-between">
-                                <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                                    {editingAlert ? "Edit Alert" : "Create New Alert"}
-                                </h2>
-                                <button onClick={closeModal} className="text-gray-500 hover:text-gray-700 dark:hover:text-white">
-                                    <X className="size-6" />
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-all duration-300">
+                        <div className="panel-elevated glass-strong w-full max-w-lg animate-in zoom-in-95 duration-300 border-cyan-400/20 shadow-[0_0_50px_rgba(34,211,238,0.15)] flex flex-col max-h-[90vh]">
+                            <div className="p-6 border-b border-white/5 flex items-center justify-between bg-white/[0.02] shrink-0">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-9 w-9 rounded-xl bg-cyan-400/10 flex items-center justify-center border border-cyan-400/20">
+                                        {editingAlert ? <Pencil className="size-4 text-cyan-400" /> : <Plus className="size-4 text-cyan-400" />}
+                                    </div>
+                                    <div>
+                                        <h2 className="text-lg font-bold text-white tracking-tight">
+                                            {editingAlert ? "Modify Alert" : "Create New Alert"}
+                                        </h2>
+                                        <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest mt-0.5">
+                                            {editingAlert ? "Update monitoring criteria" : "Set market monitoring criteria"}
+                                        </p>
+                                    </div>
+                                </div>
+                                <button 
+                                    onClick={closeModal} 
+                                    className="h-9 w-9 rounded-xl flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/5 transition-all"
+                                >
+                                    <X className="size-5" />
                                 </button>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                                <div className="space-y-4">
-                                    <CarTaxonomyDropdowns
-                                        selectedMake={formData.make}
-                                        selectedModel={formData.model}
-                                        selectedVariant={formData.variant}
-                                        onChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
-                                    />
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Year Min</label>
-                                        <input
-                                            type="number"
-                                            name="yearMin"
-                                            value={formData.yearMin}
-                                            onChange={handleInputChange}
-                                            className="w-full px-4 py-2.5 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                            placeholder="e.g. 2018"
+                            <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
+                                <form id="alert-form" onSubmit={handleSubmit} className="space-y-6">
+                                    <div className="space-y-6">
+                                        <CarTaxonomyDropdowns
+                                            selectedMake={formData.make}
+                                            selectedModel={formData.model}
+                                            selectedVariant={formData.variant}
+                                            onChange={(field, value) => setFormData(prev => ({ ...prev, [field]: value }))}
                                         />
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Year Max</label>
-                                        <input
-                                            type="number"
-                                            name="yearMax"
-                                            value={formData.yearMax}
-                                            onChange={handleInputChange}
-                                            className="w-full px-4 py-2.5 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                            placeholder="e.g. 2024"
-                                        />
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-mono text-gray-400 uppercase tracking-[0.15em] ml-1">Year Min</label>
+                                            <input
+                                                type="number"
+                                                name="yearMin"
+                                                value={formData.yearMin}
+                                                onChange={handleInputChange}
+                                                className="w-full h-11 px-4 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all placeholder:text-gray-600"
+                                                placeholder="e.g. 2018"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-mono text-gray-400 uppercase tracking-[0.15em] ml-1">Year Max</label>
+                                            <input
+                                                type="number"
+                                                name="yearMax"
+                                                value={formData.yearMax}
+                                                onChange={handleInputChange}
+                                                className="w-full h-11 px-4 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all placeholder:text-gray-600"
+                                                placeholder="e.g. 2024"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Region *</label>
-                                    <select
-                                        name="region"
-                                        value={formData.region}
-                                        onChange={handleInputChange}
-                                        className="w-full px-4 py-2.5 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                    >
-                                        {REGIONS.map((r) => (
-                                            <option key={r} value={r}>{r}</option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Notify Me *</label>
-                                    <div className="grid grid-cols-4 gap-2">
-                                        {FREQUENCIES.map((f) => (
-                                            <button
-                                                key={f.value}
-                                                type="button"
-                                                onClick={() => setFormData((prev) => ({ ...prev, frequency: f.value }))}
-                                                className={`py-2 px-3 rounded-xl text-sm font-medium transition-all ${formData.frequency === f.value
-                                                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
-                                                    : "bg-gray-100 dark:bg-[#152033] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#1a2942]"
-                                                    }`}
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-mono text-gray-400 uppercase tracking-[0.15em] ml-1">Region *</label>
+                                        <div className="relative group">
+                                            <select
+                                                name="region"
+                                                value={formData.region}
+                                                onChange={handleInputChange}
+                                                className="w-full h-11 pl-4 pr-10 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white appearance-none focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all cursor-pointer group-hover:bg-white/[0.08]"
                                             >
-                                                {f.label}
-                                            </button>
-                                        ))}
+                                                {REGIONS.map((r) => (
+                                                    <option key={r} value={r} className="bg-[#050b14] text-white">{r}</option>
+                                                ))}
+                                            </select>
+                                            <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-500 group-focus-within:text-cyan-400 transition-colors">
+                                                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="pt-4 flex gap-3">
-                                    <button
-                                        type="button"
-                                        onClick={closeModal}
-                                        className="flex-1 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-white rounded-2xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        disabled={submitting}
-                                        className="flex-1 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20 disabled:opacity-50 flex items-center justify-center gap-2"
-                                    >
-                                        {submitting ? (
-                                            <Loader2 className="size-5 animate-spin" />
-                                        ) : editingAlert ? (
-                                            <><Pencil className="size-4" /> Save Changes</>
-                                        ) : (
-                                            <><Plus className="size-4" /> Create Alert</>
-                                        )}
-                                    </button>
-                                </div>
-                            </form>
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-mono text-gray-400 uppercase tracking-[0.15em] ml-1">Notification Frequency *</label>
+                                        <div className="grid grid-cols-2 gap-2.5">
+                                            {FREQUENCIES.map((f) => (
+                                                <button
+                                                    key={f.value}
+                                                    type="button"
+                                                    onClick={() => setFormData((prev) => ({ ...prev, frequency: f.value }))}
+                                                    className={cn(
+                                                        "h-10 px-3 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all border",
+                                                        formData.frequency === f.value
+                                                            ? "bg-cyan-500/10 text-cyan-400 border-cyan-400/30 shadow-[0_0_15px_rgba(34,211,238,0.1)]"
+                                                            : "bg-white/[0.02] text-gray-500 border-white/5 hover:bg-white/5 hover:text-gray-300"
+                                                    )}
+                                                >
+                                                    {f.label}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div className="p-6 border-t border-white/5 flex gap-3 bg-white/[0.02] shrink-0">
+                                <button
+                                    type="button"
+                                    onClick={closeModal}
+                                    className="flex-1 h-12 bg-white/[0.03] text-gray-400 rounded-xl font-bold hover:bg-white/5 hover:text-white transition-all border border-white/5 text-sm"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    form="alert-form"
+                                    disabled={submitting}
+                                    className="flex-[2] h-12 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-xl font-bold transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(34,211,238,0.3)] disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
+                                >
+                                    {submitting ? (
+                                        <Loader2 className="size-5 animate-spin" />
+                                    ) : editingAlert ? (
+                                        <><Pencil className="size-4" /> Save Changes</>
+                                    ) : (
+                                        <><Plus className="size-4" /> Create Alert</>
+                                    )}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 )}
