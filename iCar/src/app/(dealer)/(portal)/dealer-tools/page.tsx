@@ -147,7 +147,7 @@ export default function DealerToolsPage() {
                         <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-glow" />
                         GLOBAL SEARCH · DEALER TOOLS
                     </span>
-                    <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
+                    <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
                         Market <span className="text-gradient">Intelligence</span>
                     </h1>
                     <p className="text-gray-400 mt-2 max-w-lg text-sm">
@@ -178,7 +178,7 @@ export default function DealerToolsPage() {
                                     name="region"
                                     value={form.region}
                                     onChange={handleChange}
-                                    className="w-full h-12 px-4 rounded-xl glass border border-white/10 text-white outline-none focus:border-cyan-400/30 transition-all"
+                                    className="w-full h-12 px-4 rounded-xl glass border border-white/10 text-foreground outline-none focus:border-cyan-400/30 transition-all"
                                 >
                                     {REGIONS.map((r) => <option key={r} value={r}>{r}</option>)}
                                 </select>
@@ -191,7 +191,7 @@ export default function DealerToolsPage() {
                         <button
                             type="button"
                             onClick={() => setFiltersOpen((v) => !v)}
-                            className="flex items-center gap-2 text-sm text-indigo-600 dark:text-indigo-400 font-medium hover:underline"
+                            className="flex items-center gap-2 text-sm text-cyan-500 font-medium hover:underline"
                         >
                             <SlidersHorizontal className="size-4" />
                             {filtersOpen ? "Hide" : "Show"} advanced filters
@@ -227,7 +227,7 @@ export default function DealerToolsPage() {
                                         placeholder="To"
                                         min={1990}
                                         max={2030}
-                                        className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-[#020d1a] text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                        className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-[#020d1a] text-foreground focus:ring-2 focus:ring-cyan-500 outline-none text-sm"
                                     />
                                 </div>
                             </div>
@@ -307,8 +307,8 @@ export default function DealerToolsPage() {
                                 <span
                                     onClick={() => setFilterSource("iCar")}
                                     className={`cursor-pointer px-3 py-1 rounded-full text-xs font-semibold border transition-all ${filterSource === "iCar"
-                                            ? "bg-indigo-600 text-white border-indigo-600"
-                                            : "bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/40"
+                                            ? "bg-cyan-500 text-black border-cyan-500"
+                                            : "bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600 dark:text-cyan-400 border-cyan-200 dark:border-cyan-800 hover:bg-cyan-100 dark:hover:bg-cyan-900/40"
                                         }`}
                                 >
                                     iCar: {iCarCount}
@@ -410,7 +410,7 @@ function ResultCard({ result }: { result: SearchResult }) {
     const href = isInternal && result.id ? `/listings/${result.id}` : (result.url ?? "#");
 
     return (
-        <div className="bg-white dark:bg-[#0a1526] rounded-3xl overflow-hidden border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-lg hover:border-indigo-200 dark:hover:border-indigo-500/30 transition-all duration-200 flex flex-col group">
+        <div className="bg-white dark:bg-[#0a1526] rounded-3xl overflow-hidden border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-lg hover:border-cyan-200 dark:hover:border-cyan-500/30 transition-all duration-200 flex flex-col group">
 
             {/* Image */}
             <div className="relative aspect-[16/10] bg-gray-100 dark:bg-[#020d1a] overflow-hidden">
@@ -452,7 +452,7 @@ function ResultCard({ result }: { result: SearchResult }) {
                 </h3>
 
                 {result.price ? (
-                    <p className="text-indigo-600 dark:text-indigo-400 font-bold text-base">
+                    <p className="text-cyan-600 dark:text-cyan-400 font-bold text-base">
                         {result.currency} {Number(result.price).toLocaleString()}
                     </p>
                 ) : (
@@ -501,7 +501,7 @@ function ResultCard({ result }: { result: SearchResult }) {
                     {isInternal ? (
                         <Link
                             href={href}
-                            className="flex items-center justify-center gap-2 w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-sm font-semibold transition-colors"
+                            className="flex items-center justify-center gap-2 w-full py-2.5 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-2xl text-sm font-bold transition-all shadow-lg shadow-cyan-500/10"
                         >
                             View Listing
                         </Link>

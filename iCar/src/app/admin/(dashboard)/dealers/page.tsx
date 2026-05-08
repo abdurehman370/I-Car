@@ -10,6 +10,7 @@ import {
   MapPin,
   Loader2,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 
 interface Dealer {
@@ -45,20 +46,20 @@ function formatDate(dateString: string) {
 }
 
 function getStatusBadge(status: string) {
-  const styles: Record<string, string> = {
-    pending:
-      "bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-800",
-    approved:
-      "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800",
-    rejected:
-      "bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800",
-  };
   const s = status?.toLowerCase() || "pending";
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${styles[s] || styles.pending}`}
+      className={cn(
+        "inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider border backdrop-blur-md",
+        s === "approved" 
+          ? "bg-cyan-500/10 text-cyan-400 border-cyan-500/20 shadow-[0_0_10px_rgba(34,211,238,0.1)]" 
+          : s === "rejected"
+          ? "bg-red-500/10 text-red-400 border-red-500/20"
+          : "bg-white/5 text-gray-500 border-white/10"
+      )}
     >
-      {status.charAt(0).toUpperCase() + status.slice(1)}
+      <span className={cn("h-1.5 w-1.5 rounded-full", s === "approved" ? "bg-cyan-400 animate-pulse" : s === "rejected" ? "bg-red-400" : "bg-gray-600")} />
+      {status}
     </span>
   );
 }
@@ -120,43 +121,31 @@ export default function AdminDealersPage() {
           </div>
         </div>
 
-        {/* Table */}
-        <div className="overflow-hidden rounded-2xl border border-white/5 bg-black/20">
+        {/* Table Section */}
+        <div className="panel border-white/5 bg-white/[0.02] shadow-xl shadow-black/20 overflow-hidden">
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <Loader2 className="h-8 w-8 animate-spin text-cyan-500" />
             </div>
           ) : dealers.length === 0 ? (
-            <div className="py-16 text-center">
-              <Building2 className="mx-auto h-12 w-12 text-gray-400" />
-              <p className="mt-3 text-gray-500 dark:text-gray-400">
-                No dealers found
-              </p>
+            <div className="py-20 text-center">
+              <Building2 className="mx-auto h-12 w-12 text-gray-500 mb-4 opacity-20" />
+              <p className="text-gray-400 font-bold">No dealers found</p>
+              <p className="text-[10px] font-mono text-gray-600 uppercase tracking-widest mt-1">Try a different search term</p>
             </div>
           ) : (
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-white/5 bg-white/[0.02]">
-                  <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
-                    Dealership
-                  </th>
-                  <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
-                    Contact
-                  </th>
-                  <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
-                    Email
-                  </th>
-                  <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
-                    Location
-                  </th>
-                  <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
-                    Status
-                  </th>
-                  <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">
-                    Registered
-                  </th>
-                </tr>
-              </thead>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-white/5 bg-white/[0.03]">
+                    <th className="px-6 py-5 text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em]">Dealership</th>
+                    <th className="px-6 py-5 text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em]">Primary Contact</th>
+                    <th className="px-6 py-5 text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em]">Email Access</th>
+                    <th className="px-6 py-5 text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em]">Regional Origin</th>
+                    <th className="px-6 py-5 text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em]">Status</th>
+                    <th className="px-6 py-5 text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em]">Registration</th>
+                  </tr>
+                </thead>
               <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {dealers.map((d) => (
                   <tr
@@ -201,6 +190,7 @@ export default function AdminDealersPage() {
                 ))}
               </tbody>
             </table>
+            </div>
           )}
         </div>
 

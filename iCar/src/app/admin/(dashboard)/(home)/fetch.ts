@@ -1,91 +1,106 @@
+import prisma from "@/lib/db";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
+
 export async function getOverviewData() {
-  // Fake delay
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  const thirtyDaysAgo = dayjs().subtract(30, 'day').toDate();
+
+  const [
+    totalDealers,
+    newDealers,
+    totalListings,
+    newListings,
+    pendingApprovals,
+    regionsCount
+  ] = await Promise.all([
+    prisma.dealer.count(),
+    prisma.dealer.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
+    prisma.listing.count(),
+    prisma.listing.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
+    prisma.dealer.count({ where: { approvalStatus: 'pending' } }),
+    prisma.listing.groupBy({
+      by: ['region'],
+      _count: true,
+    }).then(res => res.length)
+  ]);
+
+  // For trend data, we can fetch listing counts for the last 6 months
+  const months = Array.from({ length: 6 }).map((_, i) => dayjs().subtract(i, 'month')).reverse();
+  const trendData = await Promise.all(months.map(async (m) => {
+    const start = m.startOf('month').toDate();
+    const end = m.endOf('month').toDate();
+    const count = await prisma.listing.count({
+      where: {
+        createdAt: {
+          gte: start,
+          lte: end
+        }
+      }
+    });
+    return { month: m.format('MMM'), listings: count };
+  }));
+
+  // Regional Distribution
+  const regionalActivity = await prisma.listing.groupBy({
+    by: ['region'],
+    _count: {
+      _all: true
+    },
+    orderBy: {
+      _count: {
+        region: 'desc'
+      }
+    },
+    take: 4
+  });
+
+  const totalAct = regionalActivity.reduce((acc, curr) => acc + curr._count._all, 0);
 
   return {
-    views: {
-      value: 3456,
-      growthRate: 0.43,
-    },
-    profit: {
-      value: 4220,
-      growthRate: 4.35,
-    },
-    products: {
-      value: 3456,
-      growthRate: 2.59,
-    },
-    users: {
-      value: 3456,
-      growthRate: -0.95,
-    },
+    dealers: totalDealers,
+    newDealers: newDealers,
+    listings: totalListings,
+    newListings: newListings,
+    pending: pendingApprovals,
+    pendingDelta: "live", // Just a label
+    pendingTrend: "flat" as const,
+    regions: regionsCount || 0,
+    trendData,
+    regionalDistribution: regionalActivity.map(r => ({
+      region: r.region,
+      value: totalAct > 0 ? Math.round((r._count._all / totalAct) * 100) : 0
+    }))
   };
 }
 
-export async function getChatsData() {
-  // Fake delay
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+export async function getDashboardQueue() {
+  const pendingDealers = await prisma.dealer.findMany({
+    where: { approvalStatus: 'pending' },
+    orderBy: { createdAt: 'desc' },
+    take: 5
+  });
 
-  return [
-    {
-      name: "Jacob Jones",
-      profile: "/images/user/user-01.png",
-      isActive: true,
-      lastMessage: {
-        content: "See you tomorrow at the meeting!",
-        type: "text",
-        timestamp: "2024-12-19T14:30:00Z",
-        isRead: false,
-      },
-      unreadCount: 3,
-    },
-    {
-      name: "Wilium Smith",
-      profile: "/images/user/user-03.png",
-      isActive: true,
-      lastMessage: {
-        content: "Thanks for the update",
-        type: "text",
-        timestamp: "2024-12-19T10:15:00Z",
-        isRead: true,
-      },
-      unreadCount: 0,
-    },
-    {
-      name: "Johurul Haque",
-      profile: "/images/user/user-04.png",
-      isActive: false,
-      lastMessage: {
-        content: "What's up?",
-        type: "text",
-        timestamp: "2024-12-19T10:15:00Z",
-        isRead: true,
-      },
-      unreadCount: 0,
-    },
-    {
-      name: "M. Chowdhury",
-      profile: "/images/user/user-05.png",
-      isActive: false,
-      lastMessage: {
-        content: "Where are you now?",
-        type: "text",
-        timestamp: "2024-12-19T10:15:00Z",
-        isRead: true,
-      },
-      unreadCount: 2,
-    },
-    {
-      name: "Akagami",
-      profile: "/images/user/user-07.png",
-      isActive: false,
-      lastMessage: {
-        content: "Hey, how are you?",
-        type: "text",
-        timestamp: "2024-12-19T10:15:00Z",
-        isRead: true,
-      },
-      unreadCount: 0,
-    },
+  return pendingDealers.map(d => ({
+    name: d.dealershipName,
+    region: d.city || d.country || "Unknown",
+    time: dayjs(d.createdAt).fromNow()
+  }));
+}
+
+export async function getPlatformFeed() {
+  // Real platform feed would come from an AuditLog or Activity table.
+  // For now, let's use recently created dealers and listings as activity.
+  const [recentDealers, recentListings] = await Promise.all([
+    prisma.dealer.findMany({ orderBy: { createdAt: 'desc' }, take: 3 }),
+    prisma.listing.findMany({ orderBy: { createdAt: 'desc' }, take: 2 })
+  ]);
+
+  const feed = [
+    ...recentDealers.map(d => `New dealer onboarded — ${d.dealershipName}`),
+    ...recentListings.map(l => `New listing added — ${l.make} ${l.model}`)
   ];
+
+  return feed.length > 0 ? feed : ["No recent activity detected."];
 }

@@ -1,9 +1,16 @@
- import { useEffect, useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 
 export function AnimatedNumber({ value, duration = 1200, prefix = "", suffix = "", decimals = 0 }: {
-  value: number; duration?: number; prefix?: string; suffix?: string; decimals?: number;
+  value: number; 
+  duration?: number; 
+  prefix?: string; 
+  suffix?: string; 
+  decimals?: number;
 }) {
   const [n, setN] = useState(0);
+
   useEffect(() => {
     let raf = 0;
     const start = performance.now();
@@ -17,5 +24,15 @@ export function AnimatedNumber({ value, duration = 1200, prefix = "", suffix = "
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [value, duration]);
-  return <span>{prefix}{n.toLocaleString(undefined, { maximumFractionDigits: decimals, minimumFractionDigits: decimals })}{suffix}</span>;
+
+  return (
+    <span>
+      {prefix}
+      {n.toLocaleString(undefined, { 
+        maximumFractionDigits: decimals, 
+        minimumFractionDigits: decimals 
+      })}
+      {suffix}
+    </span>
+  );
 }

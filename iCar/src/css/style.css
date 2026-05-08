@@ -42,7 +42,7 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background-image: var(--gradient-mesh);
     background-attachment: fixed;
-    background-color: #050b14 !important;
+    background-color: #040d18 !important;
   }
 }
 
@@ -552,12 +552,15 @@ input[type="search"]::-webkit-search-cancel-button {
 
   /* Gradients */
   --gradient-primary: linear-gradient(135deg, hsl(188 95% 55%) 0%, hsl(174 80% 50%) 100%);
-  --gradient-hero: radial-gradient(ellipse 80% 60% at 50% 0%, hsl(188 95% 35% / 0.35), transparent 60%),
-                   radial-gradient(ellipse 60% 50% at 100% 100%, hsl(174 80% 30% / 0.25), transparent 60%),
-                   linear-gradient(180deg, hsl(220 45% 5%) 0%, hsl(222 47% 4%) 100%);
-  --gradient-mesh: radial-gradient(at 20% 20%, hsl(188 95% 35% / 0.18) 0px, transparent 50%),
-                   radial-gradient(at 80% 0%, hsl(174 80% 40% / 0.12) 0px, transparent 50%),
-                   radial-gradient(at 0% 100%, hsl(192 80% 30% / 0.15) 0px, transparent 50%);
+  --gradient-hero: radial-gradient(ellipse 90% 65% at 50% 0%,   hsl(188 100% 50% / 0.42), transparent 58%),
+                   radial-gradient(ellipse 65% 55% at 100% 100%, hsl(174 90%  45% / 0.30), transparent 58%),
+                   radial-gradient(ellipse 50% 40% at 0%   60%,  hsl(200 100% 40% / 0.22), transparent 55%),
+                   linear-gradient(180deg, hsl(216 55% 6%) 0%, hsl(222 50% 4%) 100%);
+  --gradient-mesh: 
+                   radial-gradient(ellipse 70% 50% at 15% 15%, hsl(188 100% 45% / 0.22) 0px, transparent 55%),
+                   radial-gradient(ellipse 55% 45% at 85% 5%,  hsl(174 90% 45% / 0.18) 0px, transparent 55%),
+                   radial-gradient(ellipse 60% 50% at 5%  90%,  hsl(192 90% 38% / 0.2)  0px, transparent 55%),
+                   radial-gradient(ellipse 40% 35% at 90% 85%,  hsl(210 80% 30% / 0.15) 0px, transparent 50%);
   --gradient-glass: linear-gradient(135deg, hsl(200 40% 18% / 0.55) 0%, hsl(220 40% 7% / 0.75) 100%);
   --gradient-border: linear-gradient(135deg, hsl(188 95% 55% / 0.5), hsl(174 80% 50% / 0.1) 50%, hsl(188 95% 55% / 0.5));
 
@@ -569,17 +572,17 @@ input[type="search"]::-webkit-search-cancel-button {
 
 @layer components {
   .glass {
-    background: linear-gradient(135deg, hsl(220 40% 12% / 0.65) 0%, hsl(222 47% 4% / 0.85) 100%);
-    backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-    border: 1px solid hsl(188 95% 55% / 0.15);
+    background: linear-gradient(135deg, hsl(210 45% 10% / 0.7) 0%, hsl(220 50% 5% / 0.88) 100%);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid hsl(188 95% 55% / 0.18);
   }
 
   .glass-strong {
-    background: linear-gradient(135deg, hsl(222 47% 8% / 0.92), hsl(222 47% 4% / 0.98));
-    backdrop-filter: blur(32px) saturate(180%);
-    -webkit-backdrop-filter: blur(32px) saturate(180%);
-    border: 1px solid hsl(188 95% 55% / 0.2);
+    background: linear-gradient(160deg, hsl(210 50% 9% / 0.94) 0%, hsl(222 55% 5% / 0.98) 100%);
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid hsl(188 95% 55% / 0.22);
   }
 
   .panel {
@@ -645,3 +648,391 @@ input[type="search"]::-webkit-search-cancel-button {
   .bg-surface-2 { background-color: hsl(var(--surface-2)); }
   .bg-surface-3 { background-color: hsl(var(--surface-3)); }
 }
+/* ================================================================
+   ADMIN LIGHT THEME — Premium Pearl & Teal Design System
+   ================================================================ */
+.admin-light {
+  --gradient-mesh:
+    radial-gradient(at 20% 20%, hsl(188 95% 75% / 0.3) 0px, transparent 50%),
+    radial-gradient(at 80% 0%,  hsl(174 80% 80% / 0.2) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsl(210 80% 92% / 0.4) 0px, transparent 50%);
+  --gradient-hero:
+    radial-gradient(ellipse 80% 60% at 50% 0%,  hsl(188 95% 60% / 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, hsl(174 80% 55% / 0.12), transparent 60%),
+    linear-gradient(180deg, hsl(210 60% 98%) 0%, hsl(210 40% 96%) 100%);
+  --shadow-card: 0 4px 24px -4px hsl(210 40% 40% / 0.1), 0 0 0 1px hsl(210 32% 88%);
+  --shadow-elevated: 0 20px 60px -20px hsl(210 40% 40% / 0.2), 0 0 0 1px hsl(210 32% 85%);
+  --glow-primary: 0 0 24px hsl(188 95% 42% / 0.25), 0 0 60px hsl(188 95% 42% / 0.1);
+  --gradient-border: linear-gradient(135deg, hsl(188 95% 55% / 0.35), hsl(174 80% 50% / 0.08) 50%, hsl(188 95% 55% / 0.35));
+  background-color: hsl(210 40% 96%);
+  background-image: var(--gradient-mesh);
+  color: hsl(222 47% 11%);
+}
+
+.admin-light aside.glass-strong {
+  background: linear-gradient(160deg, hsl(0 0% 100% / 0.97) 0%, hsl(210 50% 98% / 0.99) 100%) !important;
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border-right: 1px solid hsl(210 32% 88%) !important;
+  box-shadow: 4px 0 40px hsl(210 40% 30% / 0.08);
+}
+
+.admin-light header.glass-strong {
+  background: linear-gradient(135deg, hsl(0 0% 100% / 0.95) 0%, hsl(210 40% 97% / 0.98) 100%) !important;
+  border-bottom: 1px solid hsl(210 32% 88%) !important;
+  box-shadow: 0 2px 24px hsl(210 40% 40% / 0.07);
+}
+
+.admin-light .panel,
+.admin-light .glass {
+  background: linear-gradient(135deg, hsl(0 0% 100% / 0.9) 0%, hsl(210 40% 98% / 0.95) 100%) !important;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid hsl(210 30% 88%) !important;
+  box-shadow: 0 4px 28px -4px hsl(210 40% 40% / 0.08), 0 0 0 1px hsl(210 32% 91%);
+}
+
+.admin-light .text-white { color: hsl(222 47% 12%) !important; }
+.admin-light .text-gray-400 { color: hsl(215 16% 48%) !important; }
+.admin-light .text-gray-500 { color: hsl(215 16% 55%) !important; }
+.admin-light .text-muted-foreground { color: hsl(215 16% 50%) !important; }
+.admin-light .border-white\/5 { border-color: hsl(210 32% 87%) !important; }
+.admin-light .border-white\/10 { border-color: hsl(210 32% 83%) !important; }
+.admin-light .bg-white\/5 { background-color: hsl(210 30% 93%) !important; }
+
+.admin-light aside .bg-cyan-500\/10 { background-color: hsl(188 90% 42% / 0.1) !important; }
+.admin-light aside .border-cyan-500\/10 { border-color: hsl(188 90% 42% / 0.25) !important; }
+
+.admin-light .bg-cyan-500\/10 { background-color: hsl(188 90% 42% / 0.09) !important; }
+.admin-light .bg-cyan-500\/20 { background-color: hsl(188 90% 42% / 0.16) !important; }
+.admin-light .border-cyan-500\/20 { border-color: hsl(188 90% 42% / 0.3) !important; }
+.admin-light .border-cyan-400\/30 { border-color: hsl(188 90% 42% / 0.35) !important; }
+
+.admin-light .bg-hud-grid {
+  background-image:
+    linear-gradient(hsl(188 95% 42% / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(188 95% 42% / 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.admin-light .bg-hero { background: var(--gradient-hero) !important; }
+
+.admin-light input {
+  background-color: hsl(210 40% 95%) !important;
+  border-color: hsl(210 32% 84%) !important;
+  color: hsl(222 47% 11%) !important;
+}
+.admin-light input::placeholder { color: hsl(215 16% 58%) !important; }
+
+.admin-light ::-webkit-scrollbar-thumb { background-color: hsl(210 32% 80%) !important; }
+
+/* ================================================================
+   GLOBAL TEXT READABILITY IMPROVEMENTS
+   Applies to both Admin and Dealer portals
+   ================================================================ */
+
+/* Ensure all body text is sharp and readable */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Boost contrast for primary content text */
+.text-gray-400 { color: hsl(215 16% 60%) !important; }
+.text-gray-500 { color: hsl(215 16% 52%) !important; }
+
+/* Ensure white text is always crisp on dark backgrounds */
+.text-white { color: #f8fafc; }
+
+/* Form inputs — better contrast placeholder text */
+input::placeholder,
+textarea::placeholder {
+  color: hsl(215 16% 42%) !important;
+  opacity: 1;
+}
+
+/* Breadcrumb heading — always visible */
+h2.text-dark,
+.text-dark {
+  color: hsl(222 47% 11%);
+}
+.dark .text-dark,
+.text-dark {
+  color: #f1f5f9;
+}
+
+/* Mono labels — improved contrast */
+.font-mono { letter-spacing: 0.02em; }
+
+/* Panel headings */
+.panel h2, .panel h3 {
+  color: #f1f5f9;
+}
+
+/* Table text readability */
+table td, table th {
+  color: #cbd5e1;
+}
+table th {
+  color: #94a3b8;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ================================================================
+   ADMIN LIGHT THEME — Text Readability Overrides
+   ================================================================ */
+.admin-light h1,
+.admin-light h2,
+.admin-light h3,
+.admin-light h4,
+.admin-light h5 {
+  color: hsl(222 47% 11%) !important;
+}
+
+.admin-light p,
+.admin-light span:not(.text-cyan-400):not(.text-cyan-500):not(.text-emerald-400):not(.text-red-400):not(.text-amber-400) {
+  color: hsl(222 47% 20%);
+}
+
+.admin-light .text-white { color: hsl(222 47% 11%) !important; }
+.admin-light .text-gray-400 { color: hsl(215 16% 38%) !important; }
+.admin-light .text-gray-500 { color: hsl(215 16% 45%) !important; }
+.admin-light .text-muted-foreground { color: hsl(215 16% 40%) !important; }
+
+.admin-light table td { color: hsl(222 47% 20%) !important; }
+.admin-light table th { color: hsl(215 16% 38%) !important; }
+
+.admin-light .panel h2,
+.admin-light .panel h3,
+.admin-light .panel h4 {
+  color: hsl(222 47% 11%) !important;
+}
+
+/* Form labels and inputs in light mode */
+.admin-light label { color: hsl(215 16% 35%) !important; }
+.admin-light input,
+.admin-light textarea,
+.admin-light select {
+  color: hsl(222 47% 11%) !important;
+  background-color: hsl(210 40% 96%) !important;
+  border-color: hsl(210 32% 82%) !important;
+}
+/* ================================================================
+   CHART TOOLTIP & DATA READABILITY
+   Ensures chart popups are readable in both themes
+   ================================================================ */
+
+/* Recharts Tooltip — Premium Theme Sync */
+.recharts-default-tooltip {
+  background: hsl(222 47% 10% / 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid hsl(188 95% 55% / 0.2) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px -10px hsl(0 0% 0% / 0.5) !important;
+  padding: 12px 16px !important;
+}
+
+.recharts-tooltip-label {
+  color: #f8fafc !important;
+  font-weight: 700 !important;
+  margin-bottom: 8px !important;
+  text-transform: uppercase !important;
+  font-size: 10px !important;
+  letter-spacing: 0.1em !important;
+}
+
+.recharts-tooltip-item {
+  padding: 2px 0 !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: #22d3ee !important;
+}
+
+/* Light Mode Chart Tooltip Override */
+.admin-light .recharts-default-tooltip {
+  background: hsl(0 0% 100% / 0.95) !important;
+  border-color: hsl(210 32% 88%) !important;
+  box-shadow: 0 10px 30px -10px hsl(210 40% 40% / 0.2) !important;
+}
+
+.admin-light .recharts-tooltip-label {
+  color: hsl(222 47% 11%) !important;
+}
+
+.admin-light .recharts-tooltip-item {
+  color: hsl(188 95% 42%) !important;
+}
+
+/* ================================================================
+   CONTAINER TEXT READABILITY
+   ================================================================ */
+
+/* Panel text defaults */
+.panel p {
+  color: hsl(215 16% 70%);
+}
+
+.admin-light .panel p,
+.admin-light .panel span,
+.admin-light .panel div {
+  color: hsl(222 47% 11%) !important;
+}
+
+.admin-light .panel h1, 
+.admin-light .panel h2, 
+.admin-light .panel h3, 
+.admin-light .panel h4 {
+  color: hsl(222 47% 11%) !important;
+}
+
+/* Subheadings (muted-foreground / gray-400/500) */
+.text-muted-foreground, 
+.text-gray-400, 
+.text-gray-500 {
+  color: hsl(215 16% 65%) !important;
+}
+
+.admin-light .text-muted-foreground, 
+.admin-light .text-gray-400, 
+.admin-light .text-gray-500 {
+  color: hsl(215 16% 40%) !important;
+}
+
+/* Badge text consistency */
+.font-mono.tracking-widest {
+  color: hsl(215 16% 75%);
+}
+
+.admin-light .font-mono.tracking-widest {
+  color: hsl(215 16% 35%) !important;
+}
+
+
+/* ================================================================
+   DARK THEME DEPTH ENHANCEMENT
+   Inspired by the light theme's airy contrast — midnight edition
+   ================================================================ */
+
+/* Base page background — deep midnight with a subtle blue cast */
+body {
+  background-color: #040d18 !important;
+}
+
+/* Panel depth — lifted cards with inner highlight and stronger border */
+.panel {
+  background: linear-gradient(
+    160deg,
+    hsl(210 48% 11% / 0.72) 0%,
+    hsl(222 55% 5%  / 0.92) 100%
+  ) !important;
+  border: 1px solid hsl(188 80% 55% / 0.14) !important;
+  box-shadow:
+    0 0 0 1px hsl(188 80% 55% / 0.06) inset,
+    0 8px 40px -12px hsl(188 100% 30% / 0.25),
+    0 2px 12px -4px  hsl(220 80% 4% / 0.6);
+}
+
+/* Panel inner white-line highlight at top — gives the "glass over light" effect */
+.panel::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  border-radius: inherit;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    hsl(188 100% 70% / 0.2) 30%,
+    hsl(174 90%  65% / 0.15) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Make panels position:relative so ::after works */
+.panel {
+  position: relative;
+  overflow: hidden;
+}
+
+/* bg-white/[0.02] and bg-white/[0.03] — give them a blue tint instead of pure white */
+.bg-white\/\[0\.02\] {
+  background-color: hsl(210 60% 50% / 0.04) !important;
+}
+.bg-white\/\[0\.03\] {
+  background-color: hsl(210 60% 50% / 0.06) !important;
+}
+
+/* Sidebar glass-strong — deeper, richer midnight blue */
+aside.glass-strong {
+  background: linear-gradient(
+    175deg,
+    hsl(213 55% 8%  / 0.96) 0%,
+    hsl(222 60% 4%  / 0.99) 100%
+  ) !important;
+  border-right: 1px solid hsl(188 80% 55% / 0.18) !important;
+  box-shadow:
+    4px 0 48px hsl(188 100% 30% / 0.12),
+    inset -1px 0 0 hsl(188 80% 55% / 0.08);
+}
+
+/* Header glass-strong */
+header.glass-strong {
+  background: linear-gradient(
+    90deg,
+    hsl(213 55% 8%  / 0.94) 0%,
+    hsl(218 52% 6%  / 0.97) 100%
+  ) !important;
+  border-bottom: 1px solid hsl(188 80% 55% / 0.18) !important;
+  box-shadow:
+    0 4px 32px hsl(188 100% 30% / 0.1),
+    inset 0 -1px 0 hsl(188 80% 55% / 0.06);
+}
+
+/* Subtle cyan-tinted row backgrounds in lists/queues */
+.rounded-xl.bg-white\/\[0\.03\] {
+  background-color: hsl(210 60% 50% / 0.05) !important;
+  border-color: hsl(188 80% 55% / 0.1) !important;
+}
+.rounded-xl.bg-white\/\[0\.03\]:hover {
+  background-color: hsl(188 80% 55% / 0.08) !important;
+  border-color: hsl(188 80% 55% / 0.18) !important;
+}
+
+/* White/5 bg — cyan tinted */
+.bg-white\/5 {
+  background-color: hsl(210 60% 50% / 0.07) !important;
+}
+
+/* ================================================================
+   ADMIN LIGHT THEME — Global Component Overrides
+   ================================================================ */
+
+.admin-light .glass {
+  background: linear-gradient(135deg, hsl(0 0% 100% / 0.7) 0%, hsl(210 40% 98% / 0.85) 100%) !important;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid hsl(210 30% 88%) !important;
+  box-shadow: 0 4px 12px hsl(210 40% 40% / 0.05);
+  color: hsl(222 47% 11%) !important;
+}
+
+.admin-light .glass-strong {
+  background: linear-gradient(160deg, hsl(0 0% 100% / 0.95) 0%, hsl(210 50% 98% / 0.98) 100%) !important;
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid hsl(210 30% 86%) !important;
+  box-shadow: 0 8px 24px hsl(210 40% 40% / 0.08);
+  color: hsl(222 47% 11%) !important;
+}
+
+/* Ensure inputs in light theme have readable text */
+.admin-light input, 
+.admin-light select, 
+.admin-light textarea {
+  color: hsl(222 47% 11%) !important;
+}
+

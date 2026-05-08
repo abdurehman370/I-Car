@@ -1,116 +1,291 @@
 "use client";
 
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { motion } from "framer-motion";
+import { User, Lock, Shield, Eye, EyeOff, Save, Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export default function Page() {
+export default function AdminProfilePage() {
   const [username, setUsername] = useState("");
+  const [originalUsername, setOriginalUsername] = useState("");
+  const [role, setRole] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
+
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showCurrent, setShowCurrent] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const [loading, setLoading] = useState(true);
-  const [updating, setUpdating] = useState(false);
+  const [savingInfo, setSavingInfo] = useState(false);
+  const [savingPassword, setSavingPassword] = useState(false);
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await fetch("/api/admin/profile");
-        if (response.ok) {
-          const data = await response.json();
-          setUsername(data.username);
-        }
-      } catch (error) {
-        console.error("Failed to fetch profile:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProfile();
+    fetch("/api/admin/profile")
+      .then((r) => r.json())
+      .then((data) => {
+        setUsername(data.username ?? "");
+        setOriginalUsername(data.username ?? "");
+        setRole(data.role ?? "admin");
+        setCreatedAt(data.createdAt ? new Date(data.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : "");
+      })
+      .catch(() => toast.error("Failed to load profile"))
+      .finally(() => setLoading(false));
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSaveInfo = async (e: React.FormEvent) => {
     e.preventDefault();
-    setUpdating(true);
+    if (!username.trim()) return toast.error("Username cannot be empty");
+    setSavingInfo(true);
     try {
-      const response = await fetch("/api/admin/profile", {
+      const res = await fetch("/api/admin/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username }),
       });
-
-      if (response.ok) {
-        toast.success("Profile updated successfully");
-        // Trigger a refresh of the user info in the header
-        window.location.reload();
-      } else {
-        toast.error("Failed to update profile");
-      }
-    } catch (error) {
-      console.error("Update error:", error);
+      const data = await res.json();
+      if (!res.ok) return toast.error(data.message || "Failed to update");
+      toast.success("Profile updated!");
+      setOriginalUsername(data.username);
+    } catch {
       toast.error("An error occurred");
     } finally {
-      setUpdating(false);
+      setSavingInfo(false);
+    }
+  };
+
+  const handleSavePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!currentPassword) return toast.error("Enter your current password");
+    if (!newPassword) return toast.error("Enter a new password");
+    if (newPassword.length < 6) return toast.error("Password must be at least 6 characters");
+    if (newPassword !== confirmPassword) return toast.error("Passwords do not match");
+    setSavingPassword(true);
+    try {
+      const res = await fetch("/api/admin/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+      const data = await res.json();
+      if (!res.ok) return toast.error(data.message || "Failed to update password");
+      toast.success("Password changed successfully!");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch {
+      toast.error("An error occurred");
+    } finally {
+      setSavingPassword(false);
     }
   };
 
   if (loading) {
-    return <div className="p-4">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center py-32">
+        <Loader2 className="h-8 w-8 animate-spin text-cyan-400" />
+      </div>
+    );
   }
 
   return (
-    <div className="mx-auto w-full max-w-[970px]">
-      <Breadcrumb pageName="Profile Settings" />
+    <div className="max-w-3xl mx-auto pb-12">
+      {/* Page Header */}
+      <div className="mb-8">
+        <p className="font-mono text-[10px] tracking-[0.3em] text-cyan-500 uppercase mb-1">
+          ADMIN · SETTINGS
+        </p>
+        <h1 className="text-3xl font-bold text-white">Profile Settings</h1>
+        <p className="text-gray-400 text-sm mt-1">Manage your account credentials and security</p>
+      </div>
 
-      <div className="grid grid-cols-1 gap-8">
-        <div className="col-span-5 xl:col-span-3">
-          <div className="rounded-[10px] border border-stroke bg-white shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
-            <div className="border-b border-stroke px-7 py-4 dark:border-dark-3">
-              <h3 className="font-medium text-dark dark:text-white">
-                Personal Information
-              </h3>
-            </div>
-            <div className="p-7">
-              <form onSubmit={handleSubmit}>
-                <div className="mb-5.5">
-                  <label
-                    className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
-                    htmlFor="username"
-                  >
-                    Username
-                  </label>
-                  <div className="relative">
-                    <input
-                      className="w-full rounded-[7px] border-[1.5px] border-stroke bg-white py-2.5 pl-4.5 pr-4.5 text-dark outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
-                      type="text"
-                      name="username"
-                      id="username"
-                      placeholder="Enter your username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="flex justify-end gap-4.5">
-                  <button
-                    className="flex justify-center rounded-[7px] border border-stroke px-6 py-[7px] font-medium text-dark hover:shadow-1 dark:border-dark-3 dark:text-white"
-                    type="button"
-                    onClick={() => window.history.back()}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="flex justify-center rounded-[7px] bg-primary px-6 py-[7px] font-medium text-white hover:bg-opacity-90"
-                    type="submit"
-                    disabled={updating}
-                  >
-                    {updating ? "Saving..." : "Save Changes"}
-                  </button>
-                </div>
-              </form>
-            </div>
+      {/* Account Overview Badge */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
+        className="panel border-white/5 p-5 bg-white/[0.02] mb-6 flex items-center gap-5"
+      >
+        <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-cyan-400/20 to-teal-500/20 border border-cyan-400/30 flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(34,211,238,0.15)]">
+          <span className="text-2xl font-bold text-cyan-400">{originalUsername?.[0]?.toUpperCase() ?? "A"}</span>
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-base font-bold text-white truncate">{originalUsername}</p>
+          <div className="flex items-center gap-3 mt-1">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-[10px] font-bold uppercase tracking-wider text-cyan-400">
+              <Shield className="h-3 w-3" /> {role}
+            </span>
+            {createdAt && (
+              <span className="text-[11px] text-gray-500 font-mono">Member since {createdAt}</span>
+            )}
           </div>
         </div>
-      </div>
+      </motion.div>
+
+      {/* Personal Information */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+        className="panel border-white/5 bg-white/[0.02] mb-6 overflow-hidden"
+      >
+        <div className="flex items-center gap-3 px-6 py-4 border-b border-white/5">
+          <div className="h-8 w-8 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+            <User className="h-4 w-4 text-cyan-400" />
+          </div>
+          <div>
+            <h2 className="text-sm font-bold text-white">Personal Information</h2>
+            <p className="text-[11px] text-gray-500">Update your display name</p>
+          </div>
+        </div>
+        <form onSubmit={handleSaveInfo} className="p-6 space-y-5">
+          <div className="space-y-1.5">
+            <label className="text-[11px] font-bold tracking-widest uppercase text-gray-400" htmlFor="username">
+              Username
+            </label>
+            <input
+              id="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter username"
+              required
+              className="w-full h-11 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all"
+            />
+          </div>
+          <div className="flex justify-end gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => setUsername(originalUsername)}
+              className="px-5 h-10 rounded-xl border border-white/10 text-gray-400 text-sm font-semibold hover:bg-white/5 hover:text-white transition-all"
+            >
+              Reset
+            </button>
+            <button
+              type="submit"
+              disabled={savingInfo || username === originalUsername}
+              className="px-5 h-10 rounded-xl bg-cyan-500 text-black text-sm font-bold hover:bg-cyan-400 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {savingInfo ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              {savingInfo ? "Saving..." : "Save Changes"}
+            </button>
+          </div>
+        </form>
+      </motion.div>
+
+      {/* Change Password */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+        className="panel border-white/5 bg-white/[0.02] overflow-hidden"
+      >
+        <div className="flex items-center gap-3 px-6 py-4 border-b border-white/5">
+          <div className="h-8 w-8 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+            <Lock className="h-4 w-4 text-cyan-400" />
+          </div>
+          <div>
+            <h2 className="text-sm font-bold text-white">Change Password</h2>
+            <p className="text-[11px] text-gray-500">Keep your account secure with a strong password</p>
+          </div>
+        </div>
+        <form onSubmit={handleSavePassword} className="p-6 space-y-5">
+          {/* Current Password */}
+          <div className="space-y-1.5">
+            <label className="text-[11px] font-bold tracking-widest uppercase text-gray-400" htmlFor="current-pass">
+              Current Password
+            </label>
+            <div className="relative">
+              <input
+                id="current-pass"
+                type={showCurrent ? "text" : "password"}
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Enter current password"
+                className="w-full h-11 pl-4 pr-11 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all"
+              />
+              <button type="button" onClick={() => setShowCurrent(!showCurrent)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors">
+                {showCurrent ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
+          </div>
+
+          {/* New Password */}
+          <div className="space-y-1.5">
+            <label className="text-[11px] font-bold tracking-widest uppercase text-gray-400" htmlFor="new-pass">
+              New Password
+            </label>
+            <div className="relative">
+              <input
+                id="new-pass"
+                type={showNew ? "text" : "password"}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Minimum 6 characters"
+                className="w-full h-11 pl-4 pr-11 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all"
+              />
+              <button type="button" onClick={() => setShowNew(!showNew)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors">
+                {showNew ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
+            {newPassword && (
+              <div className="flex items-center gap-2 mt-1">
+                <div className="flex-1 h-1 rounded-full bg-white/5 overflow-hidden">
+                  <div className={cn("h-full transition-all rounded-full", newPassword.length < 6 ? "w-1/4 bg-red-500" : newPassword.length < 10 ? "w-1/2 bg-amber-500" : "w-full bg-emerald-500")} />
+                </div>
+                <span className={cn("text-[10px] font-mono font-bold", newPassword.length < 6 ? "text-red-400" : newPassword.length < 10 ? "text-amber-400" : "text-emerald-400")}>
+                  {newPassword.length < 6 ? "Weak" : newPassword.length < 10 ? "Good" : "Strong"}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Confirm Password */}
+          <div className="space-y-1.5">
+            <label className="text-[11px] font-bold tracking-widest uppercase text-gray-400" htmlFor="confirm-pass">
+              Confirm New Password
+            </label>
+            <div className="relative">
+              <input
+                id="confirm-pass"
+                type={showConfirm ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Repeat new password"
+                className={cn(
+                  "w-full h-11 pl-4 pr-11 rounded-xl bg-white/5 border text-white text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 transition-all",
+                  confirmPassword && confirmPassword !== newPassword
+                    ? "border-red-500/40 focus:border-red-500/60 focus:ring-red-500/20"
+                    : confirmPassword && confirmPassword === newPassword
+                    ? "border-emerald-500/40 focus:border-emerald-500/60 focus:ring-emerald-500/20"
+                    : "border-white/10 focus:border-cyan-400/50 focus:ring-cyan-400/20"
+                )}
+              />
+              <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors">
+                {showConfirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
+            {confirmPassword && confirmPassword !== newPassword && (
+              <p className="text-[11px] text-red-400 font-mono">Passwords do not match</p>
+            )}
+          </div>
+
+          <div className="flex justify-end gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => { setCurrentPassword(""); setNewPassword(""); setConfirmPassword(""); }}
+              className="px-5 h-10 rounded-xl border border-white/10 text-gray-400 text-sm font-semibold hover:bg-white/5 hover:text-white transition-all"
+            >
+              Clear
+            </button>
+            <button
+              type="submit"
+              disabled={savingPassword || !currentPassword || !newPassword || newPassword !== confirmPassword}
+              className="px-5 h-10 rounded-xl bg-cyan-500 text-black text-sm font-bold hover:bg-cyan-400 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {savingPassword ? <Loader2 className="h-4 w-4 animate-spin" /> : <Lock className="h-4 w-4" />}
+              {savingPassword ? "Updating..." : "Update Password"}
+            </button>
+          </div>
+        </form>
+      </motion.div>
     </div>
   );
 }

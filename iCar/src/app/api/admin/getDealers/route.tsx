@@ -33,11 +33,11 @@ export async function GET(request: NextRequest) {
             ...(q
                 ? {
                     OR: [
-                        { email: { contains: q, mode: "insensitive" } },
-                        { dealershipName: { contains: q, mode: "insensitive" } },
-                        { contactPerson: { contains: q, mode: "insensitive" } },
-                        { city: { contains: q, mode: "insensitive" } },
-                        { phoneNumber: { contains: q, mode: "insensitive" } },
+                        { email: { contains: q } },
+                        { dealershipName: { contains: q } },
+                        { contactPerson: { contains: q } },
+                        { city: { contains: q } },
+                        { phoneNumber: { contains: q } },
                     ],
                 }
                 : {}),

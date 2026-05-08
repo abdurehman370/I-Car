@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Search, Bell, Command, LayoutDashboard, Car, 
   Settings, LogOut, Zap, Menu, X, 
-  User, ShieldCheck, Users, Database, BellRing, List
+  User, ShieldCheck, Users, Database, BellRing, List, Sun, Moon
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -16,12 +16,12 @@ interface Props {
 }
 
 const adminNavItems = [
-    { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
+    { title: "Overview", url: "/admin", icon: LayoutDashboard },
     { title: "Profile", url: "/admin/profile", icon: User },
     { title: "Dealers", url: "/admin/dealers", icon: Users },
     { title: "Listings", url: "/admin/listings", icon: List },
     { title: "Taxonomy", url: "/admin/taxonomy", icon: Database },
-    { title: "Authenticate", url: "/admin/authenticate-dealers", icon: ShieldCheck },
+    { title: "Approvals", url: "/admin/authenticate-dealers", icon: ShieldCheck },
 ];
 
 export default function AdminPortalLayout({ children }: Props) {
@@ -31,6 +31,20 @@ export default function AdminPortalLayout({ children }: Props) {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isLight, setIsLight] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("admin-theme");
+    if (saved === "light") setIsLight(true);
+  }, []);
+
+  const toggleTheme = () => {
+    setIsLight(prev => {
+      const next = !prev;
+      localStorage.setItem("admin-theme", next ? "light" : "dark");
+      return next;
+    });
+  };
 
   const handleSignOut = async () => {
     try {
@@ -63,7 +77,7 @@ export default function AdminPortalLayout({ children }: Props) {
   }, [isMobile]);
 
   return (
-    <div className="min-h-screen flex w-full bg-background text-foreground selection:bg-primary/30">
+    <div className={cn("min-h-screen flex w-full bg-background text-foreground selection:bg-primary/30", isLight && "admin-light")}>
       {/* Sidebar Overlay */}
       {isMobile && isSidebarOpen && (
         <div 
@@ -93,7 +107,7 @@ export default function AdminPortalLayout({ children }: Props) {
         <div className="px-3 py-2">
           {isSidebarOpen && (
             <p className="px-3 mb-4 font-mono text-[10px] tracking-[0.3em] text-gray-500 uppercase opacity-60">
-              Management
+              WORKSPACE
             </p>
           )}
           <nav className="space-y-1.5">
@@ -150,7 +164,7 @@ export default function AdminPortalLayout({ children }: Props) {
         <header className="sticky top-0 z-30 h-16 flex items-center gap-4 px-4 md:px-8 glass-strong border-b border-white/5">
           <button 
             onClick={() => setSidebarOpen(!isSidebarOpen)}
-            className="p-2 rounded-lg hover:bg-white/5 text-gray-400 hover:text-white transition-colors"
+            className="p-2 rounded-lg hover:bg-white/5 text-gray-500 hover:text-foreground transition-colors"
           >
             {isSidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -170,7 +184,7 @@ export default function AdminPortalLayout({ children }: Props) {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 group-focus-within:text-cyan-400 transition-colors" />
               <input
                 placeholder="Search dealers, listings, taxonomy..."
-                className="w-full h-10 pl-10 pr-12 rounded-xl bg-white/[0.03] border border-white/10 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all"
+                className="w-full h-10 pl-10 pr-12 rounded-xl bg-white/5 border border-white/10 text-sm text-foreground placeholder:text-gray-500 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all"
               />
               <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 px-1.5 h-5 rounded border border-white/10 bg-white/5 text-[10px] font-mono text-gray-500">
                 <Command className="h-2.5 w-2.5" />K
@@ -179,9 +193,23 @@ export default function AdminPortalLayout({ children }: Props) {
           </div>
 
           <div className="flex items-center gap-3">
+             {/* Theme Toggle */}
+             <button
+               onClick={toggleTheme}
+               title={isLight ? "Switch to Dark" : "Switch to Light"}
+               className={cn(
+                 "relative h-10 w-10 rounded-xl flex items-center justify-center transition-all duration-300 border",
+                 isLight
+                   ? "bg-amber-50 border-amber-200 text-amber-600 hover:bg-amber-100 shadow-[0_0_12px_rgba(245,158,11,0.15)]"
+                   : "bg-white/5 border-white/10 text-gray-400 hover:text-amber-400 hover:border-amber-400/30 hover:bg-amber-400/5"
+               )}
+             >
+               {isLight ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+             </button>
+
              <button className="relative h-10 w-10 rounded-xl flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/5 transition-colors">
                 <BellRing className="h-5 w-5" />
-                <span className="absolute top-2.5 right-2.5 h-2 w-2 rounded-full bg-cyan-400 border-2 border-[#050b14] animate-pulse" />
+                <span className={cn("absolute top-2.5 right-2.5 h-2 w-2 rounded-full bg-cyan-400 border-2 animate-pulse", isLight ? "border-white" : "border-[#050b14]")} />
              </button>
 
              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-cyan-400/20 to-teal-500/20 border border-cyan-400/30 flex items-center justify-center shrink-0">

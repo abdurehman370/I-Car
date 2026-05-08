@@ -128,7 +128,7 @@ export default function ListingDetailPage() {
                 {/* Left — Images + Details */}
                 <div className="lg:col-span-2 space-y-6">
                     {/* Image gallery */}
-                    <div className="bg-white dark:bg-[#0a1526] rounded-3xl overflow-hidden border border-gray-200 dark:border-white/5 shadow-sm">
+                    <div className="panel overflow-hidden border-white/5">
                         {orderedImages.length > 0 ? (
                             <>
                                 <div className="w-full aspect-[16/9] bg-gray-100 dark:bg-[#020d1a]">
@@ -170,10 +170,10 @@ export default function ListingDetailPage() {
                     </div>
 
                     {/* Title + badges */}
-                    <div className="bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm space-y-4">
+                    <div className="panel p-6 border-white/5 space-y-4">
                         <div className="flex flex-wrap items-start justify-between gap-3">
                             <div>
-                                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                <h1 className="text-2xl font-bold text-foreground">
                                     {listing.year} {listing.make} {listing.model}
                                     {listing.variant && <span className="text-gray-500 dark:text-gray-400 font-normal"> — {listing.variant}</span>}
                                 </h1>
@@ -192,45 +192,45 @@ export default function ListingDetailPage() {
                         </div>
 
                         {/* Key specs */}
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-gray-100 dark:border-white/5">
-                            <div className="flex flex-col items-center gap-1 p-3 bg-gray-50 dark:bg-[#020d1a] rounded-2xl">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-white/5">
+                            <div className="flex flex-col items-center gap-1 p-3 bg-white/5 dark:bg-black/20 rounded-2xl">
                                 <Calendar className="size-5 text-cyan-500" />
-                                <span className="text-xs text-gray-500 dark:text-gray-400">Year</span>
-                                <span className="font-bold text-gray-900 dark:text-white">{listing.year}</span>
+                                <span className="text-xs text-muted-foreground uppercase font-mono tracking-wider">Year</span>
+                                <span className="font-bold text-foreground">{listing.year}</span>
                             </div>
-                            <div className="flex flex-col items-center gap-1 p-3 bg-gray-50 dark:bg-[#020d1a] rounded-2xl">
+                            <div className="flex flex-col items-center gap-1 p-3 bg-white/5 dark:bg-black/20 rounded-2xl">
                                 <Gauge className="size-5 text-cyan-500" />
-                                <span className="text-xs text-gray-500 dark:text-gray-400">Mileage</span>
-                                <span className="font-bold text-gray-900 dark:text-white">{listing.mileage.toLocaleString()} KM</span>
+                                <span className="text-xs text-muted-foreground uppercase font-mono tracking-wider">Mileage</span>
+                                <span className="font-bold text-foreground">{listing.mileage.toLocaleString()} KM</span>
                             </div>
-                            <div className="flex flex-col items-center gap-1 p-3 bg-gray-50 dark:bg-[#020d1a] rounded-2xl">
+                            <div className="flex flex-col items-center gap-1 p-3 bg-white/5 dark:bg-black/20 rounded-2xl">
                                 <Settings2 className="size-5 text-cyan-500" />
-                                <span className="text-xs text-gray-500 dark:text-gray-400">Condition</span>
-                                <span className="font-bold text-gray-900 dark:text-white capitalize">{listing.condition.toLowerCase()}</span>
+                                <span className="text-xs text-muted-foreground uppercase font-mono tracking-wider">Condition</span>
+                                <span className="font-bold text-foreground capitalize">{listing.condition.toLowerCase()}</span>
                             </div>
-                            <div className="flex flex-col items-center gap-1 p-3 bg-gray-50 dark:bg-[#020d1a] rounded-2xl">
+                            <div className="flex flex-col items-center gap-1 p-3 bg-white/5 dark:bg-black/20 rounded-2xl">
                                 <MapPin className="size-5 text-cyan-500" />
-                                <span className="text-xs text-gray-500 dark:text-gray-400">Region</span>
-                                <span className="font-bold text-gray-900 dark:text-white">{listing.region}</span>
+                                <span className="text-xs text-muted-foreground uppercase font-mono tracking-wider">Region</span>
+                                <span className="font-bold text-foreground">{listing.region}</span>
                             </div>
                         </div>
                     </div>
 
                     {/* Description */}
-                    <div className="bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm">
-                        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-3">Description</h2>
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">{listing.description}</p>
+                    <div className="panel p-6 border-white/5">
+                        <h2 className="text-lg font-bold text-foreground mb-3">Description</h2>
+                        <p className="text-foreground leading-relaxed whitespace-pre-line opacity-80">{listing.description}</p>
                     </div>
 
                     {/* Features */}
                     {features.length > 0 && (
-                        <div className="bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm">
-                            <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Features</h2>
+                        <div className="panel p-6 border-white/5">
+                            <h2 className="text-lg font-bold text-foreground mb-4">Features</h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 {features.map((feature, i) => (
-                                    <div key={i} className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                                    <div key={i} className="flex items-center gap-2 text-sm text-foreground">
                                         <CheckCircle className="size-4 text-cyan-500 flex-shrink-0" />
-                                        {feature}
+                                        <span className="font-medium">{feature}</span>
                                     </div>
                                 ))}
                             </div>
@@ -241,7 +241,7 @@ export default function ListingDetailPage() {
                 {/* Right — Price + Dealer */}
                 <div className="space-y-6">
                     {/* Price card */}
-                    <div className="bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm sticky top-6">
+                    <div className="panel p-6 border-white/5 sticky top-6">
                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Asking Price</p>
                         <p className="text-3xl font-bold text-cyan-500 dark:text-cyan-400">
                             {listing.currency} {listing.price.toLocaleString()}
@@ -255,17 +255,17 @@ export default function ListingDetailPage() {
 
                         {/* Dealer info */}
                         <div className="mt-6 pt-6 border-t border-gray-100 dark:border-white/5 space-y-3">
-                            <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                            <h3 className="font-semibold text-foreground flex items-center gap-2">
                                 <Building2 className="size-4 text-cyan-500" />
                                 {listing.dealer.dealershipName}
                             </h3>
-                            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                                <Tag className="size-4 text-gray-400" />
+                            <div className="flex items-center gap-2 text-sm text-foreground opacity-70">
+                                <Tag className="size-4 text-muted-foreground" />
                                 {listing.dealer.contactPerson}
                             </div>
                             {listing.dealer.city && (
-                                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                                    <MapPin className="size-4 text-gray-400" />
+                                <div className="flex items-center gap-2 text-sm text-foreground opacity-70">
+                                    <MapPin className="size-4 text-muted-foreground" />
                                     {listing.dealer.city}{listing.dealer.country ? `, ${listing.dealer.country}` : ""}
                                 </div>
                             )}

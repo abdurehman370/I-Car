@@ -165,7 +165,7 @@ export default function DealerDashboard() {
                 <span className="h-1.5 w-1.5 rounded-full bg-primary animate-glow" />
                 LIVE · MARKET FEED
               </span>
-              <h1 className="text-3xl md:text-5xl font-semibold tracking-tight leading-tight">
+              <h1 className="text-3xl md:text-5xl font-semibold tracking-tight leading-tight text-foreground">
                 Welcome back,<br />
                 <span className="text-gradient capitalize">Dealer</span>
               </h1>
@@ -232,14 +232,7 @@ export default function DealerDashboard() {
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" vertical={false} />
                 <XAxis dataKey="month" stroke="#6B7280" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis stroke="#6B7280" fontSize={11} tickLine={false} axisLine={false} />
-                <Tooltip
-                  contentStyle={{
-                    background: "#0a1526",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: "8px",
-                    fontSize: "12px",
-                  }}
-                />
+                <Tooltip />
                 <Area type="monotone" dataKey="listings" stroke="#22d3ee" strokeWidth={3} fill="url(#g1)" />
                 <Area type="monotone" dataKey="valuations" stroke="#2dd4bf" strokeWidth={3} fill="url(#g2)" />
               </AreaChart>
@@ -272,7 +265,7 @@ export default function DealerDashboard() {
                   a.type === "valuation" ? "bg-cyan-400 shadow-[0_0_8px_#22d3ee]" : a.type === "alert" ? "bg-teal-400 shadow-[0_0_8px_#2dd4bf]" : "bg-gray-500"
                 }`} />
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm leading-snug text-gray-300 group-hover:text-white transition-colors">{a.text}</p>
+                  <p className="text-sm leading-snug text-foreground/80 group-hover:text-foreground transition-colors">{a.text}</p>
                   <p className="text-[10px] font-mono text-gray-500 tracking-widest mt-0.5 uppercase">{a.time}</p>
                 </div>
               </motion.div>
@@ -441,7 +434,7 @@ function HeroKpi({ label, value, delta, trend, prefix, suffix }: any) {
   return (
     <div className="relative panel p-4 overflow-hidden group hover:border-cyan-400/40 transition-all border border-white/10 shadow-lg shadow-black/20">
       <p className="font-mono text-[10px] font-bold tracking-[0.25em] text-gray-400 mb-2 uppercase">{label}</p>
-      <p className="text-3xl font-bold tracking-tight text-white group-hover:text-cyan-400 transition-colors">
+      <p className="text-3xl font-bold tracking-tight text-foreground group-hover:text-cyan-400 transition-colors">
         <AnimatedNumber value={value} prefix={prefix} suffix={suffix} />
       </p>
       <div className={`mt-2 inline-flex items-center gap-1 text-[11px] font-mono ${trend === "up" ? "text-cyan-400" : "text-red-400"}`}>
@@ -506,9 +499,9 @@ function VehicleCard({ v, delay, onEdit, onDelete, deleting }: any) {
           <h4 className="font-semibold text-sm tracking-tight truncate text-white">{v.make} {v.model}</h4>
         </div>
       </div>
-      <div className="p-4 space-y-4 bg-gradient-to-b from-transparent to-black/40">
+      <div className="p-4 space-y-4 bg-white/5 dark:bg-black/20">
         <div className="flex items-baseline justify-between">
-          <span className="text-2xl font-bold tracking-tight text-white">{v.currency} {v.price.toLocaleString()}</span>
+          <span className="text-2xl font-bold tracking-tight text-foreground">{v.currency} {v.price.toLocaleString()}</span>
           <Link href={`/listings/${v.id}`} onClick={(e) => e.stopPropagation()}>
             <button className="text-gray-400 hover:text-cyan-400 transition-colors p-1 rounded-lg hover:bg-white/5">
                 <Eye className="h-5 w-5" />

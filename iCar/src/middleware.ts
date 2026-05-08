@@ -9,6 +9,7 @@ export async function middleware(request: NextRequest) {
   const isStatic =
     pathname.startsWith('/_next') ||
     pathname.startsWith('/images') ||
+    pathname.startsWith('/uploads') ||
     pathname.startsWith('/favicon.ico') ||
     pathname.startsWith('/api/webhook'); // public webhooks
 
@@ -68,5 +69,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|images).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|images|uploads).*)'],
 };

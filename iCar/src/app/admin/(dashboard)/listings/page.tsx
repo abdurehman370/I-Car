@@ -126,62 +126,63 @@ function AdminListingCard({ listing }: { listing: Listing }) {
   return (
     <Link
       href={`/admin/listings/${listing.id}`}
-      className="group flex flex-col overflow-hidden rounded-[2rem] border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:border-cyan-500/30 dark:border-white/5 dark:bg-gray-800 dark:shadow-lg cursor-pointer"
+      className="group panel border-white/5 overflow-hidden flex flex-col bg-white/[0.02] hover:bg-white/[0.04] transition-all relative"
     >
-      {/* Image */}
-      <div className="relative aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
+      {/* Image Section */}
+      <div className="relative aspect-[16/10] overflow-hidden bg-white/5">
         <Image
           src={imgSrc}
           alt={`${listing.make} ${listing.model}`}
           fill
           unoptimized
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className="object-cover transition-transform duration-700 group-hover:scale-110"
           onError={() => setImgSrc("/car-placeholder.png")}
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+        
         <div className="absolute top-3 left-3">
-          <span className="flex items-center gap-1.5 rounded-full border border-green-500/30 bg-green-500/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-green-400 backdrop-blur-md">
-            {listing.status}
+          <span className="px-2.5 py-1 rounded-lg text-[10px] font-bold tracking-widest backdrop-blur-md border border-cyan-500/40 bg-cyan-500/20 text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.2)]">
+            {listing.status.toUpperCase()}
           </span>
+        </div>
+
+        <div className="absolute bottom-3 left-4 right-4">
+            <h4 className="font-bold text-white text-lg tracking-tight truncate">{listing.year} {listing.make} {listing.model}</h4>
+            <p className="text-[10px] text-gray-400 font-mono tracking-widest uppercase truncate">
+                <Building2 className="inline size-3 mr-1 text-cyan-400" />
+                {listing.dealer.dealershipName}
+            </p>
         </div>
       </div>
 
-      {/* Body */}
-      <div className="flex flex-1 flex-col p-5">
-        <div className="mb-2 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-          <Building2 className="h-3.5 w-3.5" />
-          {listing.dealer.dealershipName}
-        </div>
-        <h3 className="text-base font-bold leading-tight text-gray-900 dark:text-white">
-          {listing.year} {listing.make} {listing.model}
-          {listing.variant && (
-            <span className="font-normal text-gray-400">
-              {" "}
-              · {listing.variant}
-            </span>
-          )}
-        </h3>
-        <p className="mt-1 text-lg font-bold text-cyan-500 dark:text-cyan-400">
-          {listing.currency} {listing.price.toLocaleString()}
-        </p>
-
-        <div className="mb-4 mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-gray-500 dark:text-gray-400">
-          <span className="flex items-center gap-1.5">
-            <Gauge className="h-3.5 w-3.5" />{" "}
-            {listing.mileage.toLocaleString()} KM
-          </span>
-          <span className="flex items-center gap-1.5">
-            <MapPin className="h-3.5 w-3.5" /> {listing.city}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Calendar className="h-3.5 w-3.5" /> {listing.condition}
-          </span>
+      {/* Content Section */}
+      <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+        <div>
+            <div className="flex items-baseline justify-between mb-4">
+                <span className="text-2xl font-bold tracking-tight text-white">{listing.currency} {listing.price.toLocaleString()}</span>
+                <span className="text-[10px] font-mono text-cyan-400/70">{(listing.price / 3.67).toFixed(0)} USD est.</span>
+            </div>
+            
+            <div className="grid grid-cols-3 gap-2">
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-white/5 border border-white/5 group-hover:border-white/10 transition-colors">
+                    <Calendar className="h-3.5 w-3.5 text-cyan-400" />
+                    <span className="text-[10px] font-bold text-gray-300">{listing.year}</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-white/5 border border-white/5 group-hover:border-white/10 transition-colors">
+                    <Gauge className="h-3.5 w-3.5 text-cyan-400" />
+                    <span className="text-[10px] font-bold text-gray-300">{(listing.mileage / 1000).toFixed(0)}K KM</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-white/5 border border-white/5 group-hover:border-white/10 transition-colors">
+                    <MapPin className="h-3.5 w-3.5 text-cyan-400" />
+                    <span className="text-[10px] font-bold text-gray-300 truncate w-full text-center">{listing.city}</span>
+                </div>
+            </div>
         </div>
 
-        <div className="mt-auto flex items-center pt-3">
-          <span className="flex items-center gap-1 text-xs font-semibold text-cyan-500 transition-colors group-hover:text-cyan-600 dark:text-cyan-400 dark:group-hover:text-cyan-300">
-            View listing
-            <ChevronRight className="h-3.5 w-3.5" />
-          </span>
+        <div className="flex items-center pt-2">
+            <div className="flex-1 h-10 rounded-xl glass border border-white/10 text-white text-xs font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition-all group/btn">
+                View Details <ChevronRight className="h-3.5 w-3.5 group-hover/btn:translate-x-1 transition-transform" />
+            </div>
         </div>
       </div>
     </Link>
