@@ -1,1 +1,3 @@
 iCar/logs/*.log
+.vscode/
+iCar/.vscode/
