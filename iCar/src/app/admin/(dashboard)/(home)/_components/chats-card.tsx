@@ -3,7 +3,7 @@ import { formatMessageTime } from "@/lib/format-message-time";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { getChatsData } from "../fetch";
+import { getChatsData, ChatData } from "../fetch";
 
 export async function ChatsCard() {
   const data = await getChatsData();
@@ -15,7 +15,7 @@ export async function ChatsCard() {
       </h2>
 
       <ul>
-        {data.map((chat, key) => (
+        {data.map((chat: ChatData, key: number) => (
           <li key={key}>
             <Link
               href="/"

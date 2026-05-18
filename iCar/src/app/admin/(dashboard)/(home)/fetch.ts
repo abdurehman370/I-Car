@@ -104,3 +104,18 @@ export async function getPlatformFeed() {
 
   return feed.length > 0 ? feed : ["No recent activity detected."];
 }
+
+export type ChatData = {
+  profile: string;
+  name: string;
+  isActive: boolean;
+  lastMessage: {
+    content: string;
+    timestamp: string;
+  };
+  unreadCount?: number;
+};
+
+export async function getChatsData(): Promise<ChatData[]> {
+  return [];
+}

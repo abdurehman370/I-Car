@@ -606,6 +606,7 @@ input[type="search"]::-webkit-search-cancel-button {
     padding: 1px;
     background: var(--gradient-border);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
