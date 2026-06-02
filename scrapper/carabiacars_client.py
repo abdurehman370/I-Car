@@ -73,7 +73,8 @@ class CarAbiaClient:
                 # Link
                 link_elem = item.select_one('.product-snippet__link, a')
                 if not link_elem: continue
-                href = link_elem.get('href', '')
+                href_val = link_elem.get('href')
+                href = href_val[0] if isinstance(href_val, list) else (href_val or "")
                 listing_url = href if href.startswith('http') else f"{BASE_URL}{href}"
                 
                 # ID
@@ -105,7 +106,8 @@ class CarAbiaClient:
                 
                 # Image
                 img_elem = item.select_one('img')
-                image_url = img_elem.get('src', '') if img_elem else ""
+                src_val = img_elem.get('src') if img_elem else ""
+                image_url = src_val[0] if isinstance(src_val, list) else (src_val or "")
                 
                 # Prepend base URL if relative
                 if image_url and not image_url.startswith('http'):

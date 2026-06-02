@@ -1,71 +1,62 @@
 import Signin from "@/components/Auth/Signin";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Sign in",
+  title: "Sign in - Admin Dashboard",
 };
 
 export default function SignIn() {
   return (
     <>
-      {/* <Breadcrumb pageName="Sign In" /> */}
+      <div className="flex min-h-screen items-center justify-center bg-[#0B1121] dark:bg-[#0B1121] p-4">
+        <div className="w-full max-w-[1000px] overflow-hidden rounded-[20px] bg-[#162032] shadow-2xl flex flex-col xl:flex-row relative z-10">
 
-      <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
-        <div className="flex flex-wrap items-center">
-          <div className="hidden w-full p-7.5 xl:block xl:w-1/2">
-            <div className="custom-gradient-1 overflow-hidden rounded-2xl px-12.5 pt-12.5 dark:!bg-dark-2 dark:bg-none">
-              <Link className="mb-10 inline-block" href="/">
-                <Image
-                  className="hidden dark:block"
-                  src={"/images/logo/logo.svg"}
-                  alt="Logo"
-                  width={176}
-                  height={32}
-                />
-                <Image
-                  className="dark:hidden"
-                  src={"/images/logo/logo-dark.svg"}
-                  alt="Logo"
-                  width={176}
-                  height={32}
-                />
+          <div className="hidden xl:flex w-full xl:w-[45%] p-4">
+            <div className="w-full relative overflow-hidden rounded-[16px] bg-[#1C2538] px-10 pt-12 flex flex-col justify-start pb-32">
+              <Link className="mb-10 inline-flex items-center gap-3" href="/">
+                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#6366f1] to-[#a855f7] flex items-center justify-center p-[3px]">
+                  <div className="w-full h-full bg-[#1C2538] rounded-full"></div>
+                </div>
+                <span className="text-[22px] font-semibold text-white tracking-wide">NextAdmin</span>
               </Link>
-              <p className="mb-3 text-xl font-medium text-dark dark:text-white">
+
+              <p className="mb-2 text-[15px] font-medium text-gray-300">
                 Sign in to your account
               </p>
 
-              <h1 className="mb-4 text-2xl font-bold text-dark dark:text-white sm:text-heading-3">
+              <h1 className="mb-4 text-[34px] leading-tight font-bold text-white">
                 Welcome Back!
               </h1>
 
-              <p className="w-full max-w-[375px] font-medium text-dark-4 dark:text-dark-6">
-                Please sign in to your account by completing the necessary
-                fields below
+              <p className="w-full max-w-[280px] text-[14px] text-gray-400 leading-relaxed">
+                Please sign in to your account by completing the necessary fields below
               </p>
 
-              <div className="mt-31">
-                <Image
-                  src={"/images/grids/grid-02.svg"}
-                  alt="Logo"
-                  width={405}
-                  height={325}
-                  className="mx-auto dark:opacity-30"
-                />
+              {/* Grid Background */}
+              <div className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1C2538] to-transparent z-10" />
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="absolute bottom-0 opacity-20">
+                  <defs>
+                    <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5" />
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#gridPattern)" />
+                </svg>
               </div>
             </div>
           </div>
 
-          <div className="w-full xl:w-1/2">
-            <h1 className="font-bold text-3xl text-center text-black">Sign In </h1>
-            <div className="w-full p-4 sm:p-12.5 xl:p-15">
-              <Signin />
-            </div>
+          <div className="w-full xl:w-[55%] p-8 sm:p-16 flex flex-col justify-center relative">
+            <h1 className="mb-10 font-bold text-[32px] text-center text-white">Sign In</h1>
+            <Signin />
           </div>
+
         </div>
       </div>
+
     </>
   );
 }

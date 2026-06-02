@@ -81,8 +81,8 @@ if __name__ == "__main__":
                 print(f"[{name}] Found {len(hits)} raw listings")
                 
                 # Apply the filtering logic similar to app.py
-                make_query = case['make'].lower().strip()
-                model_query = case['model'].lower().strip()
+                make_query = str(case.get('make', '')).lower().strip()
+                model_query = str(case.get('model', '')).lower().strip()
                 year_min = case.get("year_min")
                 year_max = case.get("year_max")
                 
@@ -140,9 +140,9 @@ if __name__ == "__main__":
                     year_val = hit.get("year")
                     if year_val and str(year_val).isdigit():
                         y = int(year_val)
-                        if year_min and y < year_min:
+                        if year_min is not None and y < int(year_min):
                             continue
-                        if year_max and y > year_max:
+                        if year_max is not None and y > int(year_max):
                             continue
                     
                     filtered.append(hit)

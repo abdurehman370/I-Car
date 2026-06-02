@@ -91,7 +91,8 @@ class YallaMotorClient:
         scripts = soup.find_all("script", type="application/ld+json")
         for script in scripts:
             try:
-                data = json.loads(script.string)
+                script_content = script.string if script.string else "{}"
+                data = json.loads(script_content)
                 if not isinstance(data, dict):
                     continue
                 
@@ -130,7 +131,7 @@ class YallaMotorClient:
                     "title": title,
                     "price": price,
                     "year": str(year_val),
-                    "mileage": str(mileage_val),
+                    "mileage": mileage_val,
                     "currency": self.currency,
                     "location": location_val,
                     "listing_url": listing_url,

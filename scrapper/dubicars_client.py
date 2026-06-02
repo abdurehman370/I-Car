@@ -111,6 +111,8 @@ class DubicarsClient:
                 listing_url = link_el.get("href") if link_el else ""
                 
                 mixpanel_data_raw = item.get("data-mixpanel-detail")
+                if isinstance(mixpanel_data_raw, list):
+                    mixpanel_data_raw = mixpanel_data_raw[0] if mixpanel_data_raw else ""
                 if not mixpanel_data_raw:
                     continue
                     

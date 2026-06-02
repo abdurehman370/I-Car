@@ -181,7 +181,7 @@ export default function DealerDashboard() {
                   <Sparkles className="h-4 w-4" /> AI List Vehicle
                 </button>
               </Link>
-              <Link href="/(dealer)/(portal)/listings">
+              <Link href="/listings">
                 <button className="h-11 px-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white flex items-center gap-2 font-semibold transition-all">
                   View Inventory <ArrowUpRight className="h-4 w-4" />
                 </button>
@@ -281,7 +281,7 @@ export default function DealerDashboard() {
             <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground uppercase">Showcase</p>
             <h2 className="text-2xl font-semibold mt-1">Your Inventory</h2>
           </div>
-          <Link href="/(dealer)/(portal)/listings" className="text-sm text-primary hover:text-accent flex items-center gap-1 font-medium transition-colors">
+          <Link href="/listings" className="text-sm text-primary hover:text-accent flex items-center gap-1 font-medium transition-colors">
             View all <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>

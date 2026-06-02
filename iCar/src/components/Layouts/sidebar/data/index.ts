@@ -94,7 +94,7 @@ export const DEALER_NAV_DATA = [
     items: [
       {
         title: "Settings",
-        url: "/pages/settings",
+        url: "/profile",
         icon: Icons.Alphabet,
         items: [],
       },

@@ -125,10 +125,14 @@ class EuropeClient:
         for article in articles:
             try:
                 # 1. Primary data extraction via data- attributes (Strongly robust)
-                guid = article.get("data-guid")
-                d_price = article.get("data-price")
-                d_mileage = article.get("data-mileage")
-                d_year_raw = article.get("data-first-registration", "") # MM-YYYY
+                guid_val = article.get("data-guid")
+                guid = guid_val[0] if isinstance(guid_val, list) else (guid_val or "")
+                d_price_val = article.get("data-price")
+                d_price = d_price_val[0] if isinstance(d_price_val, list) else (d_price_val or "")
+                d_mileage_val = article.get("data-mileage")
+                d_mileage = d_mileage_val[0] if isinstance(d_mileage_val, list) else (d_mileage_val or "")
+                d_year_raw_val = article.get("data-first-registration")
+                d_year_raw = d_year_raw_val[0] if isinstance(d_year_raw_val, list) else (d_year_raw_val or "")
                 
                 # Title + Subtitle
                 title_base = article.find(class_=re.compile("ListItemTitle_title", re.I))
@@ -138,8 +142,12 @@ class EuropeClient:
                     title += " " + subtitle.get_text(strip=True)
                 
                 # If title is still N/A, build from components
-                if title == "N/A" and article.get("data-make"):
-                    title = f"{article.get('data-make').capitalize()} {article.get('data-model', '').capitalize()}"
+                d_make_val = article.get("data-make")
+                d_make = d_make_val[0] if isinstance(d_make_val, list) else (d_make_val or "")
+                d_model_val = article.get("data-model")
+                d_model = d_model_val[0] if isinstance(d_model_val, list) else (d_model_val or "")
+                if title == "N/A" and d_make:
+                    title = f"{d_make.capitalize()} {d_model.capitalize()}"
 
                 # Price extraction
                 price = 0
@@ -160,8 +168,9 @@ class EuropeClient:
                 img = article.find("img")
                 image_url = "N/A"
                 if img:
-                    image_url = img.get("src") or img.get("data-src") or "N/A"
-                if image_url.startswith("/"):
+                    src_val = img.get("src") or img.get("data-src") or "N/A"
+                    image_url = src_val[0] if isinstance(src_val, list) else (src_val or "N/A")
+                if isinstance(image_url, str) and image_url.startswith("/"):
                     image_url = base_url + image_url
 
                 # Link - Prioritize building from data-guid for robustness
@@ -169,8 +178,9 @@ class EuropeClient:
                     listing_url = f"{base_url}/angebote/-{guid}"
                 else:
                     link = article.select_one('a[class*="overlay_anchor"], a[class*="ListItemTitle_anchor"], a[class*="ListItem_title"], a[href*="/angebote/"]')
-                    listing_url = link['href'] if link and link.has_attr('href') else "N/A"
-                    if listing_url.startswith("/"):
+                    href_val = link.get('href') if link else None
+                    listing_url = href_val[0] if isinstance(href_val, list) else (href_val or "N/A")
+                    if isinstance(listing_url, str) and listing_url.startswith("/"):
                         listing_url = base_url + listing_url
 
                 # Skip if no valid URL found
@@ -179,11 +189,11 @@ class EuropeClient:
 
                 # Year / Mileage
                 year = "N/A"
-                if d_year_raw and len(d_year_raw) >= 4:
+                if isinstance(d_year_raw, str) and len(d_year_raw) >= 4:
                     year = d_year_raw.split("-")[-1]
                 
                 mileage = "N/A"
-                if d_mileage and d_mileage.isdigit():
+                if isinstance(d_mileage, str) and d_mileage.isdigit():
                     mileage = d_mileage
                 
                 # Fallback for Year/Mileage via Pills

@@ -78,13 +78,13 @@ class Hatla2eeClient:
             response = self.scraper.get(url, timeout=TIMEOUT)
             response.raise_for_status()
             
-            return self._parse_rsc_and_html(response.text, page)
+            return self._parse_rsc_and_html(response.text, page, make)
             
         except Exception as e:
             logger.error(f"Hatla2ee request/parse failed for {url}: {e}")
             return [], 0, 0
 
-    def _parse_rsc_and_html(self, html, current_page):
+    def _parse_rsc_and_html(self, html, current_page, make=None):
         """
         Extracts listings from Next.js RSC payloads and fallback HTML.
         """

@@ -37,6 +37,9 @@ from core.analytics import compute_price_analytics
 from core.cache import cache
 from core.network import get_request_session
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 # Load Taxonomy
 TAXONOMY_PATH = "data/car_taxonomy.json"
 try:
@@ -52,9 +55,6 @@ LEBANON_CLIENTS = [
     ("Autotrader", AutotraderLbClient),
     ("Wheelers", WheelersLbClient),
 ]
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Dubizzle Scraper API")
 
@@ -154,23 +154,28 @@ async def scrape_listings(req: ScrapeRequest, api_key: str = Depends(get_api_key
     logger.info(f"Received scrape request: {req}")
     
     # 1. Normalization
-    req.make = normalize_make(req.make)
-    req.model = normalize_model(req.make, req.model)
-    req.variant = normalize_variant(req.make, req.model, req.variant)
+    req.make = normalize_make(req.make or "")
+    req.model = normalize_model(req.make, req.model or "")
+    req.variant = normalize_variant(req.make, req.model, req.variant or "")
     
     # 2. Check Cache
-    cache_key = req.dict()
+    cache_key = req.model_dump()
     cached_res = cache.get(cache_key)
     if cached_res:
         return cached_res
 
     proxy = req.proxy if req.use_proxy else None
     
+    # Pre-initialize to satisfy static type checker
+    clients = []
+    europe_client = None
+    client = None
+    
     # Initialize appropriate client(s)
     if req.region == "Lebanon":
         clients = [(name, cls(proxy=proxy)) for name, cls in LEBANON_CLIENTS]
-    elif req.region == "Europe": # Added
-        client = EuropeClient(proxy=proxy) # Added
+    elif req.region == "Europe":
+        europe_client = EuropeClient(proxy=proxy)
     else:
         client = DubizzleClient(proxy=proxy)
         
@@ -209,9 +214,16 @@ async def scrape_listings(req: ScrapeRequest, api_key: str = Depends(get_api_key
                         for hit in hits:
                             title = hit.get("title", "").lower()
                             # Check if make is in title
-                            if make_query and make_query not in title:
-                                # For Mercedes, sometimes it's just 'Benz' or the title starts with model
-                                if make_query == "mercedes" and "benz" in title:
+                            if make_query:
+                                make_query_space = make_query.replace("-", " ")
+                                make_query_clean = re.sub(r'[^a-z0-9]', '', make_query)
+                                title_clean = re.sub(r'[^a-z0-9]', '', title)
+                                
+                                if make_query in title or make_query_space in title or make_query_clean in title_clean:
+                                    pass
+                                elif "mercedes" in make_query and "benz" in title:
+                                    pass
+                                elif make_query == "land-rover" and ("range rover" in title or "defender" in title or "discovery" in title):
                                     pass
                                 else:
                                     if len(hits) < 5: logger.debug(f"[{source_name}] Rejected '{title}' due to Make mismatch (Query: {make_query})")
@@ -309,6 +321,8 @@ async def scrape_listings(req: ScrapeRequest, api_key: str = Depends(get_api_key
             
             evaluation = PriceEvaluator.calculate_stats(all_results) if all_results else {}
         elif req.region == "Europe": # Added
+            if europe_client is None:
+                europe_client = EuropeClient(proxy=proxy)
             # Europe specific logic
             filters = {
                 "make": req.make,
@@ -319,7 +333,7 @@ async def scrape_listings(req: ScrapeRequest, api_key: str = Depends(get_api_key
             }
             # Europe uses country parameter
             country = req.country or "Germany"
-            hits, _, _ = client.get_listings(filters, country_name=country, page=1)
+            hits, _, _ = europe_client.get_listings(filters, country_name=country, page=1)
             all_results = hits
             
             # Special valuation for Europe
@@ -341,7 +355,14 @@ async def scrape_listings(req: ScrapeRequest, api_key: str = Depends(get_api_key
             
             # Build payload for algolia (Dubizzle)
             class MockArgs:
-                pass
+                make: Optional[str] = None
+                model: Optional[str] = None
+                variant: Optional[str] = None
+                year_min: Optional[int] = None
+                year_max: Optional[int] = None
+                mileage_max: Optional[int] = None
+                price_min: Optional[int] = None
+                price_max: Optional[int] = None
             args = MockArgs()
             args.make = req.make
             args.model = req.model
@@ -372,7 +393,7 @@ async def scrape_listings(req: ScrapeRequest, api_key: str = Depends(get_api_key
                                 formatted = Exporter.format_listing(hit)
                                 
                                 if req.variant:
-                                    var_clean = re.sub(r'[^a-zA-Z0-9]', '', str(req.variant).lower())
+                                    var_clean = re.sub(r'[^a-zA-Z0-9]', '', req.variant.lower())
                                     title_clean = re.sub(r'[^a-zA-Z0-9]', '', str(formatted.get("title", "")).lower())
                                     hit_var_clean = re.sub(r'[^a-zA-Z0-9]', '', str(formatted.get("variant", "")).lower())
                                     if var_clean and var_clean not in title_clean and var_clean not in hit_var_clean:
@@ -403,8 +424,19 @@ async def scrape_listings(req: ScrapeRequest, api_key: str = Depends(get_api_key
                                 make_query = (req.make or "").lower().strip()
                                 
                                 # Basic make check to avoid totally unrelated cars
-                                if make_query and make_query not in title:
-                                    continue
+                                if make_query:
+                                    make_query_space = make_query.replace("-", " ")
+                                    make_query_clean = re.sub(r'[^a-z0-9]', '', make_query)
+                                    title_clean_str = re.sub(r'[^a-z0-9]', '', title)
+                                    
+                                    if make_query in title or make_query_space in title or make_query_clean in title_clean_str:
+                                        pass
+                                    elif "mercedes" in make_query and "benz" in title:
+                                        pass
+                                    elif make_query == "land-rover" and ("range rover" in title or "defender" in title or "discovery" in title):
+                                        pass
+                                    else:
+                                        continue
                                 
                                 # Variant filtering
                                 variant_query = (req.variant or "").lower().strip()
@@ -484,17 +516,22 @@ async def evaluate_car(req: ValuationRequest, api_key: str = Depends(get_api_key
     logger.info(f"Received valuation request: {req}")
     
     # 1. Normalization
-    req.make = normalize_make(req.make)
-    req.model = normalize_model(req.make, req.model)
-    req.variant = normalize_variant(req.make, req.model, req.variant)
+    req.make = normalize_make(req.make or "")
+    req.model = normalize_model(req.make, req.model or "")
+    req.variant = normalize_variant(req.make, req.model, req.variant or "")
 
     proxy = req.proxy if req.use_proxy else None
+    
+    # Pre-initialize to satisfy static type checker
+    clients = []
+    europe_client = None
+    client = None
     
     # Initialize appropriate client(s)
     if req.region == "Lebanon":
         clients = [(name, cls(proxy=proxy)) for name, cls in LEBANON_CLIENTS]
     elif req.region == "Europe":
-        client = EuropeClient(proxy=proxy)
+        europe_client = EuropeClient(proxy=proxy)
     else:
         client = DubizzleClient(proxy=proxy)
         
@@ -543,6 +580,8 @@ async def evaluate_car(req: ValuationRequest, api_key: str = Depends(get_api_key
                 all_results.extend(lst)
             evaluation = PriceEvaluator.calculate_valuation(all_results, {"year": req.year, "mileage": req.mileage}) if all_results else None
         elif req.region == "Europe":
+            if europe_client is None:
+                europe_client = EuropeClient(proxy=proxy)
             filters = {
                 "make": req.make,
                 "model": req.model,
@@ -554,7 +593,7 @@ async def evaluate_car(req: ValuationRequest, api_key: str = Depends(get_api_key
             }
             country = req.country or "Germany"
             # EuropeClient usually returns 1 page of results
-            hits, _, _ = client.get_listings(filters, country_name=country, page=1)
+            hits, _, _ = europe_client.get_listings(filters, country_name=country, page=1)
             all_results = hits
             
             evaluation = EuropeClient.calculate_valuation(all_results, {"year": req.year, "mileage": req.mileage})
@@ -570,7 +609,14 @@ async def evaluate_car(req: ValuationRequest, api_key: str = Depends(get_api_key
             ]
 
             class MockArgs:
-                pass
+                make: Optional[str] = None
+                model: Optional[str] = None
+                variant: Optional[str] = None
+                year_min: Optional[int] = None
+                year_max: Optional[int] = None
+                mileage_max: Optional[int] = None
+                price_min: Optional[int] = None
+                price_max: Optional[int] = None
             args = MockArgs()
             args.make = req.make
             args.model = req.model
