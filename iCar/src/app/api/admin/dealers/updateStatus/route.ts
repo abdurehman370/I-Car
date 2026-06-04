@@ -19,6 +19,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Invalid request data" }, { status: 400 });
     }
 
+    if (status === "approved") {
+      const dealer = await prisma.dealer.findUnique({
+        where: { id: dealerId },
+        select: { licenseDocumentUrl: true },
+      });
+
+      if (!dealer?.licenseDocumentUrl) {
+        return NextResponse.json(
+          { message: "Cannot approve dealer without a license document on file" },
+          { status: 400 }
+        );
+      }
+    }
+
     // 3. Update database
     const updatedDealer = await prisma.dealer.update({
       where: { id: dealerId },

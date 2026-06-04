@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import {
-    Car, Plus, Trash2, Loader2, ChevronRight,
-    Layers, Package, Type
+    Plus, Trash2, Loader2, ChevronRight,
+    Layers, Package, Type, Upload, Download, FileSpreadsheet, X
 } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import toast from "react-hot-toast";
@@ -11,6 +11,19 @@ import toast from "react-hot-toast";
 interface TaxonomyItem {
     id: number;
     name: string;
+}
+
+interface TaxonomyImportStats {
+    rowsProcessed: number;
+    rowsSkippedEmpty: number;
+    duplicateRowsInFile: number;
+    makesCreated: number;
+    makesExisting: number;
+    modelsCreated: number;
+    modelsExisting: number;
+    variantsCreated: number;
+    variantsExisting: number;
+    errors: { row: number; message: string }[];
 }
 
 export default function AdminTaxonomyPage() {
@@ -30,6 +43,9 @@ export default function AdminTaxonomyPage() {
     const [newVariant, setNewVariant] = useState("");
 
     const [submitting, setSubmitting] = useState(false);
+    const [importFile, setImportFile] = useState<File | null>(null);
+    const [importing, setImporting] = useState(false);
+    const [importStats, setImportStats] = useState<TaxonomyImportStats | null>(null);
 
     // Fetch Makes
     const fetchMakes = async () => {
@@ -160,6 +176,79 @@ export default function AdminTaxonomyPage() {
         }
     };
 
+    const handleDownloadTemplate = () => {
+        window.location.href = "/api/admin/taxonomy/import";
+    };
+
+    const handleImportFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        setImportStats(null);
+        if (!file) {
+            setImportFile(null);
+            return;
+        }
+        const name = file.name.toLowerCase();
+        if (!name.endsWith(".xlsx") && !name.endsWith(".xls")) {
+            toast.error("Please upload an Excel file (.xlsx or .xls)");
+            e.target.value = "";
+            setImportFile(null);
+            return;
+        }
+        setImportFile(file);
+    };
+
+    const clearImportFile = () => {
+        setImportFile(null);
+        setImportStats(null);
+        const input = document.getElementById("taxonomy-import-file") as HTMLInputElement | null;
+        if (input) input.value = "";
+    };
+
+    const handleImportSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!importFile) {
+            toast.error("Select an Excel file to import");
+            return;
+        }
+
+        setImporting(true);
+        setImportStats(null);
+
+        try {
+            const formData = new FormData();
+            formData.append("file", importFile);
+
+            const res = await fetch("/api/admin/taxonomy/import", {
+                method: "POST",
+                body: formData,
+            });
+
+            const json = await res.json();
+
+            if (!res.ok) {
+                toast.error(json.message || "Import failed");
+                return;
+            }
+
+            setImportStats(json.stats);
+            toast.success("Taxonomy imported successfully");
+            clearImportFile();
+            await fetchMakes();
+            if (selectedMake) {
+                const modelsRes = await fetch(`/api/taxonomy/models/${selectedMake.id}`);
+                if (modelsRes.ok) setModels(await modelsRes.json());
+            }
+            if (selectedModel) {
+                const variantsRes = await fetch(`/api/taxonomy/variants/${selectedModel.id}`);
+                if (variantsRes.ok) setVariants(await variantsRes.json());
+            }
+        } catch {
+            toast.error("Import failed");
+        } finally {
+            setImporting(false);
+        }
+    };
+
     const handleDelete = async (type: 'make' | 'model' | 'variant', id: number) => {
         if (!confirm(`Are you sure you want to delete this ${type}?`)) return;
         try {
@@ -188,6 +277,142 @@ export default function AdminTaxonomyPage() {
     return (
         <>
             <Breadcrumb pageName="Car Taxonomy Management" />
+
+            <div className="mb-6 panel border-white/5 bg-white/[0.02] shadow-xl shadow-black/20 overflow-hidden">
+                <div className="p-5 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h3 className="font-bold text-white flex items-center gap-2 tracking-tight">
+                            <FileSpreadsheet className="size-5 text-cyan-400" />
+                            Bulk Import from Excel
+                        </h3>
+                        <p className="text-xs text-gray-500 mt-1 max-w-2xl">
+                            Upload a spreadsheet with columns <span className="text-gray-400 font-mono">Make</span> (required),{" "}
+                            <span className="text-gray-400 font-mono">Model</span>, and{" "}
+                            <span className="text-gray-400 font-mono">Variant</span>.
+                            Existing entries are skipped; duplicates within the same file are ignored.
+                        </p>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={handleDownloadTemplate}
+                        className="inline-flex items-center gap-2 h-10 px-4 rounded-xl glass border border-white/10 text-sm font-semibold text-cyan-400 hover:bg-white/5 transition-all shrink-0"
+                    >
+                        <Download className="size-4" />
+                        Download template
+                    </button>
+                </div>
+
+                <div className="p-5">
+                    <form onSubmit={handleImportSubmit} className="space-y-4">
+                        {!importFile ? (
+                            <label
+                                htmlFor="taxonomy-import-file"
+                                className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-white/10 bg-white/[0.02] px-6 py-10 hover:border-cyan-400/40 hover:bg-cyan-400/5 transition-all"
+                            >
+                                <Upload className="size-8 text-gray-500" />
+                                <span className="text-sm font-medium text-gray-300">
+                                    Click to upload Excel file
+                                </span>
+                                <span className="text-xs text-gray-500">.xlsx or .xls, max 10MB</span>
+                                <input
+                                    id="taxonomy-import-file"
+                                    type="file"
+                                    accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+                                    onChange={handleImportFileChange}
+                                    className="sr-only"
+                                />
+                            </label>
+                        ) : (
+                            <div className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                                <div className="flex min-w-0 items-center gap-3">
+                                    <FileSpreadsheet className="size-5 text-cyan-400 shrink-0" />
+                                    <div className="min-w-0">
+                                        <p className="truncate text-sm font-medium text-white">{importFile.name}</p>
+                                        <p className="text-xs text-gray-500">
+                                            {(importFile.size / 1024).toFixed(1)} KB
+                                        </p>
+                                    </div>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={clearImportFile}
+                                    className="shrink-0 rounded-lg p-2 text-gray-400 hover:bg-white/5 hover:text-red-400"
+                                    aria-label="Remove file"
+                                >
+                                    <X className="size-4" />
+                                </button>
+                            </div>
+                        )}
+
+                        <button
+                            type="submit"
+                            disabled={!importFile || importing}
+                            className="h-11 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 text-black text-sm font-bold hover:scale-[1.02] transition-all disabled:opacity-50 disabled:hover:scale-100 flex items-center gap-2"
+                        >
+                            {importing ? (
+                                <>
+                                    <Loader2 className="size-4 animate-spin" />
+                                    Importing...
+                                </>
+                            ) : (
+                                <>
+                                    <Upload className="size-4" />
+                                    Import taxonomy
+                                </>
+                            )}
+                        </button>
+                    </form>
+
+                    {importStats && (
+                        <div className="mt-5 rounded-xl border border-cyan-400/20 bg-cyan-400/5 p-4 space-y-3">
+                            <p className="text-sm font-bold text-cyan-400">Import summary</p>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                                <div className="rounded-lg bg-black/20 p-3 border border-white/5">
+                                    <p className="text-gray-500 uppercase tracking-wider mb-1">Rows processed</p>
+                                    <p className="text-lg font-bold text-white">{importStats.rowsProcessed}</p>
+                                </div>
+                                <div className="rounded-lg bg-black/20 p-3 border border-white/5">
+                                    <p className="text-gray-500 uppercase tracking-wider mb-1">Duplicates in file</p>
+                                    <p className="text-lg font-bold text-yellow-400">{importStats.duplicateRowsInFile}</p>
+                                </div>
+                                <div className="rounded-lg bg-black/20 p-3 border border-white/5">
+                                    <p className="text-gray-500 uppercase tracking-wider mb-1">Makes</p>
+                                    <p className="text-sm text-white">
+                                        <span className="text-green-400 font-bold">{importStats.makesCreated}</span> new ·{" "}
+                                        <span className="text-gray-400">{importStats.makesExisting}</span> existing
+                                    </p>
+                                </div>
+                                <div className="rounded-lg bg-black/20 p-3 border border-white/5">
+                                    <p className="text-gray-500 uppercase tracking-wider mb-1">Models</p>
+                                    <p className="text-sm text-white">
+                                        <span className="text-green-400 font-bold">{importStats.modelsCreated}</span> new ·{" "}
+                                        <span className="text-gray-400">{importStats.modelsExisting}</span> existing
+                                    </p>
+                                </div>
+                                <div className="rounded-lg bg-black/20 p-3 border border-white/5 md:col-span-2">
+                                    <p className="text-gray-500 uppercase tracking-wider mb-1">Variants</p>
+                                    <p className="text-sm text-white">
+                                        <span className="text-green-400 font-bold">{importStats.variantsCreated}</span> new ·{" "}
+                                        <span className="text-gray-400">{importStats.variantsExisting}</span> existing
+                                    </p>
+                                </div>
+                            </div>
+                            {importStats.errors.length > 0 && (
+                                <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3">
+                                    <p className="text-xs font-semibold text-red-400 mb-2">Row errors</p>
+                                    <ul className="text-xs text-red-300/90 space-y-1 max-h-32 overflow-y-auto">
+                                        {importStats.errors.map((err) => (
+                                            <li key={`${err.row}-${err.message}`}>
+                                                Row {err.row}: {err.message}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Makes Column */}

@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Search, Bell, Command, LayoutDashboard, Car, PlusCircle, 
   History, Settings, LogOut, Zap, Menu, X, ChevronRight,
-  User, Briefcase, BellRing, Sun, Moon
+  User, Briefcase, BellRing, Sun, Moon, DollarSign
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -32,6 +32,7 @@ const navItems = [
     { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
     { title: "Inventory", url: "/listings", icon: Car },
     { title: "List Vehicle", url: "/list-vehicle", icon: PlusCircle },
+    { title: "Vehicle Valuation", url: "/vehicle-valuation", icon: DollarSign },
     { title: "Alerts", url: "/alerts", icon: Bell },
     { title: "Dealer Tools", url: "/dealer-tools", icon: Briefcase },
     { title: "Profile", url: "/profile", icon: User },

@@ -25,11 +25,12 @@ model Dealer {
   address        String?
   city           String?
   country        String?
-  approvalStatus String    @default("pending") // pending, approved, rejected
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  listings       Listing[]
-  alerts         Alert[]
+  approvalStatus      String    @default("pending") // pending, approved, rejected
+  licenseDocumentUrl  String?   // dealership license uploaded at signup
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  listings            Listing[]
+  alerts              Alert[]
 }
 
 model Listing {
@@ -83,13 +84,11 @@ model ListingImage {
   @@index([listingId])
 }
 
-
 // Alert preferences for dealers
 model Alert {
   id        Int      @id @default(autoincrement())
   dealerId  Int
   dealer    Dealer   @relation(fields: [dealerId], references: [id], onDelete: Cascade)
-  
   make      String
   model     String
   yearMin   Int?
@@ -135,7 +134,6 @@ model CarVariant {
   model     CarModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
   @@unique([modelId, name])
   @@index([modelId])
 }

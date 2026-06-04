@@ -3,7 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Upload, X, PlusCircle, Save, Send, Car, DollarSign, FileText, ChevronRight, ArrowLeft, Loader2 } from "lucide-react";
-import ReactMarkdown from "react-markdown";
+import { CarTaxonomyDropdowns } from "@/components/FormElements/CarTaxonomyDropdowns";
+import { MileageFields } from "@/components/dealer/MileageFields";
+import { ValuationReport } from "@/components/dealer/ValuationReport";
+import { formatMileageDisplay } from "@/lib/mileage";
 // --- Types & Constants ---
 const COMMON_FEATURES = [
     "Air Conditioning", "Power Steering", "Power Windows", "ABS", "Airbags",
@@ -22,60 +25,6 @@ const EUROPE_COUNTRIES = [
     "Germany"
 ];
 
-interface ValuationResult {
-    status: string;
-    region: string;
-    currency: string;
-    markdown?: string;
-}
-
-// Parse price ranges from AI markdown for card display
-function parsePriceRanges(markdown: string): { label: string; range: string }[] {
-    const fmrMatch = markdown.match(/\*\*Fair Market Retail[^:*]*:\*\*\s*([^\n]+)/i);
-    const dbpMatch = markdown.match(/\*\*Dealer Buy Price[^:*]*:\*\*\s*([^\n]+)/i);
-
-    const results: { label: string; range: string }[] = [];
-
-    if (fmrMatch) {
-        const fmr = fmrMatch[1].trim();
-        results.push({ label: "Fair Market Retail", range: fmr });
-
-        const numbers = fmr.replace(/,/g, '').match(/\d+(\.\d+)?/g);
-        let avgRange = fmr;
-        if (numbers && numbers.length >= 2) {
-            const n1 = parseFloat(numbers[0]);
-            const n2 = parseFloat(numbers[numbers.length - 1]);
-            const avg = Math.round((n1 + n2) / 2);
-
-            const currencyMatch = fmr.match(/[A-Za-z$€£]+/);
-            const currency = currencyMatch ? currencyMatch[0] : "";
-
-            if (currency.match(/^[$€£]/)) {
-                avgRange = `${currency}${avg.toLocaleString()}`;
-            } else {
-                avgRange = `${avg.toLocaleString()} ${currency}`.trim();
-            }
-        }
-        results.push({ label: "Average Fair Market Price", range: avgRange });
-    }
-
-    if (dbpMatch) {
-        results.push({ label: "Dealer Buy Price", range: dbpMatch[1].trim() });
-    }
-
-    return results;
-}
-
-// Markdown without price range lines (for Summary section)
-function markdownWithoutPriceRanges(markdown: string): string {
-    return markdown
-        .replace(/\*\*Fair Market Retail[^:*]*:\*\*\s*[^\n]+/gi, "")
-        .replace(/\*\*Dealer Retail Asking[^:*]*:\*\*\s*[^\n]+/gi, "")
-        .replace(/\*\*Dealer Buy Price[^:*]*:\*\*\s*[^\n]+/gi, "")
-        .replace(/\n{3,}/g, "\n\n")
-        .trim();
-}
-
 // --- Main Component ---
 export default function ListVehicle() {
     const router = useRouter();
@@ -87,7 +36,7 @@ export default function ListVehicle() {
     // Valuation State
     const [valuationImages, setValuationImages] = useState<File[]>([]);
     const [valuationPreviews, setValuationPreviews] = useState<string[]>([]);
-    const [valuationResult, setValuationResult] = useState<ValuationResult | null>(null);
+    const [valuationMarkdown, setValuationMarkdown] = useState<string | null>(null);
 
     // Form Data (Shared across steps)
     const [formData, setFormData] = useState({
@@ -117,6 +66,10 @@ export default function ListVehicle() {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleTaxonomyChange = (field: string, value: string) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
     };
 
     // Step 1: Valuation Logic (1-5 images mandatory)
@@ -157,7 +110,7 @@ export default function ListVehicle() {
         }
         setLoading(true);
         setError("");
-        setValuationResult(null);
+        setValuationMarkdown(null);
 
         try {
             const imageBase64 = await Promise.all(
@@ -175,11 +128,12 @@ export default function ListVehicle() {
                 : formData.region;
 
             const payload = {
+                mode: "listing",
                 region: regionValue,
                 make: formData.make,
                 model: formData.model,
                 year: parseInt(formData.year),
-                mileage: parseInt(formData.mileage),
+                mileage: parseInt(formData.mileage, 10),
                 variant: formData.variant || undefined,
                 specs: formData.specs,
                 notes: formData.notes || undefined,
@@ -194,8 +148,8 @@ export default function ListVehicle() {
 
             const data = await response.json();
 
-            if (response.ok) {
-                setValuationResult(data);
+            if (response.ok && data.markdown) {
+                setValuationMarkdown(data.markdown);
             } else {
                 setError(data.message || "Failed to get valuation");
             }
@@ -364,7 +318,7 @@ export default function ListVehicle() {
                             <form onSubmit={handleGetValuation} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-xs font-mono uppercase tracking-[0.1em] text-gray-400 ml-1">Region *</label>
-                                    <select name="region" value={formData.region} onChange={handleInputChange} required className="w-full h-12 px-4 rounded-xl glass border border-white/10 text-white outline-none focus:border-cyan-400/30 transition-all">
+                                    <select name="region" value={formData.region} onChange={handleInputChange} required className="icar-select">
                                         <option value="UAE">UAE</option>
                                         <option value="Lebanon">Lebanon</option>
                                         <option value="Europe">Europe</option>
@@ -373,7 +327,7 @@ export default function ListVehicle() {
                                 {formData.region === "Europe" && (
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Country *</label>
-                                        <select name="country" value={formData.country} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white">
+                                        <select name="country" value={formData.country} onChange={handleInputChange} required className="icar-select">
                                             <option value="">Select Country</option>
                                             {EUROPE_COUNTRIES.map(c => (
                                                 <option key={c} value={c}>{c}</option>
@@ -381,29 +335,28 @@ export default function ListVehicle() {
                                         </select>
                                     </div>
                                 )}
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Make *</label>
-                                    <input type="text" name="make" value={formData.make} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. Toyota" />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Model *</label>
-                                    <input type="text" name="model" value={formData.model} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. Camry" />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Variant/Trim</label>
-                                    <input type="text" name="variant" value={formData.variant} onChange={handleInputChange} className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. XLE 2.5" />
+                                <div className="col-span-1 md:col-span-2">
+                                    <CarTaxonomyDropdowns
+                                        selectedMake={formData.make}
+                                        selectedModel={formData.model}
+                                        selectedVariant={formData.variant}
+                                        onChange={handleTaxonomyChange}
+                                    />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Year *</label>
-                                    <input type="number" name="year" value={formData.year} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. 2022" />
+                                    <input type="number" name="year" value={formData.year} onChange={handleInputChange} required className="icar-input" placeholder="e.g. 2022" />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Mileage (KM) *</label>
-                                    <input type="number" name="mileage" value={formData.mileage} onChange={handleInputChange} required className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. 50000" />
-                                </div>
+                                <MileageFields
+                                    mode="single"
+                                    label="Mileage *"
+                                    mileageKm={formData.mileage}
+                                    onMileageKmChange={(v) => setFormData(prev => ({ ...prev, mileage: v }))}
+                                    required
+                                />
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Specs</label>
-                                    <select name="specs" value={formData.specs} onChange={handleInputChange} className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white">
+                                    <select name="specs" value={formData.specs} onChange={handleInputChange} className="icar-select">
                                         <option value="GCC">GCC</option>
                                         <option value="Import">Import</option>
                                         <option value="Unknown">Unknown</option>
@@ -411,7 +364,7 @@ export default function ListVehicle() {
                                 </div>
                                 <div className="space-y-2 col-span-1 md:col-span-2">
                                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Notes (optional)</label>
-                                    <textarea name="notes" value={formData.notes} onChange={handleInputChange} rows={2} className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="Service history, warranty, accidents, repaint, owners, etc." />
+                                    <textarea name="notes" value={formData.notes} onChange={handleInputChange} rows={2} className="icar-textarea" placeholder="Service history, warranty, accidents, repaint, owners, etc." />
                                 </div>
 
                                 {/* Image Upload Step 1 (Mandatory 1-5) */}
@@ -450,47 +403,9 @@ export default function ListVehicle() {
                         </div>
 
                         {/* Valuation Results (AI Markdown Report) */}
-                        {valuationResult && valuationResult.markdown && (
+                        {valuationMarkdown && (
                             <div className="space-y-4">
-                                <div className="bg-white dark:bg-[#0a1526] rounded-3xl p-6 border border-gray-200 dark:border-white/5 shadow-sm overflow-hidden">
-                                    <div className="flex items-center gap-2 mb-4">
-                                        <DollarSign className="size-5 text-cyan-500" />
-                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Evaluation Report</h3>
-                                    </div>
-                                    <div className="prose prose-sm dark:prose-invert max-w-none max-h-[60vh] overflow-y-auto space-y-4">
-                                        <ReactMarkdown
-                                            components={{
-                                                h2: ({ children }) => <h2 className="text-base font-semibold mt-6 mb-2 text-cyan-500 dark:text-cyan-400 first:mt-0">{children}</h2>,
-                                                ul: ({ children }) => <ul className="list-disc pl-5 space-y-1 my-2">{children}</ul>,
-                                                strong: ({ children }) => <strong className="text-gray-900 dark:text-white font-semibold">{children}</strong>,
-                                                p: ({ children }) => <p className="my-1 text-gray-700 dark:text-gray-300">{children}</p>,
-                                            }}
-                                        >
-                                            {markdownWithoutPriceRanges(valuationResult.markdown)}
-                                        </ReactMarkdown>
-                                    </div>
-                                    {/* Price Ranges in Cards */}
-                                    {parsePriceRanges(valuationResult.markdown).length > 0 && (
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-200 dark:border-white/10">
-                                            {parsePriceRanges(valuationResult.markdown).map(({ label, range }) => {
-                                                const isDealerBuy = label === "Dealer Buy Price";
-                                                return (
-                                                    <div
-                                                        key={label}
-                                                        className={`rounded-xl border p-4 shadow-sm ${isDealerBuy
-                                                            ? "border-cyan-300 dark:border-cyan-500 bg-cyan-50/50 dark:bg-cyan-500/10 ring-1 ring-cyan-200 dark:ring-cyan-500/30"
-                                                            : "border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5"
-                                                            }`}
-                                                    >
-                                                        <p className={`text-xs font-medium uppercase tracking-wide mb-1 ${isDealerBuy ? "text-cyan-500 dark:text-cyan-400" : "text-gray-500 dark:text-gray-400"
-                                                            }`}>{label}</p>
-                                                        <p className="text-lg font-bold text-gray-900 dark:text-white">{range}</p>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    )}
-                                </div>
+                                <ValuationReport markdown={valuationMarkdown} />
                                 <button
                                     onClick={proceedToStep2}
                                     className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-xl font-bold transition-all hover:scale-[1.02] flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20"
@@ -527,19 +442,19 @@ export default function ListVehicle() {
                                 <div><span className="text-xs text-gray-500">Model</span><p className="font-semibold dark:text-white">{formData.model}</p></div>
                                 <div><span className="text-xs text-gray-500">Variant</span><p className="font-semibold dark:text-white">{formData.variant || "—"}</p></div>
                                 <div><span className="text-xs text-gray-500">Year</span><p className="font-semibold dark:text-white">{formData.year}</p></div>
-                                <div><span className="text-xs text-gray-500">Mileage</span><p className="font-semibold dark:text-white">{formData.mileage} KM</p></div>
+                                <div><span className="text-xs text-gray-500">Mileage</span><p className="font-semibold dark:text-white">{formData.mileage ? formatMileageDisplay(parseInt(formData.mileage, 10)) : "—"}</p></div>
                             </div>
 
                             <div className="space-y-4">
                                 {/* Price */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Price *</label>
-                                    <input type="number" name="price" value={formData.price} onChange={handleInputChange} className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="e.g. 65000" />
+                                    <input type="number" name="price" value={formData.price} onChange={handleInputChange} className="icar-input" placeholder="e.g. 65000" />
                                 </div>
                                 {/* Condition */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Condition *</label>
-                                    <select name="condition" value={formData.condition} onChange={handleInputChange} className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white">
+                                    <select name="condition" value={formData.condition} onChange={handleInputChange} className="icar-select">
                                         <option value="NEW">New</option>
                                         <option value="USED">Used</option>
                                         <option value="CERTIFIED">Certified Pre-Owned</option>
@@ -548,7 +463,7 @@ export default function ListVehicle() {
                                 {/* City */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">City *</label>
-                                    <select name="city" value={formData.city} onChange={handleInputChange} className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white">
+                                    <select name="city" value={formData.city} onChange={handleInputChange} className="icar-select">
                                         <option value="">Select City</option>
                                         {(REGION_CITIES[formData.region] || []).map(c => (
                                             <option key={c} value={c}>{c}</option>
@@ -558,7 +473,7 @@ export default function ListVehicle() {
                                 {/* Description */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description *</label>
-                                    <textarea name="description" value={formData.description} onChange={handleInputChange} rows={6} className="w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="Describe your vehicle..." />
+                                    <textarea name="description" value={formData.description} onChange={handleInputChange} rows={6} className="icar-textarea" placeholder="Describe your vehicle..." />
                                 </div>
                                 {/* Features */}
                                 <div>
@@ -572,7 +487,7 @@ export default function ListVehicle() {
                                         ))}
                                     </div>
                                     <div className="flex gap-2">
-                                        <input type="text" value={customFeature} onChange={(e) => setCustomFeature(e.target.value)} onKeyPress={(e) => e.key === "Enter" && addCustomFeature()} className="flex-1 px-4 py-2 rounded-xl border bg-gray-50 dark:bg-[#020d1a] dark:border-white/10 dark:text-white" placeholder="Add custom feature..." />
+                                        <input type="text" value={customFeature} onChange={(e) => setCustomFeature(e.target.value)} onKeyPress={(e) => e.key === "Enter" && addCustomFeature()} className="icar-input flex-1 !h-11" placeholder="Add custom feature..." />
                                         <button type="button" onClick={addCustomFeature} className="px-4 py-2 bg-cyan-500 text-black font-bold rounded-xl"><PlusCircle className="size-5" /></button>
                                     </div>
                                 </div>

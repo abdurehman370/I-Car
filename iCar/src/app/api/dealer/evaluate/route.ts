@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getDealerSession } from '@/lib/auth';
+import { formatMileageDisplay, formatMileageRangeDisplay } from '@/lib/mileage';
 
-const VALUATION_SYSTEM_PROMPT = `You are an expert used-car dealer appraiser. Your task is to produce a dealer-focused valuation for the selected region using:
+const LISTING_VALUATION_PROMPT = `You are an expert used-car dealer appraiser. Your task is to produce a dealer-focused valuation for the selected region using:
 
 1. Live market evidence from internet listings/marketplaces (search the web), and
 2. Condition analysis from 1–5 user-uploaded images (mandatory).
@@ -56,6 +57,56 @@ Output format (STRICT — return ONLY this, no other sections or text):
 
 Do NOT include "How I Calculated It", "Dealer Notes", market comps, baseline, photo adjustment details, quick-turn strategy, or any other sections. Only the Summary and the three price ranges above.`;
 
+const QUICK_VALUATION_PROMPT = `You are an expert used-car dealer appraiser. Produce a dealer-focused valuation using live market evidence from internet listings (search the web). No vehicle photos are provided.
+
+You will receive:
+- Region/Country/Market
+- Vehicle details: Make, Model, Variant/Trim, Year, Mileage (single value OR min–max range), Specs, Notes
+
+What you must do:
+
+A) Identify local market + currency for the region. All prices in that region's typical currency.
+
+B) Search for comparable listings. Filter by year (±1 if needed), mileage within or near the provided range, similar trim/specs.
+Derive Fair Market Retail, Dealer Retail Asking, and Dealer Buy Price ranges.
+
+C) No photos — assume **Average** condition unless Notes specify otherwise. State this in Summary.
+
+D) If mileage is a range, value across that range (wider price bands are acceptable) and mention the mileage range in Summary.
+
+Output format (STRICT — same as listing valuation, but Condition line should say "Estimated (no photos)" instead of photo-based):
+
+## Summary
+
+**Region:** <region>
+**Vehicle:** <year make model variant>
+**Mileage:** <range or single> | **Specs:** <...>
+**Condition (estimated):** <category> — no photos supplied
+
+## Price Ranges (local currency)
+
+**Fair Market Retail (private):** <low> – <high>
+
+**Dealer Retail Asking:** <low> – <high>
+
+**Dealer Buy Price (recommended):** <low> – <high>
+
+Only Summary and Price Ranges sections.`;
+
+function buildMileageLabel(
+    mileage?: number,
+    mileageMin?: number,
+    mileageMax?: number
+): string {
+    if (mileageMin != null && mileageMax != null) {
+        return formatMileageRangeDisplay(mileageMin, mileageMax);
+    }
+    if (mileage != null) {
+        return formatMileageDisplay(mileage);
+    }
+    return 'Not specified';
+}
+
 export async function POST(request: Request) {
     try {
         const session = await getDealerSession();
@@ -71,23 +122,64 @@ export async function POST(request: Request) {
             variant,
             year,
             mileage,
+            mileageMin,
+            mileageMax,
             specs = 'Unknown',
             notes = '',
             images = [],
+            mode = 'listing',
         } = payload;
 
-        if (!region || !make || !model || !year || !mileage) {
+        const isQuick = mode === 'quick';
+
+        if (!region || !make || !model || !year) {
             return NextResponse.json(
-                { message: 'Missing required fields: region, make, model, year, mileage' },
+                { message: 'Missing required fields: region, make, model, year' },
                 { status: 400 }
             );
         }
 
-        if (!Array.isArray(images) || images.length < 1 || images.length > 5) {
-            return NextResponse.json(
-                { message: 'Please provide 1 to 5 vehicle photos (mandatory)' },
-                { status: 400 }
-            );
+        let mileageLabel: string;
+        let numericMileage: number | undefined;
+
+        if (isQuick) {
+            const min = mileageMin != null ? parseInt(String(mileageMin), 10) : NaN;
+            const max = mileageMax != null ? parseInt(String(mileageMax), 10) : NaN;
+            if (Number.isNaN(min) || Number.isNaN(max) || min < 0 || max < 0) {
+                return NextResponse.json(
+                    { message: 'Please provide valid mileage min and max (km)' },
+                    { status: 400 }
+                );
+            }
+            if (min > max) {
+                return NextResponse.json(
+                    { message: 'Minimum mileage cannot exceed maximum mileage' },
+                    { status: 400 }
+                );
+            }
+            mileageLabel = buildMileageLabel(undefined, min, max);
+            numericMileage = Math.round((min + max) / 2);
+        } else {
+            const km = parseInt(String(mileage), 10);
+            if (Number.isNaN(km) || km < 0) {
+                return NextResponse.json(
+                    { message: 'Missing or invalid mileage' },
+                    { status: 400 }
+                );
+            }
+            mileageLabel = buildMileageLabel(km);
+            numericMileage = km;
+        }
+
+        const imageList = Array.isArray(images) ? images : [];
+
+        if (!isQuick) {
+            if (imageList.length < 1 || imageList.length > 5) {
+                return NextResponse.json(
+                    { message: 'Please provide 1 to 5 vehicle photos (mandatory)' },
+                    { status: 400 }
+                );
+            }
         }
 
         const apiKey = process.env.LLM_API_KEY;
@@ -98,7 +190,13 @@ export async function POST(request: Request) {
             );
         }
 
-        const userContent: Array<{ type: 'text'; text: string } | { type: 'image_url'; image_url: { url: string } }> = [
+        const photoNote = isQuick
+            ? 'No photos provided. Use market data only and assume average condition unless notes say otherwise.'
+            : `Below are ${imageList.length} photo(s) of the vehicle. Analyze them for condition.`;
+
+        const userContent: Array<
+            { type: 'text'; text: string } | { type: 'image_url'; image_url: { url: string } }
+        > = [
             {
                 type: 'text',
                 text: `Evaluate this vehicle:
@@ -108,21 +206,25 @@ export async function POST(request: Request) {
 **Model:** ${model}
 **Variant/Trim:** ${variant || 'Not specified'}
 **Year:** ${year}
-**Mileage:** ${Number(mileage).toLocaleString()} km
+**Mileage:** ${mileageLabel}
 **Specs:** ${specs}
 **Notes:** ${notes || 'None'}
 
-Below are ${images.length} photo(s) of the vehicle. Analyze them for condition and produce the full dealer valuation report in the exact markdown format specified.`,
+${photoNote}
+
+Produce the full dealer valuation report in the exact markdown format specified.`,
             },
         ];
 
-        for (const img of images) {
-            const url = typeof img === 'string' ? img : img.url || img;
-            if (url && url.startsWith('data:')) {
-                userContent.push({
-                    type: 'image_url',
-                    image_url: { url },
-                });
+        if (!isQuick) {
+            for (const img of imageList) {
+                const url = typeof img === 'string' ? img : img.url || img;
+                if (url && url.startsWith('data:')) {
+                    userContent.push({
+                        type: 'image_url',
+                        image_url: { url },
+                    });
+                }
             }
         }
 
@@ -131,13 +233,19 @@ Below are ${images.length} photo(s) of the vehicle. Analyze them for condition a
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${apiKey}`,
-                'HTTP-Referer': process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000',
+                'HTTP-Referer':
+                    process.env.NEXT_PUBLIC_APP_URL ||
+                    process.env.NEXTAUTH_URL ||
+                    'http://localhost:3000',
                 'X-Title': 'iCar Dealer Portal',
             },
             body: JSON.stringify({
                 model: 'google/gemini-2.0-flash-001',
                 messages: [
-                    { role: 'system', content: VALUATION_SYSTEM_PROMPT },
+                    {
+                        role: 'system',
+                        content: isQuick ? QUICK_VALUATION_PROMPT : LISTING_VALUATION_PROMPT,
+                    },
                     { role: 'user', content: userContent },
                 ],
                 max_tokens: 4096,
@@ -149,9 +257,7 @@ Below are ${images.length} photo(s) of the vehicle. Analyze them for condition a
 
         if (!response.ok) {
             const errMsg = data.error?.message || data.message || 'LLM request failed';
-            const errCode = data.error?.code || response.status;
-            console.error(`OpenRouter Error (${errCode}):`, errMsg, data);
-            
+            console.error(`OpenRouter Error:`, errMsg, data);
             return NextResponse.json(
                 { message: `Valuation service error: ${errMsg}` },
                 { status: response.status >= 400 ? response.status : 500 }
@@ -165,6 +271,7 @@ Below are ${images.length} photo(s) of the vehicle. Analyze them for condition a
             region,
             currency: 'AED',
             markdown,
+            mileageUsed: numericMileage,
         });
     } catch (error) {
         console.error('Valuation API error:', error);

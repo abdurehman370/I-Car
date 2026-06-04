@@ -321,7 +321,7 @@ export default function AlertsPage() {
                                         {editingAlert ? <Pencil className="size-4 text-cyan-400" /> : <Plus className="size-4 text-cyan-400" />}
                                     </div>
                                     <div>
-                                        <h2 className="text-lg font-bold text-white tracking-tight">
+                                        <h2 className="text-lg font-bold text-foreground tracking-tight">
                                             {editingAlert ? "Modify Alert" : "Create New Alert"}
                                         </h2>
                                         <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest mt-0.5">
@@ -356,7 +356,7 @@ export default function AlertsPage() {
                                                 name="yearMin"
                                                 value={formData.yearMin}
                                                 onChange={handleInputChange}
-                                                className="w-full h-11 px-4 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all placeholder:text-gray-600"
+                                                className="w-full h-11 px-4 rounded-xl border border-white/10 text-sm focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all placeholder:text-gray-500"
                                                 placeholder="e.g. 2018"
                                             />
                                         </div>
@@ -367,7 +367,7 @@ export default function AlertsPage() {
                                                 name="yearMax"
                                                 value={formData.yearMax}
                                                 onChange={handleInputChange}
-                                                className="w-full h-11 px-4 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all placeholder:text-gray-600"
+                                                className="w-full h-11 px-4 rounded-xl border border-white/10 text-sm focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all placeholder:text-gray-500"
                                                 placeholder="e.g. 2024"
                                             />
                                         </div>
@@ -380,10 +380,10 @@ export default function AlertsPage() {
                                                 name="region"
                                                 value={formData.region}
                                                 onChange={handleInputChange}
-                                                className="w-full h-11 pl-4 pr-10 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white appearance-none focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all cursor-pointer group-hover:bg-white/[0.08]"
+                                                className="icar-select h-11"
                                             >
                                                 {REGIONS.map((r) => (
-                                                    <option key={r} value={r} className="bg-[#050b14] text-white">{r}</option>
+                                                    <option key={r} value={r}>{r}</option>
                                                 ))}
                                             </select>
                                             <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-500 group-focus-within:text-cyan-400 transition-colors">

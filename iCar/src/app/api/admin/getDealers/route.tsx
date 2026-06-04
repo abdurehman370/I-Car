@@ -59,6 +59,7 @@ export async function GET(request: NextRequest) {
                     city: true,
                     country: true,
                     approvalStatus: true,
+                    licenseDocumentUrl: true,
                     createdAt: true,
                     updatedAt: true,
                     // ❌ password intentionally excluded

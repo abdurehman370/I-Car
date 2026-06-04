@@ -14,6 +14,8 @@ import {
     Eye,
     RefreshCw,
     AlertCircle,
+    FileText,
+    ExternalLink,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -30,8 +32,13 @@ interface Dealer {
     city: string;
     country: string;
     approvalStatus: "pending" | "approved" | "rejected";
+    licenseDocumentUrl?: string | null;
     createdAt: string;
     updatedAt?: string;
+}
+
+function isImageLicense(url: string): boolean {
+    return /\.(jpe?g|png|webp)$/i.test(url);
 }
 
 type FilterStatus = "all" | "pending" | "approved" | "rejected";
@@ -440,8 +447,8 @@ const AuthenticateDealers: React.FC = () => {
                                                                     <button
                                                                         onClick={() => handleApprove(dealer.id)}
                                                                         className="h-9 w-9 rounded-xl glass border border-white/10 text-gray-400 hover:text-cyan-400 transition-all flex items-center justify-center disabled:opacity-50"
-                                                                        title="Approve"
-                                                                        disabled={actionLoading !== null}
+                                                                        title={dealer.licenseDocumentUrl ? "Approve" : "License required to approve"}
+                                                                        disabled={actionLoading !== null || !dealer.licenseDocumentUrl}
                                                                     >
                                                                         {actionLoading === dealer.id ? (
                                                                             <RefreshCw className="w-4 h-4 animate-spin text-cyan-400" />
@@ -513,7 +520,7 @@ const AuthenticateDealers: React.FC = () => {
                                                 { icon: User, label: "Contact Person", value: selectedDealer.contactPerson },
                                                 { icon: Mail, label: "Email Address", value: selectedDealer.email },
                                                 { icon: Phone, label: "Phone Number", value: selectedDealer.phoneNumber },
-                                                { icon: MapPin, label: "Location", value: `${selectedDealer.address}, ${selectedDealer.city}, ${selectedDealer.country}` },
+                                                { icon: MapPin, label: "Location", value: `${selectedDealer.address || "—"}, ${selectedDealer.city || "—"}, ${selectedDealer.country || "—"}` },
                                                 { icon: Clock, label: "Registered On", value: formatDate(selectedDealer.createdAt) },
                                             ].map((item, idx) => (
                                                 <div key={idx} className="flex gap-4">
@@ -526,28 +533,80 @@ const AuthenticateDealers: React.FC = () => {
                                                     </div>
                                                 </div>
                                             ))}
+
+                                            <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/5 p-4 space-y-4">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="h-10 w-10 rounded-xl bg-cyan-400/10 flex items-center justify-center border border-cyan-400/20 shrink-0">
+                                                        <FileText className="size-4 text-cyan-400" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-[9px] font-mono text-cyan-400/80 uppercase tracking-wider mb-1">
+                                                            Dealership License
+                                                        </p>
+                                                        <p className="text-xs text-gray-400">
+                                                            Review this document before approving the dealer.
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                {selectedDealer.licenseDocumentUrl ? (
+                                                    <>
+                                                        <a
+                                                            href={selectedDealer.licenseDocumentUrl}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-semibold text-cyan-400 hover:bg-white/10 transition-all"
+                                                        >
+                                                            <ExternalLink className="size-4" />
+                                                            Open license in new tab
+                                                        </a>
+                                                        {isImageLicense(selectedDealer.licenseDocumentUrl) && (
+                                                            <div className="rounded-xl border border-white/10 overflow-hidden bg-black/20">
+                                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                                <img
+                                                                    src={selectedDealer.licenseDocumentUrl}
+                                                                    alt="Dealership license"
+                                                                    className="w-full max-h-80 object-contain"
+                                                                />
+                                                            </div>
+                                                        )}
+                                                    </>
+                                                ) : (
+                                                    <p className="text-sm text-yellow-500/90 rounded-xl border border-yellow-500/20 bg-yellow-500/10 px-4 py-3">
+                                                        No license document on file (registered before license upload was required).
+                                                    </p>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
 
                                     {/* Modal Footer */}
                                     {selectedDealer.approvalStatus === "pending" && (
-                                        <div className="p-6 border-t border-white/5 flex gap-3 bg-white/[0.02] shrink-0">
-                                            <button
-                                                onClick={() => handleReject(selectedDealer.id)}
-                                                className="flex-1 h-12 glass border border-white/5 text-red-400 rounded-xl font-bold hover:bg-red-500/10 transition-all flex items-center justify-center gap-2 text-sm"
-                                                disabled={actionLoading !== null}
-                                            >
-                                                {actionLoading === selectedDealer.id ? <RefreshCw className="size-4 animate-spin" /> : <XCircle className="size-4" />}
-                                                Reject
-                                            </button>
-                                            <button
-                                                onClick={() => handleApprove(selectedDealer.id)}
-                                                className="flex-[2] h-12 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-xl font-bold transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(34,211,238,0.3)] flex items-center justify-center gap-2 text-sm"
-                                                disabled={actionLoading !== null}
-                                            >
-                                                {actionLoading === selectedDealer.id ? <RefreshCw className="size-4 animate-spin" /> : <CheckCircle className="size-4" />}
-                                                Approve Dealer
-                                            </button>
+                                        <div className="p-6 border-t border-white/5 flex flex-col gap-3 bg-white/[0.02] shrink-0">
+                                            {!selectedDealer.licenseDocumentUrl && (
+                                                <p className="text-xs text-yellow-500 text-center">
+                                                    Cannot approve without a license document on file.
+                                                </p>
+                                            )}
+                                            <div className="flex gap-3">
+                                                <button
+                                                    onClick={() => handleReject(selectedDealer.id)}
+                                                    className="flex-1 h-12 glass border border-white/5 text-red-400 rounded-xl font-bold hover:bg-red-500/10 transition-all flex items-center justify-center gap-2 text-sm"
+                                                    disabled={actionLoading !== null}
+                                                >
+                                                    {actionLoading === selectedDealer.id ? <RefreshCw className="size-4 animate-spin" /> : <XCircle className="size-4" />}
+                                                    Reject
+                                                </button>
+                                                <button
+                                                    onClick={() => handleApprove(selectedDealer.id)}
+                                                    className="flex-[2] h-12 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-xl font-bold transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(34,211,238,0.3)] flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:hover:scale-100"
+                                                    disabled={actionLoading !== null || !selectedDealer.licenseDocumentUrl}
+                                                    title={!selectedDealer.licenseDocumentUrl ? "License document required to approve" : undefined}
+                                                >
+                                                    {actionLoading === selectedDealer.id ? <RefreshCw className="size-4 animate-spin" /> : <CheckCircle className="size-4" />}
+                                                    Approve Dealer
+                                                </button>
+                                            </div>
                                         </div>
                                     )}
                                 </div>

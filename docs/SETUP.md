@@ -329,4 +329,6 @@ iCar/
 └── SETUP.md                 # This file
 ```
 
+For architecture, auth, Prisma schema, API routes, and BullMQ worker details, see **`iCar/DEVELOPER_README.md`**.
+
 You’re done. Use the steps above to get the whole project running on another laptop.

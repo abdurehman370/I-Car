@@ -178,7 +178,7 @@ export default function DealerToolsPage() {
                                     name="region"
                                     value={form.region}
                                     onChange={handleChange}
-                                    className="w-full h-12 px-4 rounded-xl glass border border-white/10 text-foreground outline-none focus:border-cyan-400/30 transition-all"
+                                    className="icar-select"
                                 >
                                     {REGIONS.map((r) => <option key={r} value={r}>{r}</option>)}
                                 </select>
@@ -338,7 +338,7 @@ export default function DealerToolsPage() {
                                 <select
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value as any)}
-                                    className="px-3 py-2 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0a1526] text-gray-700 dark:text-gray-300 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+                                    className="icar-select !w-auto !h-auto py-2 px-3 text-sm"
                                 >
                                     <option value="default">Sort: Default</option>
                                     <option value="price_asc">Price: Low → High</option>

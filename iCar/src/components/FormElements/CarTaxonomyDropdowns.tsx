@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Car } from "lucide-react";
 
 interface TaxonomyItem {
     id: number;
@@ -15,6 +14,14 @@ interface Props {
     onChange: (field: string, value: string) => void;
     error?: string;
 }
+
+const SELECT_CLASS = "icar-select";
+
+const CHEVRON = (
+    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+    </svg>
+);
 
 export function CarTaxonomyDropdowns({
     selectedMake,
@@ -31,7 +38,6 @@ export function CarTaxonomyDropdowns({
     const [loadingModels, setLoadingModels] = useState(false);
     const [loadingVariants, setLoadingVariants] = useState(false);
 
-    // Fetch Makes on mount
     useEffect(() => {
         async function fetchMakes() {
             setLoadingMakes(true);
@@ -50,14 +56,13 @@ export function CarTaxonomyDropdowns({
         fetchMakes();
     }, []);
 
-    // Fetch Models when selectedMake changes
     useEffect(() => {
         if (!selectedMake) {
             setModels([]);
             return;
         }
 
-        const makeObj = makes.find(m => m.name === selectedMake);
+        const makeObj = makes.find((m) => m.name === selectedMake);
         if (!makeObj) return;
 
         async function fetchModels() {
@@ -77,14 +82,13 @@ export function CarTaxonomyDropdowns({
         fetchModels();
     }, [selectedMake, makes]);
 
-    // Fetch Variants when selectedModel changes
     useEffect(() => {
         if (!selectedModel) {
             setVariants([]);
             return;
         }
 
-        const modelObj = models.find(m => m.name === selectedModel);
+        const modelObj = models.find((m) => m.name === selectedModel);
         if (!modelObj) return;
 
         async function fetchVariants() {
@@ -106,7 +110,6 @@ export function CarTaxonomyDropdowns({
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Make */}
             <div className="space-y-2">
                 <label className="text-xs font-mono text-gray-400 uppercase tracking-[0.15em] ml-1">
                     Make *
@@ -121,22 +124,21 @@ export function CarTaxonomyDropdowns({
                             onChange("variant", "");
                         }}
                         required
-                        className="w-full h-12 pl-4 pr-10 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white appearance-none focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all cursor-pointer group-hover:bg-white/[0.08]"
+                        className={SELECT_CLASS}
                     >
-                        <option value="" className="bg-[#050b14]">{loadingMakes ? "Loading..." : "Select Make"}</option>
+                        <option value="">{loadingMakes ? "Loading..." : "Select Make"}</option>
                         {makes.map((make) => (
-                            <option key={make.id} value={make.name} className="bg-[#050b14]">
+                            <option key={make.id} value={make.name}>
                                 {make.name.charAt(0).toUpperCase() + make.name.slice(1)}
                             </option>
                         ))}
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400 group-focus-within:text-cyan-400 transition-colors">
-                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                        {CHEVRON}
                     </div>
                 </div>
             </div>
 
-            {/* Model */}
             <div className="space-y-2">
                 <label className="text-xs font-mono text-gray-400 uppercase tracking-[0.15em] ml-1">
                     Model *
@@ -151,24 +153,27 @@ export function CarTaxonomyDropdowns({
                         }}
                         required
                         disabled={!selectedMake || loadingModels}
-                        className="w-full h-12 pl-4 pr-10 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white appearance-none focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all cursor-pointer group-hover:bg-white/[0.08] disabled:opacity-30 disabled:cursor-not-allowed"
+                        className={SELECT_CLASS}
                     >
-                        <option value="" className="bg-[#050b14]">
-                            {!selectedMake ? "Select Make First" : loadingModels ? "Loading..." : "Select Model"}
+                        <option value="">
+                            {!selectedMake
+                                ? "Select Make First"
+                                : loadingModels
+                                  ? "Loading..."
+                                  : "Select Model"}
                         </option>
                         {models.map((model) => (
-                            <option key={model.id} value={model.name} className="bg-[#050b14]">
+                            <option key={model.id} value={model.name}>
                                 {model.name}
                             </option>
                         ))}
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400 group-focus-within:text-cyan-400 transition-colors">
-                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                        {CHEVRON}
                     </div>
                 </div>
             </div>
 
-            {/* Variant */}
             <div className="space-y-2 sm:col-span-2">
                 <label className="text-xs font-mono text-gray-400 uppercase tracking-[0.15em] ml-1">
                     Variant
@@ -179,22 +184,28 @@ export function CarTaxonomyDropdowns({
                         value={selectedVariant}
                         onChange={(e) => onChange("variant", e.target.value)}
                         disabled={!selectedModel || loadingVariants}
-                        className="w-full h-12 pl-4 pr-10 rounded-xl bg-white/[0.05] border border-white/10 text-sm text-white appearance-none focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all cursor-pointer group-hover:bg-white/[0.08] disabled:opacity-30 disabled:cursor-not-allowed"
+                        className={SELECT_CLASS}
                     >
-                        <option value="" className="bg-[#050b14]">
-                            {!selectedModel ? "Select Model First" : loadingVariants ? "Loading..." : "Select Variant (Optional)"}
+                        <option value="">
+                            {!selectedModel
+                                ? "Select Model First"
+                                : loadingVariants
+                                  ? "Loading..."
+                                  : "Select Variant (Optional)"}
                         </option>
                         {variants.map((variant) => (
-                            <option key={variant.id} value={variant.name} className="bg-[#050b14]">
+                            <option key={variant.id} value={variant.name}>
                                 {variant.name}
                             </option>
                         ))}
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400 group-focus-within:text-cyan-400 transition-colors">
-                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                        {CHEVRON}
                     </div>
                 </div>
             </div>
+
+            {error && <p className="sm:col-span-2 text-sm text-red-400">{error}</p>}
         </div>
     );
 }

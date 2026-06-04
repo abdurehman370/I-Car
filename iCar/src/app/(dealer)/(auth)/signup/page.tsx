@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Eye, EyeOff, Mail, Building2, User, Phone, MapPin, Globe, Loader2, CheckCircle2 } from "lucide-react";
+import { Eye, EyeOff, Mail, Building2, User, Phone, MapPin, Globe, Loader2, CheckCircle2, FileText, Upload, X } from "lucide-react";
 
 export default function SignupPage() {
     const router = useRouter();
@@ -23,6 +23,41 @@ export default function SignupPage() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [licenseFile, setLicenseFile] = useState<File | null>(null);
+
+    const ALLOWED_LICENSE_TYPES = ["application/pdf", "image/jpeg", "image/png", "image/webp"];
+    const MAX_LICENSE_SIZE = 5 * 1024 * 1024;
+
+    const handleLicenseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) {
+            setLicenseFile(null);
+            return;
+        }
+
+        if (!ALLOWED_LICENSE_TYPES.includes(file.type)) {
+            setError("License must be a PDF or image (JPEG, PNG, or WebP)");
+            setLicenseFile(null);
+            e.target.value = "";
+            return;
+        }
+
+        if (file.size > MAX_LICENSE_SIZE) {
+            setError("License file must be 5MB or smaller");
+            setLicenseFile(null);
+            e.target.value = "";
+            return;
+        }
+
+        setError("");
+        setLicenseFile(file);
+    };
+
+    const clearLicense = () => {
+        setLicenseFile(null);
+        const input = document.getElementById("licenseDocument") as HTMLInputElement | null;
+        if (input) input.value = "";
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setData({
@@ -43,22 +78,27 @@ export default function SignupPage() {
             return;
         }
 
+        if (!licenseFile) {
+            setError("Please upload your dealership license document");
+            setLoading(false);
+            return;
+        }
+
         try {
+            const formData = new FormData();
+            formData.append("email", data.email);
+            formData.append("password", data.password);
+            formData.append("dealershipName", data.dealershipName);
+            formData.append("contactPerson", data.contactPerson);
+            formData.append("phoneNumber", data.phoneNumber);
+            formData.append("address", data.address);
+            formData.append("city", data.city);
+            formData.append("country", data.country);
+            formData.append("licenseDocument", licenseFile);
+
             const res = await fetch("/api/dealer/auth/signup", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: data.email,
-                    password: data.password,
-                    dealershipName: data.dealershipName,
-                    contactPerson: data.contactPerson,
-                    phoneNumber: data.phoneNumber,
-                    address: data.address,
-                    city: data.city,
-                    country: data.country,
-                }),
+                body: formData,
             });
 
             const json = await res.json();
@@ -87,7 +127,7 @@ export default function SignupPage() {
                     </div>
                     <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Registration Successful!</h2>
                     <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-                        Your account has been created and is pending admin approval. You will be notified once you can access the portal.
+                        Your account and dealership license have been submitted. An admin will review your license and approve your access to the portal.
                     </p>
                     <div className="flex items-center justify-center gap-2 text-sm text-gray-500 font-medium">
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -143,7 +183,7 @@ export default function SignupPage() {
                             Dealer Registration
                         </h1>
                         <p className="mt-2 text-gray-500 dark:text-gray-400">
-                            Apply for a dealer account and get started today.
+                            Apply for a dealer account. Upload your dealership license for admin verification.
                         </p>
                     </div>
 
@@ -304,6 +344,61 @@ export default function SignupPage() {
                                         className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-4 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-950 dark:border-gray-800 dark:text-white transition-all shadow-sm"
                                     />
                                 </div>
+                            </div>
+
+                            {/* Dealership License */}
+                            <div className="md:col-span-2 space-y-2">
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Dealership License *
+                                </label>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                    Upload your official dealership license (PDF, JPEG, PNG, or WebP, max 5MB). Required for admin approval.
+                                </p>
+                                {!licenseFile ? (
+                                    <label
+                                        htmlFor="licenseDocument"
+                                        className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-200 bg-white px-6 py-8 transition-all hover:border-blue-400 hover:bg-blue-50/50 dark:border-gray-700 dark:bg-gray-950 dark:hover:border-blue-500 dark:hover:bg-blue-950/20"
+                                    >
+                                        <Upload className="h-8 w-8 text-gray-400" />
+                                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            Click to upload license
+                                        </span>
+                                        <span className="text-xs text-gray-500">PDF or image up to 5MB</span>
+                                        <input
+                                            id="licenseDocument"
+                                            name="licenseDocument"
+                                            type="file"
+                                            accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp"
+                                            required
+                                            onChange={handleLicenseChange}
+                                            className="sr-only"
+                                        />
+                                    </label>
+                                ) : (
+                                    <div className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 dark:border-gray-800 dark:bg-gray-950">
+                                        <div className="flex min-w-0 items-center gap-3">
+                                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-950/40">
+                                                <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                                                    {licenseFile.name}
+                                                </p>
+                                                <p className="text-xs text-gray-500">
+                                                    {(licenseFile.size / 1024).toFixed(1)} KB
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={clearLicense}
+                                            className="shrink-0 rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-red-500 dark:hover:bg-gray-800"
+                                            aria-label="Remove license file"
+                                        >
+                                            <X className="h-4 w-4" />
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
 

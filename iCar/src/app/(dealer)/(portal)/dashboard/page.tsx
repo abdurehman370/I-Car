@@ -7,14 +7,15 @@ import { motion } from "framer-motion";
 import {
   TrendingUp, TrendingDown, Car, DollarSign, Bell, Sparkles,
   ArrowUpRight, MapPin, Gauge, Calendar, Eye, MoreHorizontal, Activity, Plus,
-  PlusCircle, Edit2, Trash2, X, Loader2, CheckCircle, AlertCircle, EyeOff, ChevronRight
+  PlusCircle, Edit2, Trash2, Loader2, CheckCircle, AlertCircle, ChevronRight
 } from "lucide-react";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
 import { AnimatedNumber } from "@/components/ui/animated-number";
-// Assuming Button component exists or we use standard button with classes
-// Based on iCar project, it seems we use standard buttons or custom ones. 
-// I'll define a simple Button-like class or use the one from Lovable if I had it.
-// Since I don't have the Button component file, I'll use a styled button.
+import ListingEditModal, {
+  type DealerListing,
+  type ListingEditForm,
+  listingToEditForm,
+} from "@/components/dealer/ListingEditModal";
 import { activity, trendData } from "@/lib/mock-data";
 
 interface ListingImage {
@@ -23,46 +24,19 @@ interface ListingImage {
   isPrimary: boolean;
 }
 
-interface Listing {
-  id: string;
-  make: string;
-  model: string;
-  year: number;
-  mileage: number;
-  variant: string | null;
-  price: number;
-  currency: string;
-  description: string;
-  condition: string;
-  city: string;
-  region: string;
-  status: string;
+interface Listing extends DealerListing {
   createdAt: string;
   images: ListingImage[];
-}
-
-interface EditForm {
-  make: string;
-  model: string;
-  year: string;
-  mileage: string;
-  variant: string;
-  price: string;
-  currency: string;
-  description: string;
-  condition: string;
-  city: string;
-  region: string;
-  status: string;
 }
 
 export default function DealerDashboard() {
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
   const [editTarget, setEditTarget] = useState<Listing | null>(null);
-  const [editForm, setEditForm] = useState<EditForm | null>(null);
+  const [editForm, setEditForm] = useState<ListingEditForm | null>(null);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [toggling, setToggling] = useState<string | null>(null);
   const [toast, setToast] = useState<{ msg: string; type: 'success' | 'error' } | null>(null);
 
   const showToast = (msg: string, type: 'success' | 'error') => {
@@ -85,20 +59,36 @@ export default function DealerDashboard() {
 
   const openEdit = (l: Listing) => {
     setEditTarget(l);
-    setEditForm({
-      make: l.make,
-      model: l.model,
-      year: String(l.year),
-      mileage: String(l.mileage),
-      variant: l.variant || "",
-      price: String(l.price),
-      currency: l.currency,
-      description: l.description,
-      condition: l.condition,
-      city: l.city,
-      region: l.region,
-      status: l.status,
-    });
+    setEditForm(listingToEditForm(l));
+  };
+
+  const handleToggleStatus = async (listing: Listing) => {
+    if (listing.status === "SOLD" || listing.status === "EXPIRED") {
+      showToast("Cannot toggle sold or expired listings", "error");
+      return;
+    }
+
+    const nextStatus = listing.status === "ACTIVE" ? "DRAFT" : "ACTIVE";
+    setToggling(listing.id);
+    try {
+      const res = await fetch(`/api/dealer/listings/${listing.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: nextStatus, toggleStatus: true }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setListings((prev) => prev.map((l) => (l.id === listing.id ? data.listing : l)));
+        showToast(
+          nextStatus === "ACTIVE" ? "Listing is now active" : "Listing is now inactive",
+          "success"
+        );
+      } else {
+        showToast(data.message || "Failed to update status", "error");
+      }
+    } finally {
+      setToggling(null);
+    }
   };
 
   const handleSave = async () => {
@@ -313,8 +303,10 @@ export default function DealerDashboard() {
                 v={l} 
                 delay={i * 0.05} 
                 onEdit={() => openEdit(l)}
+                onToggleStatus={() => handleToggleStatus(l)}
                 onDelete={() => handleDelete(l.id)}
                 deleting={deleting === l.id}
+                toggling={toggling === l.id}
               />
             ))}
           </div>
@@ -334,97 +326,18 @@ export default function DealerDashboard() {
         </div>
       )}
 
-      {/* Edit Modal */}
       {editTarget && editForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-          <div className="bg-surface-2 rounded-[2rem] border border-white/10 shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-6 border-b border-white/10">
-              <div>
-                <h2 className="text-xl font-bold text-white">Edit Listing</h2>
-                <p className="text-sm text-gray-400 mt-0.5">{editTarget.make} {editTarget.model} {editTarget.year}</p>
-              </div>
-              <button
-                onClick={() => { setEditTarget(null); setEditForm(null); }}
-                className="p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
-              >
-                <X className="size-5" />
-              </button>
-            </div>
-
-            <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="Make" value={editForm.make} onChange={v => setEditForm(f => ({ ...f!, make: v }))} />
-              <Field label="Model" value={editForm.model} onChange={v => setEditForm(f => ({ ...f!, model: v }))} />
-              <Field label="Year" value={editForm.year} onChange={v => setEditForm(f => ({ ...f!, year: v }))} type="number" />
-              <Field label="Mileage (KM)" value={editForm.mileage} onChange={v => setEditForm(f => ({ ...f!, mileage: v }))} type="number" />
-              <Field label="Variant" value={editForm.variant} onChange={v => setEditForm(f => ({ ...f!, variant: v }))} />
-              <Field label="Price" value={editForm.price} onChange={v => setEditForm(f => ({ ...f!, price: v }))} type="number" />
-              <div>
-                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Currency</label>
-                <select
-                  value={editForm.currency}
-                  onChange={e => setEditForm(f => ({ ...f!, currency: e.target.value }))}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-cyan-500"
-                >
-                  <option value="AED">AED</option>
-                  <option value="USD">USD</option>
-                  <option value="EUR">EUR</option>
-                  <option value="LBP">LBP</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Condition</label>
-                <select
-                  value={editForm.condition}
-                  onChange={e => setEditForm(f => ({ ...f!, condition: e.target.value }))}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-cyan-500"
-                >
-                  <option value="USED">Used</option>
-                  <option value="NEW">New</option>
-                  <option value="CERTIFIED">Certified</option>
-                </select>
-              </div>
-              <Field label="City" value={editForm.city} onChange={v => setEditForm(f => ({ ...f!, city: v }))} />
-              <Field label="Region" value={editForm.region} onChange={v => setEditForm(f => ({ ...f!, region: v }))} />
-              <div>
-                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Status</label>
-                <select
-                  value={editForm.status}
-                  onChange={e => setEditForm(f => ({ ...f!, status: e.target.value }))}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-cyan-500"
-                >
-                  <option value="ACTIVE">Active</option>
-                  <option value="DRAFT">Draft</option>
-                </select>
-              </div>
-              <div className="sm:col-span-2">
-                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Description</label>
-                <textarea
-                  value={editForm.description}
-                  onChange={e => setEditForm(f => ({ ...f!, description: e.target.value }))}
-                  rows={4}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-cyan-500 resize-none placeholder:text-gray-600"
-                />
-              </div>
-            </div>
-
-            <div className="flex gap-3 p-6 border-t border-white/10">
-              <button
-                onClick={() => { setEditTarget(null); setEditForm(null); }}
-                className="flex-1 py-3 rounded-2xl border border-white/10 text-gray-400 hover:text-white hover:bg-white/5 font-semibold transition-colors text-sm"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSave}
-                disabled={saving}
-                className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-teal-500 text-black font-bold transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/10"
-              >
-                {saving ? <Loader2 className="size-4 animate-spin" /> : null}
-                {saving ? "Saving..." : "Save Changes"}
-              </button>
-            </div>
-          </div>
-        </div>
+        <ListingEditModal
+          listing={editTarget}
+          form={editForm}
+          saving={saving}
+          onClose={() => {
+            setEditTarget(null);
+            setEditForm(null);
+          }}
+          onSave={handleSave}
+          onChange={setEditForm}
+        />
       )}
     </div>
   );
@@ -446,9 +359,10 @@ function HeroKpi({ label, value, delta, trend, prefix, suffix }: any) {
   );
 }
 
-function VehicleCard({ v, delay, onEdit, onDelete, deleting }: any) {
+function VehicleCard({ v, delay, onEdit, onToggleStatus, onDelete, deleting, toggling }: any) {
   const primaryImage = v.images?.find((i: any) => i.isPrimary)?.url || v.images?.[0]?.url || '/car-placeholder.png';
   const isActive = v.status === 'ACTIVE';
+  const canToggle = v.status === 'ACTIVE' || v.status === 'DRAFT';
   const [imgSrc, setImgSrc] = useState(primaryImage);
 
   return (
@@ -475,7 +389,7 @@ function VehicleCard({ v, delay, onEdit, onDelete, deleting }: any) {
               ? "bg-cyan-500/20 text-cyan-400 border-cyan-500/40"
               : "bg-gray-500/40 text-gray-400 border-white/10"
           }`}>
-            {v.status.toUpperCase()}
+            {v.status === "DRAFT" ? "INACTIVE" : v.status.toUpperCase()}
           </span>
         </div>
         
@@ -503,11 +417,39 @@ function VehicleCard({ v, delay, onEdit, onDelete, deleting }: any) {
         <div className="flex items-baseline justify-between">
           <span className="text-2xl font-bold tracking-tight text-foreground">{v.currency} {v.price.toLocaleString()}</span>
           <Link href={`/listings/${v.id}`} onClick={(e) => e.stopPropagation()}>
-            <button className="text-gray-400 hover:text-cyan-400 transition-colors p-1 rounded-lg hover:bg-white/5">
+            <button type="button" className="text-gray-400 hover:text-cyan-400 transition-colors p-1 rounded-lg hover:bg-white/5">
                 <Eye className="h-5 w-5" />
             </button>
           </Link>
         </div>
+
+        {canToggle && (
+          <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+            <span className={`text-[10px] font-bold uppercase tracking-wider ${isActive ? "text-cyan-400" : "text-gray-500"}`}>
+              {isActive ? "Active" : "Inactive"}
+            </span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={isActive}
+              disabled={toggling}
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleStatus();
+              }}
+              className={`relative h-6 w-10 rounded-full transition-colors disabled:opacity-50 ${
+                isActive ? "bg-cyan-500" : "bg-gray-600"
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${
+                  isActive ? "translate-x-4" : "translate-x-0"
+                }`}
+              />
+            </button>
+          </div>
+        )}
+
         <div className="flex items-center gap-3 text-[12px] text-gray-300 font-medium tracking-wide">
           <span className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/5"><Calendar className="h-3.5 w-3.5 text-cyan-400" />{v.year}</span>
           <span className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/5"><Gauge className="h-3.5 w-3.5 text-cyan-400" />{(v.mileage / 1000).toFixed(0)}K</span>
@@ -518,16 +460,3 @@ function VehicleCard({ v, delay, onEdit, onDelete, deleting }: any) {
   );
 }
 
-function Field({ label, value, onChange, type = "text" }: { label: string; value: string; onChange: (v: string) => void; type?: string }) {
-  return (
-    <div>
-      <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">{label}</label>
-      <input
-        type={type}
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white text-sm outline-none focus:border-cyan-500 placeholder:text-gray-600"
-      />
-    </div>
-  );
-}
