@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Eye, EyeOff, Mail, Building2, User, Phone, MapPin, Globe, Loader2, CheckCircle2, FileText, Upload, X } from "lucide-react";
+import { Eye, EyeOff, Mail, Building2, User, Phone, MapPin, Globe, Loader2, CheckCircle2, FileText, Upload, X, Lock, ChevronDown } from "lucide-react";
 
 export default function SignupPage() {
     const router = useRouter();
@@ -17,7 +17,9 @@ export default function SignupPage() {
         address: "",
         city: "",
         country: "",
+        // role will be managed separately
     });
+    const [role, setRole] = useState("User");
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -78,7 +80,7 @@ export default function SignupPage() {
             return;
         }
 
-        if (!licenseFile) {
+        if (role === "Car Dealers" && !licenseFile) {
             setError("Please upload your dealership license document");
             setLoading(false);
             return;
@@ -94,7 +96,10 @@ export default function SignupPage() {
             formData.append("address", data.address);
             formData.append("city", data.city);
             formData.append("country", data.country);
-            formData.append("licenseDocument", licenseFile);
+            if (licenseFile) {
+                formData.append("licenseDocument", licenseFile);
+            }
+            formData.append("role", role);
 
             const res = await fetch("/api/dealer/auth/signup", {
                 method: "POST",
@@ -205,6 +210,23 @@ export default function SignupPage() {
                                     />
                                 </div>
                             </div>
+                                {/* Role Selection */}
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Role *</label>
+                                    <div className="relative group">
+                                        <select
+                                            name="role"
+                                            value={role}
+                                            onChange={(e) => setRole(e.target.value)}
+                                            className="h-11 w-full appearance-none rounded-xl border border-gray-200 bg-white pl-4 pr-10 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-950 dark:border-gray-800 dark:text-white transition-all shadow-sm cursor-pointer"
+                                        >
+                                            <option value="Baking Sector/Partners" className="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-200">Baking Sector/Partners</option>
+                                            <option value="Car Dealers" className="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-200">Car Dealers</option>
+                                            <option value="User" className="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-200">User</option>
+                                        </select>
+                                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4 pointer-events-none group-focus-within:text-blue-500 transition-colors" />
+                                    </div>
+                                </div>
 
                             {/* Dealership Name */}
                             <div className="space-y-2">
@@ -309,6 +331,9 @@ export default function SignupPage() {
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Password *</label>
                                 <div className="relative group">
+                                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors">
+                                        <Lock size={18} />
+                                    </div>
                                     <input
                                         name="password"
                                         type={showPassword ? "text" : "password"}
@@ -317,14 +342,15 @@ export default function SignupPage() {
                                         minLength={6}
                                         value={data.password}
                                         onChange={handleChange}
-                                        className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-4 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-950 dark:border-gray-800 dark:text-white transition-all shadow-sm"
+                                        className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-950 dark:border-gray-800 dark:text-white transition-all shadow-sm"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
                                         className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                                        aria-label={showPassword ? "Hide password" : "Show password"}
                                     >
-                                        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                                     </button>
                                 </div>
                             </div>
@@ -347,59 +373,61 @@ export default function SignupPage() {
                             </div>
 
                             {/* Dealership License */}
-                            <div className="md:col-span-2 space-y-2">
-                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Dealership License *
-                                </label>
-                                <p className="text-xs text-gray-500 dark:text-gray-400">
-                                    Upload your official dealership license (PDF, JPEG, PNG, or WebP, max 5MB). Required for admin approval.
-                                </p>
-                                {!licenseFile ? (
-                                    <label
-                                        htmlFor="licenseDocument"
-                                        className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-200 bg-white px-6 py-8 transition-all hover:border-blue-400 hover:bg-blue-50/50 dark:border-gray-700 dark:bg-gray-950 dark:hover:border-blue-500 dark:hover:bg-blue-950/20"
-                                    >
-                                        <Upload className="h-8 w-8 text-gray-400" />
-                                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            Click to upload license
-                                        </span>
-                                        <span className="text-xs text-gray-500">PDF or image up to 5MB</span>
-                                        <input
-                                            id="licenseDocument"
-                                            name="licenseDocument"
-                                            type="file"
-                                            accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp"
-                                            required
-                                            onChange={handleLicenseChange}
-                                            className="sr-only"
-                                        />
+                            {role === "Car Dealers" && (
+                                <div className="md:col-span-2 space-y-2">
+                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Dealership License *
                                     </label>
-                                ) : (
-                                    <div className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 dark:border-gray-800 dark:bg-gray-950">
-                                        <div className="flex min-w-0 items-center gap-3">
-                                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-950/40">
-                                                <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                                            </div>
-                                            <div className="min-w-0">
-                                                <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                                                    {licenseFile.name}
-                                                </p>
-                                                <p className="text-xs text-gray-500">
-                                                    {(licenseFile.size / 1024).toFixed(1)} KB
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <button
-                                            type="button"
-                                            onClick={clearLicense}
-                                            className="shrink-0 rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-red-500 dark:hover:bg-gray-800"
-                                            aria-label="Remove license file"
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                                        Upload your official dealership license (PDF, JPEG, PNG, or WebP, max 5MB). Required for admin approval.
+                                    </p>
+                                    {!licenseFile ? (
+                                        <label
+                                            htmlFor="licenseDocument"
+                                            className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-200 bg-white px-6 py-8 transition-all hover:border-blue-400 hover:bg-blue-50/50 dark:border-gray-700 dark:bg-gray-950 dark:hover:border-blue-500 dark:hover:bg-blue-950/20"
                                         >
-                                            <X className="h-4 w-4" />
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
+                                            <Upload className="h-8 w-8 text-gray-400" />
+                                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                                Click to upload license
+                                            </span>
+                                            <span className="text-xs text-gray-500">PDF or image up to 5MB</span>
+                                            <input
+                                                id="licenseDocument"
+                                                name="licenseDocument"
+                                                type="file"
+                                                accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp"
+                                                required
+                                                onChange={handleLicenseChange}
+                                                className="sr-only"
+                                            />
+                                        </label>
+                                    ) : (
+                                        <div className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 dark:border-gray-800 dark:bg-gray-950">
+                                            <div className="flex min-w-0 items-center gap-3">
+                                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-950/40">
+                                                    <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                                                </div>
+                                                <div className="min-w-0">
+                                                    <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                                                        {licenseFile.name}
+                                                    </p>
+                                                    <p className="text-xs text-gray-500">
+                                                        {(licenseFile.size / 1024).toFixed(1)} KB
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={clearLicense}
+                                                className="shrink-0 rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-red-500 dark:hover:bg-gray-800"
+                                                aria-label="Remove license file"
+                                            >
+                                                <X className="h-4 w-4" />
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
 
                         {error && (

@@ -1,75 +1,9 @@
 "use client";
-
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, BarChart3, Shield, ShieldCheck, Store, Building2 } from "lucide-react";
-
-type RoleCardProps = {
-  href: string;
-  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  title: string;
-  tagline: string;
-  accent: string;
-  delay: number;
-};
-
-function RoleCard({ href, icon: Icon, title, tagline, accent, delay }: RoleCardProps) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-      className="h-full"
-    >
-      <Link
-        href={href}
-        className="group relative flex h-full flex-col overflow-hidden rounded-[28px] bg-[#071423]/65 p-[1px] transition-all duration-500 hover:-translate-y-1"
-      >
-        {/* luminous border (always visible) */}
-        <div
-          className="pointer-events-none absolute inset-0 rounded-[28px] opacity-60 transition-opacity duration-500 group-hover:opacity-100"
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(45, 212, 191, 0.55), rgba(59, 130, 246, 0.25), rgba(244, 63, 94, 0.18))",
-          }}
-          aria-hidden
-        />
-        {/* crisp outline like screenshot */}
-        <div
-          className="pointer-events-none absolute inset-[1px] rounded-[27px] ring-1 ring-cyan-200/25 transition-all duration-500 group-hover:ring-cyan-200/45"
-          aria-hidden
-        />
-        {/* ambient hover glow */}
-        <div
-          className="pointer-events-none absolute -inset-2 opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-100"
-          style={{ background: accent }}
-          aria-hidden
-        />
-        {/* inner surface */}
-        <div className="relative flex h-full flex-col rounded-[27px] border border-white/10 bg-[#081a2c]/70 p-8 backdrop-blur-xl">
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.06] via-transparent to-transparent opacity-80" aria-hidden />
-          <div className="mb-8 flex items-center justify-between">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-400/10 shadow-[0_0_0_1px_rgba(34,211,238,0.08)]">
-              <Icon className="h-6 w-6 text-cyan-200" strokeWidth={2.25} />
-            </div>
-            <span className="font-mono text-[10px] tracking-[0.3em] text-white/55">
-              ACCESS · 0{title === "Admin" ? "1" : "2"}
-            </span>
-          </div>
-
-          <h3 className="mb-2 text-3xl font-semibold tracking-tight text-white">{title}</h3>
-          <p className="mb-10 flex-grow leading-relaxed text-white/75">{tagline}</p>
-
-          <div className="mt-auto flex items-center justify-between text-sm">
-            <span className="text-cyan-200/90 transition-colors group-hover:text-cyan-100">Continue</span>
-            <ArrowRight className="h-4 w-4 text-cyan-200/90 transition-all group-hover:translate-x-1 group-hover:text-cyan-100" />
-          </div>
-        </div>
-      </Link>
-    </motion.div>
-  );
-}
+import { ArrowRight, BarChart3, ShieldCheck, Building2 } from "lucide-react";
 
 function BadgeCard({
   icon: Icon,
@@ -127,6 +61,24 @@ function BadgeCard({
 }
 
 export default function LandingPage() {
+  const [session, setSession] = React.useState<{ name: string; dashboardHref: string } | null | "loading">("loading");
+
+  React.useEffect(() => {
+    fetch("/api/dealer/profile")
+      .then((r) => {
+        if (r.ok) return r.json();
+        return null;
+      })
+      .then((data) => {
+        if (data && (data.dealershipName || data.name)) {
+          setSession({ name: data.dealershipName || data.name, dashboardHref: "/dashboard" });
+        } else {
+          setSession(null);
+        }
+      })
+      .catch(() => setSession(null));
+  }, []);
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#020d1a] text-white selection:bg-cyan-500/30">
       <Image
@@ -168,7 +120,7 @@ export default function LandingPage() {
 
         {/* Main */}
         <main className="flex flex-1 items-center justify-center px-6 py-12">
-          <div className="w-full max-w-5xl">
+          <div className="w-full max-w-3xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -177,53 +129,54 @@ export default function LandingPage() {
             >
               <span className="mb-7 inline-flex items-center gap-2 rounded-full border border-cyan-200/35 bg-cyan-500/5 px-4 py-1.5 text-[11px] font-mono tracking-[0.28em] text-cyan-100/90 shadow-[0_0_0_1px_rgba(34,211,238,0.06)] backdrop-blur-xl">
                 <span className="h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.55)]" />
-                AUTHENTICATION GATEWAY
+                AUTOMOTIVE INTELLIGENCE
               </span>
               <h1 className="mb-5 text-5xl font-extrabold tracking-tight text-white md:text-7xl">
                 Welcome to <span className="text-cyan-300">iCar</span>
               </h1>
               <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/60 md:text-lg">
-                AI-powered automotive intelligence. Choose your access channel to enter the command center.
+                AI-powered automotive intelligence for dealers, banking partners, and industry professionals.
               </p>
             </motion.div>
 
-            <div className="grid gap-6 md:grid-cols-2">
-              <RoleCard
-                href="/admin/login"
-                icon={Shield}
-                title="Admin"
-                tagline="Platform oversight, dealer approvals, and global market intelligence."
-                accent="radial-gradient(circle at center, rgba(34, 211, 238, 0.22), transparent 70%)"
-                delay={0.15}
-              />
-              <RoleCard
-                href="/login"
-                icon={Store}
-                title="Dealer"
-                tagline="Inventory workspace, AI valuations, and live market alerts."
-                accent="radial-gradient(circle at center, rgba(52, 211, 153, 0.22), transparent 70%)"
-                delay={0.25}
-              />
-            </div>
-
-            {/* Secondary actions */}
+            {/* CTA Buttons */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.35, duration: 0.6 }}
-              className="mt-8 flex flex-col items-center justify-center gap-3 text-sm text-white/60 sm:flex-row"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="flex flex-col items-center justify-center gap-4 sm:flex-row"
             >
-              <span>New dealership?</span>
-              <Link
-                href="/signup"
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 font-semibold text-white/85 backdrop-blur-xl transition-colors hover:border-cyan-200/30 hover:bg-white/[0.06]"
-              >
-                Apply for dealer access <ArrowRight className="h-4 w-4" />
-              </Link>
+              {session === "loading" ? (
+                <div className="h-12 w-64 animate-pulse rounded-full bg-white/10" />
+              ) : session ? (
+                <Link
+                  href={session.dashboardHref}
+                  className="group inline-flex items-center gap-3 rounded-full bg-cyan-500 px-8 py-3.5 text-sm font-semibold text-[#020d1a] shadow-[0_0_32px_rgba(34,211,238,0.35)] transition-all duration-300 hover:bg-cyan-400 hover:shadow-[0_0_48px_rgba(34,211,238,0.5)]"
+                >
+                  Go to Dashboard
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="group inline-flex items-center gap-3 rounded-full bg-cyan-500 px-8 py-3.5 text-sm font-semibold text-[#020d1a] shadow-[0_0_32px_rgba(34,211,238,0.35)] transition-all duration-300 hover:bg-cyan-400 hover:shadow-[0_0_48px_rgba(34,211,238,0.5)]"
+                  >
+                    Login
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.04] px-8 py-3.5 text-sm font-semibold text-white/90 backdrop-blur-xl transition-all duration-300 hover:border-cyan-200/35 hover:bg-white/[0.08]"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
             </motion.div>
 
-            {/* Badges (ported from your current landing page, restyled) */}
-            <div className="mt-14 grid gap-5 md:grid-cols-3">
+            {/* Badges */}
+            <div className="mt-16 grid gap-5 md:grid-cols-3">
               <BadgeCard
                 icon={BarChart3}
                 title="Live Market Data"

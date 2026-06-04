@@ -59,6 +59,7 @@ export async function POST(request: Request) {
     const address = (formData.get('address') as string | null)?.trim() || null;
     const city = (formData.get('city') as string | null)?.trim() || null;
     const country = (formData.get('country') as string | null)?.trim() || null;
+    const role = (formData.get('role') as string | null)?.trim() || 'User';
     const licenseFile = formData.get('licenseDocument');
 
     if (!email || !password || !dealershipName || !contactPerson || !phoneNumber) {
@@ -68,25 +69,27 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!(licenseFile instanceof File) || licenseFile.size === 0) {
-      return NextResponse.json(
-        { message: 'Dealership license document is required' },
-        { status: 400 }
-      );
-    }
+    if (role === 'Car Dealers') {
+      if (!(licenseFile instanceof File) || licenseFile.size === 0) {
+        return NextResponse.json(
+          { message: 'Dealership license document is required for Car Dealers' },
+          { status: 400 }
+        );
+      }
 
-    if (!ALLOWED_LICENSE_TYPES.has(licenseFile.type)) {
-      return NextResponse.json(
-        { message: 'License must be a PDF or image (JPEG, PNG, or WebP)' },
-        { status: 400 }
-      );
-    }
+      if (!ALLOWED_LICENSE_TYPES.has(licenseFile.type)) {
+        return NextResponse.json(
+          { message: 'License must be a PDF or image (JPEG, PNG, or WebP)' },
+          { status: 400 }
+        );
+      }
 
-    if (licenseFile.size > MAX_LICENSE_SIZE_BYTES) {
-      return NextResponse.json(
-        { message: 'License file must be 5MB or smaller' },
-        { status: 400 }
-      );
+      if (licenseFile.size > MAX_LICENSE_SIZE_BYTES) {
+        return NextResponse.json(
+          { message: 'License file must be 5MB or smaller' },
+          { status: 400 }
+        );
+      }
     }
 
     const existingDealer = await prisma.dealer.findUnique({
@@ -112,18 +115,21 @@ export async function POST(request: Request) {
         address,
         city,
         country,
+        role,
         approvalStatus: 'pending',
       },
     });
 
     createdDealerId = dealer.id;
 
-    const licenseDocumentUrl = await saveLicenseDocument(dealer.id, licenseFile);
+    if (role === 'Car Dealers' && licenseFile instanceof File) {
+      const licenseDocumentUrl = await saveLicenseDocument(dealer.id, licenseFile);
 
-    await prisma.dealer.update({
-      where: { id: dealer.id },
-      data: { licenseDocumentUrl },
-    });
+      await prisma.dealer.update({
+        where: { id: dealer.id },
+        data: { licenseDocumentUrl },
+      });
+    }
 
     return NextResponse.json(
       {

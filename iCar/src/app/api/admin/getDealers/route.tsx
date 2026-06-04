@@ -58,6 +58,7 @@ export async function GET(request: NextRequest) {
                     address: true,
                     city: true,
                     country: true,
+                    role: true,
                     approvalStatus: true,
                     licenseDocumentUrl: true,
                     createdAt: true,

@@ -31,6 +31,7 @@ interface Dealer {
     address: string;
     city: string;
     country: string;
+    role: string;
     approvalStatus: "pending" | "approved" | "rejected";
     licenseDocumentUrl?: string | null;
     createdAt: string;
@@ -385,6 +386,7 @@ const AuthenticateDealers: React.FC = () => {
                                             <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">Dealership</th>
                                             <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">Contact</th>
                                             <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">Location</th>
+                                            <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">Role</th>
                                             <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest">Status</th>
                                             <th className="px-6 py-4 text-[10px] font-mono text-gray-500 uppercase tracking-widest text-right">Actions</th>
                                         </tr>
@@ -392,7 +394,7 @@ const AuthenticateDealers: React.FC = () => {
                                     <tbody className="divide-y divide-white/5">
                                         {filteredDealers.length === 0 ? (
                                             <tr>
-                                                <td colSpan={5} className="px-6 py-20 text-center">
+                                                <td colSpan={6} className="px-6 py-20 text-center">
                                                     <div className="flex flex-col items-center justify-center text-gray-500">
                                                         <Building2 className="w-12 h-12 mb-4 opacity-20" />
                                                         <p className="text-lg font-bold text-gray-400">No dealers found</p>
@@ -430,6 +432,18 @@ const AuthenticateDealers: React.FC = () => {
                                                         <div className="text-[10px] font-mono text-gray-500 uppercase tracking-wider mt-0.5">{dealer.country}</div>
                                                     </td>
                                                     <td className="px-6 py-4">
+                                                        <span className={cn(
+                                                            "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border",
+                                                            dealer.role === "Car Dealers"
+                                                                ? "bg-blue-500/10 text-blue-400 border-blue-500/20"
+                                                                : dealer.role === "Baking Sector/Partners"
+                                                                ? "bg-purple-500/10 text-purple-400 border-purple-500/20"
+                                                                : "bg-gray-500/10 text-gray-400 border-gray-500/20"
+                                                        )}>
+                                                            {dealer.role || "User"}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-6 py-4">
                                                         {getStatusBadge(dealer.approvalStatus)}
                                                     </td>
                                                     <td className="px-6 py-4 text-right">
@@ -447,8 +461,8 @@ const AuthenticateDealers: React.FC = () => {
                                                                     <button
                                                                         onClick={() => handleApprove(dealer.id)}
                                                                         className="h-9 w-9 rounded-xl glass border border-white/10 text-gray-400 hover:text-cyan-400 transition-all flex items-center justify-center disabled:opacity-50"
-                                                                        title={dealer.licenseDocumentUrl ? "Approve" : "License required to approve"}
-                                                                        disabled={actionLoading !== null || !dealer.licenseDocumentUrl}
+                                                                        title={dealer.role === "Car Dealers" && !dealer.licenseDocumentUrl ? "License required to approve Car Dealers" : "Approve"}
+                                                                        disabled={actionLoading !== null || (dealer.role === "Car Dealers" && !dealer.licenseDocumentUrl)}
                                                                     >
                                                                         {actionLoading === dealer.id ? (
                                                                             <RefreshCw className="w-4 h-4 animate-spin text-cyan-400" />
@@ -583,9 +597,9 @@ const AuthenticateDealers: React.FC = () => {
                                     {/* Modal Footer */}
                                     {selectedDealer.approvalStatus === "pending" && (
                                         <div className="p-6 border-t border-white/5 flex flex-col gap-3 bg-white/[0.02] shrink-0">
-                                            {!selectedDealer.licenseDocumentUrl && (
+                                            {selectedDealer.role === "Car Dealers" && !selectedDealer.licenseDocumentUrl && (
                                                 <p className="text-xs text-yellow-500 text-center">
-                                                    Cannot approve without a license document on file.
+                                                    Cannot approve Car Dealers without a license document on file.
                                                 </p>
                                             )}
                                             <div className="flex gap-3">
@@ -600,11 +614,11 @@ const AuthenticateDealers: React.FC = () => {
                                                 <button
                                                     onClick={() => handleApprove(selectedDealer.id)}
                                                     className="flex-[2] h-12 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-xl font-bold transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(34,211,238,0.3)] flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:hover:scale-100"
-                                                    disabled={actionLoading !== null || !selectedDealer.licenseDocumentUrl}
-                                                    title={!selectedDealer.licenseDocumentUrl ? "License document required to approve" : undefined}
+                                                    disabled={actionLoading !== null || (selectedDealer.role === "Car Dealers" && !selectedDealer.licenseDocumentUrl)}
+                                                    title={selectedDealer.role === "Car Dealers" && !selectedDealer.licenseDocumentUrl ? "License document required to approve Car Dealers" : undefined}
                                                 >
                                                     {actionLoading === selectedDealer.id ? <RefreshCw className="size-4 animate-spin" /> : <CheckCircle className="size-4" />}
-                                                    Approve Dealer
+                                                    Approve
                                                 </button>
                                             </div>
                                         </div>

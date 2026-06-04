@@ -25,6 +25,7 @@ model Dealer {
   address        String?
   city           String?
   country        String?
+  role           String    @default("User")
   approvalStatus      String    @default("pending") // pending, approved, rejected
   licenseDocumentUrl  String?   // dealership license uploaded at signup
   createdAt           DateTime  @default(now())
