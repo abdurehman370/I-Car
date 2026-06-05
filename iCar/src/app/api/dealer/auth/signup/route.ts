@@ -1,41 +1,45 @@
-import prisma from '@/lib/db';
-import bcrypt from 'bcryptjs';
-import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
+import prisma from "@/lib/db";
+import { Prisma } from "@prisma/client";
+import bcrypt from "bcryptjs";
+import { NextResponse } from "next/server";
+import fs from "fs/promises";
+import path from "path";
 
 const MAX_LICENSE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
 const ALLOWED_LICENSE_TYPES = new Set([
-  'application/pdf',
-  'image/jpeg',
-  'image/png',
-  'image/webp',
+  "application/pdf",
+  "image/jpeg",
+  "image/png",
+  "image/webp",
 ]);
 
 function extensionForMime(mime: string): string {
   switch (mime) {
-    case 'application/pdf':
-      return 'pdf';
-    case 'image/jpeg':
-      return 'jpg';
-    case 'image/png':
-      return 'png';
-    case 'image/webp':
-      return 'webp';
+    case "application/pdf":
+      return "pdf";
+    case "image/jpeg":
+      return "jpg";
+    case "image/png":
+      return "png";
+    case "image/webp":
+      return "webp";
     default:
-      return 'bin';
+      return "bin";
   }
 }
 
-async function saveLicenseDocument(dealerId: number, file: File): Promise<string> {
+async function saveLicenseDocument(
+  dealerId: number,
+  file: File,
+): Promise<string> {
   const buffer = Buffer.from(await file.arrayBuffer());
   const ext = extensionForMime(file.type);
   const uploadDir = path.join(
     process.cwd(),
-    'public',
-    'uploads',
-    'dealer-licenses',
-    String(dealerId)
+    "public",
+    "uploads",
+    "dealer-licenses",
+    String(dealerId),
   );
   await fs.mkdir(uploadDir, { recursive: true });
 
@@ -51,43 +55,57 @@ export async function POST(request: Request) {
   try {
     const formData = await request.formData();
 
-    const email = (formData.get('email') as string | null)?.trim();
-    const password = formData.get('password') as string | null;
-    const dealershipName = (formData.get('dealershipName') as string | null)?.trim();
-    const contactPerson = (formData.get('contactPerson') as string | null)?.trim();
-    const phoneNumber = (formData.get('phoneNumber') as string | null)?.trim();
-    const address = (formData.get('address') as string | null)?.trim() || null;
-    const city = (formData.get('city') as string | null)?.trim() || null;
-    const country = (formData.get('country') as string | null)?.trim() || null;
-    const role = (formData.get('role') as string | null)?.trim() || 'User';
-    const licenseFile = formData.get('licenseDocument');
+    const email = (formData.get("email") as string | null)?.trim();
+    const password = formData.get("password") as string | null;
+    const dealershipName =
+      (formData.get("dealershipName") as string | null)?.trim() || null;
+    const contactPerson = (
+      formData.get("contactPerson") as string | null
+    )?.trim();
+    const phoneNumber = (formData.get("phoneNumber") as string | null)?.trim();
+    const address = (formData.get("address") as string | null)?.trim() || null;
+    const city = (formData.get("city") as string | null)?.trim() || null;
+    const country = (formData.get("country") as string | null)?.trim() || null;
+    const role = (formData.get("role") as string | null)?.trim() || "User";
+    const licenseFile = formData.get("licenseDocument");
 
-    if (!email || !password || !dealershipName || !contactPerson || !phoneNumber) {
+    // Basic required fields validation
+    if (!email || !password || !contactPerson || !phoneNumber) {
       return NextResponse.json(
-        { message: 'Please fill in all required fields' },
-        { status: 400 }
+        { message: "Please fill in all required fields" },
+        { status: 400 },
       );
     }
 
-    if (role === 'Car Dealers') {
+    // Dealership Name is required only for non-User roles
+    if (role !== "User" && !dealershipName) {
+      return NextResponse.json(
+        { message: "Dealership Name is required for this role" },
+        { status: 400 },
+      );
+    }
+
+    if (role === "Car Dealers") {
       if (!(licenseFile instanceof File) || licenseFile.size === 0) {
         return NextResponse.json(
-          { message: 'Dealership license document is required for Car Dealers' },
-          { status: 400 }
+          {
+            message: "Dealership license document is required for Car Dealers",
+          },
+          { status: 400 },
         );
       }
 
       if (!ALLOWED_LICENSE_TYPES.has(licenseFile.type)) {
         return NextResponse.json(
-          { message: 'License must be a PDF or image (JPEG, PNG, or WebP)' },
-          { status: 400 }
+          { message: "License must be a PDF or image (JPEG, PNG, or WebP)" },
+          { status: 400 },
         );
       }
 
       if (licenseFile.size > MAX_LICENSE_SIZE_BYTES) {
         return NextResponse.json(
-          { message: 'License file must be 5MB or smaller' },
-          { status: 400 }
+          { message: "License file must be 5MB or smaller" },
+          { status: 400 },
         );
       }
     }
@@ -98,32 +116,37 @@ export async function POST(request: Request) {
 
     if (existingDealer) {
       return NextResponse.json(
-        { message: 'A dealer with this email already exists' },
-        { status: 409 }
+        { message: "A dealer with this email already exists" },
+        { status: 409 },
       );
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const dealerData: Prisma.DealerCreateInput = {
+      email,
+      password: hashedPassword,
+      contactPerson,
+      phoneNumber,
+      address,
+      city,
+      country,
+      role,
+      approvalStatus: "pending",
+      dealershipName,
+    };
+
     const dealer = await prisma.dealer.create({
-      data: {
-        email,
-        password: hashedPassword,
-        dealershipName,
-        contactPerson,
-        phoneNumber,
-        address,
-        city,
-        country,
-        role,
-        approvalStatus: 'pending',
-      },
+      data: dealerData,
     });
 
     createdDealerId = dealer.id;
 
-    if (role === 'Car Dealers' && licenseFile instanceof File) {
-      const licenseDocumentUrl = await saveLicenseDocument(dealer.id, licenseFile);
+    if (role === "Car Dealers" && licenseFile instanceof File) {
+      const licenseDocumentUrl = await saveLicenseDocument(
+        dealer.id,
+        licenseFile,
+      );
 
       await prisma.dealer.update({
         where: { id: dealer.id },
@@ -134,9 +157,9 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message:
-          'Signup successful! Your account and dealership license are pending admin review.',
+          "Signup successful! Your account and dealership license are pending admin review.",
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     if (createdDealerId !== null) {
@@ -144,10 +167,10 @@ export async function POST(request: Request) {
         await prisma.dealer.delete({ where: { id: createdDealerId } });
         const licenseDir = path.join(
           process.cwd(),
-          'public',
-          'uploads',
-          'dealer-licenses',
-          String(createdDealerId)
+          "public",
+          "uploads",
+          "dealer-licenses",
+          String(createdDealerId),
         );
         await fs.rm(licenseDir, { recursive: true, force: true });
       } catch {
@@ -155,7 +178,10 @@ export async function POST(request: Request) {
       }
     }
 
-    console.error('Signup error:', error);
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    console.error("Signup error:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
