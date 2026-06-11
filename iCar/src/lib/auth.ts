@@ -22,7 +22,8 @@ interface AdminData {
 interface DealerData {
   id: number;
   email: string;
-  dealershipName: string;
+  dealershipName: string | null;
+  role: string;
 }
 
 // =====================
@@ -114,6 +115,15 @@ export async function updateAdminSession(request: NextRequest) {
 // DEALER FUNCTIONS
 // =====================
 
+/** Re-issue JWT when cookie role is missing or out of date vs the database. */
+export function dealerSessionNeedsSync(
+  session: { user?: Partial<DealerData> } | null,
+  dealer: DealerData
+): boolean {
+  if (!session?.user?.role) return true;
+  return session.user.role !== dealer.role;
+}
+
 export async function loginDealer(userData: DealerData) {
   // Create dealer session
   const session = await encrypt({ 
@@ -144,6 +154,18 @@ export async function getDealerSession() {
     if (decrypted.type !== 'dealer') return null;
     return decrypted;
   } catch (error) {
+    return null;
+  }
+}
+
+export async function parseDealerSessionFromRequest(request: NextRequest) {
+  const session = request.cookies.get(DEALER_COOKIE_NAME)?.value;
+  if (!session) return null;
+  try {
+    const parsed = await decrypt(session);
+    if (parsed.type !== "dealer") return null;
+    return parsed;
+  } catch {
     return null;
   }
 }

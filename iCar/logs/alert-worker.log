@@ -3262,3 +3262,1703 @@
 [2026-06-03T12:40:01.873Z] [INFO] [job:alert-1-5934968] Completed successfully
 [2026-06-03T12:40:01.874Z] [INFO] [job:alert-3-5934968] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-02T13:40:05.712Z) — skipping
 [2026-06-03T12:40:01.875Z] [INFO] [job:alert-3-5934968] Completed successfully
+[2026-06-05T11:17:17.329Z] [INFO] [job:alert-1-5934969] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:17.332Z] [INFO] [job:alert-3-5934969] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:17.333Z] [INFO] [job:alert-1-5934970] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:17.333Z] [INFO] [job:alert-3-5934970] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:17.334Z] [INFO] [job:alert-1-5934971] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:17.517Z] [INFO] [job:alert-3-5934969] Internal matches: 0
+[2026-06-05T11:17:17.550Z] [INFO] [job:alert-1-5934970] Internal matches: 1
+[2026-06-05T11:17:17.553Z] [INFO] [job:alert-1-5934969] Internal matches: 1
+[2026-06-05T11:17:17.555Z] [INFO] [job:alert-3-5934970] Internal matches: 0
+[2026-06-05T11:17:17.557Z] [INFO] [job:alert-1-5934971] Internal matches: 1
+[2026-06-05T11:17:17.562Z] [WARN] [job:alert-3-5934969] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:17.562Z] [INFO] [job:alert-3-5934969] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:17.564Z] [WARN] [job:alert-1-5934970] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:17.599Z] [INFO] [job:alert-3-5934969] Completed successfully
+[2026-06-05T11:17:17.599Z] [INFO] [job:alert-3-5934971] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:17.603Z] [WARN] [job:alert-1-5934969] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:17.604Z] [WARN] [job:alert-3-5934970] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:17.604Z] [INFO] [job:alert-3-5934970] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:17.606Z] [INFO] [job:alert-3-5934970] Completed successfully
+[2026-06-05T11:17:17.606Z] [INFO] [job:alert-1-5934972] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:17.609Z] [WARN] [job:alert-1-5934971] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:17.613Z] [INFO] [job:alert-3-5934971] Internal matches: 0
+[2026-06-05T11:17:17.616Z] [INFO] [job:alert-1-5934972] Internal matches: 1
+[2026-06-05T11:17:17.618Z] [WARN] [job:alert-3-5934971] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:17.618Z] [INFO] [job:alert-3-5934971] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:17.622Z] [INFO] [job:alert-3-5934971] Completed successfully
+[2026-06-05T11:17:17.622Z] [INFO] [job:alert-3-5934972] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:17.624Z] [WARN] [job:alert-1-5934972] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:17.628Z] [INFO] [job:alert-3-5934972] Internal matches: 0
+[2026-06-05T11:17:17.631Z] [WARN] [job:alert-3-5934972] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:17.631Z] [INFO] [job:alert-3-5934972] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:17.632Z] [INFO] [job:alert-3-5934972] Completed successfully
+[2026-06-05T11:17:17.632Z] [INFO] [job:alert-1-5934973] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:17.638Z] [INFO] [job:alert-1-5934973] Internal matches: 1
+[2026-06-05T11:17:17.641Z] [WARN] [job:alert-1-5934973] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:19.990Z] [INFO] [job:alert-1-5934969] Done — sent email with 1 matches
+[2026-06-05T11:17:19.992Z] [INFO] [job:alert-1-5934969] Completed successfully
+[2026-06-05T11:17:19.993Z] [INFO] [job:alert-3-5934973] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.001Z] [INFO] [job:alert-3-5934973] Internal matches: 0
+[2026-06-05T11:17:20.005Z] [WARN] [job:alert-3-5934973] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.006Z] [INFO] [job:alert-3-5934973] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.007Z] [INFO] [job:alert-3-5934973] Completed successfully
+[2026-06-05T11:17:20.008Z] [INFO] [job:alert-1-5934974] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.011Z] [INFO] [job:alert-1-5934974] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:19.951Z) — skipping
+[2026-06-05T11:17:20.013Z] [INFO] [job:alert-1-5934974] Completed successfully
+[2026-06-05T11:17:20.014Z] [INFO] [job:alert-3-5934974] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.022Z] [INFO] [job:alert-3-5934974] Internal matches: 0
+[2026-06-05T11:17:20.025Z] [WARN] [job:alert-3-5934974] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.025Z] [INFO] [job:alert-3-5934974] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.027Z] [INFO] [job:alert-3-5934974] Completed successfully
+[2026-06-05T11:17:20.027Z] [INFO] [job:alert-1-5934975] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.029Z] [INFO] [job:alert-1-5934975] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:19.951Z) — skipping
+[2026-06-05T11:17:20.031Z] [INFO] [job:alert-1-5934975] Completed successfully
+[2026-06-05T11:17:20.031Z] [INFO] [job:alert-3-5934975] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.036Z] [INFO] [job:alert-3-5934975] Internal matches: 0
+[2026-06-05T11:17:20.038Z] [WARN] [job:alert-3-5934975] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.038Z] [INFO] [job:alert-3-5934975] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.040Z] [INFO] [job:alert-3-5934975] Completed successfully
+[2026-06-05T11:17:20.040Z] [INFO] [job:alert-1-5934976] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.042Z] [INFO] [job:alert-1-5934976] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:19.951Z) — skipping
+[2026-06-05T11:17:20.044Z] [INFO] [job:alert-1-5934976] Completed successfully
+[2026-06-05T11:17:20.044Z] [INFO] [job:alert-3-5934976] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.048Z] [INFO] [job:alert-3-5934976] Internal matches: 0
+[2026-06-05T11:17:20.051Z] [WARN] [job:alert-3-5934976] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.051Z] [INFO] [job:alert-3-5934976] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.053Z] [INFO] [job:alert-3-5934976] Completed successfully
+[2026-06-05T11:17:20.053Z] [INFO] [job:alert-1-5934977] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.056Z] [INFO] [job:alert-1-5934977] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:19.951Z) — skipping
+[2026-06-05T11:17:20.058Z] [INFO] [job:alert-1-5934977] Completed successfully
+[2026-06-05T11:17:20.058Z] [INFO] [job:alert-3-5934977] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.062Z] [INFO] [job:alert-3-5934977] Internal matches: 0
+[2026-06-05T11:17:20.065Z] [WARN] [job:alert-3-5934977] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.065Z] [INFO] [job:alert-3-5934977] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.067Z] [INFO] [job:alert-3-5934977] Completed successfully
+[2026-06-05T11:17:20.067Z] [INFO] [job:alert-1-5934978] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.068Z] [INFO] [job:alert-1-5934978] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:19.951Z) — skipping
+[2026-06-05T11:17:20.069Z] [INFO] [job:alert-1-5934978] Completed successfully
+[2026-06-05T11:17:20.069Z] [INFO] [job:alert-3-5934978] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.073Z] [INFO] [job:alert-3-5934978] Internal matches: 0
+[2026-06-05T11:17:20.076Z] [WARN] [job:alert-3-5934978] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.076Z] [INFO] [job:alert-3-5934978] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.077Z] [INFO] [job:alert-3-5934978] Completed successfully
+[2026-06-05T11:17:20.077Z] [INFO] [job:alert-1-5934979] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.080Z] [INFO] [job:alert-1-5934979] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:19.951Z) — skipping
+[2026-06-05T11:17:20.082Z] [INFO] [job:alert-1-5934979] Completed successfully
+[2026-06-05T11:17:20.082Z] [INFO] [job:alert-3-5934979] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.088Z] [INFO] [job:alert-3-5934979] Internal matches: 0
+[2026-06-05T11:17:20.092Z] [WARN] [job:alert-3-5934979] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.092Z] [INFO] [job:alert-3-5934979] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.093Z] [INFO] [job:alert-3-5934979] Completed successfully
+[2026-06-05T11:17:20.094Z] [INFO] [job:alert-1-5934980] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.096Z] [INFO] [job:alert-1-5934980] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:19.951Z) — skipping
+[2026-06-05T11:17:20.098Z] [INFO] [job:alert-1-5934980] Completed successfully
+[2026-06-05T11:17:20.098Z] [INFO] [job:alert-3-5934980] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.103Z] [INFO] [job:alert-3-5934980] Internal matches: 0
+[2026-06-05T11:17:20.106Z] [WARN] [job:alert-3-5934980] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.106Z] [INFO] [job:alert-3-5934980] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.108Z] [INFO] [job:alert-3-5934980] Completed successfully
+[2026-06-05T11:17:20.109Z] [INFO] [job:alert-1-5934981] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.111Z] [INFO] [job:alert-1-5934981] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:19.951Z) — skipping
+[2026-06-05T11:17:20.113Z] [INFO] [job:alert-1-5934981] Completed successfully
+[2026-06-05T11:17:20.114Z] [INFO] [job:alert-3-5934981] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.119Z] [INFO] [job:alert-3-5934981] Internal matches: 0
+[2026-06-05T11:17:20.121Z] [WARN] [job:alert-3-5934981] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.121Z] [INFO] [job:alert-3-5934981] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.123Z] [INFO] [job:alert-3-5934981] Completed successfully
+[2026-06-05T11:17:20.123Z] [INFO] [job:alert-1-5934982] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.128Z] [INFO] [job:alert-1-5934982] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:19.951Z) — skipping
+[2026-06-05T11:17:20.131Z] [INFO] [job:alert-1-5934982] Completed successfully
+[2026-06-05T11:17:20.131Z] [INFO] [job:alert-3-5934982] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.137Z] [INFO] [job:alert-3-5934982] Internal matches: 0
+[2026-06-05T11:17:20.139Z] [WARN] [job:alert-3-5934982] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.140Z] [INFO] [job:alert-3-5934982] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.142Z] [INFO] [job:alert-3-5934982] Completed successfully
+[2026-06-05T11:17:20.142Z] [INFO] [job:alert-1-5934983] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.145Z] [INFO] [job:alert-1-5934983] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:19.951Z) — skipping
+[2026-06-05T11:17:20.146Z] [INFO] [job:alert-1-5934971] Done — sent email with 1 matches
+[2026-06-05T11:17:20.147Z] [INFO] [job:alert-1-5934983] Completed successfully
+[2026-06-05T11:17:20.147Z] [INFO] [job:alert-3-5934983] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.149Z] [INFO] [job:alert-1-5934971] Completed successfully
+[2026-06-05T11:17:20.150Z] [INFO] [job:alert-1-5934984] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.152Z] [INFO] [job:alert-1-5934984] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.154Z] [INFO] [job:alert-1-5934984] Completed successfully
+[2026-06-05T11:17:20.154Z] [INFO] [job:alert-3-5934984] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.156Z] [INFO] [job:alert-3-5934983] Internal matches: 0
+[2026-06-05T11:17:20.161Z] [WARN] [job:alert-3-5934983] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.161Z] [INFO] [job:alert-3-5934983] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.163Z] [INFO] [job:alert-3-5934983] Completed successfully
+[2026-06-05T11:17:20.163Z] [INFO] [job:alert-1-5934985] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.165Z] [INFO] [job:alert-3-5934984] Internal matches: 0
+[2026-06-05T11:17:20.167Z] [INFO] [job:alert-1-5934985] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.169Z] [WARN] [job:alert-3-5934984] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.169Z] [INFO] [job:alert-3-5934984] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.170Z] [INFO] [job:alert-1-5934985] Completed successfully
+[2026-06-05T11:17:20.170Z] [INFO] [job:alert-3-5934985] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.172Z] [INFO] [job:alert-3-5934984] Completed successfully
+[2026-06-05T11:17:20.172Z] [INFO] [job:alert-1-5934986] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.175Z] [INFO] [job:alert-1-5934986] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.177Z] [INFO] [job:alert-1-5934986] Completed successfully
+[2026-06-05T11:17:20.177Z] [INFO] [job:alert-3-5934986] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.179Z] [INFO] [job:alert-3-5934985] Internal matches: 0
+[2026-06-05T11:17:20.183Z] [WARN] [job:alert-3-5934985] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.183Z] [INFO] [job:alert-3-5934985] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.185Z] [INFO] [job:alert-3-5934985] Completed successfully
+[2026-06-05T11:17:20.185Z] [INFO] [job:alert-1-5934987] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.187Z] [INFO] [job:alert-3-5934986] Internal matches: 0
+[2026-06-05T11:17:20.188Z] [INFO] [job:alert-1-5934987] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.190Z] [WARN] [job:alert-3-5934986] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.190Z] [INFO] [job:alert-3-5934986] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.191Z] [INFO] [job:alert-1-5934987] Completed successfully
+[2026-06-05T11:17:20.192Z] [INFO] [job:alert-3-5934986] Completed successfully
+[2026-06-05T11:17:20.192Z] [INFO] [job:alert-3-5934987] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.192Z] [INFO] [job:alert-1-5934988] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.197Z] [INFO] [job:alert-1-5934988] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.200Z] [INFO] [job:alert-1-5934988] Completed successfully
+[2026-06-05T11:17:20.201Z] [INFO] [job:alert-3-5934988] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.202Z] [INFO] [job:alert-3-5934987] Internal matches: 0
+[2026-06-05T11:17:20.206Z] [WARN] [job:alert-3-5934987] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.206Z] [INFO] [job:alert-3-5934987] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.209Z] [INFO] [job:alert-3-5934987] Completed successfully
+[2026-06-05T11:17:20.209Z] [INFO] [job:alert-1-5934989] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.211Z] [INFO] [job:alert-3-5934988] Internal matches: 0
+[2026-06-05T11:17:20.213Z] [INFO] [job:alert-1-5934989] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.215Z] [WARN] [job:alert-3-5934988] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.215Z] [INFO] [job:alert-3-5934988] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.217Z] [INFO] [job:alert-1-5934989] Completed successfully
+[2026-06-05T11:17:20.217Z] [INFO] [job:alert-3-5934988] Completed successfully
+[2026-06-05T11:17:20.218Z] [INFO] [job:alert-3-5934989] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.218Z] [INFO] [job:alert-1-5934990] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.221Z] [INFO] [job:alert-1-5934990] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.223Z] [INFO] [job:alert-1-5934990] Completed successfully
+[2026-06-05T11:17:20.224Z] [INFO] [job:alert-3-5934990] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.225Z] [INFO] [job:alert-3-5934989] Internal matches: 0
+[2026-06-05T11:17:20.228Z] [WARN] [job:alert-3-5934989] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.228Z] [INFO] [job:alert-3-5934989] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.233Z] [INFO] [job:alert-3-5934989] Completed successfully
+[2026-06-05T11:17:20.233Z] [INFO] [job:alert-1-5934991] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.235Z] [INFO] [job:alert-3-5934990] Internal matches: 0
+[2026-06-05T11:17:20.236Z] [INFO] [job:alert-1-5934991] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.237Z] [WARN] [job:alert-3-5934990] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.237Z] [INFO] [job:alert-3-5934990] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.238Z] [INFO] [job:alert-1-5934991] Completed successfully
+[2026-06-05T11:17:20.238Z] [INFO] [job:alert-3-5934990] Completed successfully
+[2026-06-05T11:17:20.238Z] [INFO] [job:alert-3-5934991] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.238Z] [INFO] [job:alert-1-5934992] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.240Z] [INFO] [job:alert-1-5934992] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.242Z] [INFO] [job:alert-1-5934992] Completed successfully
+[2026-06-05T11:17:20.242Z] [INFO] [job:alert-3-5934992] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.244Z] [INFO] [job:alert-3-5934991] Internal matches: 0
+[2026-06-05T11:17:20.247Z] [INFO] [job:alert-3-5934992] Internal matches: 0
+[2026-06-05T11:17:20.248Z] [WARN] [job:alert-3-5934991] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.248Z] [INFO] [job:alert-3-5934991] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.249Z] [WARN] [job:alert-3-5934992] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.249Z] [INFO] [job:alert-3-5934992] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.250Z] [INFO] [job:alert-3-5934991] Completed successfully
+[2026-06-05T11:17:20.250Z] [INFO] [job:alert-3-5934992] Completed successfully
+[2026-06-05T11:17:20.250Z] [INFO] [job:alert-1-5934993] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.250Z] [INFO] [job:alert-3-5934993] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.252Z] [INFO] [job:alert-1-5934993] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.254Z] [INFO] [job:alert-1-5934993] Completed successfully
+[2026-06-05T11:17:20.254Z] [INFO] [job:alert-1-5934994] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.255Z] [INFO] [job:alert-3-5934993] Internal matches: 0
+[2026-06-05T11:17:20.256Z] [INFO] [job:alert-1-5934994] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.257Z] [WARN] [job:alert-3-5934993] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.257Z] [INFO] [job:alert-3-5934993] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.257Z] [INFO] [job:alert-1-5934994] Completed successfully
+[2026-06-05T11:17:20.257Z] [INFO] [job:alert-3-5934994] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.258Z] [INFO] [job:alert-3-5934993] Completed successfully
+[2026-06-05T11:17:20.258Z] [INFO] [job:alert-1-5934995] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.260Z] [INFO] [job:alert-1-5934995] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.262Z] [INFO] [job:alert-1-5934995] Completed successfully
+[2026-06-05T11:17:20.262Z] [INFO] [job:alert-3-5934995] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.263Z] [INFO] [job:alert-3-5934994] Internal matches: 0
+[2026-06-05T11:17:20.266Z] [WARN] [job:alert-3-5934994] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.266Z] [INFO] [job:alert-3-5934994] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.268Z] [INFO] [job:alert-3-5934994] Completed successfully
+[2026-06-05T11:17:20.268Z] [INFO] [job:alert-1-5934996] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.269Z] [INFO] [job:alert-3-5934995] Internal matches: 0
+[2026-06-05T11:17:20.269Z] [INFO] [job:alert-1-5934996] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.270Z] [WARN] [job:alert-3-5934995] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.270Z] [INFO] [job:alert-3-5934995] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.271Z] [INFO] [job:alert-1-5934996] Completed successfully
+[2026-06-05T11:17:20.271Z] [INFO] [job:alert-3-5934996] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.272Z] [INFO] [job:alert-3-5934995] Completed successfully
+[2026-06-05T11:17:20.272Z] [INFO] [job:alert-1-5934997] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.273Z] [INFO] [job:alert-1-5934997] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.125Z) — skipping
+[2026-06-05T11:17:20.274Z] [INFO] [job:alert-1-5934972] Done — sent email with 1 matches
+[2026-06-05T11:17:20.275Z] [INFO] [job:alert-1-5934997] Completed successfully
+[2026-06-05T11:17:20.275Z] [INFO] [job:alert-3-5934997] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.276Z] [INFO] [job:alert-3-5934996] Internal matches: 0
+[2026-06-05T11:17:20.277Z] [INFO] [job:alert-1-5934972] Completed successfully
+[2026-06-05T11:17:20.277Z] [INFO] [job:alert-1-5934998] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.278Z] [INFO] [job:alert-1-5934998] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.280Z] [WARN] [job:alert-3-5934996] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.280Z] [INFO] [job:alert-3-5934996] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.280Z] [INFO] [job:alert-1-5934998] Completed successfully
+[2026-06-05T11:17:20.281Z] [INFO] [job:alert-3-5934998] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.281Z] [INFO] [job:alert-3-5934997] Internal matches: 0
+[2026-06-05T11:17:20.282Z] [INFO] [job:alert-3-5934996] Completed successfully
+[2026-06-05T11:17:20.283Z] [INFO] [job:alert-1-5934999] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.284Z] [INFO] [job:alert-1-5934999] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.285Z] [WARN] [job:alert-3-5934997] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.285Z] [INFO] [job:alert-3-5934997] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.286Z] [INFO] [job:alert-1-5934999] Completed successfully
+[2026-06-05T11:17:20.286Z] [INFO] [job:alert-3-5934997] Completed successfully
+[2026-06-05T11:17:20.286Z] [INFO] [job:alert-3-5934999] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.286Z] [INFO] [job:alert-1-5935000] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.287Z] [INFO] [job:alert-3-5934998] Internal matches: 0
+[2026-06-05T11:17:20.288Z] [INFO] [job:alert-1-5935000] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.289Z] [WARN] [job:alert-3-5934998] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.289Z] [INFO] [job:alert-3-5934998] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.290Z] [INFO] [job:alert-1-5935000] Completed successfully
+[2026-06-05T11:17:20.290Z] [INFO] [job:alert-3-5935000] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.291Z] [INFO] [job:alert-3-5934998] Completed successfully
+[2026-06-05T11:17:20.291Z] [INFO] [job:alert-1-5935001] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.293Z] [INFO] [job:alert-3-5934999] Internal matches: 0
+[2026-06-05T11:17:20.294Z] [INFO] [job:alert-1-5935001] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.295Z] [INFO] [job:alert-1-5935001] Completed successfully
+[2026-06-05T11:17:20.296Z] [INFO] [job:alert-3-5935001] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.297Z] [WARN] [job:alert-3-5934999] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.297Z] [INFO] [job:alert-3-5934999] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.297Z] [INFO] [job:alert-3-5935000] Internal matches: 0
+[2026-06-05T11:17:20.299Z] [INFO] [job:alert-3-5934999] Completed successfully
+[2026-06-05T11:17:20.299Z] [INFO] [job:alert-1-5935002] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.300Z] [WARN] [job:alert-3-5935000] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.300Z] [INFO] [job:alert-3-5935000] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.301Z] [INFO] [job:alert-1-5935002] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.301Z] [INFO] [job:alert-3-5935001] Internal matches: 0
+[2026-06-05T11:17:20.302Z] [INFO] [job:alert-3-5935000] Completed successfully
+[2026-06-05T11:17:20.302Z] [INFO] [job:alert-1-5935002] Completed successfully
+[2026-06-05T11:17:20.302Z] [INFO] [job:alert-3-5935002] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.303Z] [INFO] [job:alert-1-5935003] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.304Z] [WARN] [job:alert-3-5935001] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.304Z] [INFO] [job:alert-3-5935001] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.304Z] [INFO] [job:alert-1-5935003] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.305Z] [INFO] [job:alert-3-5935001] Completed successfully
+[2026-06-05T11:17:20.306Z] [INFO] [job:alert-3-5935003] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.306Z] [INFO] [job:alert-1-5935003] Completed successfully
+[2026-06-05T11:17:20.307Z] [INFO] [job:alert-1-5935004] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.308Z] [INFO] [job:alert-1-5935004] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.309Z] [INFO] [job:alert-3-5935002] Internal matches: 0
+[2026-06-05T11:17:20.310Z] [INFO] [job:alert-1-5935004] Completed successfully
+[2026-06-05T11:17:20.310Z] [INFO] [job:alert-3-5935004] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.311Z] [INFO] [job:alert-3-5935003] Internal matches: 0
+[2026-06-05T11:17:20.312Z] [WARN] [job:alert-3-5935002] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.312Z] [INFO] [job:alert-3-5935002] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.313Z] [INFO] [job:alert-3-5935002] Completed successfully
+[2026-06-05T11:17:20.314Z] [INFO] [job:alert-1-5935005] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.315Z] [WARN] [job:alert-3-5935003] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.315Z] [INFO] [job:alert-3-5935003] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.316Z] [INFO] [job:alert-1-5935005] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.316Z] [INFO] [job:alert-3-5935003] Completed successfully
+[2026-06-05T11:17:20.317Z] [INFO] [job:alert-3-5935005] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.318Z] [INFO] [job:alert-3-5935004] Internal matches: 0
+[2026-06-05T11:17:20.319Z] [INFO] [job:alert-1-5935005] Completed successfully
+[2026-06-05T11:17:20.319Z] [INFO] [job:alert-1-5935006] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.321Z] [INFO] [job:alert-1-5935006] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.323Z] [WARN] [job:alert-3-5935004] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.323Z] [INFO] [job:alert-3-5935004] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.323Z] [INFO] [job:alert-1-5935006] Completed successfully
+[2026-06-05T11:17:20.324Z] [INFO] [job:alert-3-5935006] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.325Z] [INFO] [job:alert-3-5935005] Internal matches: 0
+[2026-06-05T11:17:20.326Z] [INFO] [job:alert-3-5935004] Completed successfully
+[2026-06-05T11:17:20.326Z] [INFO] [job:alert-1-5935007] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.327Z] [INFO] [job:alert-1-5935007] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.328Z] [WARN] [job:alert-3-5935005] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.328Z] [INFO] [job:alert-3-5935005] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.329Z] [INFO] [job:alert-1-5935007] Completed successfully
+[2026-06-05T11:17:20.329Z] [INFO] [job:alert-3-5935007] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.330Z] [INFO] [job:alert-3-5935005] Completed successfully
+[2026-06-05T11:17:20.330Z] [INFO] [job:alert-1-5935008] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.331Z] [INFO] [job:alert-3-5935006] Internal matches: 0
+[2026-06-05T11:17:20.333Z] [INFO] [job:alert-1-5935008] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.335Z] [INFO] [job:alert-1-5935008] Completed successfully
+[2026-06-05T11:17:20.335Z] [INFO] [job:alert-3-5935008] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.336Z] [WARN] [job:alert-3-5935006] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.336Z] [INFO] [job:alert-3-5935006] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.337Z] [INFO] [job:alert-3-5935007] Internal matches: 0
+[2026-06-05T11:17:20.339Z] [INFO] [job:alert-3-5935006] Completed successfully
+[2026-06-05T11:17:20.339Z] [INFO] [job:alert-1-5935009] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.341Z] [WARN] [job:alert-3-5935007] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.341Z] [INFO] [job:alert-3-5935007] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.342Z] [INFO] [job:alert-1-5935009] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.342Z] [INFO] [job:alert-3-5935008] Internal matches: 0
+[2026-06-05T11:17:20.343Z] [INFO] [job:alert-3-5935007] Completed successfully
+[2026-06-05T11:17:20.344Z] [INFO] [job:alert-1-5935009] Completed successfully
+[2026-06-05T11:17:20.344Z] [INFO] [job:alert-3-5935009] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.344Z] [INFO] [job:alert-1-5935010] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.345Z] [WARN] [job:alert-3-5935008] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.345Z] [INFO] [job:alert-3-5935008] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.346Z] [INFO] [job:alert-1-5935010] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.348Z] [INFO] [job:alert-3-5935008] Completed successfully
+[2026-06-05T11:17:20.348Z] [INFO] [job:alert-3-5935010] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.349Z] [INFO] [job:alert-1-5935010] Completed successfully
+[2026-06-05T11:17:20.349Z] [INFO] [job:alert-1-5935011] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.351Z] [INFO] [job:alert-1-5935011] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.351Z] [INFO] [job:alert-3-5935009] Internal matches: 0
+[2026-06-05T11:17:20.353Z] [INFO] [job:alert-1-5935011] Completed successfully
+[2026-06-05T11:17:20.353Z] [INFO] [job:alert-3-5935011] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.354Z] [INFO] [job:alert-3-5935010] Internal matches: 0
+[2026-06-05T11:17:20.355Z] [WARN] [job:alert-3-5935009] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.355Z] [INFO] [job:alert-3-5935009] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.356Z] [INFO] [job:alert-3-5935009] Completed successfully
+[2026-06-05T11:17:20.357Z] [INFO] [job:alert-1-5935012] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.358Z] [WARN] [job:alert-3-5935010] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.358Z] [INFO] [job:alert-3-5935010] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.359Z] [INFO] [job:alert-1-5935012] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.360Z] [INFO] [job:alert-3-5935010] Completed successfully
+[2026-06-05T11:17:20.360Z] [INFO] [job:alert-3-5935012] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.361Z] [INFO] [job:alert-3-5935011] Internal matches: 0
+[2026-06-05T11:17:20.362Z] [INFO] [job:alert-1-5935012] Completed successfully
+[2026-06-05T11:17:20.362Z] [INFO] [job:alert-1-5935013] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.364Z] [INFO] [job:alert-1-5935013] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.365Z] [WARN] [job:alert-3-5935011] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.365Z] [INFO] [job:alert-3-5935011] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.366Z] [INFO] [job:alert-1-5935013] Completed successfully
+[2026-06-05T11:17:20.366Z] [INFO] [job:alert-3-5935013] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.367Z] [INFO] [job:alert-3-5935012] Internal matches: 0
+[2026-06-05T11:17:20.368Z] [INFO] [job:alert-3-5935011] Completed successfully
+[2026-06-05T11:17:20.368Z] [INFO] [job:alert-1-5935014] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.370Z] [INFO] [job:alert-1-5935014] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.371Z] [WARN] [job:alert-3-5935012] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.371Z] [INFO] [job:alert-3-5935012] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.371Z] [INFO] [job:alert-1-5935014] Completed successfully
+[2026-06-05T11:17:20.371Z] [INFO] [job:alert-3-5935012] Completed successfully
+[2026-06-05T11:17:20.372Z] [INFO] [job:alert-3-5935014] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.372Z] [INFO] [job:alert-1-5935015] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.372Z] [INFO] [job:alert-3-5935013] Internal matches: 0
+[2026-06-05T11:17:20.374Z] [INFO] [job:alert-1-5935015] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.376Z] [WARN] [job:alert-3-5935013] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.376Z] [INFO] [job:alert-3-5935013] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.377Z] [INFO] [job:alert-1-5935015] Completed successfully
+[2026-06-05T11:17:20.377Z] [INFO] [job:alert-3-5935013] Completed successfully
+[2026-06-05T11:17:20.377Z] [INFO] [job:alert-3-5935015] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.378Z] [INFO] [job:alert-1-5935016] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.379Z] [INFO] [job:alert-3-5935014] Internal matches: 0
+[2026-06-05T11:17:20.380Z] [INFO] [job:alert-1-5935016] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.381Z] [WARN] [job:alert-3-5935014] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.382Z] [INFO] [job:alert-3-5935014] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.382Z] [INFO] [job:alert-1-5935016] Completed successfully
+[2026-06-05T11:17:20.382Z] [INFO] [job:alert-3-5935016] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.383Z] [INFO] [job:alert-3-5935014] Completed successfully
+[2026-06-05T11:17:20.383Z] [INFO] [job:alert-1-5935017] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.385Z] [INFO] [job:alert-3-5935015] Internal matches: 0
+[2026-06-05T11:17:20.386Z] [INFO] [job:alert-1-5935017] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.387Z] [INFO] [job:alert-1-5935017] Completed successfully
+[2026-06-05T11:17:20.387Z] [INFO] [job:alert-3-5935017] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.388Z] [WARN] [job:alert-3-5935015] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.388Z] [INFO] [job:alert-3-5935015] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.388Z] [INFO] [job:alert-3-5935016] Internal matches: 0
+[2026-06-05T11:17:20.390Z] [INFO] [job:alert-3-5935015] Completed successfully
+[2026-06-05T11:17:20.390Z] [INFO] [job:alert-1-5935018] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.392Z] [WARN] [job:alert-3-5935016] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.392Z] [INFO] [job:alert-3-5935016] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.393Z] [INFO] [job:alert-1-5935018] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.393Z] [INFO] [job:alert-3-5935017] Internal matches: 0
+[2026-06-05T11:17:20.394Z] [INFO] [job:alert-3-5935016] Completed successfully
+[2026-06-05T11:17:20.395Z] [INFO] [job:alert-1-5935018] Completed successfully
+[2026-06-05T11:17:20.395Z] [INFO] [job:alert-3-5935018] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.395Z] [INFO] [job:alert-1-5935019] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.397Z] [INFO] [job:alert-1-5935019] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.398Z] [WARN] [job:alert-3-5935017] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.398Z] [INFO] [job:alert-3-5935017] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.399Z] [INFO] [job:alert-1-5935019] Completed successfully
+[2026-06-05T11:17:20.399Z] [INFO] [job:alert-3-5935017] Completed successfully
+[2026-06-05T11:17:20.399Z] [INFO] [job:alert-3-5935019] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.399Z] [INFO] [job:alert-1-5935020] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.400Z] [INFO] [job:alert-3-5935018] Internal matches: 0
+[2026-06-05T11:17:20.401Z] [INFO] [job:alert-1-5935020] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.403Z] [WARN] [job:alert-3-5935018] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.403Z] [INFO] [job:alert-3-5935018] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.405Z] [INFO] [job:alert-1-5935020] Completed successfully
+[2026-06-05T11:17:20.405Z] [INFO] [job:alert-3-5935018] Completed successfully
+[2026-06-05T11:17:20.405Z] [INFO] [job:alert-3-5935020] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.405Z] [INFO] [job:alert-1-5935021] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.406Z] [INFO] [job:alert-3-5935019] Internal matches: 0
+[2026-06-05T11:17:20.407Z] [INFO] [job:alert-1-5935021] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.409Z] [WARN] [job:alert-3-5935019] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.409Z] [INFO] [job:alert-3-5935019] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.410Z] [INFO] [job:alert-1-5935021] Completed successfully
+[2026-06-05T11:17:20.410Z] [INFO] [job:alert-3-5935019] Completed successfully
+[2026-06-05T11:17:20.411Z] [INFO] [job:alert-3-5935021] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.411Z] [INFO] [job:alert-1-5935022] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.416Z] [INFO] [job:alert-3-5935020] Internal matches: 0
+[2026-06-05T11:17:20.418Z] [INFO] [job:alert-1-5935022] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.419Z] [WARN] [job:alert-3-5935020] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.419Z] [INFO] [job:alert-3-5935020] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.420Z] [INFO] [job:alert-1-5935022] Completed successfully
+[2026-06-05T11:17:20.420Z] [INFO] [job:alert-3-5935020] Completed successfully
+[2026-06-05T11:17:20.420Z] [INFO] [job:alert-3-5935022] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.420Z] [INFO] [job:alert-1-5935023] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.422Z] [INFO] [job:alert-1-5935023] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.422Z] [INFO] [job:alert-3-5935021] Internal matches: 0
+[2026-06-05T11:17:20.424Z] [INFO] [job:alert-1-5935023] Completed successfully
+[2026-06-05T11:17:20.424Z] [INFO] [job:alert-3-5935023] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.425Z] [INFO] [job:alert-3-5935022] Internal matches: 0
+[2026-06-05T11:17:20.427Z] [WARN] [job:alert-3-5935021] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.427Z] [INFO] [job:alert-3-5935021] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.428Z] [INFO] [job:alert-3-5935021] Completed successfully
+[2026-06-05T11:17:20.428Z] [INFO] [job:alert-1-5935024] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.429Z] [WARN] [job:alert-3-5935022] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.429Z] [INFO] [job:alert-3-5935022] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.430Z] [INFO] [job:alert-3-5935023] Internal matches: 0
+[2026-06-05T11:17:20.430Z] [INFO] [job:alert-1-5935024] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.431Z] [INFO] [job:alert-3-5935022] Completed successfully
+[2026-06-05T11:17:20.431Z] [INFO] [job:alert-3-5935024] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.432Z] [INFO] [job:alert-1-5935024] Completed successfully
+[2026-06-05T11:17:20.432Z] [INFO] [job:alert-1-5935025] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.433Z] [WARN] [job:alert-3-5935023] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.433Z] [INFO] [job:alert-3-5935023] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.435Z] [INFO] [job:alert-1-5935025] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.435Z] [INFO] [job:alert-3-5935023] Completed successfully
+[2026-06-05T11:17:20.436Z] [INFO] [job:alert-1-5935025] Completed successfully
+[2026-06-05T11:17:20.436Z] [INFO] [job:alert-3-5935025] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.436Z] [INFO] [job:alert-1-5935026] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.437Z] [INFO] [job:alert-1-5935026] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.438Z] [INFO] [job:alert-3-5935024] Internal matches: 0
+[2026-06-05T11:17:20.440Z] [INFO] [job:alert-1-5935026] Completed successfully
+[2026-06-05T11:17:20.440Z] [INFO] [job:alert-3-5935026] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.441Z] [INFO] [job:alert-3-5935025] Internal matches: 0
+[2026-06-05T11:17:20.443Z] [WARN] [job:alert-3-5935024] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.443Z] [INFO] [job:alert-3-5935024] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.444Z] [INFO] [job:alert-3-5935024] Completed successfully
+[2026-06-05T11:17:20.445Z] [INFO] [job:alert-1-5935027] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.446Z] [WARN] [job:alert-3-5935025] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.446Z] [INFO] [job:alert-3-5935025] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.446Z] [INFO] [job:alert-3-5935026] Internal matches: 0
+[2026-06-05T11:17:20.448Z] [INFO] [job:alert-1-5935027] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.259Z) — skipping
+[2026-06-05T11:17:20.448Z] [INFO] [job:alert-3-5935025] Completed successfully
+[2026-06-05T11:17:20.449Z] [INFO] [job:alert-3-5935027] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.450Z] [INFO] [job:alert-1-5934970] Done — sent email with 1 matches
+[2026-06-05T11:17:20.451Z] [INFO] [job:alert-1-5935027] Completed successfully
+[2026-06-05T11:17:20.451Z] [INFO] [job:alert-1-5935028] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.453Z] [WARN] [job:alert-3-5935026] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.453Z] [INFO] [job:alert-3-5935026] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.454Z] [INFO] [job:alert-1-5934970] Completed successfully
+[2026-06-05T11:17:20.454Z] [INFO] [job:alert-3-5935028] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.454Z] [INFO] [job:alert-1-5935028] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.455Z] [INFO] [job:alert-3-5935026] Completed successfully
+[2026-06-05T11:17:20.455Z] [INFO] [job:alert-1-5935028] Completed successfully
+[2026-06-05T11:17:20.455Z] [INFO] [job:alert-1-5935029] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.456Z] [INFO] [job:alert-3-5935029] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.457Z] [INFO] [job:alert-3-5935027] Internal matches: 0
+[2026-06-05T11:17:20.458Z] [INFO] [job:alert-1-5935029] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.460Z] [INFO] [job:alert-1-5935029] Completed successfully
+[2026-06-05T11:17:20.460Z] [INFO] [job:alert-1-5935030] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.461Z] [WARN] [job:alert-3-5935027] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.461Z] [INFO] [job:alert-3-5935027] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.461Z] [INFO] [job:alert-3-5935028] Internal matches: 0
+[2026-06-05T11:17:20.462Z] [INFO] [job:alert-3-5935029] Internal matches: 0
+[2026-06-05T11:17:20.463Z] [INFO] [job:alert-1-5935030] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.464Z] [INFO] [job:alert-3-5935027] Completed successfully
+[2026-06-05T11:17:20.464Z] [INFO] [job:alert-3-5935030] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.465Z] [INFO] [job:alert-1-5935030] Completed successfully
+[2026-06-05T11:17:20.465Z] [INFO] [job:alert-1-5935031] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.466Z] [WARN] [job:alert-3-5935028] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.466Z] [INFO] [job:alert-3-5935028] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.467Z] [WARN] [job:alert-3-5935029] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.467Z] [INFO] [job:alert-3-5935029] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.467Z] [INFO] [job:alert-3-5935028] Completed successfully
+[2026-06-05T11:17:20.467Z] [INFO] [job:alert-3-5935029] Completed successfully
+[2026-06-05T11:17:20.468Z] [INFO] [job:alert-3-5935031] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.468Z] [INFO] [job:alert-1-5935032] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.469Z] [INFO] [job:alert-1-5935031] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.470Z] [INFO] [job:alert-1-5935032] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.471Z] [INFO] [job:alert-1-5935031] Completed successfully
+[2026-06-05T11:17:20.471Z] [INFO] [job:alert-1-5935032] Completed successfully
+[2026-06-05T11:17:20.471Z] [INFO] [job:alert-3-5935032] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.471Z] [INFO] [job:alert-1-5935033] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.472Z] [INFO] [job:alert-3-5935030] Internal matches: 0
+[2026-06-05T11:17:20.473Z] [INFO] [job:alert-1-5935033] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.474Z] [INFO] [job:alert-3-5935031] Internal matches: 0
+[2026-06-05T11:17:20.475Z] [INFO] [job:alert-1-5935033] Completed successfully
+[2026-06-05T11:17:20.475Z] [INFO] [job:alert-3-5935033] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.477Z] [WARN] [job:alert-3-5935030] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.477Z] [INFO] [job:alert-3-5935030] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.478Z] [INFO] [job:alert-3-5935032] Internal matches: 0
+[2026-06-05T11:17:20.479Z] [WARN] [job:alert-3-5935031] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.479Z] [INFO] [job:alert-3-5935031] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.480Z] [INFO] [job:alert-3-5935030] Completed successfully
+[2026-06-05T11:17:20.480Z] [INFO] [job:alert-1-5935034] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.481Z] [INFO] [job:alert-3-5935033] Internal matches: 0
+[2026-06-05T11:17:20.482Z] [INFO] [job:alert-3-5935031] Completed successfully
+[2026-06-05T11:17:20.482Z] [INFO] [job:alert-3-5935034] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.483Z] [INFO] [job:alert-1-5935034] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.483Z] [WARN] [job:alert-3-5935032] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.483Z] [INFO] [job:alert-3-5935032] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.484Z] [INFO] [job:alert-1-5935034] Completed successfully
+[2026-06-05T11:17:20.484Z] [INFO] [job:alert-3-5935032] Completed successfully
+[2026-06-05T11:17:20.484Z] [INFO] [job:alert-1-5935035] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.484Z] [INFO] [job:alert-3-5935035] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.486Z] [INFO] [job:alert-1-5935035] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.487Z] [WARN] [job:alert-3-5935033] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.487Z] [INFO] [job:alert-3-5935033] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.488Z] [INFO] [job:alert-1-5935035] Completed successfully
+[2026-06-05T11:17:20.488Z] [INFO] [job:alert-3-5935033] Completed successfully
+[2026-06-05T11:17:20.488Z] [INFO] [job:alert-1-5935036] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.488Z] [INFO] [job:alert-3-5935036] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.489Z] [INFO] [job:alert-3-5935034] Internal matches: 0
+[2026-06-05T11:17:20.490Z] [INFO] [job:alert-3-5935035] Internal matches: 0
+[2026-06-05T11:17:20.491Z] [INFO] [job:alert-1-5935036] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.492Z] [WARN] [job:alert-3-5935034] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.492Z] [INFO] [job:alert-3-5935034] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.492Z] [WARN] [job:alert-3-5935035] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.492Z] [INFO] [job:alert-3-5935035] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.493Z] [INFO] [job:alert-1-5935036] Completed successfully
+[2026-06-05T11:17:20.493Z] [INFO] [job:alert-3-5935034] Completed successfully
+[2026-06-05T11:17:20.494Z] [INFO] [job:alert-3-5935035] Completed successfully
+[2026-06-05T11:17:20.494Z] [INFO] [job:alert-1-5935037] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.494Z] [INFO] [job:alert-3-5935037] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.494Z] [INFO] [job:alert-1-5935038] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.496Z] [INFO] [job:alert-3-5935036] Internal matches: 0
+[2026-06-05T11:17:20.498Z] [INFO] [job:alert-1-5935037] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.498Z] [INFO] [job:alert-1-5935038] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.499Z] [WARN] [job:alert-3-5935036] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.499Z] [INFO] [job:alert-3-5935036] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.500Z] [INFO] [job:alert-1-5935037] Completed successfully
+[2026-06-05T11:17:20.500Z] [INFO] [job:alert-1-5935038] Completed successfully
+[2026-06-05T11:17:20.500Z] [INFO] [job:alert-3-5935036] Completed successfully
+[2026-06-05T11:17:20.501Z] [INFO] [job:alert-3-5935038] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.501Z] [INFO] [job:alert-1-5935039] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.501Z] [INFO] [job:alert-3-5935039] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.502Z] [INFO] [job:alert-3-5935037] Internal matches: 0
+[2026-06-05T11:17:20.503Z] [INFO] [job:alert-1-5935039] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.505Z] [WARN] [job:alert-3-5935037] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.505Z] [INFO] [job:alert-3-5935037] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.506Z] [INFO] [job:alert-1-5935039] Completed successfully
+[2026-06-05T11:17:20.506Z] [INFO] [job:alert-3-5935037] Completed successfully
+[2026-06-05T11:17:20.506Z] [INFO] [job:alert-1-5935040] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.506Z] [INFO] [job:alert-3-5935040] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.507Z] [INFO] [job:alert-3-5935038] Internal matches: 0
+[2026-06-05T11:17:20.508Z] [INFO] [job:alert-3-5935039] Internal matches: 0
+[2026-06-05T11:17:20.509Z] [INFO] [job:alert-1-5935040] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.510Z] [WARN] [job:alert-3-5935038] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.511Z] [INFO] [job:alert-3-5935038] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.511Z] [WARN] [job:alert-3-5935039] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.511Z] [INFO] [job:alert-3-5935039] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.512Z] [INFO] [job:alert-1-5935040] Completed successfully
+[2026-06-05T11:17:20.512Z] [INFO] [job:alert-3-5935038] Completed successfully
+[2026-06-05T11:17:20.512Z] [INFO] [job:alert-3-5935039] Completed successfully
+[2026-06-05T11:17:20.512Z] [INFO] [job:alert-1-5935041] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.512Z] [INFO] [job:alert-3-5935041] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.513Z] [INFO] [job:alert-1-5935042] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.514Z] [INFO] [job:alert-3-5935040] Internal matches: 0
+[2026-06-05T11:17:20.514Z] [INFO] [job:alert-1-5935041] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.515Z] [INFO] [job:alert-1-5935042] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.516Z] [WARN] [job:alert-3-5935040] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.516Z] [INFO] [job:alert-3-5935040] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.516Z] [INFO] [job:alert-1-5935041] Completed successfully
+[2026-06-05T11:17:20.517Z] [INFO] [job:alert-1-5935042] Completed successfully
+[2026-06-05T11:17:20.517Z] [INFO] [job:alert-3-5935040] Completed successfully
+[2026-06-05T11:17:20.517Z] [INFO] [job:alert-3-5935042] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.517Z] [INFO] [job:alert-1-5935043] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.517Z] [INFO] [job:alert-3-5935043] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.519Z] [INFO] [job:alert-1-5935043] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.520Z] [INFO] [job:alert-3-5935041] Internal matches: 0
+[2026-06-05T11:17:20.521Z] [INFO] [job:alert-1-5935043] Completed successfully
+[2026-06-05T11:17:20.521Z] [INFO] [job:alert-1-5935044] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.522Z] [INFO] [job:alert-3-5935042] Internal matches: 0
+[2026-06-05T11:17:20.523Z] [INFO] [job:alert-3-5935043] Internal matches: 0
+[2026-06-05T11:17:20.524Z] [WARN] [job:alert-3-5935041] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.524Z] [INFO] [job:alert-3-5935041] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.524Z] [INFO] [job:alert-1-5935044] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.525Z] [INFO] [job:alert-3-5935041] Completed successfully
+[2026-06-05T11:17:20.525Z] [INFO] [job:alert-1-5935044] Completed successfully
+[2026-06-05T11:17:20.525Z] [INFO] [job:alert-3-5935044] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.526Z] [INFO] [job:alert-1-5935250] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.527Z] [WARN] [job:alert-3-5935042] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.527Z] [INFO] [job:alert-3-5935042] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.527Z] [WARN] [job:alert-3-5935043] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.527Z] [INFO] [job:alert-3-5935043] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.528Z] [INFO] [job:alert-3-5935042] Completed successfully
+[2026-06-05T11:17:20.528Z] [INFO] [job:alert-3-5935043] Completed successfully
+[2026-06-05T11:17:20.528Z] [INFO] [job:alert-3-5935250] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.528Z] [INFO] [job:alert-1-5935251] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.529Z] [INFO] [job:alert-1-5935250] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.531Z] [INFO] [job:alert-1-5935251] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.532Z] [INFO] [job:alert-1-5935250] Completed successfully
+[2026-06-05T11:17:20.532Z] [INFO] [job:alert-1-5935251] Completed successfully
+[2026-06-05T11:17:20.532Z] [INFO] [job:alert-3-5935251] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.532Z] [INFO] [job:alert-1-5935252] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.533Z] [INFO] [job:alert-3-5935044] Internal matches: 0
+[2026-06-05T11:17:20.534Z] [INFO] [job:alert-1-5935252] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.535Z] [INFO] [job:alert-3-5935250] Internal matches: 0
+[2026-06-05T11:17:20.536Z] [INFO] [job:alert-1-5935252] Completed successfully
+[2026-06-05T11:17:20.536Z] [INFO] [job:alert-3-5935252] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.537Z] [INFO] [job:alert-3-5935251] Internal matches: 0
+[2026-06-05T11:17:20.538Z] [WARN] [job:alert-3-5935044] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.538Z] [INFO] [job:alert-3-5935044] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.539Z] [WARN] [job:alert-3-5935250] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.539Z] [INFO] [job:alert-3-5935250] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.540Z] [INFO] [job:alert-3-5935044] Completed successfully
+[2026-06-05T11:17:20.540Z] [INFO] [job:alert-1-5935253] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.542Z] [WARN] [job:alert-3-5935251] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.542Z] [INFO] [job:alert-3-5935251] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.542Z] [INFO] [job:alert-3-5935250] Completed successfully
+[2026-06-05T11:17:20.543Z] [INFO] [job:alert-3-5935251] Completed successfully
+[2026-06-05T11:17:20.543Z] [INFO] [job:alert-3-5935253] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.543Z] [INFO] [job:alert-1-5935254] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.544Z] [INFO] [job:alert-1-5935253] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.544Z] [INFO] [job:alert-3-5935252] Internal matches: 0
+[2026-06-05T11:17:20.545Z] [INFO] [job:alert-1-5935253] Completed successfully
+[2026-06-05T11:17:20.546Z] [INFO] [job:alert-3-5935254] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.547Z] [INFO] [job:alert-1-5935254] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.549Z] [INFO] [job:alert-1-5935254] Completed successfully
+[2026-06-05T11:17:20.549Z] [INFO] [job:alert-1-5935255] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.550Z] [WARN] [job:alert-3-5935252] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.550Z] [INFO] [job:alert-3-5935252] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.551Z] [INFO] [job:alert-3-5935253] Internal matches: 0
+[2026-06-05T11:17:20.552Z] [INFO] [job:alert-1-5935255] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.552Z] [INFO] [job:alert-3-5935252] Completed successfully
+[2026-06-05T11:17:20.553Z] [INFO] [job:alert-3-5935255] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.553Z] [INFO] [job:alert-3-5935254] Internal matches: 0
+[2026-06-05T11:17:20.554Z] [INFO] [job:alert-1-5935255] Completed successfully
+[2026-06-05T11:17:20.555Z] [INFO] [job:alert-1-5935256] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.557Z] [WARN] [job:alert-3-5935253] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.557Z] [INFO] [job:alert-3-5935253] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.557Z] [INFO] [job:alert-1-5935256] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.558Z] [WARN] [job:alert-3-5935254] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.558Z] [INFO] [job:alert-3-5935254] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.559Z] [INFO] [job:alert-3-5935253] Completed successfully
+[2026-06-05T11:17:20.559Z] [INFO] [job:alert-1-5935256] Completed successfully
+[2026-06-05T11:17:20.559Z] [INFO] [job:alert-3-5935256] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.559Z] [INFO] [job:alert-1-5935257] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.560Z] [INFO] [job:alert-3-5935255] Internal matches: 0
+[2026-06-05T11:17:20.560Z] [INFO] [job:alert-3-5935254] Completed successfully
+[2026-06-05T11:17:20.560Z] [INFO] [job:alert-3-5935257] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.561Z] [INFO] [job:alert-1-5935257] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.564Z] [INFO] [job:alert-1-5935257] Completed successfully
+[2026-06-05T11:17:20.564Z] [INFO] [job:alert-1-5935258] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.565Z] [WARN] [job:alert-3-5935255] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.565Z] [INFO] [job:alert-3-5935255] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.566Z] [INFO] [job:alert-3-5935256] Internal matches: 0
+[2026-06-05T11:17:20.567Z] [INFO] [job:alert-1-5935258] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.567Z] [INFO] [job:alert-3-5935255] Completed successfully
+[2026-06-05T11:17:20.568Z] [INFO] [job:alert-3-5935258] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.568Z] [INFO] [job:alert-3-5935257] Internal matches: 0
+[2026-06-05T11:17:20.569Z] [INFO] [job:alert-1-5935258] Completed successfully
+[2026-06-05T11:17:20.569Z] [INFO] [job:alert-1-5935259] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.570Z] [WARN] [job:alert-3-5935256] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.571Z] [INFO] [job:alert-3-5935256] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.571Z] [INFO] [job:alert-1-5935259] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.572Z] [WARN] [job:alert-3-5935257] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.572Z] [INFO] [job:alert-3-5935257] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.572Z] [INFO] [job:alert-3-5935256] Completed successfully
+[2026-06-05T11:17:20.572Z] [INFO] [job:alert-1-5935259] Completed successfully
+[2026-06-05T11:17:20.573Z] [INFO] [job:alert-3-5935257] Completed successfully
+[2026-06-05T11:17:20.573Z] [INFO] [job:alert-3-5935259] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.573Z] [INFO] [job:alert-1-5935260] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.573Z] [INFO] [job:alert-3-5935260] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.574Z] [INFO] [job:alert-3-5935258] Internal matches: 0
+[2026-06-05T11:17:20.578Z] [INFO] [job:alert-1-5935260] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.580Z] [WARN] [job:alert-3-5935258] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.580Z] [INFO] [job:alert-3-5935258] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.581Z] [INFO] [job:alert-1-5935260] Completed successfully
+[2026-06-05T11:17:20.581Z] [INFO] [job:alert-1-5935261] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.582Z] [INFO] [job:alert-3-5935259] Internal matches: 0
+[2026-06-05T11:17:20.583Z] [INFO] [job:alert-3-5935260] Internal matches: 0
+[2026-06-05T11:17:20.584Z] [INFO] [job:alert-3-5935258] Completed successfully
+[2026-06-05T11:17:20.584Z] [INFO] [job:alert-3-5935261] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.585Z] [INFO] [job:alert-1-5935261] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.586Z] [WARN] [job:alert-3-5935259] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.586Z] [INFO] [job:alert-3-5935259] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.586Z] [WARN] [job:alert-3-5935260] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.587Z] [INFO] [job:alert-3-5935260] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.587Z] [INFO] [job:alert-1-5935261] Completed successfully
+[2026-06-05T11:17:20.587Z] [INFO] [job:alert-3-5935259] Completed successfully
+[2026-06-05T11:17:20.587Z] [INFO] [job:alert-3-5935260] Completed successfully
+[2026-06-05T11:17:20.587Z] [INFO] [job:alert-1-5935262] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.587Z] [INFO] [job:alert-3-5935262] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.587Z] [INFO] [job:alert-1-5935263] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.588Z] [INFO] [job:alert-1-5935262] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.588Z] [INFO] [job:alert-1-5935263] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.589Z] [INFO] [job:alert-3-5935261] Internal matches: 0
+[2026-06-05T11:17:20.590Z] [INFO] [job:alert-1-5935262] Completed successfully
+[2026-06-05T11:17:20.591Z] [INFO] [job:alert-1-5935263] Completed successfully
+[2026-06-05T11:17:20.591Z] [INFO] [job:alert-3-5935263] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.591Z] [INFO] [job:alert-1-5935264] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.592Z] [INFO] [job:alert-3-5935262] Internal matches: 0
+[2026-06-05T11:17:20.593Z] [INFO] [job:alert-1-5935264] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.594Z] [WARN] [job:alert-3-5935261] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.594Z] [INFO] [job:alert-3-5935261] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.594Z] [INFO] [job:alert-1-5935264] Completed successfully
+[2026-06-05T11:17:20.595Z] [INFO] [job:alert-3-5935261] Completed successfully
+[2026-06-05T11:17:20.595Z] [INFO] [job:alert-3-5935264] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.595Z] [INFO] [job:alert-1-5935265] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.596Z] [INFO] [job:alert-3-5935263] Internal matches: 0
+[2026-06-05T11:17:20.597Z] [WARN] [job:alert-3-5935262] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.597Z] [INFO] [job:alert-3-5935262] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.597Z] [INFO] [job:alert-1-5935265] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.598Z] [INFO] [job:alert-3-5935262] Completed successfully
+[2026-06-05T11:17:20.598Z] [INFO] [job:alert-1-5935265] Completed successfully
+[2026-06-05T11:17:20.599Z] [INFO] [job:alert-3-5935265] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.599Z] [INFO] [job:alert-1-5935266] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.599Z] [WARN] [job:alert-3-5935263] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.599Z] [INFO] [job:alert-3-5935263] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.600Z] [INFO] [job:alert-1-5935266] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.601Z] [INFO] [job:alert-3-5935263] Completed successfully
+[2026-06-05T11:17:20.601Z] [INFO] [job:alert-3-5935266] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.602Z] [INFO] [job:alert-3-5935264] Internal matches: 0
+[2026-06-05T11:17:20.602Z] [INFO] [job:alert-1-5935266] Completed successfully
+[2026-06-05T11:17:20.602Z] [INFO] [job:alert-1-5935267] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.604Z] [INFO] [job:alert-1-5935267] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.604Z] [INFO] [job:alert-3-5935265] Internal matches: 0
+[2026-06-05T11:17:20.605Z] [INFO] [job:alert-1-5935267] Completed successfully
+[2026-06-05T11:17:20.605Z] [INFO] [job:alert-3-5935267] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.606Z] [WARN] [job:alert-3-5935264] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.606Z] [INFO] [job:alert-3-5935264] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.607Z] [INFO] [job:alert-3-5935266] Internal matches: 0
+[2026-06-05T11:17:20.609Z] [INFO] [job:alert-3-5935264] Completed successfully
+[2026-06-05T11:17:20.609Z] [INFO] [job:alert-1-5935268] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.610Z] [WARN] [job:alert-3-5935265] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.610Z] [INFO] [job:alert-3-5935265] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.611Z] [INFO] [job:alert-1-5935268] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.611Z] [WARN] [job:alert-3-5935266] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.611Z] [INFO] [job:alert-3-5935266] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.612Z] [INFO] [job:alert-3-5935265] Completed successfully
+[2026-06-05T11:17:20.612Z] [INFO] [job:alert-1-5935268] Completed successfully
+[2026-06-05T11:17:20.612Z] [INFO] [job:alert-3-5935268] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.613Z] [INFO] [job:alert-1-5935269] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.613Z] [INFO] [job:alert-3-5935267] Internal matches: 0
+[2026-06-05T11:17:20.614Z] [INFO] [job:alert-3-5935266] Completed successfully
+[2026-06-05T11:17:20.614Z] [INFO] [job:alert-3-5935269] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.615Z] [INFO] [job:alert-1-5935269] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.617Z] [INFO] [job:alert-1-5935269] Completed successfully
+[2026-06-05T11:17:20.617Z] [INFO] [job:alert-1-5935270] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.618Z] [WARN] [job:alert-3-5935267] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.618Z] [INFO] [job:alert-3-5935267] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.619Z] [INFO] [job:alert-3-5935268] Internal matches: 0
+[2026-06-05T11:17:20.619Z] [INFO] [job:alert-1-5935270] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.620Z] [INFO] [job:alert-3-5935267] Completed successfully
+[2026-06-05T11:17:20.620Z] [INFO] [job:alert-3-5935270] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.621Z] [INFO] [job:alert-3-5935269] Internal matches: 0
+[2026-06-05T11:17:20.622Z] [INFO] [job:alert-1-5935270] Completed successfully
+[2026-06-05T11:17:20.622Z] [INFO] [job:alert-1-5935271] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.623Z] [WARN] [job:alert-3-5935268] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.623Z] [INFO] [job:alert-3-5935268] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.624Z] [INFO] [job:alert-1-5935271] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.625Z] [INFO] [job:alert-3-5935268] Completed successfully
+[2026-06-05T11:17:20.625Z] [INFO] [job:alert-1-5935271] Completed successfully
+[2026-06-05T11:17:20.625Z] [INFO] [job:alert-3-5935271] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.626Z] [INFO] [job:alert-1-5935272] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.627Z] [WARN] [job:alert-3-5935269] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.627Z] [INFO] [job:alert-3-5935269] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.628Z] [INFO] [job:alert-3-5935270] Internal matches: 0
+[2026-06-05T11:17:20.629Z] [INFO] [job:alert-1-5935272] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.631Z] [INFO] [job:alert-3-5935269] Completed successfully
+[2026-06-05T11:17:20.631Z] [INFO] [job:alert-3-5935272] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.633Z] [INFO] [job:alert-1-5935272] Completed successfully
+[2026-06-05T11:17:20.633Z] [INFO] [job:alert-1-5935273] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.635Z] [WARN] [job:alert-3-5935270] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.635Z] [INFO] [job:alert-3-5935270] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.636Z] [INFO] [job:alert-1-5935273] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.637Z] [INFO] [job:alert-3-5935271] Internal matches: 0
+[2026-06-05T11:17:20.638Z] [INFO] [job:alert-3-5935270] Completed successfully
+[2026-06-05T11:17:20.638Z] [INFO] [job:alert-1-5935273] Completed successfully
+[2026-06-05T11:17:20.639Z] [INFO] [job:alert-3-5935273] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.639Z] [INFO] [job:alert-1-5935274] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.641Z] [INFO] [job:alert-1-5935274] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.642Z] [INFO] [job:alert-3-5935272] Internal matches: 0
+[2026-06-05T11:17:20.644Z] [INFO] [job:alert-1-5935274] Completed successfully
+[2026-06-05T11:17:20.644Z] [INFO] [job:alert-3-5935274] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.645Z] [WARN] [job:alert-3-5935271] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.645Z] [INFO] [job:alert-3-5935271] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.646Z] [INFO] [job:alert-3-5935273] Internal matches: 0
+[2026-06-05T11:17:20.648Z] [WARN] [job:alert-3-5935272] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.648Z] [INFO] [job:alert-3-5935272] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.649Z] [INFO] [job:alert-3-5935271] Completed successfully
+[2026-06-05T11:17:20.649Z] [INFO] [job:alert-1-5935275] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.651Z] [INFO] [job:alert-3-5935272] Completed successfully
+[2026-06-05T11:17:20.651Z] [INFO] [job:alert-3-5935275] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.652Z] [INFO] [job:alert-1-5935275] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.653Z] [WARN] [job:alert-3-5935273] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.653Z] [INFO] [job:alert-3-5935273] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.654Z] [INFO] [job:alert-1-5935275] Completed successfully
+[2026-06-05T11:17:20.654Z] [INFO] [job:alert-1-5935276] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.655Z] [INFO] [job:alert-3-5935274] Internal matches: 0
+[2026-06-05T11:17:20.657Z] [INFO] [job:alert-3-5935273] Completed successfully
+[2026-06-05T11:17:20.658Z] [INFO] [job:alert-3-5935276] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.659Z] [INFO] [job:alert-1-5935276] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.661Z] [INFO] [job:alert-1-5935276] Completed successfully
+[2026-06-05T11:17:20.661Z] [INFO] [job:alert-1-5935277] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.662Z] [INFO] [job:alert-3-5935275] Internal matches: 0
+[2026-06-05T11:17:20.664Z] [WARN] [job:alert-3-5935274] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.664Z] [INFO] [job:alert-3-5935274] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.665Z] [INFO] [job:alert-1-5935277] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.666Z] [INFO] [job:alert-3-5935274] Completed successfully
+[2026-06-05T11:17:20.667Z] [INFO] [job:alert-1-5935277] Completed successfully
+[2026-06-05T11:17:20.667Z] [INFO] [job:alert-3-5935277] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.667Z] [INFO] [job:alert-1-5935278] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.668Z] [INFO] [job:alert-3-5935276] Internal matches: 0
+[2026-06-05T11:17:20.669Z] [WARN] [job:alert-3-5935275] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.670Z] [INFO] [job:alert-3-5935275] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.671Z] [INFO] [job:alert-1-5935278] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.673Z] [INFO] [job:alert-3-5935275] Completed successfully
+[2026-06-05T11:17:20.673Z] [INFO] [job:alert-1-5935278] Completed successfully
+[2026-06-05T11:17:20.674Z] [INFO] [job:alert-3-5935278] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.674Z] [INFO] [job:alert-1-5935279] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.676Z] [WARN] [job:alert-3-5935276] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.676Z] [INFO] [job:alert-3-5935276] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.677Z] [INFO] [job:alert-1-5935279] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.679Z] [INFO] [job:alert-3-5935277] Internal matches: 0
+[2026-06-05T11:17:20.681Z] [INFO] [job:alert-3-5935276] Completed successfully
+[2026-06-05T11:17:20.681Z] [INFO] [job:alert-1-5935279] Completed successfully
+[2026-06-05T11:17:20.681Z] [INFO] [job:alert-3-5935279] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.682Z] [INFO] [job:alert-1-5935280] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.686Z] [INFO] [job:alert-1-5935280] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.687Z] [INFO] [job:alert-3-5935278] Internal matches: 0
+[2026-06-05T11:17:20.689Z] [WARN] [job:alert-3-5935277] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.689Z] [INFO] [job:alert-3-5935277] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.690Z] [INFO] [job:alert-1-5935280] Completed successfully
+[2026-06-05T11:17:20.691Z] [INFO] [job:alert-3-5935277] Completed successfully
+[2026-06-05T11:17:20.691Z] [INFO] [job:alert-3-5935280] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.691Z] [INFO] [job:alert-1-5935281] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.692Z] [INFO] [job:alert-3-5935279] Internal matches: 0
+[2026-06-05T11:17:20.694Z] [WARN] [job:alert-3-5935278] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.694Z] [INFO] [job:alert-3-5935278] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.694Z] [INFO] [job:alert-1-5935281] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.434Z) — skipping
+[2026-06-05T11:17:20.696Z] [INFO] [job:alert-3-5935278] Completed successfully
+[2026-06-05T11:17:20.696Z] [INFO] [job:alert-1-5935281] Completed successfully
+[2026-06-05T11:17:20.697Z] [INFO] [job:alert-3-5935281] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.697Z] [INFO] [job:alert-1-5935282] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.698Z] [WARN] [job:alert-3-5935279] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.699Z] [INFO] [job:alert-3-5935279] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.699Z] [INFO] [job:alert-1-5934973] Done — sent email with 1 matches
+[2026-06-05T11:17:20.700Z] [INFO] [job:alert-1-5935282] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.702Z] [INFO] [job:alert-3-5935280] Internal matches: 0
+[2026-06-05T11:17:20.703Z] [INFO] [job:alert-3-5935279] Completed successfully
+[2026-06-05T11:17:20.703Z] [INFO] [job:alert-1-5934973] Completed successfully
+[2026-06-05T11:17:20.703Z] [INFO] [job:alert-1-5935282] Completed successfully
+[2026-06-05T11:17:20.704Z] [INFO] [job:alert-3-5935282] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.704Z] [INFO] [job:alert-1-5935283] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.704Z] [INFO] [job:alert-3-5935283] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.706Z] [WARN] [job:alert-3-5935280] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.706Z] [INFO] [job:alert-3-5935280] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.706Z] [INFO] [job:alert-3-5935281] Internal matches: 0
+[2026-06-05T11:17:20.708Z] [INFO] [job:alert-1-5935283] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.709Z] [INFO] [job:alert-3-5935280] Completed successfully
+[2026-06-05T11:17:20.710Z] [INFO] [job:alert-1-5935284] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.711Z] [INFO] [job:alert-1-5935283] Completed successfully
+[2026-06-05T11:17:20.711Z] [INFO] [job:alert-3-5935284] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.713Z] [INFO] [job:alert-1-5935284] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.714Z] [WARN] [job:alert-3-5935281] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.714Z] [INFO] [job:alert-3-5935281] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.714Z] [INFO] [job:alert-1-5935284] Completed successfully
+[2026-06-05T11:17:20.715Z] [INFO] [job:alert-1-5935285] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.716Z] [INFO] [job:alert-3-5935282] Internal matches: 0
+[2026-06-05T11:17:20.718Z] [INFO] [job:alert-3-5935283] Internal matches: 0
+[2026-06-05T11:17:20.719Z] [INFO] [job:alert-3-5935281] Completed successfully
+[2026-06-05T11:17:20.719Z] [INFO] [job:alert-3-5935285] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.720Z] [INFO] [job:alert-1-5935285] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.721Z] [INFO] [job:alert-1-5935285] Completed successfully
+[2026-06-05T11:17:20.721Z] [INFO] [job:alert-1-5935286] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.723Z] [WARN] [job:alert-3-5935282] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.724Z] [INFO] [job:alert-3-5935282] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.724Z] [WARN] [job:alert-3-5935283] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.724Z] [INFO] [job:alert-3-5935283] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.725Z] [INFO] [job:alert-3-5935282] Completed successfully
+[2026-06-05T11:17:20.725Z] [INFO] [job:alert-3-5935283] Completed successfully
+[2026-06-05T11:17:20.725Z] [INFO] [job:alert-3-5935286] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.726Z] [INFO] [job:alert-1-5935287] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.727Z] [INFO] [job:alert-3-5935284] Internal matches: 0
+[2026-06-05T11:17:20.728Z] [INFO] [job:alert-1-5935286] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.730Z] [INFO] [job:alert-1-5935286] Completed successfully
+[2026-06-05T11:17:20.730Z] [INFO] [job:alert-3-5935287] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.731Z] [INFO] [job:alert-1-5935287] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.732Z] [INFO] [job:alert-3-5935285] Internal matches: 0
+[2026-06-05T11:17:20.734Z] [WARN] [job:alert-3-5935284] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.734Z] [INFO] [job:alert-3-5935284] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.735Z] [INFO] [job:alert-1-5935287] Completed successfully
+[2026-06-05T11:17:20.735Z] [INFO] [job:alert-3-5935284] Completed successfully
+[2026-06-05T11:17:20.735Z] [INFO] [job:alert-1-5935288] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.735Z] [INFO] [job:alert-3-5935288] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.737Z] [INFO] [job:alert-3-5935286] Internal matches: 0
+[2026-06-05T11:17:20.738Z] [INFO] [job:alert-1-5935288] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.739Z] [WARN] [job:alert-3-5935285] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.739Z] [INFO] [job:alert-3-5935285] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.740Z] [INFO] [job:alert-3-5935287] Internal matches: 0
+[2026-06-05T11:17:20.741Z] [INFO] [job:alert-1-5935288] Completed successfully
+[2026-06-05T11:17:20.741Z] [INFO] [job:alert-3-5935285] Completed successfully
+[2026-06-05T11:17:20.741Z] [INFO] [job:alert-1-5935289] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.742Z] [INFO] [job:alert-3-5935289] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.743Z] [INFO] [job:alert-3-5935288] Internal matches: 0
+[2026-06-05T11:17:20.744Z] [WARN] [job:alert-3-5935286] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.744Z] [INFO] [job:alert-3-5935286] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.745Z] [INFO] [job:alert-1-5935289] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.747Z] [WARN] [job:alert-3-5935287] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.748Z] [INFO] [job:alert-3-5935287] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.748Z] [INFO] [job:alert-3-5935286] Completed successfully
+[2026-06-05T11:17:20.748Z] [INFO] [job:alert-1-5935289] Completed successfully
+[2026-06-05T11:17:20.748Z] [INFO] [job:alert-1-5935290] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.749Z] [INFO] [job:alert-3-5935290] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.750Z] [WARN] [job:alert-3-5935288] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.750Z] [INFO] [job:alert-3-5935288] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.751Z] [INFO] [job:alert-3-5935287] Completed successfully
+[2026-06-05T11:17:20.751Z] [INFO] [job:alert-1-5935291] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.752Z] [INFO] [job:alert-1-5935290] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.753Z] [INFO] [job:alert-3-5935289] Internal matches: 0
+[2026-06-05T11:17:20.754Z] [INFO] [job:alert-3-5935288] Completed successfully
+[2026-06-05T11:17:20.755Z] [INFO] [job:alert-1-5935290] Completed successfully
+[2026-06-05T11:17:20.755Z] [INFO] [job:alert-3-5935291] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.755Z] [INFO] [job:alert-1-5935292] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.756Z] [INFO] [job:alert-1-5935291] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.757Z] [INFO] [job:alert-1-5935291] Completed successfully
+[2026-06-05T11:17:20.757Z] [INFO] [job:alert-3-5935292] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.759Z] [INFO] [job:alert-1-5935292] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.761Z] [INFO] [job:alert-3-5935290] Internal matches: 0
+[2026-06-05T11:17:20.764Z] [WARN] [job:alert-3-5935289] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.764Z] [INFO] [job:alert-3-5935289] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.765Z] [INFO] [job:alert-1-5935292] Completed successfully
+[2026-06-05T11:17:20.765Z] [INFO] [job:alert-3-5935289] Completed successfully
+[2026-06-05T11:17:20.765Z] [INFO] [job:alert-1-5935293] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.765Z] [INFO] [job:alert-3-5935293] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.767Z] [INFO] [job:alert-3-5935291] Internal matches: 0
+[2026-06-05T11:17:20.768Z] [WARN] [job:alert-3-5935290] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.769Z] [INFO] [job:alert-3-5935290] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.769Z] [INFO] [job:alert-3-5935292] Internal matches: 0
+[2026-06-05T11:17:20.770Z] [INFO] [job:alert-1-5935293] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.772Z] [INFO] [job:alert-3-5935290] Completed successfully
+[2026-06-05T11:17:20.772Z] [INFO] [job:alert-1-5935294] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.774Z] [WARN] [job:alert-3-5935291] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.774Z] [INFO] [job:alert-3-5935291] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.775Z] [WARN] [job:alert-3-5935292] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.775Z] [INFO] [job:alert-3-5935292] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.776Z] [INFO] [job:alert-1-5935294] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.776Z] [INFO] [job:alert-3-5935293] Internal matches: 0
+[2026-06-05T11:17:20.777Z] [INFO] [job:alert-1-5935293] Completed successfully
+[2026-06-05T11:17:20.777Z] [INFO] [job:alert-3-5935291] Completed successfully
+[2026-06-05T11:17:20.777Z] [INFO] [job:alert-3-5935292] Completed successfully
+[2026-06-05T11:17:20.777Z] [INFO] [job:alert-1-5935294] Completed successfully
+[2026-06-05T11:17:20.778Z] [INFO] [job:alert-3-5935294] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.778Z] [INFO] [job:alert-1-5935295] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.778Z] [INFO] [job:alert-3-5935295] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.778Z] [INFO] [job:alert-1-5935296] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.781Z] [WARN] [job:alert-3-5935293] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.781Z] [INFO] [job:alert-3-5935293] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.782Z] [INFO] [job:alert-1-5935295] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.782Z] [INFO] [job:alert-1-5935296] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.784Z] [INFO] [job:alert-3-5935293] Completed successfully
+[2026-06-05T11:17:20.784Z] [INFO] [job:alert-3-5935296] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.786Z] [INFO] [job:alert-1-5935295] Completed successfully
+[2026-06-05T11:17:20.786Z] [INFO] [job:alert-1-5935296] Completed successfully
+[2026-06-05T11:17:20.786Z] [INFO] [job:alert-1-5935297] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.787Z] [INFO] [job:alert-3-5935297] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.793Z] [INFO] [job:alert-3-5935294] Internal matches: 0
+[2026-06-05T11:17:20.794Z] [INFO] [job:alert-1-5935297] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.795Z] [INFO] [job:alert-3-5935295] Internal matches: 0
+[2026-06-05T11:17:20.797Z] [INFO] [job:alert-1-5935297] Completed successfully
+[2026-06-05T11:17:20.797Z] [INFO] [job:alert-1-5935298] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.798Z] [WARN] [job:alert-3-5935294] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.798Z] [INFO] [job:alert-3-5935294] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.799Z] [INFO] [job:alert-3-5935296] Internal matches: 0
+[2026-06-05T11:17:20.800Z] [INFO] [job:alert-1-5935298] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.800Z] [INFO] [job:alert-3-5935297] Internal matches: 0
+[2026-06-05T11:17:20.801Z] [WARN] [job:alert-3-5935295] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.801Z] [INFO] [job:alert-3-5935295] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.801Z] [INFO] [job:alert-3-5935294] Completed successfully
+[2026-06-05T11:17:20.801Z] [INFO] [job:alert-1-5935298] Completed successfully
+[2026-06-05T11:17:20.801Z] [INFO] [job:alert-3-5935298] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.802Z] [INFO] [job:alert-1-5935299] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.803Z] [INFO] [job:alert-3-5935295] Completed successfully
+[2026-06-05T11:17:20.803Z] [INFO] [job:alert-3-5935299] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.804Z] [WARN] [job:alert-3-5935296] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.804Z] [INFO] [job:alert-3-5935296] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.805Z] [WARN] [job:alert-3-5935297] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.805Z] [INFO] [job:alert-3-5935297] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.805Z] [INFO] [job:alert-3-5935296] Completed successfully
+[2026-06-05T11:17:20.805Z] [INFO] [job:alert-3-5935297] Completed successfully
+[2026-06-05T11:17:20.806Z] [INFO] [job:alert-1-5935300] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.806Z] [INFO] [job:alert-3-5935300] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.807Z] [INFO] [job:alert-1-5935299] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.808Z] [INFO] [job:alert-1-5935299] Completed successfully
+[2026-06-05T11:17:20.809Z] [INFO] [job:alert-1-5935301] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.810Z] [INFO] [job:alert-1-5935300] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.811Z] [INFO] [job:alert-1-5935300] Completed successfully
+[2026-06-05T11:17:20.811Z] [INFO] [job:alert-3-5935301] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.813Z] [INFO] [job:alert-1-5935301] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.814Z] [INFO] [job:alert-1-5935301] Completed successfully
+[2026-06-05T11:17:20.814Z] [INFO] [job:alert-1-5935302] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.815Z] [INFO] [job:alert-3-5935298] Internal matches: 0
+[2026-06-05T11:17:20.817Z] [INFO] [job:alert-3-5935299] Internal matches: 0
+[2026-06-05T11:17:20.818Z] [INFO] [job:alert-3-5935300] Internal matches: 0
+[2026-06-05T11:17:20.818Z] [INFO] [job:alert-1-5935302] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.819Z] [INFO] [job:alert-1-5935302] Completed successfully
+[2026-06-05T11:17:20.819Z] [INFO] [job:alert-3-5935302] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.820Z] [WARN] [job:alert-3-5935298] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.820Z] [INFO] [job:alert-3-5935298] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.821Z] [WARN] [job:alert-3-5935299] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.821Z] [INFO] [job:alert-3-5935299] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.821Z] [WARN] [job:alert-3-5935300] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.821Z] [INFO] [job:alert-3-5935300] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.822Z] [INFO] [job:alert-3-5935298] Completed successfully
+[2026-06-05T11:17:20.822Z] [INFO] [job:alert-3-5935299] Completed successfully
+[2026-06-05T11:17:20.822Z] [INFO] [job:alert-1-5935303] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.822Z] [INFO] [job:alert-3-5935303] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.823Z] [INFO] [job:alert-3-5935301] Internal matches: 0
+[2026-06-05T11:17:20.824Z] [INFO] [job:alert-3-5935300] Completed successfully
+[2026-06-05T11:17:20.825Z] [INFO] [job:alert-1-5935304] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.825Z] [INFO] [job:alert-1-5935303] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.827Z] [INFO] [job:alert-1-5935304] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.827Z] [WARN] [job:alert-3-5935301] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.827Z] [INFO] [job:alert-3-5935301] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.828Z] [INFO] [job:alert-1-5935303] Completed successfully
+[2026-06-05T11:17:20.828Z] [INFO] [job:alert-1-5935304] Completed successfully
+[2026-06-05T11:17:20.828Z] [INFO] [job:alert-3-5935301] Completed successfully
+[2026-06-05T11:17:20.828Z] [INFO] [job:alert-3-5935304] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.829Z] [INFO] [job:alert-1-5935305] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.829Z] [INFO] [job:alert-3-5935305] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.830Z] [INFO] [job:alert-3-5935302] Internal matches: 0
+[2026-06-05T11:17:20.831Z] [INFO] [job:alert-3-5935303] Internal matches: 0
+[2026-06-05T11:17:20.831Z] [INFO] [job:alert-1-5935305] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.833Z] [INFO] [job:alert-1-5935305] Completed successfully
+[2026-06-05T11:17:20.833Z] [INFO] [job:alert-1-5935306] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.834Z] [WARN] [job:alert-3-5935302] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.834Z] [INFO] [job:alert-3-5935302] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.835Z] [WARN] [job:alert-3-5935303] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.835Z] [INFO] [job:alert-3-5935303] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.835Z] [INFO] [job:alert-3-5935304] Internal matches: 0
+[2026-06-05T11:17:20.836Z] [INFO] [job:alert-3-5935305] Internal matches: 0
+[2026-06-05T11:17:20.836Z] [INFO] [job:alert-1-5935306] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.837Z] [INFO] [job:alert-3-5935302] Completed successfully
+[2026-06-05T11:17:20.837Z] [INFO] [job:alert-3-5935303] Completed successfully
+[2026-06-05T11:17:20.837Z] [INFO] [job:alert-1-5935306] Completed successfully
+[2026-06-05T11:17:20.837Z] [INFO] [job:alert-3-5935306] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.837Z] [INFO] [job:alert-1-5935307] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.838Z] [INFO] [job:alert-3-5935307] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.838Z] [WARN] [job:alert-3-5935304] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.839Z] [INFO] [job:alert-3-5935304] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.839Z] [WARN] [job:alert-3-5935305] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.839Z] [INFO] [job:alert-3-5935305] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.840Z] [INFO] [job:alert-1-5935307] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.841Z] [INFO] [job:alert-3-5935304] Completed successfully
+[2026-06-05T11:17:20.841Z] [INFO] [job:alert-3-5935305] Completed successfully
+[2026-06-05T11:17:20.841Z] [INFO] [job:alert-1-5935308] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.841Z] [INFO] [job:alert-3-5935308] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.842Z] [INFO] [job:alert-1-5935307] Completed successfully
+[2026-06-05T11:17:20.842Z] [INFO] [job:alert-1-5935309] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.843Z] [INFO] [job:alert-1-5935308] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.844Z] [INFO] [job:alert-1-5935309] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.844Z] [INFO] [job:alert-3-5935306] Internal matches: 0
+[2026-06-05T11:17:20.845Z] [INFO] [job:alert-3-5935307] Internal matches: 0
+[2026-06-05T11:17:20.846Z] [INFO] [job:alert-1-5935308] Completed successfully
+[2026-06-05T11:17:20.846Z] [INFO] [job:alert-1-5935309] Completed successfully
+[2026-06-05T11:17:20.846Z] [INFO] [job:alert-3-5935309] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.847Z] [INFO] [job:alert-1-5935310] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.847Z] [INFO] [job:alert-3-5935308] Internal matches: 0
+[2026-06-05T11:17:20.848Z] [INFO] [job:alert-1-5935310] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.849Z] [WARN] [job:alert-3-5935306] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.849Z] [INFO] [job:alert-3-5935306] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.850Z] [WARN] [job:alert-3-5935307] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.850Z] [INFO] [job:alert-3-5935307] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.850Z] [INFO] [job:alert-1-5935310] Completed successfully
+[2026-06-05T11:17:20.851Z] [INFO] [job:alert-3-5935306] Completed successfully
+[2026-06-05T11:17:20.851Z] [INFO] [job:alert-3-5935307] Completed successfully
+[2026-06-05T11:17:20.851Z] [INFO] [job:alert-3-5935310] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.851Z] [INFO] [job:alert-1-5935311] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.851Z] [INFO] [job:alert-3-5935311] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.852Z] [INFO] [job:alert-3-5935309] Internal matches: 0
+[2026-06-05T11:17:20.852Z] [WARN] [job:alert-3-5935308] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.853Z] [INFO] [job:alert-3-5935308] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.853Z] [INFO] [job:alert-1-5935311] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.855Z] [INFO] [job:alert-3-5935308] Completed successfully
+[2026-06-05T11:17:20.855Z] [INFO] [job:alert-1-5935311] Completed successfully
+[2026-06-05T11:17:20.855Z] [INFO] [job:alert-1-5935312] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.855Z] [INFO] [job:alert-3-5935312] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.856Z] [WARN] [job:alert-3-5935309] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.857Z] [INFO] [job:alert-3-5935309] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.857Z] [INFO] [job:alert-1-5935312] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.858Z] [INFO] [job:alert-3-5935310] Internal matches: 0
+[2026-06-05T11:17:20.858Z] [INFO] [job:alert-3-5935311] Internal matches: 0
+[2026-06-05T11:17:20.859Z] [INFO] [job:alert-3-5935309] Completed successfully
+[2026-06-05T11:17:20.859Z] [INFO] [job:alert-1-5935312] Completed successfully
+[2026-06-05T11:17:20.859Z] [INFO] [job:alert-1-5935313] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.859Z] [INFO] [job:alert-3-5935313] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.860Z] [INFO] [job:alert-1-5935313] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.861Z] [INFO] [job:alert-3-5935312] Internal matches: 0
+[2026-06-05T11:17:20.862Z] [WARN] [job:alert-3-5935310] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.862Z] [INFO] [job:alert-3-5935310] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.863Z] [WARN] [job:alert-3-5935311] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.863Z] [INFO] [job:alert-3-5935311] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.863Z] [INFO] [job:alert-1-5935313] Completed successfully
+[2026-06-05T11:17:20.863Z] [INFO] [job:alert-3-5935310] Completed successfully
+[2026-06-05T11:17:20.864Z] [INFO] [job:alert-3-5935311] Completed successfully
+[2026-06-05T11:17:20.864Z] [INFO] [job:alert-1-5935314] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.864Z] [INFO] [job:alert-3-5935314] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.864Z] [INFO] [job:alert-1-5935315] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.865Z] [INFO] [job:alert-3-5935313] Internal matches: 0
+[2026-06-05T11:17:20.866Z] [WARN] [job:alert-3-5935312] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.866Z] [INFO] [job:alert-3-5935312] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.866Z] [INFO] [job:alert-1-5935314] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.866Z] [INFO] [job:alert-1-5935315] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.867Z] [INFO] [job:alert-3-5935312] Completed successfully
+[2026-06-05T11:17:20.867Z] [INFO] [job:alert-1-5935314] Completed successfully
+[2026-06-05T11:17:20.867Z] [INFO] [job:alert-1-5935315] Completed successfully
+[2026-06-05T11:17:20.868Z] [INFO] [job:alert-3-5935315] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.868Z] [INFO] [job:alert-1-5935316] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.868Z] [INFO] [job:alert-3-5935316] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.869Z] [WARN] [job:alert-3-5935313] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.869Z] [INFO] [job:alert-3-5935313] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.869Z] [INFO] [job:alert-1-5935316] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.871Z] [INFO] [job:alert-3-5935313] Completed successfully
+[2026-06-05T11:17:20.871Z] [INFO] [job:alert-1-5935317] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.872Z] [INFO] [job:alert-3-5935314] Internal matches: 0
+[2026-06-05T11:17:20.873Z] [INFO] [job:alert-1-5935316] Completed successfully
+[2026-06-05T11:17:20.873Z] [INFO] [job:alert-3-5935317] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.874Z] [INFO] [job:alert-1-5935317] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.874Z] [INFO] [job:alert-3-5935315] Internal matches: 0
+[2026-06-05T11:17:20.875Z] [INFO] [job:alert-3-5935316] Internal matches: 0
+[2026-06-05T11:17:20.876Z] [WARN] [job:alert-3-5935314] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.876Z] [INFO] [job:alert-3-5935314] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.877Z] [INFO] [job:alert-1-5935317] Completed successfully
+[2026-06-05T11:17:20.877Z] [INFO] [job:alert-1-5935318] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.878Z] [INFO] [job:alert-3-5935314] Completed successfully
+[2026-06-05T11:17:20.878Z] [INFO] [job:alert-3-5935318] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.879Z] [INFO] [job:alert-1-5935318] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.880Z] [WARN] [job:alert-3-5935315] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.880Z] [INFO] [job:alert-3-5935315] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.880Z] [WARN] [job:alert-3-5935316] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.880Z] [INFO] [job:alert-3-5935316] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.880Z] [INFO] [job:alert-1-5935318] Completed successfully
+[2026-06-05T11:17:20.881Z] [INFO] [job:alert-3-5935315] Completed successfully
+[2026-06-05T11:17:20.881Z] [INFO] [job:alert-1-5935319] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.881Z] [INFO] [job:alert-3-5935319] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.882Z] [INFO] [job:alert-3-5935317] Internal matches: 0
+[2026-06-05T11:17:20.883Z] [INFO] [job:alert-3-5935316] Completed successfully
+[2026-06-05T11:17:20.883Z] [INFO] [job:alert-1-5935320] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.884Z] [INFO] [job:alert-1-5935319] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.885Z] [INFO] [job:alert-1-5935320] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.885Z] [WARN] [job:alert-3-5935317] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.885Z] [INFO] [job:alert-3-5935317] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.886Z] [INFO] [job:alert-1-5935319] Completed successfully
+[2026-06-05T11:17:20.886Z] [INFO] [job:alert-1-5935320] Completed successfully
+[2026-06-05T11:17:20.886Z] [INFO] [job:alert-3-5935317] Completed successfully
+[2026-06-05T11:17:20.886Z] [INFO] [job:alert-3-5935320] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.887Z] [INFO] [job:alert-1-5935321] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.887Z] [INFO] [job:alert-3-5935321] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.887Z] [INFO] [job:alert-3-5935318] Internal matches: 0
+[2026-06-05T11:17:20.888Z] [INFO] [job:alert-3-5935319] Internal matches: 0
+[2026-06-05T11:17:20.889Z] [INFO] [job:alert-1-5935321] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.892Z] [INFO] [job:alert-1-5935321] Completed successfully
+[2026-06-05T11:17:20.892Z] [INFO] [job:alert-1-5935322] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.893Z] [WARN] [job:alert-3-5935318] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.893Z] [INFO] [job:alert-3-5935318] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.894Z] [WARN] [job:alert-3-5935319] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.894Z] [INFO] [job:alert-3-5935319] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.894Z] [INFO] [job:alert-3-5935318] Completed successfully
+[2026-06-05T11:17:20.895Z] [INFO] [job:alert-3-5935319] Completed successfully
+[2026-06-05T11:17:20.895Z] [INFO] [job:alert-3-5935322] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.895Z] [INFO] [job:alert-1-5935323] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.896Z] [INFO] [job:alert-3-5935320] Internal matches: 0
+[2026-06-05T11:17:20.897Z] [INFO] [job:alert-3-5935321] Internal matches: 0
+[2026-06-05T11:17:20.898Z] [INFO] [job:alert-1-5935322] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.899Z] [INFO] [job:alert-1-5935323] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.903Z] [INFO] [job:alert-1-5935322] Completed successfully
+[2026-06-05T11:17:20.904Z] [INFO] [job:alert-1-5935323] Completed successfully
+[2026-06-05T11:17:20.904Z] [INFO] [job:alert-3-5935323] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.904Z] [INFO] [job:alert-1-5935324] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.905Z] [WARN] [job:alert-3-5935320] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.905Z] [INFO] [job:alert-3-5935320] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.907Z] [INFO] [job:alert-1-5935324] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.908Z] [WARN] [job:alert-3-5935321] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.908Z] [INFO] [job:alert-3-5935321] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.909Z] [INFO] [job:alert-3-5935320] Completed successfully
+[2026-06-05T11:17:20.909Z] [INFO] [job:alert-1-5935324] Completed successfully
+[2026-06-05T11:17:20.909Z] [INFO] [job:alert-3-5935321] Completed successfully
+[2026-06-05T11:17:20.909Z] [INFO] [job:alert-3-5935324] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.909Z] [INFO] [job:alert-1-5935325] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.909Z] [INFO] [job:alert-3-5935325] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.910Z] [INFO] [job:alert-3-5935322] Internal matches: 0
+[2026-06-05T11:17:20.911Z] [INFO] [job:alert-1-5935325] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.912Z] [INFO] [job:alert-3-5935323] Internal matches: 0
+[2026-06-05T11:17:20.914Z] [WARN] [job:alert-3-5935322] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.914Z] [INFO] [job:alert-3-5935322] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.914Z] [INFO] [job:alert-1-5935325] Completed successfully
+[2026-06-05T11:17:20.915Z] [INFO] [job:alert-3-5935322] Completed successfully
+[2026-06-05T11:17:20.915Z] [INFO] [job:alert-1-5935326] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.915Z] [INFO] [job:alert-3-5935326] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.916Z] [INFO] [job:alert-3-5935324] Internal matches: 0
+[2026-06-05T11:17:20.916Z] [INFO] [job:alert-3-5935325] Internal matches: 0
+[2026-06-05T11:17:20.917Z] [INFO] [job:alert-1-5935326] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.918Z] [WARN] [job:alert-3-5935323] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.918Z] [INFO] [job:alert-3-5935323] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.919Z] [INFO] [job:alert-1-5935326] Completed successfully
+[2026-06-05T11:17:20.919Z] [INFO] [job:alert-3-5935323] Completed successfully
+[2026-06-05T11:17:20.919Z] [INFO] [job:alert-1-5935327] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.919Z] [INFO] [job:alert-3-5935327] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.920Z] [INFO] [job:alert-3-5935326] Internal matches: 0
+[2026-06-05T11:17:20.921Z] [WARN] [job:alert-3-5935324] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.921Z] [INFO] [job:alert-3-5935324] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.921Z] [WARN] [job:alert-3-5935325] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.921Z] [INFO] [job:alert-3-5935325] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.922Z] [INFO] [job:alert-1-5935327] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.923Z] [INFO] [job:alert-3-5935324] Completed successfully
+[2026-06-05T11:17:20.923Z] [INFO] [job:alert-3-5935325] Completed successfully
+[2026-06-05T11:17:20.923Z] [INFO] [job:alert-1-5935328] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.923Z] [INFO] [job:alert-3-5935328] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.924Z] [INFO] [job:alert-1-5935327] Completed successfully
+[2026-06-05T11:17:20.924Z] [INFO] [job:alert-1-5935329] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.925Z] [WARN] [job:alert-3-5935326] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.925Z] [INFO] [job:alert-3-5935326] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.926Z] [INFO] [job:alert-1-5935328] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.927Z] [INFO] [job:alert-1-5935329] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.927Z] [INFO] [job:alert-3-5935327] Internal matches: 0
+[2026-06-05T11:17:20.928Z] [INFO] [job:alert-3-5935326] Completed successfully
+[2026-06-05T11:17:20.928Z] [INFO] [job:alert-1-5935328] Completed successfully
+[2026-06-05T11:17:20.928Z] [INFO] [job:alert-1-5935329] Completed successfully
+[2026-06-05T11:17:20.928Z] [INFO] [job:alert-3-5935329] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.928Z] [INFO] [job:alert-1-5935330] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.928Z] [INFO] [job:alert-3-5935330] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.930Z] [INFO] [job:alert-1-5935330] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.931Z] [INFO] [job:alert-3-5935328] Internal matches: 0
+[2026-06-05T11:17:20.932Z] [WARN] [job:alert-3-5935327] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.932Z] [INFO] [job:alert-3-5935327] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.933Z] [INFO] [job:alert-1-5935330] Completed successfully
+[2026-06-05T11:17:20.934Z] [INFO] [job:alert-3-5935327] Completed successfully
+[2026-06-05T11:17:20.934Z] [INFO] [job:alert-1-5935331] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.934Z] [INFO] [job:alert-3-5935331] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.935Z] [INFO] [job:alert-3-5935329] Internal matches: 0
+[2026-06-05T11:17:20.936Z] [INFO] [job:alert-3-5935330] Internal matches: 0
+[2026-06-05T11:17:20.936Z] [WARN] [job:alert-3-5935328] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.936Z] [INFO] [job:alert-3-5935328] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.937Z] [INFO] [job:alert-1-5935331] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.938Z] [INFO] [job:alert-3-5935328] Completed successfully
+[2026-06-05T11:17:20.938Z] [INFO] [job:alert-1-5935331] Completed successfully
+[2026-06-05T11:17:20.938Z] [INFO] [job:alert-1-5935526] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.938Z] [INFO] [job:alert-3-5935526] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.939Z] [WARN] [job:alert-3-5935329] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.939Z] [INFO] [job:alert-3-5935329] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.939Z] [WARN] [job:alert-3-5935330] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.939Z] [INFO] [job:alert-3-5935330] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.940Z] [INFO] [job:alert-3-5935329] Completed successfully
+[2026-06-05T11:17:20.940Z] [INFO] [job:alert-3-5935330] Completed successfully
+[2026-06-05T11:17:20.940Z] [INFO] [job:alert-1-5935527] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:17:20.940Z] [INFO] [job:alert-3-5935527] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:17:20.941Z] [INFO] [job:alert-1-5935526] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.942Z] [INFO] [job:alert-1-5935527] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:17:20.942Z] [INFO] [job:alert-3-5935331] Internal matches: 0
+[2026-06-05T11:17:20.943Z] [INFO] [job:alert-1-5935526] Completed successfully
+[2026-06-05T11:17:20.943Z] [INFO] [job:alert-1-5935527] Completed successfully
+[2026-06-05T11:17:20.945Z] [INFO] [job:alert-3-5935526] Internal matches: 0
+[2026-06-05T11:17:20.946Z] [INFO] [job:alert-3-5935527] Internal matches: 0
+[2026-06-05T11:17:20.947Z] [WARN] [job:alert-3-5935331] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.947Z] [INFO] [job:alert-3-5935331] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.948Z] [WARN] [job:alert-3-5935526] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.948Z] [INFO] [job:alert-3-5935526] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.948Z] [INFO] [job:alert-3-5935331] Completed successfully
+[2026-06-05T11:17:20.948Z] [WARN] [job:alert-3-5935527] Scraper error (non-fatal): fetch failed
+[2026-06-05T11:17:20.948Z] [INFO] [job:alert-3-5935527] No matches — skipping email, lastRun not updated
+[2026-06-05T11:17:20.949Z] [INFO] [job:alert-3-5935526] Completed successfully
+[2026-06-05T11:17:20.949Z] [INFO] [job:alert-3-5935527] Completed successfully
+[2026-06-05T11:20:02.447Z] [INFO] [job:alert-1-5935528] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:20:02.452Z] [INFO] [job:alert-3-5935528] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:20:02.454Z] [INFO] [job:alert-1-5935528] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:20:02.456Z] [INFO] [job:alert-1-5935528] Completed successfully
+[2026-06-05T11:20:02.459Z] [INFO] [job:alert-3-5935528] Internal matches: 0
+[2026-06-05T11:20:09.450Z] [INFO] [job:alert-3-5935528] Scraper matches: 5
+[2026-06-05T11:20:12.054Z] [INFO] [job:alert-3-5935528] Done — sent email with 5 matches
+[2026-06-05T11:20:12.055Z] [INFO] [job:alert-3-5935528] Completed successfully
+[2026-06-05T11:25:02.535Z] [INFO] [job:alert-1-5935529] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:25:02.545Z] [INFO] [job:alert-3-5935529] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:25:02.546Z] [INFO] [job:alert-1-5935529] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:25:02.547Z] [INFO] [job:alert-1-5935529] Completed successfully
+[2026-06-05T11:25:02.547Z] [INFO] [job:alert-3-5935529] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T11:25:02.548Z] [INFO] [job:alert-3-5935529] Completed successfully
+[2026-06-05T11:30:02.613Z] [INFO] [job:alert-1-5935530] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:30:02.617Z] [INFO] [job:alert-3-5935530] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:30:02.618Z] [INFO] [job:alert-1-5935530] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:30:02.619Z] [INFO] [job:alert-1-5935530] Completed successfully
+[2026-06-05T11:30:02.620Z] [INFO] [job:alert-3-5935530] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T11:30:02.621Z] [INFO] [job:alert-3-5935530] Completed successfully
+[2026-06-05T11:35:02.713Z] [INFO] [job:alert-1-5935531] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:35:02.722Z] [INFO] [job:alert-3-5935531] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:35:02.724Z] [INFO] [job:alert-1-5935531] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:35:02.724Z] [INFO] [job:alert-1-5935531] Completed successfully
+[2026-06-05T11:35:02.725Z] [INFO] [job:alert-3-5935531] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T11:35:02.726Z] [INFO] [job:alert-3-5935531] Completed successfully
+[2026-06-05T11:40:02.804Z] [INFO] [job:alert-1-5935532] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:40:02.806Z] [INFO] [job:alert-3-5935532] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:40:02.807Z] [INFO] [job:alert-1-5935532] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:40:02.808Z] [INFO] [job:alert-1-5935532] Completed successfully
+[2026-06-05T11:40:02.809Z] [INFO] [job:alert-3-5935532] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T11:40:02.810Z] [INFO] [job:alert-3-5935532] Completed successfully
+[2026-06-05T11:45:01.898Z] [INFO] [job:alert-1-5935533] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:45:01.900Z] [INFO] [job:alert-1-5935533] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:45:01.901Z] [INFO] [job:alert-3-5935533] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:45:01.901Z] [INFO] [job:alert-1-5935533] Completed successfully
+[2026-06-05T11:45:01.902Z] [INFO] [job:alert-3-5935533] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T11:45:01.903Z] [INFO] [job:alert-3-5935533] Completed successfully
+[2026-06-05T11:50:01.954Z] [INFO] [job:alert-1-5935534] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:50:01.956Z] [INFO] [job:alert-3-5935534] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:50:01.957Z] [INFO] [job:alert-1-5935534] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:50:01.957Z] [INFO] [job:alert-1-5935534] Completed successfully
+[2026-06-05T11:50:01.958Z] [INFO] [job:alert-3-5935534] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T11:50:01.958Z] [INFO] [job:alert-3-5935534] Completed successfully
+[2026-06-05T11:55:01.992Z] [INFO] [job:alert-1-5935535] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T11:55:01.994Z] [INFO] [job:alert-1-5935535] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T11:55:01.995Z] [INFO] [job:alert-1-5935535] Completed successfully
+[2026-06-05T11:55:01.995Z] [INFO] [job:alert-3-5935535] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T11:55:01.996Z] [INFO] [job:alert-3-5935535] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T11:55:01.997Z] [INFO] [job:alert-3-5935535] Completed successfully
+[2026-06-05T12:00:02.040Z] [INFO] [job:alert-1-5935536] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T12:00:02.042Z] [INFO] [job:alert-3-5935536] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T12:00:02.043Z] [INFO] [job:alert-1-5935536] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T12:00:02.044Z] [INFO] [job:alert-1-5935536] Completed successfully
+[2026-06-05T12:00:02.044Z] [INFO] [job:alert-3-5935536] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T12:00:02.045Z] [INFO] [job:alert-3-5935536] Completed successfully
+[2026-06-05T12:05:02.092Z] [INFO] [job:alert-1-5935537] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T12:05:02.095Z] [INFO] [job:alert-1-5935537] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T12:05:02.095Z] [INFO] [job:alert-1-5935537] Completed successfully
+[2026-06-05T12:05:02.102Z] [INFO] [job:alert-3-5935537] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T12:05:02.104Z] [INFO] [job:alert-3-5935537] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T12:05:02.105Z] [INFO] [job:alert-3-5935537] Completed successfully
+[2026-06-05T12:10:02.160Z] [INFO] [job:alert-1-5935538] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T12:10:02.162Z] [INFO] [job:alert-3-5935538] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T12:10:02.163Z] [INFO] [job:alert-1-5935538] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T12:10:02.164Z] [INFO] [job:alert-1-5935538] Completed successfully
+[2026-06-05T12:10:02.164Z] [INFO] [job:alert-3-5935538] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T12:10:02.165Z] [INFO] [job:alert-3-5935538] Completed successfully
+[2026-06-05T12:15:02.235Z] [INFO] [job:alert-1-5935539] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T12:15:02.237Z] [INFO] [job:alert-3-5935539] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T12:15:02.238Z] [INFO] [job:alert-1-5935539] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T12:15:02.239Z] [INFO] [job:alert-1-5935539] Completed successfully
+[2026-06-05T12:15:02.239Z] [INFO] [job:alert-3-5935539] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T12:15:02.240Z] [INFO] [job:alert-3-5935539] Completed successfully
+[2026-06-05T12:20:02.459Z] [INFO] [job:alert-1-5935540] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T12:20:02.460Z] [INFO] [job:alert-3-5935540] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T12:20:02.461Z] [INFO] [job:alert-1-5935540] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T12:20:02.462Z] [INFO] [job:alert-1-5935540] Completed successfully
+[2026-06-05T12:20:02.462Z] [INFO] [job:alert-3-5935540] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T12:20:02.463Z] [INFO] [job:alert-3-5935540] Completed successfully
+[2026-06-05T12:25:02.547Z] [INFO] [job:alert-1-5935541] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T12:25:02.548Z] [INFO] [job:alert-3-5935541] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T12:25:02.549Z] [INFO] [job:alert-1-5935541] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T12:25:02.550Z] [INFO] [job:alert-1-5935541] Completed successfully
+[2026-06-05T12:25:02.551Z] [INFO] [job:alert-3-5935541] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T12:25:02.552Z] [INFO] [job:alert-3-5935541] Completed successfully
+[2026-06-05T12:30:02.682Z] [INFO] [job:alert-1-5935542] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T12:30:02.684Z] [INFO] [job:alert-3-5935542] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T12:30:02.686Z] [INFO] [job:alert-1-5935542] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T12:30:02.686Z] [INFO] [job:alert-1-5935542] Completed successfully
+[2026-06-05T12:30:02.688Z] [INFO] [job:alert-3-5935542] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T12:30:02.689Z] [INFO] [job:alert-3-5935542] Completed successfully
+[2026-06-05T12:35:02.776Z] [INFO] [job:alert-1-5935543] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T12:35:02.778Z] [INFO] [job:alert-3-5935543] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T12:35:02.787Z] [INFO] [job:alert-1-5935543] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T12:35:02.788Z] [INFO] [job:alert-3-5935543] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T12:35:02.789Z] [INFO] [job:alert-1-5935543] Completed successfully
+[2026-06-05T12:35:02.789Z] [INFO] [job:alert-3-5935543] Completed successfully
+[2026-06-05T12:40:01.945Z] [INFO] [job:alert-1-5935544] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T12:40:01.947Z] [INFO] [job:alert-3-5935544] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T12:40:01.949Z] [INFO] [job:alert-1-5935544] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T12:40:01.950Z] [INFO] [job:alert-1-5935544] Completed successfully
+[2026-06-05T12:40:01.951Z] [INFO] [job:alert-3-5935544] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T12:40:01.952Z] [INFO] [job:alert-3-5935544] Completed successfully
+[2026-06-05T12:45:02.083Z] [INFO] [job:alert-1-5935545] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T12:45:02.085Z] [INFO] [job:alert-3-5935545] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T12:45:02.086Z] [INFO] [job:alert-3-5935545] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T12:45:02.087Z] [INFO] [job:alert-1-5935545] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T12:45:02.087Z] [INFO] [job:alert-3-5935545] Completed successfully
+[2026-06-05T12:45:02.087Z] [INFO] [job:alert-1-5935545] Completed successfully
+[2026-06-05T12:50:02.184Z] [INFO] [job:alert-1-5935546] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T12:50:02.186Z] [INFO] [job:alert-3-5935546] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T12:50:02.189Z] [INFO] [job:alert-3-5935546] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T12:50:02.190Z] [INFO] [job:alert-1-5935546] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T12:50:02.191Z] [INFO] [job:alert-3-5935546] Completed successfully
+[2026-06-05T12:50:02.191Z] [INFO] [job:alert-1-5935546] Completed successfully
+[2026-06-05T12:55:02.262Z] [INFO] [job:alert-1-5935547] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T12:55:02.264Z] [INFO] [job:alert-1-5935547] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T12:55:02.265Z] [INFO] [job:alert-3-5935547] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T12:55:02.266Z] [INFO] [job:alert-1-5935547] Completed successfully
+[2026-06-05T12:55:02.268Z] [INFO] [job:alert-3-5935547] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T12:55:02.270Z] [INFO] [job:alert-3-5935547] Completed successfully
+[2026-06-05T13:00:02.330Z] [INFO] [job:alert-1-5935548] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T13:00:02.331Z] [INFO] [job:alert-3-5935548] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T13:00:02.334Z] [INFO] [job:alert-1-5935548] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T13:00:02.334Z] [INFO] [job:alert-3-5935548] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T13:00:02.335Z] [INFO] [job:alert-1-5935548] Completed successfully
+[2026-06-05T13:00:02.335Z] [INFO] [job:alert-3-5935548] Completed successfully
+[2026-06-05T13:05:02.400Z] [INFO] [job:alert-1-5935549] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T13:05:02.402Z] [INFO] [job:alert-3-5935549] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T13:05:02.403Z] [INFO] [job:alert-1-5935549] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T13:05:02.404Z] [INFO] [job:alert-1-5935549] Completed successfully
+[2026-06-05T13:05:02.404Z] [INFO] [job:alert-3-5935549] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T13:05:02.405Z] [INFO] [job:alert-3-5935549] Completed successfully
+[2026-06-05T13:10:02.470Z] [INFO] [job:alert-1-5935550] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T13:10:02.472Z] [INFO] [job:alert-3-5935550] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T13:10:02.473Z] [INFO] [job:alert-1-5935550] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T13:10:02.474Z] [INFO] [job:alert-3-5935550] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T13:10:02.474Z] [INFO] [job:alert-1-5935550] Completed successfully
+[2026-06-05T13:10:02.474Z] [INFO] [job:alert-3-5935550] Completed successfully
+[2026-06-05T13:15:02.678Z] [INFO] [job:alert-1-5935551] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T13:15:02.688Z] [INFO] [job:alert-3-5935551] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T13:15:02.689Z] [INFO] [job:alert-1-5935551] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T13:15:02.690Z] [INFO] [job:alert-1-5935551] Completed successfully
+[2026-06-05T13:15:02.690Z] [INFO] [job:alert-3-5935551] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T13:15:02.691Z] [INFO] [job:alert-3-5935551] Completed successfully
+[2026-06-05T13:20:02.667Z] [INFO] [job:alert-1-5935552] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T13:20:02.670Z] [INFO] [job:alert-3-5935552] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T13:20:02.672Z] [INFO] [job:alert-1-5935552] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T13:20:02.673Z] [INFO] [job:alert-1-5935552] Completed successfully
+[2026-06-05T13:20:02.673Z] [INFO] [job:alert-3-5935552] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T13:20:02.675Z] [INFO] [job:alert-3-5935552] Completed successfully
+[2026-06-05T13:25:02.692Z] [INFO] [job:alert-1-5935553] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T13:25:02.694Z] [INFO] [job:alert-3-5935553] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T13:25:02.695Z] [INFO] [job:alert-1-5935553] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T13:25:02.696Z] [INFO] [job:alert-1-5935553] Completed successfully
+[2026-06-05T13:25:02.697Z] [INFO] [job:alert-3-5935553] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T13:25:02.697Z] [INFO] [job:alert-3-5935553] Completed successfully
+[2026-06-05T13:30:02.790Z] [INFO] [job:alert-1-5935554] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T13:30:02.794Z] [INFO] [job:alert-3-5935554] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T13:30:02.796Z] [INFO] [job:alert-1-5935554] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T13:30:02.797Z] [INFO] [job:alert-1-5935554] Completed successfully
+[2026-06-05T13:30:02.797Z] [INFO] [job:alert-3-5935554] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T13:30:02.798Z] [INFO] [job:alert-3-5935554] Completed successfully
+[2026-06-05T13:35:02.787Z] [INFO] [job:alert-1-5935555] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T13:35:02.789Z] [INFO] [job:alert-3-5935555] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T13:35:02.789Z] [INFO] [job:alert-1-5935555] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T13:35:02.790Z] [INFO] [job:alert-1-5935555] Completed successfully
+[2026-06-05T13:35:02.791Z] [INFO] [job:alert-3-5935555] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T13:35:02.792Z] [INFO] [job:alert-3-5935555] Completed successfully
+[2026-06-05T13:40:01.855Z] [INFO] [job:alert-1-5935556] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T13:40:01.857Z] [INFO] [job:alert-3-5935556] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T13:40:01.859Z] [INFO] [job:alert-1-5935556] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T13:40:01.859Z] [INFO] [job:alert-3-5935556] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T13:40:01.860Z] [INFO] [job:alert-1-5935556] Completed successfully
+[2026-06-05T13:40:01.861Z] [INFO] [job:alert-3-5935556] Completed successfully
+[2026-06-05T13:45:01.988Z] [INFO] [job:alert-1-5935557] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T13:45:01.991Z] [INFO] [job:alert-3-5935557] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T13:45:01.993Z] [INFO] [job:alert-1-5935557] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T13:45:01.994Z] [INFO] [job:alert-3-5935557] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T13:45:01.995Z] [INFO] [job:alert-1-5935557] Completed successfully
+[2026-06-05T13:45:01.995Z] [INFO] [job:alert-3-5935557] Completed successfully
+[2026-06-05T13:50:02.093Z] [INFO] [job:alert-1-5935558] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T13:50:02.099Z] [INFO] [job:alert-3-5935558] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T13:50:02.102Z] [INFO] [job:alert-1-5935558] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T13:50:02.102Z] [INFO] [job:alert-3-5935558] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T13:50:02.103Z] [INFO] [job:alert-1-5935558] Completed successfully
+[2026-06-05T13:50:02.103Z] [INFO] [job:alert-3-5935558] Completed successfully
+[2026-06-05T13:55:02.135Z] [INFO] [job:alert-1-5935559] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T13:55:02.140Z] [INFO] [job:alert-3-5935559] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T13:55:02.142Z] [INFO] [job:alert-1-5935559] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T13:55:02.142Z] [INFO] [job:alert-1-5935559] Completed successfully
+[2026-06-05T13:55:02.143Z] [INFO] [job:alert-3-5935559] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T13:55:02.143Z] [INFO] [job:alert-3-5935559] Completed successfully
+[2026-06-05T14:00:02.257Z] [INFO] [job:alert-1-5935560] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T14:00:02.260Z] [INFO] [job:alert-3-5935560] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T14:00:02.261Z] [INFO] [job:alert-3-5935560] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T14:00:02.263Z] [INFO] [job:alert-1-5935560] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T14:00:02.264Z] [INFO] [job:alert-3-5935560] Completed successfully
+[2026-06-05T14:00:02.264Z] [INFO] [job:alert-1-5935560] Completed successfully
+[2026-06-05T14:05:03.072Z] [INFO] [job:alert-1-5935561] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T14:05:03.078Z] [INFO] [job:alert-3-5935561] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T14:05:03.080Z] [INFO] [job:alert-1-5935561] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T14:05:03.084Z] [INFO] [job:alert-1-5935561] Completed successfully
+[2026-06-05T14:05:03.085Z] [INFO] [job:alert-3-5935561] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T14:05:03.087Z] [INFO] [job:alert-3-5935561] Completed successfully
+[2026-06-05T14:10:02.668Z] [INFO] [job:alert-1-5935562] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T14:10:02.677Z] [INFO] [job:alert-3-5935562] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T14:10:02.681Z] [INFO] [job:alert-1-5935562] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T14:10:02.684Z] [INFO] [job:alert-1-5935562] Completed successfully
+[2026-06-05T14:10:02.685Z] [INFO] [job:alert-3-5935562] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T14:10:02.686Z] [INFO] [job:alert-3-5935562] Completed successfully
+[2026-06-05T14:15:01.884Z] [INFO] [job:alert-1-5935563] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T14:15:01.887Z] [INFO] [job:alert-3-5935563] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T14:15:01.889Z] [INFO] [job:alert-1-5935563] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T14:15:01.889Z] [INFO] [job:alert-3-5935563] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T14:15:01.889Z] [INFO] [job:alert-1-5935563] Completed successfully
+[2026-06-05T14:15:01.890Z] [INFO] [job:alert-3-5935563] Completed successfully
+[2026-06-05T14:20:01.835Z] [INFO] [job:alert-1-5935564] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T14:20:01.837Z] [INFO] [job:alert-3-5935564] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T14:20:01.839Z] [INFO] [job:alert-1-5935564] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T14:20:01.839Z] [INFO] [job:alert-3-5935564] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T14:20:01.840Z] [INFO] [job:alert-1-5935564] Completed successfully
+[2026-06-05T14:20:01.840Z] [INFO] [job:alert-3-5935564] Completed successfully
+[2026-06-05T14:25:01.725Z] [INFO] [job:alert-1-5935565] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T14:25:01.727Z] [INFO] [job:alert-3-5935565] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T14:25:01.729Z] [INFO] [job:alert-1-5935565] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T14:25:01.729Z] [INFO] [job:alert-1-5935565] Completed successfully
+[2026-06-05T14:25:01.730Z] [INFO] [job:alert-3-5935565] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T14:25:01.730Z] [INFO] [job:alert-3-5935565] Completed successfully
+[2026-06-05T14:30:02.561Z] [INFO] [job:alert-1-5935566] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T14:30:02.563Z] [INFO] [job:alert-3-5935566] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T14:30:02.565Z] [INFO] [job:alert-1-5935566] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T14:30:02.567Z] [INFO] [job:alert-1-5935566] Completed successfully
+[2026-06-05T14:30:02.567Z] [INFO] [job:alert-3-5935566] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T14:30:02.568Z] [INFO] [job:alert-3-5935566] Completed successfully
+[2026-06-05T14:35:02.331Z] [INFO] [job:alert-1-5935567] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T14:35:02.332Z] [INFO] [job:alert-3-5935567] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T14:35:02.333Z] [INFO] [job:alert-1-5935567] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T14:35:02.333Z] [INFO] [job:alert-1-5935567] Completed successfully
+[2026-06-05T14:35:02.334Z] [INFO] [job:alert-3-5935567] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T14:35:02.334Z] [INFO] [job:alert-3-5935567] Completed successfully
+[2026-06-05T14:40:03.366Z] [INFO] [job:alert-1-5935568] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T14:40:03.374Z] [INFO] [job:alert-3-5935568] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T14:40:03.378Z] [INFO] [job:alert-3-5935568] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T14:40:03.380Z] [INFO] [job:alert-1-5935568] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T14:40:03.381Z] [INFO] [job:alert-3-5935568] Completed successfully
+[2026-06-05T14:40:03.382Z] [INFO] [job:alert-1-5935568] Completed successfully
+[2026-06-05T14:45:02.602Z] [INFO] [job:alert-1-5935569] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T14:45:02.604Z] [INFO] [job:alert-3-5935569] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T14:45:02.605Z] [INFO] [job:alert-1-5935569] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T14:45:02.606Z] [INFO] [job:alert-1-5935569] Completed successfully
+[2026-06-05T14:45:02.606Z] [INFO] [job:alert-3-5935569] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T14:45:02.607Z] [INFO] [job:alert-3-5935569] Completed successfully
+[2026-06-05T14:50:04.864Z] [INFO] [job:alert-1-5935570] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T14:50:04.880Z] [INFO] [job:alert-3-5935570] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T14:50:04.887Z] [INFO] [job:alert-1-5935570] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T14:50:04.889Z] [INFO] [job:alert-1-5935570] Completed successfully
+[2026-06-05T14:50:04.891Z] [INFO] [job:alert-3-5935570] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T14:50:04.893Z] [INFO] [job:alert-3-5935570] Completed successfully
+[2026-06-05T14:55:02.296Z] [INFO] [job:alert-1-5935571] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T14:55:02.298Z] [INFO] [job:alert-3-5935571] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T14:55:02.300Z] [INFO] [job:alert-1-5935571] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T14:55:02.300Z] [INFO] [job:alert-1-5935571] Completed successfully
+[2026-06-05T14:55:02.301Z] [INFO] [job:alert-3-5935571] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T14:55:02.301Z] [INFO] [job:alert-3-5935571] Completed successfully
+[2026-06-05T15:01:35.374Z] [INFO] [job:alert-1-5935572] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T15:01:35.401Z] [INFO] [job:alert-3-5935572] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T15:01:35.406Z] [INFO] [job:alert-1-5935572] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T15:01:35.408Z] [INFO] [job:alert-1-5935572] Completed successfully
+[2026-06-05T15:01:35.416Z] [INFO] [job:alert-3-5935572] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T15:01:35.418Z] [INFO] [job:alert-3-5935572] Completed successfully
+[2026-06-05T15:10:02.727Z] [INFO] [job:alert-1-5935574] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T15:10:02.729Z] [INFO] [job:alert-3-5935574] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T15:10:02.731Z] [INFO] [job:alert-1-5935574] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T15:10:02.732Z] [INFO] [job:alert-1-5935574] Completed successfully
+[2026-06-05T15:10:02.732Z] [INFO] [job:alert-3-5935574] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T15:10:02.733Z] [INFO] [job:alert-3-5935574] Completed successfully
+[2026-06-05T15:15:02.843Z] [INFO] [job:alert-1-5935575] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T15:15:02.845Z] [INFO] [job:alert-3-5935575] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T15:15:02.846Z] [INFO] [job:alert-1-5935575] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T15:15:02.847Z] [INFO] [job:alert-1-5935575] Completed successfully
+[2026-06-05T15:15:02.847Z] [INFO] [job:alert-3-5935575] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T15:15:02.848Z] [INFO] [job:alert-3-5935575] Completed successfully
+[2026-06-05T15:20:02.012Z] [INFO] [job:alert-1-5935576] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T15:20:02.022Z] [INFO] [job:alert-3-5935576] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T15:20:02.023Z] [INFO] [job:alert-1-5935576] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T15:20:02.024Z] [INFO] [job:alert-1-5935576] Completed successfully
+[2026-06-05T15:20:02.024Z] [INFO] [job:alert-3-5935576] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T15:20:02.025Z] [INFO] [job:alert-3-5935576] Completed successfully
+[2026-06-05T15:25:02.141Z] [INFO] [job:alert-1-5935577] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T15:25:02.143Z] [INFO] [job:alert-3-5935577] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T15:25:02.145Z] [INFO] [job:alert-1-5935577] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T15:25:02.146Z] [INFO] [job:alert-1-5935577] Completed successfully
+[2026-06-05T15:25:02.146Z] [INFO] [job:alert-3-5935577] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T15:25:02.147Z] [INFO] [job:alert-3-5935577] Completed successfully
+[2026-06-05T15:30:02.612Z] [INFO] [job:alert-1-5935578] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T15:30:02.615Z] [INFO] [job:alert-3-5935578] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T15:30:02.623Z] [INFO] [job:alert-3-5935578] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T15:30:02.624Z] [INFO] [job:alert-1-5935578] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T15:30:02.627Z] [INFO] [job:alert-3-5935578] Completed successfully
+[2026-06-05T15:30:02.628Z] [INFO] [job:alert-1-5935578] Completed successfully
+[2026-06-05T15:35:02.888Z] [INFO] [job:alert-1-5935579] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T15:35:02.891Z] [INFO] [job:alert-3-5935579] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T15:35:02.892Z] [INFO] [job:alert-1-5935579] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T15:35:02.893Z] [INFO] [job:alert-1-5935579] Completed successfully
+[2026-06-05T15:35:02.893Z] [INFO] [job:alert-3-5935579] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T15:35:02.894Z] [INFO] [job:alert-3-5935579] Completed successfully
+[2026-06-05T15:40:02.002Z] [INFO] [job:alert-1-5935580] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T15:40:02.012Z] [INFO] [job:alert-3-5935580] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T15:40:02.013Z] [INFO] [job:alert-1-5935580] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T15:40:02.014Z] [INFO] [job:alert-1-5935580] Completed successfully
+[2026-06-05T15:40:02.014Z] [INFO] [job:alert-3-5935580] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T15:40:02.015Z] [INFO] [job:alert-3-5935580] Completed successfully
+[2026-06-05T15:45:02.357Z] [INFO] [job:alert-1-5935581] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T15:45:02.360Z] [INFO] [job:alert-3-5935581] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T15:45:02.364Z] [INFO] [job:alert-1-5935581] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T15:45:02.365Z] [INFO] [job:alert-1-5935581] Completed successfully
+[2026-06-05T15:45:02.366Z] [INFO] [job:alert-3-5935581] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T15:45:02.368Z] [INFO] [job:alert-3-5935581] Completed successfully
+[2026-06-05T15:50:02.891Z] [INFO] [job:alert-1-5935582] Starting — alert #1 (Honda Civic, UAE)
+[2026-06-05T15:50:02.893Z] [INFO] [job:alert-3-5935582] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T15:50:02.899Z] [INFO] [job:alert-1-5935582] Alert #1 is within cooldown (freq=daily, lastRun=2026-06-05T11:17:20.672Z) — skipping
+[2026-06-05T15:50:02.901Z] [INFO] [job:alert-3-5935582] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T15:50:02.902Z] [INFO] [job:alert-1-5935582] Completed successfully
+[2026-06-05T15:50:02.902Z] [INFO] [job:alert-3-5935582] Completed successfully
+[2026-06-05T15:55:02.277Z] [INFO] [job:alert-3-5935583] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T15:55:02.279Z] [INFO] [job:alert-3-5935583] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T15:55:02.280Z] [INFO] [job:alert-3-5935583] Completed successfully
+[2026-06-05T16:00:02.341Z] [INFO] [job:alert-3-5935584] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T16:00:02.343Z] [INFO] [job:alert-3-5935584] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T16:00:02.344Z] [INFO] [job:alert-3-5935584] Completed successfully
+[2026-06-05T16:05:02.450Z] [INFO] [job:alert-3-5935585] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T16:05:02.452Z] [INFO] [job:alert-3-5935585] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T16:05:02.453Z] [INFO] [job:alert-3-5935585] Completed successfully
+[2026-06-05T16:10:02.569Z] [INFO] [job:alert-3-5935586] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T16:10:02.571Z] [INFO] [job:alert-3-5935586] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T16:10:02.572Z] [INFO] [job:alert-3-5935586] Completed successfully
+[2026-06-05T16:15:02.868Z] [INFO] [job:alert-3-5935587] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T16:15:02.871Z] [INFO] [job:alert-3-5935587] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T16:15:02.872Z] [INFO] [job:alert-3-5935587] Completed successfully
+[2026-06-05T16:20:02.317Z] [INFO] [job:alert-3-5935588] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T16:20:02.320Z] [INFO] [job:alert-3-5935588] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T16:20:02.321Z] [INFO] [job:alert-3-5935588] Completed successfully
+[2026-06-05T16:25:02.623Z] [INFO] [job:alert-3-5935589] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T16:25:02.626Z] [INFO] [job:alert-3-5935589] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T16:25:02.627Z] [INFO] [job:alert-3-5935589] Completed successfully
+[2026-06-05T16:30:02.725Z] [INFO] [job:alert-3-5935590] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T16:30:02.727Z] [INFO] [job:alert-3-5935590] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T16:30:02.728Z] [INFO] [job:alert-3-5935590] Completed successfully
+[2026-06-05T16:35:03.062Z] [INFO] [job:alert-3-5935591] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T16:35:03.067Z] [INFO] [job:alert-3-5935591] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T16:35:03.069Z] [INFO] [job:alert-3-5935591] Completed successfully
+[2026-06-05T16:40:02.412Z] [INFO] [job:alert-3-5935592] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T16:40:02.414Z] [INFO] [job:alert-3-5935592] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T16:40:02.415Z] [INFO] [job:alert-3-5935592] Completed successfully
+[2026-06-05T16:45:02.857Z] [INFO] [job:alert-3-5935593] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T16:45:02.860Z] [INFO] [job:alert-3-5935593] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T16:45:02.861Z] [INFO] [job:alert-3-5935593] Completed successfully
+[2026-06-05T16:50:01.954Z] [INFO] [job:alert-3-5935594] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T16:50:01.966Z] [INFO] [job:alert-3-5935594] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T16:50:01.967Z] [INFO] [job:alert-3-5935594] Completed successfully
+[2026-06-05T16:55:02.047Z] [INFO] [job:alert-3-5935595] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T16:55:02.049Z] [INFO] [job:alert-3-5935595] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T16:55:02.050Z] [INFO] [job:alert-3-5935595] Completed successfully
+[2026-06-05T17:00:02.106Z] [INFO] [job:alert-3-5935596] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T17:00:02.116Z] [INFO] [job:alert-3-5935596] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T17:00:02.117Z] [INFO] [job:alert-3-5935596] Completed successfully
+[2026-06-05T17:05:02.284Z] [INFO] [job:alert-3-5935597] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T17:05:02.286Z] [INFO] [job:alert-3-5935597] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T17:05:02.287Z] [INFO] [job:alert-3-5935597] Completed successfully
+[2026-06-05T17:10:02.402Z] [INFO] [job:alert-3-5935598] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T17:10:02.404Z] [INFO] [job:alert-3-5935598] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T17:10:02.405Z] [INFO] [job:alert-3-5935598] Completed successfully
+[2026-06-05T17:15:02.455Z] [INFO] [job:alert-3-5935599] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T17:15:02.458Z] [INFO] [job:alert-3-5935599] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T17:15:02.460Z] [INFO] [job:alert-3-5935599] Completed successfully
+[2026-06-05T17:20:02.570Z] [INFO] [job:alert-3-5935600] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T17:20:02.573Z] [INFO] [job:alert-3-5935600] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T17:20:02.574Z] [INFO] [job:alert-3-5935600] Completed successfully
+[2026-06-05T17:25:02.617Z] [INFO] [job:alert-3-5935601] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T17:25:02.619Z] [INFO] [job:alert-3-5935601] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T17:25:02.620Z] [INFO] [job:alert-3-5935601] Completed successfully
+[2026-06-05T17:30:02.704Z] [INFO] [job:alert-3-5935602] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T17:30:02.706Z] [INFO] [job:alert-3-5935602] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T17:30:02.715Z] [INFO] [job:alert-3-5935602] Completed successfully
+[2026-06-05T17:35:02.861Z] [INFO] [job:alert-3-5935603] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T17:35:02.862Z] [INFO] [job:alert-3-5935603] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T17:35:02.863Z] [INFO] [job:alert-3-5935603] Completed successfully
+[2026-06-05T17:40:02.006Z] [INFO] [job:alert-3-5935604] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T17:40:02.009Z] [INFO] [job:alert-3-5935604] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T17:40:02.009Z] [INFO] [job:alert-3-5935604] Completed successfully
+[2026-06-05T17:45:02.137Z] [INFO] [job:alert-3-5935605] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T17:45:02.139Z] [INFO] [job:alert-3-5935605] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T17:45:02.140Z] [INFO] [job:alert-3-5935605] Completed successfully
+[2026-06-05T17:50:02.430Z] [INFO] [job:alert-3-5935606] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T17:50:02.433Z] [INFO] [job:alert-3-5935606] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T17:50:02.434Z] [INFO] [job:alert-3-5935606] Completed successfully
+[2026-06-05T17:55:02.534Z] [INFO] [job:alert-3-5935607] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T17:55:02.536Z] [INFO] [job:alert-3-5935607] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T17:55:02.536Z] [INFO] [job:alert-3-5935607] Completed successfully
+[2026-06-05T18:00:02.623Z] [INFO] [job:alert-3-5935608] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T18:00:02.625Z] [INFO] [job:alert-3-5935608] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T18:00:02.625Z] [INFO] [job:alert-3-5935608] Completed successfully
+[2026-06-05T18:05:02.692Z] [INFO] [job:alert-3-5935609] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T18:05:02.694Z] [INFO] [job:alert-3-5935609] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T18:05:02.695Z] [INFO] [job:alert-3-5935609] Completed successfully
+[2026-06-05T18:10:02.837Z] [INFO] [job:alert-3-5935610] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-05T18:10:02.840Z] [INFO] [job:alert-3-5935610] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
+[2026-06-05T18:10:02.841Z] [INFO] [job:alert-3-5935610] Completed successfully

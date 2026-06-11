@@ -7,67 +7,72 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  password  String
-  role      String   @default("admin")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              Int       @id @default(autoincrement())
+  username        String    @unique
+  password        String
+  role            String    @default("admin")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  createdAuctions Auction[]
 }
 
 model Dealer {
-  id             Int       @id @default(autoincrement())
-  email          String    @unique
-  password       String
-  dealershipName String?
-  contactPerson  String
-  phoneNumber    String
-  address        String?
-  city           String?
-  country        String?
-  role           String    @default("User")
-  approvalStatus      String    @default("pending") // pending, approved, rejected
-  licenseDocumentUrl  String?   // dealership license uploaded at signup
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
-  listings            Listing[]
-  alerts              Alert[]
+  id                   Int                   @id @default(autoincrement())
+  email                String                @unique
+  password             String
+  dealershipName       String?
+  contactPerson        String
+  phoneNumber          String
+  address              String?
+  city                 String?
+  country              String?
+  role                 String                @default("User")
+  approvalStatus       String                @default("pending") // pending, approved, rejected
+  licenseDocumentUrl   String? // dealership license uploaded at signup
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  listings             Listing[]
+  alerts               Alert[]
+  auctionBids          AuctionBid[]
+  auctionNotifications AuctionNotification[]
+  wonAuctions          Auction[]             @relation("AuctionWinner")
 }
 
 model Listing {
-  id          String         @id @default(cuid())
-  dealerId    Int
-  dealer      Dealer         @relation(fields: [dealerId], references: [id], onDelete: Cascade)
-  
+  id       String @id @default(cuid())
+  dealerId Int
+  dealer   Dealer @relation(fields: [dealerId], references: [id], onDelete: Cascade)
+
   // Vehicle Information
-  make        String
-  model       String
-  year        Int
-  mileage     Int
-  variant     String?
-  
+  make    String
+  model   String
+  year    Int
+  mileage Int
+  variant String?
+
   // Listing Details
   price       Float
-  currency    String         @default("AED")
-  description String         @db.Text
-  features    String         @db.Text // JSON array stored as text
-  condition   String         // NEW, USED, CERTIFIED
-  
+  currency    String @default("AED")
+  description String @db.Text
+  features    String @db.Text // JSON array stored as text
+  condition   String // NEW, USED, CERTIFIED
+
   // Location
-  city        String
-  region      String
-  
+  city   String
+  region String
+
   // Status
-  status      String         @default("DRAFT") // DRAFT, ACTIVE, SOLD, EXPIRED
-  
+  status String @default("DRAFT") // DRAFT, ACTIVE, SOLD, EXPIRED
+
   // Images
-  images      ListingImage[]
-  
+  images ListingImage[]
+
   // Metadata
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   publishedAt DateTime?
-  
+  auctions    Auction[]
+
   @@index([dealerId])
   @@index([status])
   @@index([make, model])
@@ -77,31 +82,31 @@ model ListingImage {
   id        String   @id @default(cuid())
   listingId String
   listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
-  url       String   // URL/Path to the image in public folder
+  url       String // URL/Path to the image in public folder
   isPrimary Boolean  @default(false)
   order     Int      @default(0)
   createdAt DateTime @default(now())
-  
+
   @@index([listingId])
 }
 
 // Alert preferences for dealers
 model Alert {
-  id        Int      @id @default(autoincrement())
-  dealerId  Int
-  dealer    Dealer   @relation(fields: [dealerId], references: [id], onDelete: Cascade)
-  make      String
-  model     String
-  yearMin   Int?
-  yearMax   Int?
-  variant   String?
-  region    String
-  
-  frequency String   @default("daily") // daily, weekly, monthly
-  enabled   Boolean  @default(true)   // false = cron temporarily skips this alert
+  id       Int     @id @default(autoincrement())
+  dealerId Int
+  dealer   Dealer  @relation(fields: [dealerId], references: [id], onDelete: Cascade)
+  make     String
+  model    String
+  yearMin  Int?
+  yearMax  Int?
+  variant  String?
+  region   String
+
+  frequency String    @default("daily") // daily, weekly, monthly
+  enabled   Boolean   @default(true) // false = cron temporarily skips this alert
   lastRun   DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   @@index([dealerId])
 }
@@ -135,6 +140,132 @@ model CarVariant {
   model     CarModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
   @@unique([modelId, name])
   @@index([modelId])
+}
+
+// =====================
+// AUCTION MODULE
+// =====================
+
+model Auction {
+  id Int @id @default(autoincrement())
+
+  listingId String?
+  listing   Listing? @relation(fields: [listingId], references: [id], onDelete: SetNull)
+
+  createdByAdminId Int?
+  createdByAdmin   User? @relation(fields: [createdByAdminId], references: [id], onDelete: SetNull)
+
+  title       String
+  make        String
+  model       String
+  year        Int
+  mileage     Int
+  variant     String?
+  region      String
+  city        String?
+  description String  @db.Text
+
+  startingBid  Decimal  @db.Decimal(12, 2)
+  reservePrice Decimal? @db.Decimal(12, 2)
+  minIncrement Decimal  @db.Decimal(12, 2)
+  currency     String   @default("AED")
+
+  status   String    @default("DRAFT")
+  startAt  DateTime
+  endAt    DateTime
+  closedAt DateTime?
+
+  currentHighestBid Decimal? @db.Decimal(12, 2)
+  winnerDealerId    Int?
+  winnerDealer      Dealer?  @relation("AuctionWinner", fields: [winnerDealerId], references: [id], onDelete: SetNull)
+
+  outcome String?
+
+  images        AuctionImage[]
+  bids          AuctionBid[]
+  notifications AuctionNotification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([startAt])
+  @@index([endAt])
+  @@index([listingId])
+  @@index([winnerDealerId])
+}
+
+model AuctionImage {
+  id        Int     @id @default(autoincrement())
+  auctionId Int
+  auction   Auction @relation(fields: [auctionId], references: [id], onDelete: Cascade)
+
+  url       String
+  isPrimary Boolean @default(false)
+  order     Int     @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@index([auctionId])
+}
+
+model AuctionBid {
+  id Int @id @default(autoincrement())
+
+  auctionId Int
+  auction   Auction @relation(fields: [auctionId], references: [id], onDelete: Cascade)
+
+  dealerId Int?
+  dealer   Dealer? @relation(fields: [dealerId], references: [id], onDelete: Cascade)
+
+  userId   Int?
+  userType String? // dealer, user. Use only if public users exist.
+
+  bidderName  String?
+  bidderEmail String?
+
+  amount   Decimal @db.Decimal(12, 2)
+  currency String  @default("AED")
+  status   String  @default("active") // active, outbid, winning, rejected
+
+  createdAt DateTime @default(now())
+
+  @@index([auctionId])
+  @@index([dealerId])
+  @@index([userId])
+  @@index([amount])
+  @@index([createdAt])
+}
+
+model AuctionNotification {
+  id Int @id @default(autoincrement())
+
+  auctionId Int
+  auction   Auction @relation(fields: [auctionId], references: [id], onDelete: Cascade)
+
+  dealerId Int?
+  dealer   Dealer? @relation(fields: [dealerId], references: [id], onDelete: Cascade)
+
+  userId   Int?
+  userType String?
+
+  recipientEmail String?
+  recipientName  String?
+
+  type      String
+  title     String
+  message   String  @db.Text
+  isRead    Boolean @default(false)
+  sentEmail Boolean @default(false)
+
+  createdAt DateTime  @default(now())
+  readAt    DateTime?
+
+  @@index([auctionId])
+  @@index([dealerId])
+  @@index([userId])
+  @@index([isRead])
 }

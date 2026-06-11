@@ -1,13 +1,12 @@
 import prisma from "@/lib/db";
-import { getDealerSession } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
+import { requireDealerPortalSession } from "@/lib/require-dealer-portal";
 
 export async function POST(request: NextRequest) {
     try {
-        const session = await getDealerSession();
-        if (!session || session.type !== 'dealer') {
-            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-        }
+        const auth = await requireDealerPortalSession();
+        if (!auth.ok) return auth.response;
+        const session = auth.session;
 
         const body = await request.json();
         const {

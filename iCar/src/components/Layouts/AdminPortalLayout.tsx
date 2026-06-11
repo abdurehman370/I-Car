@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Search, Bell, Command, LayoutDashboard, Car, 
   Settings, LogOut, Zap, Menu, X, 
-  User, ShieldCheck, Users, Database, BellRing, List, Sun, Moon
+  User, ShieldCheck, Users, Database, BellRing, List, Sun, Moon, Gavel
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -18,9 +18,10 @@ interface Props {
 const adminNavItems = [
     { title: "Overview", url: "/admin", icon: LayoutDashboard },
     { title: "Profile", url: "/admin/profile", icon: User },
-    { title: "Dealers", url: "/admin/dealers", icon: Users },
+    { title: "Users", url: "/admin/users", icon: Users },
     { title: "Listings", url: "/admin/listings", icon: List },
     { title: "Taxonomy", url: "/admin/taxonomy", icon: Database },
+    { title: "Auctions", url: "/admin/auctions", icon: Gavel },
     { title: "Approvals", url: "/admin/authenticate-dealers", icon: ShieldCheck },
 ];
 
@@ -183,7 +184,7 @@ export default function AdminPortalLayout({ children }: Props) {
             <div className="relative group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 group-focus-within:text-cyan-400 transition-colors" />
               <input
-                placeholder="Search dealers, listings, taxonomy..."
+                placeholder="Search users, listings, taxonomy..."
                 className="w-full h-10 pl-10 pr-12 rounded-xl bg-white/5 border border-white/10 text-sm text-foreground placeholder:text-gray-500 focus:outline-none focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20 transition-all"
               />
               <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 px-1.5 h-5 rounded border border-white/10 bg-white/5 text-[10px] font-mono text-gray-500">

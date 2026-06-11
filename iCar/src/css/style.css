@@ -1170,3 +1170,15 @@ select option {
 .admin-light .icar-select:hover:not(:disabled) {
   background-color: hsl(210 40% 98%) !important;
 }
+
+/* Auth pages (login/signup) — readable text & password bullets on white inputs */
+.auth-form-input {
+  color: hsl(222 47% 11%) !important;
+  caret-color: hsl(222 47% 11%) !important;
+  -webkit-text-fill-color: hsl(222 47% 11%) !important;
+}
+
+.auth-form-input::placeholder {
+  color: hsl(215 16% 58%) !important;
+  opacity: 1;
+}

@@ -23,6 +23,7 @@ export async function GET(request: NextRequest) {
         const q = (searchParams.get("q") || "").trim(); // search email/name/city etc.
         const approvalStatus = (searchParams.get("approvalStatus") || "").trim(); // pending/approved/...
         const country = (searchParams.get("country") || "").trim();
+        const role = (searchParams.get("role") || "").trim();
 
         // ⚠️ IMPORTANT: use the correct Prisma model name:
         // If your schema has `model Dealer`, use prisma.dealer
@@ -30,6 +31,7 @@ export async function GET(request: NextRequest) {
         const where: any = {
             ...(approvalStatus ? { approvalStatus } : {}),
             ...(country ? { country } : {}),
+            ...(role ? { role } : {}),
             ...(q
                 ? {
                     OR: [

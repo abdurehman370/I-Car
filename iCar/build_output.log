@@ -1,0 +1,102 @@
+
+> free-nextadmin-nextjs@1.2.2 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 9.9s
+  Running TypeScript ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/48) ...
+  Generating static pages using 7 workers (12/48) 
+  Generating static pages using 7 workers (24/48) 
+The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+  Generating static pages using 7 workers (36/48) 
+The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+✓ Generating static pages using 7 workers (48/48) in 1231.8ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/auctions
+├ ƒ /admin/auctions/[id]
+├ ○ /admin/auctions/create
+├ ○ /admin/authenticate-dealers
+├ ○ /admin/calendar
+├ ○ /admin/dealers
+├ ○ /admin/listings
+├ ƒ /admin/listings/[id]
+├ ○ /admin/login
+├ ○ /admin/profile
+├ ○ /admin/taxonomy
+├ ○ /alerts
+├ ƒ /alerts/[id]/results
+├ ƒ /api/admin/auctions
+├ ƒ /api/admin/auctions/[id]
+├ ƒ /api/admin/auctions/[id]/bids
+├ ƒ /api/admin/auctions/[id]/cancel
+├ ƒ /api/admin/auctions/[id]/close
+├ ƒ /api/admin/auctions/[id]/publish
+├ ƒ /api/admin/auctions/[id]/start
+├ ƒ /api/admin/auth/login
+├ ƒ /api/admin/auth/logout
+├ ƒ /api/admin/dealers/updateStatus
+├ ƒ /api/admin/getDealers
+├ ƒ /api/admin/getListings
+├ ƒ /api/admin/listings/[id]
+├ ƒ /api/admin/profile
+├ ƒ /api/admin/taxonomy/import
+├ ƒ /api/admin/taxonomy/makes
+├ ƒ /api/admin/taxonomy/models
+├ ƒ /api/admin/taxonomy/variants
+├ ƒ /api/dealer/alerts
+├ ƒ /api/dealer/alerts/[id]
+├ ƒ /api/dealer/alerts/[id]/results
+├ ƒ /api/dealer/auction-notifications
+├ ƒ /api/dealer/auction-notifications/[id]/read
+├ ƒ /api/dealer/auctions
+├ ƒ /api/dealer/auctions/[id]
+├ ƒ /api/dealer/auctions/[id]/bid
+├ ƒ /api/dealer/auth/login
+├ ƒ /api/dealer/auth/logout
+├ ƒ /api/dealer/auth/signup
+├ ƒ /api/dealer/evaluate
+├ ƒ /api/dealer/getDealer
+├ ƒ /api/dealer/listings
+├ ƒ /api/dealer/listings/[id]
+├ ƒ /api/dealer/profile
+├ ƒ /api/dealer/search
+├ ƒ /api/listings/[id]
+├ ƒ /api/taxonomy/makes
+├ ƒ /api/taxonomy/models/[makeId]
+├ ƒ /api/taxonomy/variants/[modelId]
+├ ○ /auction-notifications
+├ ○ /auctions
+├ ƒ /auctions/[id]
+├ ○ /dashboard
+├ ○ /dealer-tools
+├ ○ /list-vehicle
+├ ○ /listings
+├ ƒ /listings/[id]
+├ ○ /login
+├ ○ /profile
+├ ○ /signup
+└ ○ /vehicle-valuation
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

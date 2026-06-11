@@ -1,12 +1,11 @@
 import prisma from "@/lib/db";
-import { getDealerSession } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
+import { requireDealerPortalSession } from "@/lib/require-dealer-portal";
 export async function GET(request: NextRequest) {
     try {
-        const session = await getDealerSession();
-        if (!session || session.type !== 'dealer') {
-            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-        }
+        const auth = await requireDealerPortalSession();
+        if (!auth.ok) return auth.response;
+        const session = auth.session;
 
         const alerts = await prisma.alert.findMany({
             where: { dealerId: session.user.id },
@@ -21,10 +20,9 @@ export async function GET(request: NextRequest) {
 }
 export async function POST(request: NextRequest) {
     try {
-        const session = await getDealerSession();
-        if (!session || session.type !== 'dealer') {
-            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-        }
+        const auth = await requireDealerPortalSession();
+        if (!auth.ok) return auth.response;
+        const session = auth.session;
 
         const body = await request.json();
         const { make, model, yearMin, yearMax, variant, region, frequency } = body;

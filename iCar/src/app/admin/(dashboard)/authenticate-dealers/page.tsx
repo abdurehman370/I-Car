@@ -17,6 +17,11 @@ import {
     FileText,
     ExternalLink,
 } from "lucide-react";
+import {
+    DEALER_ROLE,
+    dealerDisplayName,
+    requiresAdminApproval,
+} from "@/lib/dealer-roles";
 import { cn } from "@/lib/utils";
 
 // =====================
@@ -25,7 +30,7 @@ import { cn } from "@/lib/utils";
 interface Dealer {
     id: number;
     email: string;
-    dealershipName: string;
+    dealershipName: string | null;
     contactPerson: string;
     phoneNumber: string;
     address: string;
@@ -122,19 +127,33 @@ const AuthenticateDealers: React.FC = () => {
     // =====================
     // Filtering
     // =====================
-    const filteredDealers: Dealer[] = useMemo(() => {
-        return dealers.filter((dealer) => {
-            const matchesSearch =
-                dealer.dealershipName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                dealer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                dealer.contactPerson.toLowerCase().includes(searchTerm.toLowerCase());
+    const dealerApprovals = useMemo(
+        () => dealers.filter((d) => requiresAdminApproval(d.role)),
+        [dealers]
+    );
 
+    const filteredDealers: Dealer[] = useMemo(() => {
+        const q = searchTerm.trim().toLowerCase();
+
+        return dealerApprovals.filter((dealer) => {
+            const haystack = [
+                dealer.dealershipName,
+                dealer.email,
+                dealer.contactPerson,
+                dealer.city,
+                dealer.country,
+            ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
+
+            const matchesSearch = !q || haystack.includes(q);
             const matchesStatus =
                 filterStatus === "all" || dealer.approvalStatus === filterStatus;
 
             return matchesSearch && matchesStatus;
         });
-    }, [dealers, searchTerm, filterStatus]);
+    }, [dealerApprovals, searchTerm, filterStatus]);
 
     // =====================
     // Actions
@@ -228,9 +247,9 @@ const AuthenticateDealers: React.FC = () => {
     };
 
     // Stats based on loaded dealers
-    const pendingCount = dealers.filter((d) => d.approvalStatus === "pending").length;
-    const approvedCount = dealers.filter((d) => d.approvalStatus === "approved").length;
-    const rejectedCount = dealers.filter((d) => d.approvalStatus === "rejected").length;
+    const pendingCount = dealerApprovals.filter((d) => d.approvalStatus === "pending").length;
+    const approvedCount = dealerApprovals.filter((d) => d.approvalStatus === "approved").length;
+    const rejectedCount = dealerApprovals.filter((d) => d.approvalStatus === "rejected").length;
 
     return (
         <div className="min-h-screen p-4 md:p-8">
@@ -246,7 +265,7 @@ const AuthenticateDealers: React.FC = () => {
                             Dealer <span className="text-gradient">Registrations</span>
                         </h1>
                         <p className="text-gray-400 mt-2 max-w-lg text-sm">
-                            Review and approve dealer registration requests to maintain platform integrity.
+                            Review and approve car dealer registrations. Users and partners are auto-approved on signup.
                         </p>
                     </div>
 
@@ -397,8 +416,10 @@ const AuthenticateDealers: React.FC = () => {
                                                 <td colSpan={6} className="px-6 py-20 text-center">
                                                     <div className="flex flex-col items-center justify-center text-gray-500">
                                                         <Building2 className="w-12 h-12 mb-4 opacity-20" />
-                                                        <p className="text-lg font-bold text-gray-400">No dealers found</p>
-                                                        <p className="text-xs uppercase tracking-widest font-mono mt-1">Try adjusting your filters</p>
+                                                        <p className="text-lg font-bold text-gray-400">No car dealer requests</p>
+                                                        <p className="text-xs uppercase tracking-widest font-mono mt-1 max-w-sm">
+                                                            Only Car Dealers appear here. Users and partners are auto-approved — see the Users page.
+                                                        </p>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -415,7 +436,7 @@ const AuthenticateDealers: React.FC = () => {
                                                             </div>
                                                             <div>
                                                                 <div className="text-sm font-bold text-white tracking-tight">
-                                                                    {dealer.dealershipName}
+                                                                    {dealerDisplayName(dealer)}
                                                                 </div>
                                                                 <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mt-0.5">
                                                                     ID: #{dealer.id} · {dealer.phoneNumber}
@@ -434,7 +455,7 @@ const AuthenticateDealers: React.FC = () => {
                                                     <td className="px-6 py-4">
                                                         <span className={cn(
                                                             "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border",
-                                                            dealer.role === "Car Dealers"
+                                                            dealer.role === DEALER_ROLE
                                                                 ? "bg-blue-500/10 text-blue-400 border-blue-500/20"
                                                                 : dealer.role === "Baking Sector/Partners"
                                                                 ? "bg-purple-500/10 text-purple-400 border-purple-500/20"
@@ -461,8 +482,8 @@ const AuthenticateDealers: React.FC = () => {
                                                                     <button
                                                                         onClick={() => handleApprove(dealer.id)}
                                                                         className="h-9 w-9 rounded-xl glass border border-white/10 text-gray-400 hover:text-cyan-400 transition-all flex items-center justify-center disabled:opacity-50"
-                                                                        title={dealer.role === "Car Dealers" && !dealer.licenseDocumentUrl ? "License required to approve Car Dealers" : "Approve"}
-                                                                        disabled={actionLoading !== null || (dealer.role === "Car Dealers" && !dealer.licenseDocumentUrl)}
+                                                                        title={dealer.role === DEALER_ROLE && !dealer.licenseDocumentUrl ? "License required to approve car dealers" : "Approve"}
+                                                                        disabled={actionLoading !== null || (dealer.role === DEALER_ROLE && !dealer.licenseDocumentUrl)}
                                                                     >
                                                                         {actionLoading === dealer.id ? (
                                                                             <RefreshCw className="w-4 h-4 animate-spin text-cyan-400" />
@@ -530,7 +551,7 @@ const AuthenticateDealers: React.FC = () => {
 
                                         <div className="space-y-6">
                                             {[
-                                                { icon: Building2, label: "Dealership Name", value: selectedDealer.dealershipName, bold: true },
+                                                { icon: Building2, label: "Dealership Name", value: dealerDisplayName(selectedDealer), bold: true },
                                                 { icon: User, label: "Contact Person", value: selectedDealer.contactPerson },
                                                 { icon: Mail, label: "Email Address", value: selectedDealer.email },
                                                 { icon: Phone, label: "Phone Number", value: selectedDealer.phoneNumber },
@@ -597,9 +618,9 @@ const AuthenticateDealers: React.FC = () => {
                                     {/* Modal Footer */}
                                     {selectedDealer.approvalStatus === "pending" && (
                                         <div className="p-6 border-t border-white/5 flex flex-col gap-3 bg-white/[0.02] shrink-0">
-                                            {selectedDealer.role === "Car Dealers" && !selectedDealer.licenseDocumentUrl && (
+                                            {selectedDealer.role === DEALER_ROLE && !selectedDealer.licenseDocumentUrl && (
                                                 <p className="text-xs text-yellow-500 text-center">
-                                                    Cannot approve Car Dealers without a license document on file.
+                                                    Cannot approve car dealers without a license document on file.
                                                 </p>
                                             )}
                                             <div className="flex gap-3">
@@ -614,8 +635,8 @@ const AuthenticateDealers: React.FC = () => {
                                                 <button
                                                     onClick={() => handleApprove(selectedDealer.id)}
                                                     className="flex-[2] h-12 bg-gradient-to-r from-cyan-500 to-teal-500 text-black rounded-xl font-bold transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(34,211,238,0.3)] flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:hover:scale-100"
-                                                    disabled={actionLoading !== null || (selectedDealer.role === "Car Dealers" && !selectedDealer.licenseDocumentUrl)}
-                                                    title={selectedDealer.role === "Car Dealers" && !selectedDealer.licenseDocumentUrl ? "License document required to approve Car Dealers" : undefined}
+                                                    disabled={actionLoading !== null || (selectedDealer.role === DEALER_ROLE && !selectedDealer.licenseDocumentUrl)}
+                                                    title={selectedDealer.role === DEALER_ROLE && !selectedDealer.licenseDocumentUrl ? "License document required to approve car dealers" : undefined}
                                                 >
                                                     {actionLoading === selectedDealer.id ? <RefreshCw className="size-4 animate-spin" /> : <CheckCircle className="size-4" />}
                                                     Approve

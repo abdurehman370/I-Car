@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { getDealerSession } from '@/lib/auth';
+import { requireValuationSession } from '@/lib/require-dealer-portal';
+import { isPartnerRole } from '@/lib/portal-access';
 import { formatMileageDisplay, formatMileageRangeDisplay } from '@/lib/mileage';
 
 const LISTING_VALUATION_PROMPT = `You are an expert used-car dealer appraiser. Your task is to produce a dealer-focused valuation for the selected region using:
@@ -93,6 +94,46 @@ Output format (STRICT — same as listing valuation, but Condition line should s
 
 Only Summary and Price Ranges sections.`;
 
+const PARTNER_VALUATION_PROMPT = `You are an expert automotive collateral appraiser advising banks and finance partners on used-vehicle loan underwriting. Produce a market-based price estimate using live listing data (search the web). No photos are provided.
+
+Context: The user is a banking/finance partner determining collateral value for an auto loan — not a dealer buying inventory.
+
+You will receive:
+- Region/Country/Market
+- Vehicle: Make, Model, Variant/Trim, Year, Mileage (range), Specs, Notes
+
+What you must do:
+
+A) Use the region's local currency and relevant marketplaces.
+
+B) Find comparable listings (year ±1, similar mileage, trim/specs). Derive conservative price ranges suitable for lending:
+- **Fair Market Retail (private):** typical private-party sale range
+- **Dealer Retail Asking:** what dealers list similar cars for
+- **Recommended Collateral Value (conservative):** a prudent loan collateral figure — typically below retail, reflecting quick-sale risk and condition uncertainty
+
+C) Assume **Average** condition unless Notes say otherwise. State "Estimated (no inspection)" in Summary.
+
+D) Be conservative for lending — the collateral value should protect the lender if the borrower defaults.
+
+Output format (STRICT):
+
+## Summary
+
+**Region:** <region>
+**Vehicle:** <year make model variant>
+**Mileage:** <range> | **Specs:** <...>
+**Condition (estimated):** <category> — no physical inspection
+
+## Price Ranges (local currency)
+
+**Fair Market Retail (private):** <low> – <high>
+
+**Dealer Retail Asking:** <low> – <high>
+
+**Recommended Collateral Value (for lending):** <low> – <high>
+
+Only Summary and Price Ranges. Use "Recommended Collateral Value (for lending)" instead of "Dealer Buy Price".`;
+
 function buildMileageLabel(
     mileage?: number,
     mileageMin?: number,
@@ -109,11 +150,10 @@ function buildMileageLabel(
 
 export async function POST(request: Request) {
     try {
-        const session = await getDealerSession();
-        if (!session?.user) {
-            return NextResponse.json({ message: 'Unauthorized. Please log in.' }, { status: 401 });
-        }
+        const auth = await requireValuationSession();
+        if (!auth.ok) return auth.response;
 
+        const sessionRole = auth.session.user.role as string;
         const payload = await request.json();
         const {
             region,
@@ -130,7 +170,15 @@ export async function POST(request: Request) {
             mode = 'listing',
         } = payload;
 
-        const isQuick = mode === 'quick';
+        const isPartner = isPartnerRole(sessionRole) || mode === 'partner';
+        const isQuick = isPartner || mode === 'quick';
+
+        if (isPartnerRole(sessionRole) && mode === 'listing') {
+            return NextResponse.json(
+                { message: 'Partner accounts can only use quick price evaluation (no photo upload)' },
+                { status: 403 }
+            );
+        }
 
         if (!region || !make || !model || !year) {
             return NextResponse.json(
@@ -190,7 +238,9 @@ export async function POST(request: Request) {
             );
         }
 
-        const photoNote = isQuick
+        const photoNote = isPartner
+            ? 'No photos provided. This is a banking/finance collateral estimate for loan underwriting.'
+            : isQuick
             ? 'No photos provided. Use market data only and assume average condition unless notes say otherwise.'
             : `Below are ${imageList.length} photo(s) of the vehicle. Analyze them for condition.`;
 
@@ -244,7 +294,11 @@ Produce the full dealer valuation report in the exact markdown format specified.
                 messages: [
                     {
                         role: 'system',
-                        content: isQuick ? QUICK_VALUATION_PROMPT : LISTING_VALUATION_PROMPT,
+                        content: isPartner
+                            ? PARTNER_VALUATION_PROMPT
+                            : isQuick
+                              ? QUICK_VALUATION_PROMPT
+                              : LISTING_VALUATION_PROMPT,
                     },
                     { role: 'user', content: userContent },
                 ],

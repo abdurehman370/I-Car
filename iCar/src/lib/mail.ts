@@ -101,3 +101,127 @@ export async function sendAlertNotificationEmail(email: string, name: string, al
 
   return transporter.sendMail(mailOptions);
 }
+
+export async function sendAuctionPublishedEmail(email: string, name: string, auction: any) {
+  const mailOptions = {
+    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    to: email,
+    subject: `New Auction: ${auction.year} ${auction.make} ${auction.model}`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: #4f46e5;">New Auction Published</h2>
+        <p>Dear ${name},</p>
+        <p>A new vehicle has been listed for auction on iCar.</p>
+        <div style="padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 20px;">
+          <h3 style="margin-top: 0; color: #111827;">${auction.year} ${auction.make} ${auction.model} ${auction.variant || ''}</h3>
+          <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Region:</strong> ${auction.region} - ${auction.city || ''}</p>
+          <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Mileage:</strong> ${auction.mileage} KM</p>
+          <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Starting Bid:</strong> ${auction.startingBid} ${auction.currency}</p>
+          <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Starts at:</strong> ${new Date(auction.startAt).toLocaleString()}</p>
+          <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Ends at:</strong> ${new Date(auction.endAt).toLocaleString()}</p>
+        </div>
+        <div style="margin: 30px 0;">
+          <a href="${APP_URL}/auctions/${auction.id}" style="background-color: #4f46e5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">View Auction</a>
+        </div>
+        <p>Best regards,<br/>The iCar Team</p>
+      </div>
+    `,
+  };
+  return transporter.sendMail(mailOptions);
+}
+
+export async function sendAuctionStartedEmail(email: string, name: string, auction: any) {
+  const mailOptions = {
+    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    to: email,
+    subject: `Auction Started: ${auction.year} ${auction.make} ${auction.model}`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: #4f46e5;">Live Auction Started!</h2>
+        <p>Dear ${name},</p>
+        <p>The auction for <strong>${auction.year} ${auction.make} ${auction.model}</strong> is now live. Place your bids before the auction closes!</p>
+        <div style="margin: 30px 0;">
+          <a href="${APP_URL}/auctions/${auction.id}" style="background-color: #4f46e5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Bid Now</a>
+        </div>
+      </div>
+    `,
+  };
+  return transporter.sendMail(mailOptions);
+}
+
+export async function sendAuctionOutbidEmail(email: string, name: string, auction: any, newHighestBid: string) {
+  const mailOptions = {
+    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    to: email,
+    subject: `You have been outbid on ${auction.make} ${auction.model}`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: #ef4444;">You have been outbid!</h2>
+        <p>Dear ${name},</p>
+        <p>Someone has placed a higher bid on the <strong>${auction.year} ${auction.make} ${auction.model}</strong>.</p>
+        <p>The current highest bid is now <strong>${newHighestBid} ${auction.currency}</strong>.</p>
+        <div style="margin: 30px 0;">
+          <a href="${APP_URL}/auctions/${auction.id}" style="background-color: #4f46e5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Increase Your Bid</a>
+        </div>
+      </div>
+    `,
+  };
+  return transporter.sendMail(mailOptions);
+}
+
+export async function sendAuctionWonEmail(email: string, name: string, auction: any, amount: string) {
+  const mailOptions = {
+    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    to: email,
+    subject: `Congratulations! You won the auction for ${auction.make} ${auction.model}`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: #10b981;">Auction Won!</h2>
+        <p>Dear ${name},</p>
+        <p>Congratulations! You have successfully won the auction for <strong>${auction.year} ${auction.make} ${auction.model}</strong> with a final bid of <strong>${amount} ${auction.currency}</strong>.</p>
+        <p>Our team will contact you shortly regarding the next steps.</p>
+        <div style="margin: 30px 0;">
+          <a href="${APP_URL}/auctions/${auction.id}" style="background-color: #4f46e5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">View Details</a>
+        </div>
+      </div>
+    `,
+  };
+  return transporter.sendMail(mailOptions);
+}
+
+export async function sendAuctionClosedEmail(email: string, name: string, auction: any, outcome: string) {
+  const mailOptions = {
+    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    to: email,
+    subject: `Auction Ended: ${auction.year} ${auction.make} ${auction.model}`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: #6b7280;">Auction Closed</h2>
+        <p>Dear ${name},</p>
+        <p>The auction for <strong>${auction.year} ${auction.make} ${auction.model}</strong> has ended.</p>
+        <p>Result: ${outcome === 'sold' ? 'Sold' : outcome === 'reserve_not_met' ? 'Reserve Not Met' : 'No Bids'}</p>
+        <div style="margin: 30px 0;">
+          <a href="${APP_URL}/auctions/${auction.id}" style="background-color: #4f46e5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">View Auction</a>
+        </div>
+      </div>
+    `,
+  };
+  return transporter.sendMail(mailOptions);
+}
+
+export async function sendAuctionCancelledEmail(email: string, name: string, auction: any) {
+  const mailOptions = {
+    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    to: email,
+    subject: `Auction Cancelled: ${auction.year} ${auction.make} ${auction.model}`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: #ef4444;">Auction Cancelled</h2>
+        <p>Dear ${name},</p>
+        <p>We regret to inform you that the auction for <strong>${auction.year} ${auction.make} ${auction.model}</strong> has been cancelled.</p>
+        <p>If you placed any bids on this auction, they have been invalidated.</p>
+      </div>
+    `,
+  };
+  return transporter.sendMail(mailOptions);
+}

@@ -1,4 +1,5 @@
 import prisma from "@/lib/db";
+import { DEALER_ROLE } from "@/lib/dealer-roles";
 import { getAdminSession } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { sendApprovalEmail, sendRejectionEmail } from "@/lib/mail";
@@ -22,12 +23,12 @@ export async function POST(request: NextRequest) {
     if (status === "approved") {
       const dealer = await prisma.dealer.findUnique({
         where: { id: dealerId },
-        select: { licenseDocumentUrl: true },
+        select: { licenseDocumentUrl: true, role: true },
       });
 
-      if (!dealer?.licenseDocumentUrl) {
+      if (dealer?.role === DEALER_ROLE && !dealer.licenseDocumentUrl) {
         return NextResponse.json(
-          { message: "Cannot approve dealer without a license document on file" },
+          { message: "Cannot approve car dealer without a license document on file" },
           { status: 400 }
         );
       }

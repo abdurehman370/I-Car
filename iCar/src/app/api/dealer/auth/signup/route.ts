@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
 import { Prisma } from "@prisma/client";
+import { requiresAdminApproval } from "@/lib/dealer-roles";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import fs from "fs/promises";
@@ -77,10 +78,15 @@ export async function POST(request: Request) {
       );
     }
 
-    // Dealership Name is required only for non-User roles
+    // Organization / dealership name required for non-User roles
     if (role !== "User" && !dealershipName) {
       return NextResponse.json(
-        { message: "Dealership Name is required for this role" },
+        {
+          message:
+            role === "Baking Sector/Partners"
+              ? "Organization Name is required for this role"
+              : "Dealership Name is required for this role",
+        },
         { status: 400 },
       );
     }
@@ -132,7 +138,7 @@ export async function POST(request: Request) {
       city,
       country,
       role,
-      approvalStatus: "pending",
+      approvalStatus: requiresAdminApproval(role) ? "pending" : "approved",
       dealershipName,
     };
 
@@ -154,13 +160,11 @@ export async function POST(request: Request) {
       });
     }
 
-    return NextResponse.json(
-      {
-        message:
-          "Signup successful! Your account and dealership license are pending admin review.",
-      },
-      { status: 201 },
-    );
+    const successMessage = requiresAdminApproval(role)
+      ? "Signup successful! Your account and dealership license are pending admin review."
+      : "Signup successful! You can log in now.";
+
+    return NextResponse.json({ message: successMessage }, { status: 201 });
   } catch (error) {
     if (createdDealerId !== null) {
       try {

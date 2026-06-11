@@ -17,8 +17,8 @@ export const ADMIN_NAV_DATA = [
         items: [],
       },
       {
-        title: "Dealers",
-        url: "/admin/dealers",
+        title: "Users",
+        url: "/admin/users",
         icon: Icons.Table,
         items: [],
       },

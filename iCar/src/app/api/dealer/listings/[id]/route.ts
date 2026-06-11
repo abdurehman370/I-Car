@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { getDealerSession } from "@/lib/auth";
+import { requireDealerPortalSession } from "@/lib/require-dealer-portal";
 
 async function getOwnedListing(listingId: string, dealerId: number) {
     const listing = await prisma.listing.findUnique({ where: { id: listingId } });
@@ -18,10 +18,9 @@ export async function GET(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const session = await getDealerSession();
-        if (!session?.user) {
-            return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
-        }
+        const auth = await requireDealerPortalSession();
+        if (!auth.ok) return auth.response;
+        const session = auth.session;
 
         const { id } = await params;
         const result = await getOwnedListing(id, session.user.id);
@@ -46,10 +45,9 @@ export async function PATCH(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const session = await getDealerSession();
-        if (!session?.user) {
-            return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
-        }
+        const auth = await requireDealerPortalSession();
+        if (!auth.ok) return auth.response;
+        const session = auth.session;
 
         const { id } = await params;
         const owned = await getOwnedListing(id, session.user.id);
@@ -69,7 +67,11 @@ export async function PATCH(
                 );
             }
 
-            if (owned.listing.status === "SOLD" || owned.listing.status === "EXPIRED") {
+        if (!('listing' in owned) || !owned.listing) {
+            return NextResponse.json({ success: false, message: "Listing not found" }, { status: 404 });
+        }
+
+        if (owned.listing.status === "SOLD" || owned.listing.status === "EXPIRED") {
                 return NextResponse.json(
                     { success: false, message: "Cannot change status of sold or expired listings" },
                     { status: 400 }
@@ -105,6 +107,10 @@ export async function PATCH(
 
         if (!make || !model || !year || !mileage || !price || !description || !condition || !city || !region) {
             return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 });
+        }
+
+        if (!('listing' in owned) || !owned.listing) {
+            return NextResponse.json({ success: false, message: "Listing not found" }, { status: 404 });
         }
 
         const nextStatus = fullUpdateStatus || owned.listing.status;
@@ -153,10 +159,9 @@ export async function DELETE(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const session = await getDealerSession();
-        if (!session?.user) {
-            return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
-        }
+        const auth = await requireDealerPortalSession();
+        if (!auth.ok) return auth.response;
+        const session = auth.session;
 
         const { id } = await params;
         const owned = await getOwnedListing(id, session.user.id);

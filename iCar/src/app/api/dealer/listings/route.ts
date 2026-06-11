@@ -1,21 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { getDealerSession } from "@/lib/auth";
+import { requireDealerPortalSession } from "@/lib/require-dealer-portal";
 import fs from "fs/promises";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 
 export async function POST(request: NextRequest) {
     try {
-        // Authenticate dealer
-        const session = await getDealerSession();
-
-        if (!session || !session.user) {
-            return NextResponse.json(
-                { success: false, message: "Unauthorized. Please log in." },
-                { status: 401 }
-            );
-        }
+        const auth = await requireDealerPortalSession();
+        if (!auth.ok) return auth.response;
+        const session = auth.session;
 
         const dealer = session.user;
         const body = await request.json();
@@ -144,15 +138,9 @@ export async function POST(request: NextRequest) {
 // GET endpoint to fetch dealer's listings
 export async function GET(request: NextRequest) {
     try {
-        // Authenticate dealer
-        const session = await getDealerSession();
-
-        if (!session || !session.user) {
-            return NextResponse.json(
-                { success: false, message: "Unauthorized. Please log in." },
-                { status: 401 }
-            );
-        }
+        const auth = await requireDealerPortalSession();
+        if (!auth.ok) return auth.response;
+        const session = auth.session;
 
         const dealer = session.user;
 

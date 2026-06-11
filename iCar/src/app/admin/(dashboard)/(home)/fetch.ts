@@ -1,3 +1,4 @@
+import { DEALER_ROLE } from "@/lib/dealer-roles";
 import prisma from "@/lib/db";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -19,7 +20,7 @@ export async function getOverviewData() {
     prisma.dealer.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
     prisma.listing.count(),
     prisma.listing.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
-    prisma.dealer.count({ where: { approvalStatus: 'pending' } }),
+    prisma.dealer.count({ where: { approvalStatus: 'pending', role: DEALER_ROLE } }),
     prisma.listing.groupBy({
       by: ['region'],
       _count: true,
@@ -77,13 +78,13 @@ export async function getOverviewData() {
 
 export async function getDashboardQueue() {
   const pendingDealers = await prisma.dealer.findMany({
-    where: { approvalStatus: 'pending' },
+    where: { approvalStatus: 'pending', role: DEALER_ROLE },
     orderBy: { createdAt: 'desc' },
     take: 5
   });
 
   return pendingDealers.map(d => ({
-    name: d.dealershipName,
+    name: d.dealershipName || d.contactPerson || d.email,
     region: d.city || d.country || "Unknown",
     time: dayjs(d.createdAt).fromNow()
   }));

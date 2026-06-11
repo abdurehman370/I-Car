@@ -1,10 +1,10 @@
 import type { PropsWithChildren } from "react";
-import DealerPortalLayout from "@/components/Layouts/DealerPortalLayout";
+import PortalLayoutShell from "@/components/Layouts/PortalLayoutShell";
 
 export default function DealerLayout({ children }: PropsWithChildren) {
     return (
-        <DealerPortalLayout>
+        <PortalLayoutShell>
             {children}
-        </DealerPortalLayout>
+        </PortalLayoutShell>
     );
 }

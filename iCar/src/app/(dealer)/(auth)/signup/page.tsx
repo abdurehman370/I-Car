@@ -20,6 +20,10 @@ import {
   Lock,
   ChevronDown,
 } from "lucide-react";
+import { DEALER_ROLE, PARTNER_ROLE, USER_ROLE } from "@/lib/dealer-roles";
+
+const inputClass =
+  "auth-form-input h-11 w-full rounded-xl border border-gray-200 bg-white text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -35,11 +39,17 @@ export default function SignupPage() {
     country: "",
     // role will be managed separately
   });
-  const [role, setRole] = useState("User");
+  const [role, setRole] = useState(PARTNER_ROLE);
+
+  const isPartner = role === PARTNER_ROLE;
+  const isDealer = role === DEALER_ROLE;
+  const orgFieldLabel = isPartner ? "Organization Name" : "Dealership Name";
+  const orgFieldPlaceholder = isPartner ? "Acme Financial Group" : "Elite Motors";
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [licenseFile, setLicenseFile] = useState<File | null>(null);
 
@@ -113,7 +123,6 @@ export default function SignupPage() {
     if (!data.confirmPassword) {
       setError("Confirm Password is required");
       setLoading(false);
-      2;
       return;
     }
 
@@ -135,13 +144,13 @@ export default function SignupPage() {
       return;
     }
 
-    if (role !== "User" && !data.dealershipName.trim()) {
-      setError("Dealership Name is required");
+    if (role !== USER_ROLE && !data.dealershipName.trim()) {
+      setError(`${orgFieldLabel} is required`);
       setLoading(false);
       return;
     }
 
-    if (role === "Car Dealers" && !licenseFile) {
+    if (isDealer && !licenseFile) {
       setError("Please upload your dealership license document");
       setLoading(false);
       return;
@@ -151,7 +160,7 @@ export default function SignupPage() {
       const formData = new FormData();
       formData.append("email", data.email);
       formData.append("password", data.password);
-      if (role !== "User") {
+      if (role !== USER_ROLE) {
         formData.append("dealershipName", data.dealershipName);
       }
       formData.append("contactPerson", data.contactPerson);
@@ -172,6 +181,7 @@ export default function SignupPage() {
       const json = await res.json();
 
       if (res.ok) {
+        setSuccessMessage(json.message || "Registration successful!");
         setSuccess(true);
         setTimeout(() => {
           router.push("/login");
@@ -197,8 +207,7 @@ export default function SignupPage() {
             Registration Successful!
           </h2>
           <p className="mb-8 leading-relaxed text-gray-600 dark:text-gray-400">
-            Your account and dealership license have been submitted. An admin
-            will review your license and approve your access to the portal.
+            {successMessage}
           </p>
           <div className="flex items-center justify-center gap-2 text-sm font-medium text-gray-500">
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -210,9 +219,9 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col lg:flex-row">
+    <div className="flex min-h-screen w-full flex-col lg:h-screen lg:flex-row lg:overflow-hidden">
       {/* Left side: Hero Image */}
-      <div className="left-main-wrapper relative hidden w-full lg:block lg:w-[40%] xl:w-[45%]">
+      <div className="left-main-wrapper relative hidden h-full w-full lg:block lg:w-[40%] xl:w-[45%]">
         <Image
           src="/images/auth/login_img.jpg"
           alt="Join the Network"
@@ -249,9 +258,10 @@ export default function SignupPage() {
       </div>
 
       {/* Right side: Form Card */}
-      <div className="flex flex-1 items-center justify-center bg-gray-50 px-6 py-12 dark:bg-[#020d1a] lg:px-12">
-        <div className="animate-in fade-in slide-in-from-bottom-4 w-full max-w-[640px] duration-700">
-          <div className="mb-8 flex justify-center lg:hidden">
+      <div className="flex flex-1 flex-col overflow-y-auto bg-gray-50 dark:bg-[#020d1a]">
+        <div className="flex min-h-full px-6 py-12 lg:px-12">
+          <div className="m-auto w-full max-w-[640px] animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div className="mb-8 flex justify-center lg:hidden">
             <Link
               href="/"
               className="flex items-center gap-2 transition-transform hover:scale-105"
@@ -267,11 +277,18 @@ export default function SignupPage() {
 
           <div className="mb-10 text-center lg:text-left">
             <h1 className="bottom-content text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Dealer Registration
+              {role === DEALER_ROLE
+                ? "Dealer Registration"
+                : isPartner
+                  ? "Partner Registration"
+                  : "User Registration"}
             </h1>
             <p className="mt-2 text-gray-500 dark:text-gray-400">
-              Apply for a dealer account. Upload your dealership license for
-              admin verification.
+              {isDealer
+                ? "Apply for a dealer account. Upload your dealership license for admin verification."
+                : isPartner
+                  ? "Apply for a partner account to access our banking and financial services."
+                  : "Create a user account to buy, sell, and manage your cars."}
             </p>
           </div>
 
@@ -290,7 +307,7 @@ export default function SignupPage() {
                     placeholder="dealer@example.com"
                     value={data.email}
                     onChange={handleChange}
-                    className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-white"
+                    className={`${inputClass} pl-10`}
                   />
                 </div>
               </div>
@@ -305,51 +322,35 @@ export default function SignupPage() {
                     value={role}
                     onChange={(e) => {
                       setRole(e.target.value);
-                      // Clear dealershipName when role is set to User
-                      if (e.target.value === "User") {
+                      if (e.target.value === USER_ROLE) {
                         setData((prev) => ({ ...prev, dealershipName: "" }));
                       }
                     }}
-                    className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-gray-200 bg-white pl-4 pr-10 text-sm text-gray-900 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-white"
+                    className={`${inputClass} cursor-pointer appearance-none pl-4 pr-10`}
                   >
-                    <option
-                      value="Baking Sector/Partners"
-                      className="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-200"
-                    >
-                      Baking Sector/Partners
-                    </option>
-                    <option
-                      value="Car Dealers"
-                      className="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-200"
-                    >
-                      Car Dealers
-                    </option>
-                    <option
-                      value="User"
-                      className="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-200"
-                    >
-                      User
-                    </option>
+                    <option value={PARTNER_ROLE}>Banking Sector/Partners</option>
+                    <option value={DEALER_ROLE}>Car Dealers</option>
+                    <option value={USER_ROLE}>User</option>
                   </select>
                   <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-blue-500" />
                 </div>
               </div>
 
-              {/* Dealership Name */}
-              {role !== "User" && (
+              {/* Organization / Dealership Name */}
+              {role !== USER_ROLE && (
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Dealership Name *
+                    {orgFieldLabel} *
                   </label>
                   <div className="group relative">
                     <Building2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500" />
                     <input
                       name="dealershipName"
                       type="text"
-                      placeholder="Elite Motors"
+                      placeholder={orgFieldPlaceholder}
                       value={data.dealershipName}
                       onChange={handleChange}
-                      className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-white"
+                      className={`${inputClass} pl-10`}
                     />
                   </div>
                 </div>
@@ -368,7 +369,7 @@ export default function SignupPage() {
                     placeholder="John Doe"
                     value={data.contactPerson}
                     onChange={handleChange}
-                    className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-white"
+                    className={`${inputClass} pl-10`}
                   />
                 </div>
               </div>
@@ -386,7 +387,7 @@ export default function SignupPage() {
                     placeholder="+1 234 567 890"
                     value={data.phoneNumber}
                     onChange={handleChange}
-                    className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-white"
+                    className={`${inputClass} pl-10`}
                   />
                 </div>
               </div>
@@ -404,7 +405,7 @@ export default function SignupPage() {
                     placeholder="123 Luxury Way"
                     value={data.address}
                     onChange={handleChange}
-                    className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-white"
+                    className={`${inputClass} pl-10`}
                   />
                 </div>
               </div>
@@ -422,7 +423,7 @@ export default function SignupPage() {
                     placeholder="Dubai"
                     value={data.city}
                     onChange={handleChange}
-                    className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-white"
+                    className={`${inputClass} pl-10`}
                   />
                 </div>
               </div>
@@ -440,7 +441,7 @@ export default function SignupPage() {
                     placeholder="UAE"
                     value={data.country}
                     onChange={handleChange}
-                    className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-white"
+                    className={`${inputClass} pl-10`}
                   />
                 </div>
               </div>
@@ -461,7 +462,7 @@ export default function SignupPage() {
                     minLength={6}
                     value={data.password}
                     onChange={handleChange}
-                    className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 pr-12 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-white"
+                    className={`${inputClass} pl-10 pr-12`}
                   />
                   <button
                     type="button"
@@ -489,13 +490,13 @@ export default function SignupPage() {
                     minLength={6}
                     value={data.confirmPassword}
                     onChange={handleChange}
-                    className="h-11 w-full rounded-xl border border-gray-200 bg-white pl-4 pr-10 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-800 dark:bg-gray-950 dark:text-white"
+                    className={`${inputClass} pl-4 pr-10`}
                   />
                 </div>
               </div>
 
               {/* Dealership License */}
-              {role === "Car Dealers" && (
+              {isDealer && (
                 <div className="space-y-2 md:col-span-2">
                   <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     Dealership License *
@@ -507,9 +508,9 @@ export default function SignupPage() {
                   {!licenseFile ? (
                     <label
                       htmlFor="licenseDocument"
-                      className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-200 bg-white px-6 py-8 transition-all hover:border-blue-400 hover:bg-blue-50/50 dark:border-gray-700 dark:bg-gray-950 dark:hover:border-blue-500 dark:hover:bg-blue-950/20"
+                      className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-200 bg-white px-6 py-4 transition-all hover:border-blue-400 hover:bg-blue-50/50 dark:border-gray-700 dark:bg-gray-950 dark:hover:border-blue-500 dark:hover:bg-blue-950/20"
                     >
-                      <Upload className="h-8 w-8 text-gray-400" />
+                      <Upload className="h-6 w-6 text-gray-400" />
                       <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                         Click to upload license
                       </span>
@@ -605,6 +606,7 @@ export default function SignupPage() {
               Sign in here
             </Link>
           </p>
+          </div>
         </div>
       </div>
     </div>

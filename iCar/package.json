@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "worker": "tsx src/scripts/start-worker.ts",
-    "push:alerts": "tsx src/scripts/cron-push-alerts.ts"
+    "push:alerts": "tsx src/scripts/cron-push-alerts.ts",
+    "push:auctions": "tsx src/scripts/cron-push-auctions.ts"
   },
   "dependencies": {
     "@bull-board/api": "^6.19.0",

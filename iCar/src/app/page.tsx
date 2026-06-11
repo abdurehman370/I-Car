@@ -3,7 +3,9 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, BarChart3, ShieldCheck, Building2 } from "lucide-react";
+import { ArrowRight, BarChart3, Building2, ShieldCheck } from "lucide-react";
+import { getPortalHomeForRole } from "@/lib/portal-access";
+import { dealerDisplayName } from "@/lib/dealer-roles";
 
 function BadgeCard({
   icon: Icon,
@@ -70,8 +72,11 @@ export default function LandingPage() {
         return null;
       })
       .then((data) => {
-        if (data && (data.dealershipName || data.name)) {
-          setSession({ name: data.dealershipName || data.name, dashboardHref: "/dashboard" });
+        if (data?.email) {
+          setSession({
+            name: dealerDisplayName(data),
+            dashboardHref: getPortalHomeForRole(data.role),
+          });
         } else {
           setSession(null);
         }

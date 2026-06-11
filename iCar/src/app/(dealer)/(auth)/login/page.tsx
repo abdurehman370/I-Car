@@ -40,7 +40,7 @@ export default function LoginPage() {
       const json = await res.json();
 
       if (res.ok) {
-        window.location.href = "/dashboard";
+        window.location.href = json.redirectUrl || "/dashboard";
       } else {
         setError(json.message || "Login failed");
         setLoading(false);
@@ -130,7 +130,7 @@ export default function LoginPage() {
                     required
                     value={data.email}
                     onChange={handleChange}
-                    className="flex h-12 w-full rounded-xl border border-gray-200 bg-white px-10 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:text-white group-hover:border-gray-300 dark:group-hover:border-gray-700 transition-all shadow-sm"
+                    className="auth-form-input flex h-12 w-full rounded-xl border border-gray-200 bg-white px-10 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 group-hover:border-gray-300 transition-all shadow-sm"
                   />
                 </div>
               </div>
@@ -163,7 +163,7 @@ export default function LoginPage() {
                       required
                       value={data.password}
                       onChange={handleChange}
-                      className="flex h-12 w-full rounded-xl border border-gray-200 bg-white pl-10 pr-12 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:text-white group-hover:border-gray-300 dark:group-hover:border-gray-700 transition-all shadow-sm"
+                      className="auth-form-input flex h-12 w-full rounded-xl border border-gray-200 bg-white pl-10 pr-12 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 group-hover:border-gray-300 transition-all shadow-sm"
                     />
                     <button
                       type="button"
