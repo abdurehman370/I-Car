@@ -230,10 +230,10 @@ export async function POST(request: Request) {
             }
         }
 
-        const apiKey = process.env.LLM_API_KEY;
+        const apiKey = process.env.OPEN_AI_KEY;
         if (!apiKey) {
             return NextResponse.json(
-                { message: 'LLM API key not configured' },
+                { message: 'OpenAI API key not configured' },
                 { status: 500 }
             );
         }
@@ -278,19 +278,14 @@ Produce the full dealer valuation report in the exact markdown format specified.
             }
         }
 
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${apiKey}`,
-                'HTTP-Referer':
-                    process.env.NEXT_PUBLIC_APP_URL ||
-                    process.env.NEXTAUTH_URL ||
-                    'http://localhost:3000',
-                'X-Title': 'iCar Dealer Portal',
             },
             body: JSON.stringify({
-                model: 'google/gemini-2.0-flash-001',
+                model: 'gpt-5.4-2026-03-05',
                 messages: [
                     {
                         role: 'system',
@@ -302,7 +297,7 @@ Produce the full dealer valuation report in the exact markdown format specified.
                     },
                     { role: 'user', content: userContent },
                 ],
-                max_tokens: 4096,
+                max_completion_tokens: 4096,
                 temperature: 0.3,
             }),
         });
@@ -310,8 +305,8 @@ Produce the full dealer valuation report in the exact markdown format specified.
         const data = await response.json();
 
         if (!response.ok) {
-            const errMsg = data.error?.message || data.message || 'LLM request failed';
-            console.error(`OpenRouter Error:`, errMsg, data);
+            const errMsg = data.error?.message || data.message || 'OpenAI request failed';
+            console.error(`OpenAI Error:`, errMsg, data);
             return NextResponse.json(
                 { message: `Valuation service error: ${errMsg}` },
                 { status: response.status >= 400 ? response.status : 500 }
