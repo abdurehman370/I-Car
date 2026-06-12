@@ -4962,3 +4962,28 @@
 [2026-06-05T18:10:02.837Z] [INFO] [job:alert-3-5935610] Starting — alert #3 (bmw 3-series, UAE)
 [2026-06-05T18:10:02.840Z] [INFO] [job:alert-3-5935610] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-05T11:20:12.033Z) — skipping
 [2026-06-05T18:10:02.841Z] [INFO] [job:alert-3-5935610] Completed successfully
+[2026-06-12T17:43:15.342Z] [INFO] [job:alert-3-5935611] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-12T17:43:15.345Z] [INFO] [job:alert-3-5935612] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-12T17:43:15.346Z] [INFO] [job:alert-3-5935613] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-12T17:43:15.346Z] [INFO] [job:alert-3-5935614] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-12T17:43:15.346Z] [INFO] [job:alert-3-5935615] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-12T17:43:15.536Z] [INFO] [job:alert-3-5935613] Internal matches: 0
+[2026-06-12T17:43:15.571Z] [INFO] [job:alert-3-5935611] Internal matches: 0
+[2026-06-12T17:43:15.573Z] [INFO] [job:alert-3-5935612] Internal matches: 0
+[2026-06-12T17:43:15.574Z] [INFO] [job:alert-3-5935615] Internal matches: 0
+[2026-06-12T17:43:15.576Z] [INFO] [job:alert-3-5935614] Internal matches: 0
+[2026-06-12T17:43:19.933Z] [INFO] [job:alert-3-5935612] Scraper matches: 3
+[2026-06-12T17:43:20.085Z] [INFO] [job:alert-3-5935615] Scraper matches: 3
+[2026-06-12T17:43:20.613Z] [INFO] [job:alert-3-5935613] Scraper matches: 3
+[2026-06-12T17:43:21.564Z] [INFO] [job:alert-3-5935611] Scraper matches: 3
+[2026-06-12T17:43:21.689Z] [INFO] [job:alert-3-5935614] Scraper matches: 3
+[2026-06-12T17:43:22.546Z] [INFO] [job:alert-3-5935615] Done — sent email with 3 matches
+[2026-06-12T17:43:22.553Z] [INFO] [job:alert-3-5935615] Completed successfully
+[2026-06-12T17:43:22.776Z] [INFO] [job:alert-3-5935612] Done — sent email with 3 matches
+[2026-06-12T17:43:22.779Z] [INFO] [job:alert-3-5935612] Completed successfully
+[2026-06-12T17:43:23.308Z] [INFO] [job:alert-3-5935613] Done — sent email with 3 matches
+[2026-06-12T17:43:23.311Z] [INFO] [job:alert-3-5935613] Completed successfully
+[2026-06-12T17:43:23.996Z] [INFO] [job:alert-3-5935611] Done — sent email with 3 matches
+[2026-06-12T17:43:23.999Z] [INFO] [job:alert-3-5935611] Completed successfully
+[2026-06-12T17:43:24.225Z] [INFO] [job:alert-3-5935614] Done — sent email with 3 matches
+[2026-06-12T17:43:24.227Z] [INFO] [job:alert-3-5935614] Completed successfully

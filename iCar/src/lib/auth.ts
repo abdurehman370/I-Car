@@ -134,7 +134,7 @@ export async function loginDealer(userData: DealerData) {
 
   // Set dealer cookie
   (await cookies()).set(DEALER_COOKIE_NAME, session, { 
-    expires: new Date(Date.now() + SESSION_DURATION), 
+    expires: new Date(Date.now() + SESSION_DURATION),                    
     httpOnly: true, 
     sameSite: 'lax', 
     path: '/' 
