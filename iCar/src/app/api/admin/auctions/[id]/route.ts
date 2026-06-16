@@ -118,7 +118,7 @@ export async function PATCH(req: NextRequest, context: any) {
         return null;
       }));
 
-      const validImageRecords = imageRecords.filter((record: any) => record !== null);
+      const validImageRecords = imageRecords.filter(record => record !== null) as any[];
 
       if (validImageRecords.length > 0) {
         await prisma.auctionImage.createMany({
