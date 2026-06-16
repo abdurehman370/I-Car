@@ -19,6 +19,7 @@ export default function DealerAuctionBiddingPage() {
   const [bidding, setBidding] = useState(false);
   const [error, setError] = useState("");
   const [timeLeft, setTimeLeft] = useState("");
+  const [activeImage, setActiveImage] = useState<string>("");
 
   const fetchAuction = async () => {
     try {
@@ -52,6 +53,13 @@ export default function DealerAuctionBiddingPage() {
     if (!auction) {
       setLoading(false);
       return;
+    }
+
+    if (auction.images && auction.images.length > 0) {
+      const primary = auction.images.find((i: any) => i.isPrimary) || auction.images[0];
+      if (!activeImage) setActiveImage(primary.url);
+    } else {
+      if (!activeImage) setActiveImage("/car-placeholder.png");
     }
 
     const timer = setInterval(() => {
@@ -115,7 +123,6 @@ export default function DealerAuctionBiddingPage() {
     );
   }
 
-  const primaryImage = auction.images?.find((i: any) => i.isPrimary)?.url || auction.images?.[0]?.url || "/car-placeholder.png";
   const currentHighest = auction.currentHighestBid ? parseFloat(auction.currentHighestBid) : 0;
   const isWinning = myBids.length > 0 && myBids[0].status === "winning";
   const isOutbid = myBids.length > 0 && myBids[0].status === "outbid";
@@ -138,7 +145,7 @@ export default function DealerAuctionBiddingPage() {
         <div className="lg:col-span-2 space-y-6">
           <div className="panel border-white/5 bg-white/[0.02] overflow-hidden rounded-2xl">
             <div className="relative aspect-video w-full bg-black/50">
-              <Image src={primaryImage} alt={auction.title} fill className="object-cover" />
+              <Image src={activeImage || "/car-placeholder.png"} alt={auction.title || "Vehicle"} fill className="object-cover" />
               <div className="absolute top-4 left-4">
                 <span className={`px-3 py-1.5 rounded-lg text-xs font-bold tracking-widest backdrop-blur-md border ${
                   auction.status === "LIVE" ? "bg-green-500/80 text-white border-green-400" :
@@ -149,6 +156,21 @@ export default function DealerAuctionBiddingPage() {
                 </span>
               </div>
             </div>
+
+            {auction.images && auction.images.length > 1 && (
+              <div className="flex gap-3 p-4 bg-black/20 overflow-x-auto custom-scrollbar">
+                {auction.images.map((img: any, idx: number) => (
+                  <div 
+                    key={idx} 
+                    onClick={() => setActiveImage(img.url)}
+                    className={`relative w-24 h-16 rounded-lg overflow-hidden cursor-pointer border-2 transition-all shrink-0 ${activeImage === img.url ? 'border-cyan-500 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                  >
+                    <Image src={img.url} alt={`Thumbnail ${idx}`} fill className="object-cover" />
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div className="p-6">
               <h1 className="text-2xl font-bold text-white mb-2">{auction.year} {auction.make} {auction.model} {auction.variant}</h1>
               <p className="text-gray-400 text-sm mb-6">{auction.region} • {auction.city}</p>

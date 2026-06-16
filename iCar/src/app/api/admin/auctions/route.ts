@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth";
 import prisma from "@/lib/db";
+import fs from "fs/promises";
+import path from "path";
+import { v4 as uuidv4 } from "uuid";
 
 
 export async function GET(req: NextRequest) {
@@ -80,16 +83,43 @@ export async function POST(req: NextRequest) {
         currency: currency || "AED",
         startAt: start,
         endAt: end,
-        status: "DRAFT",
-        images: images && images.length > 0 ? {
-          create: images.map((img: any) => ({
-            url: img.url,
-            isPrimary: img.isPrimary || false,
-            order: img.order || 0
-          }))
-        } : undefined
+        status: "DRAFT"
       }
     });
+
+    if (images && Array.isArray(images) && images.length > 0) {
+      const uploadDir = path.join(process.cwd(), "public", "uploads", "auctions", auction.id.toString());
+      await fs.mkdir(uploadDir, { recursive: true });
+
+      const imageRecords = await Promise.all(images.map(async (imageData: string, index: number) => {
+        if (!imageData.startsWith("data:image")) return null;
+        const matches = imageData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+        if (!matches || matches.length !== 3) return null;
+
+        const type = matches[1];
+        const buffer = Buffer.from(matches[2], "base64");
+        const extension = type.split("/")[1] || "jpeg";
+        const filename = `${uuidv4()}.${extension}`;
+        const filePath = path.join(uploadDir, filename);
+
+        await fs.writeFile(filePath, buffer);
+
+        return {
+          auctionId: auction.id,
+          url: `/uploads/auctions/${auction.id}/${filename}`,
+          isPrimary: index === 0,
+          order: index,
+        };
+      }));
+
+      const validImageRecords = imageRecords.filter((record: any) => record !== null);
+
+      if (validImageRecords.length > 0) {
+        await prisma.auctionImage.createMany({
+          data: validImageRecords,
+        });
+      }
+    }
 
     return NextResponse.json({ auction, message: "Auction created successfully" }, { status: 201 });
   } catch (error: any) {

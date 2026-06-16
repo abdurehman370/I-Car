@@ -78,6 +78,49 @@ export default function AdminAuctionMonitorPage() {
     }
   };
 
+  const handleDelete = async () => {
+    if (!confirm("Are you sure you want to permanently delete this auction? This action cannot be undone.")) return;
+    setActionLoading("delete");
+    try {
+      const res = await fetch(`/api/admin/auctions/${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (res.ok) {
+        router.push("/admin/auctions");
+      } else {
+        alert(data.error || "Failed to delete auction");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred while deleting the auction.");
+    } finally {
+      setActionLoading("");
+    }
+  };
+
+  const handleAwardBid = async (bidId: string, bidderName: string) => {
+    if (!confirm(`Are you sure you want to award this auction to ${bidderName}? This will close the auction immediately.`)) return;
+    setActionLoading(`award-${bidId}`);
+    try {
+      const res = await fetch(`/api/admin/auctions/${id}/award`, { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bidId })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        fetchAuction();
+        fetchBids();
+      } else {
+        alert(data.error || "Failed to award bid");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred while awarding the bid.");
+    } finally {
+      setActionLoading("");
+    }
+  };
+
   if (loading || !auction) {
     return (
       <div className="flex items-center justify-center py-24">
@@ -125,6 +168,9 @@ export default function AdminAuctionMonitorPage() {
               </button>
             </>
           )}
+          <button onClick={handleDelete} disabled={!!actionLoading} className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold transition-colors ml-1">
+            {actionLoading === 'delete' ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Delete'}
+          </button>
         </div>
       </div>
 
@@ -186,6 +232,7 @@ export default function AdminAuctionMonitorPage() {
                       <th className="pb-3 font-medium">Bidder</th>
                       <th className="pb-3 font-medium">Amount</th>
                       <th className="pb-3 font-medium">Status</th>
+                      <th className="pb-3 font-medium text-right">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5">
@@ -205,6 +252,17 @@ export default function AdminAuctionMonitorPage() {
                           }`}>
                             {bid.status}
                           </span>
+                        </td>
+                        <td className="py-3 text-right">
+                          {auction.status !== "CLOSED" && auction.status !== "CANCELLED" && (
+                            <button 
+                              onClick={() => handleAwardBid(bid.id, bid.bidderName)}
+                              disabled={!!actionLoading}
+                              className="px-3 py-1.5 rounded-lg bg-green-500 hover:bg-green-400 text-white text-xs font-bold transition-colors disabled:opacity-50 inline-flex items-center"
+                            >
+                              {actionLoading === `award-${bid.id}` ? <Loader2 className="h-3 w-3 animate-spin mx-auto" /> : 'Award Winner'}
+                            </button>
+                          )}
                         </td>
                       </tr>
                     ))}

@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth";
 import prisma from "@/lib/db";
+import fs from "fs/promises";
+import path from "path";
+import { v4 as uuidv4 } from "uuid";
 
 
 export async function GET(req: NextRequest, context: any) {
@@ -70,14 +73,58 @@ export async function PATCH(req: NextRequest, context: any) {
 
     // Handle nested images update if provided
     if (body.images && Array.isArray(body.images)) {
-      updateData.images = {
-        deleteMany: {},
-        create: body.images.map((img: any) => ({
-          url: img.url,
-          isPrimary: img.isPrimary || false,
-          order: img.order || 0
-        }))
-      };
+      // Delete old records
+      await prisma.auctionImage.deleteMany({ where: { auctionId: id } });
+      
+      const uploadDir = path.join(process.cwd(), "public", "uploads", "auctions", id.toString());
+      
+      // Clear old directory if it exists, ignore errors
+      try {
+        await fs.rm(uploadDir, { recursive: true, force: true });
+      } catch (e) {}
+
+      await fs.mkdir(uploadDir, { recursive: true });
+
+      const imageRecords = await Promise.all(body.images.map(async (imageData: string | any, index: number) => {
+        // If it's already an existing image object, just keep it (though we just deleted the directory, so this won't work well)
+        // Let's assume frontend sends full base64 for all images if they change them
+        if (typeof imageData === 'string' && imageData.startsWith("data:image")) {
+          const matches = imageData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+          if (!matches || matches.length !== 3) return null;
+
+          const type = matches[1];
+          const buffer = Buffer.from(matches[2], "base64");
+          const extension = type.split("/")[1] || "jpeg";
+          const filename = `${uuidv4()}.${extension}`;
+          const filePath = path.join(uploadDir, filename);
+
+          await fs.writeFile(filePath, buffer);
+
+          return {
+            auctionId: id,
+            url: `/uploads/auctions/${id}/${filename}`,
+            isPrimary: index === 0,
+            order: index,
+          };
+        } else if (typeof imageData === 'string' && imageData.startsWith("/")) {
+          // If the frontend somehow sends the old URL back
+          return {
+            auctionId: id,
+            url: imageData,
+            isPrimary: index === 0,
+            order: index,
+          };
+        }
+        return null;
+      }));
+
+      const validImageRecords = imageRecords.filter((record: any) => record !== null);
+
+      if (validImageRecords.length > 0) {
+        await prisma.auctionImage.createMany({
+          data: validImageRecords,
+        });
+      }
     }
 
     const updatedAuction = await prisma.auction.update({
@@ -89,5 +136,31 @@ export async function PATCH(req: NextRequest, context: any) {
   } catch (error: any) {
     console.error("Error updating auction:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(req: NextRequest, context: any) {
+  const params = await context.params;
+  const id = parseInt(params.id);
+
+  const session = await getAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const auction = await prisma.auction.findUnique({ where: { id } });
+    if (!auction) {
+      return NextResponse.json({ error: "Auction not found" }, { status: 404 });
+    }
+
+    await prisma.auction.delete({
+      where: { id }
+    });
+
+    return NextResponse.json({ message: "Auction deleted successfully" });
+  } catch (error: any) {
+    console.error("Error deleting auction:", error);
+    return NextResponse.json({ error: "Failed to delete auction. It may have active bids or other dependencies." }, { status: 500 });
   }
 }

@@ -1,14 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { Loader2, ArrowLeft, Save, Upload, X, PlusCircle } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 
-export default function CreateAuctionPage() {
+export default function EditAuctionPage() {
   const router = useRouter();
+  const params = useParams();
+  const id = params.id;
+
   const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
   const [error, setError] = useState("");
 
   const [formData, setFormData] = useState({
@@ -31,6 +35,55 @@ export default function CreateAuctionPage() {
 
   const [images, setImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [hasImageChanges, setHasImageChanges] = useState(false);
+
+  useEffect(() => {
+    const fetchAuction = async () => {
+      try {
+        const res = await fetch(`/api/admin/auctions/${id}`);
+        const data = await res.json();
+        if (data.auction) {
+          const a = data.auction;
+          // Format dates for datetime-local input
+          const formatDate = (dateString: string) => {
+            if (!dateString) return "";
+            const d = new Date(dateString);
+            return d.toISOString().slice(0, 16);
+          };
+
+          setFormData({
+            title: a.title || "",
+            make: a.make || "",
+            model: a.model || "",
+            year: a.year?.toString() || new Date().getFullYear().toString(),
+            mileage: a.mileage?.toString() || "",
+            variant: a.variant || "",
+            region: a.region || "Dubai",
+            city: a.city || "Dubai",
+            description: a.description || "",
+            startingBid: a.startingBid?.toString() || "",
+            reservePrice: a.reservePrice?.toString() || "",
+            minIncrement: a.minIncrement?.toString() || "500",
+            currency: a.currency || "AED",
+            startAt: formatDate(a.startAt),
+            endAt: formatDate(a.endAt),
+          });
+
+          if (a.images && Array.isArray(a.images)) {
+            const sortedImages = [...a.images].sort((imgA, imgB) => imgA.order - imgB.order).map(img => img.url);
+            setImagePreviews(sortedImages);
+          }
+        } else {
+          setError("Auction not found");
+        }
+      } catch (err: any) {
+        setError(err.message || "Failed to fetch auction");
+      } finally {
+        setFetching(false);
+      }
+    };
+    fetchAuction();
+  }, [id]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -38,10 +91,11 @@ export default function CreateAuctionPage() {
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    if (images.length + files.length > 5) {
+    if (imagePreviews.length + files.length > 5) {
       setError("Maximum 5 images allowed");
       return;
     }
+    setHasImageChanges(true);
     setImages(prev => [...prev, ...files]);
     files.forEach(file => {
       const reader = new FileReader();
@@ -53,19 +107,11 @@ export default function CreateAuctionPage() {
   };
 
   const removeImage = (index: number) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
+    setHasImageChanges(true);
     setImagePreviews(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const convertImagesToBase64 = async (): Promise<string[]> => {
-    const promises = images.map(file => {
-      return new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.readAsDataURL(file);
-      });
-    });
-    return Promise.all(promises);
+    // Since images array only contains NEW files, we might not have a 1:1 mapping if some existing images are present.
+    // It's simpler to just clear the images array and make the user re-upload if they remove something,
+    // OR just use imagePreviews which has the mix of URLs and base64 strings!
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -74,51 +120,65 @@ export default function CreateAuctionPage() {
     setError("");
 
     try {
-      const imageData = await convertImagesToBase64();
-      
-      const payload = {
+      const payload: any = {
         ...formData,
-        images: imageData
+        year: parseInt(formData.year),
+        mileage: parseInt(formData.mileage),
+        startingBid: parseFloat(formData.startingBid),
+        reservePrice: formData.reservePrice ? parseFloat(formData.reservePrice) : null,
+        minIncrement: parseFloat(formData.minIncrement),
       };
 
-      const res = await fetch("/api/admin/auctions", {
-        method: "POST",
+      if (hasImageChanges) {
+        payload.images = imagePreviews;
+      }
+
+      const res = await fetch(`/api/admin/auctions/${id}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to create auction");
+      if (!res.ok) throw new Error(data.error || "Failed to update auction");
 
-      router.push(`/admin/auctions/${data.auction.id}`);
+      router.push(`/admin/auctions/${id}`);
     } catch (err: any) {
       setError(err.message);
       setLoading(false);
     }
   };
 
+  if (fetching) {
+    return (
+      <div className="flex items-center justify-center py-24">
+        <Loader2 className="h-10 w-10 animate-spin text-cyan-500" />
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-4xl mx-auto pb-12">
       <div className="flex items-center gap-4 mb-6">
         <Link
-          href="/admin/auctions"
+          href={`/admin/auctions/${id}`}
           className="p-2 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="h-5 w-5" />
         </Link>
-        <Breadcrumb pageName="Create Auction" />
+        <Breadcrumb pageName="Edit Auction" />
       </div>
 
       <div className="panel border-white/5 bg-white/[0.02] p-6 lg:p-8 rounded-2xl relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-500"></div>
-        
+
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* General Information */}
           <div className="space-y-4">
             <h3 className="text-lg font-bold text-white tracking-tight border-b border-white/10 pb-2">
               General Information
             </h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-semibold text-gray-300">Auction Title *</label>
@@ -254,7 +314,7 @@ export default function CreateAuctionPage() {
             <h3 className="text-lg font-bold text-white tracking-tight border-b border-white/10 pb-2">
               Auction Configuration
             </h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-300">Starting Bid ({formData.currency}) *</label>
@@ -309,7 +369,7 @@ export default function CreateAuctionPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-300">Start Time *</label>
+                <label className="text-sm font-semibold text-gray-300">Start Date & Time *</label>
                 <input
                   required
                   type="datetime-local"
@@ -321,7 +381,7 @@ export default function CreateAuctionPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-300">End Time *</label>
+                <label className="text-sm font-semibold text-gray-300">End Date & Time *</label>
                 <input
                   required
                   type="datetime-local"
@@ -342,7 +402,7 @@ export default function CreateAuctionPage() {
 
           <div className="flex items-center justify-end gap-4 pt-6 border-t border-white/10">
             <Link
-              href="/admin/auctions"
+              href={`/admin/auctions/${id}`}
               className="px-6 py-3 rounded-xl text-gray-300 hover:bg-white/5 transition-colors font-semibold"
             >
               Cancel
@@ -353,7 +413,7 @@ export default function CreateAuctionPage() {
               className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-cyan-500/25 disabled:opacity-50"
             >
               {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Save className="h-5 w-5" />}
-              Save as Draft
+              Save Changes
             </button>
           </div>
         </form>
