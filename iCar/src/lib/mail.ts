@@ -54,6 +54,45 @@ export async function sendRejectionEmail(email: string, name: string) {
   return transporter.sendMail(mailOptions);
 }
 
+export async function sendDealerSignupEmail(email: string, name: string) {
+  const mailOptions = {
+    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    to: email,
+    subject: 'Welcome to iCar! Your Application is Received',
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: #4f46e5;">Welcome to iCar!</h2>
+        <p>Dear ${name},</p>
+        <p>Thank you for signing up to become a dealer on iCar.</p>
+        <p>We have successfully received your application. Our admin team will review your details and license document shortly.</p>
+        <p>You will receive another email once your application has been approved.</p>
+        <p>Best regards,<br/>The iCar Team</p>
+      </div>
+    `,
+  };
+  return transporter.sendMail(mailOptions);
+}
+
+export async function sendAdminNewDealerEmail(adminEmail: string, dealerName: string, dealershipName: string) {
+  const mailOptions = {
+    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    to: adminEmail,
+    subject: 'New Dealer Application Received',
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: #4f46e5;">New Dealer Signup</h2>
+        <p>A new dealer has signed up and is waiting for approval.</p>
+        <p><strong>Contact Person:</strong> ${dealerName}</p>
+        <p><strong>Dealership Name:</strong> ${dealershipName}</p>
+        <div style="margin: 30px 0;">
+          <a href="${APP_URL}/admin/dealers" style="background-color: #4f46e5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Review Application</a>
+        </div>
+      </div>
+    `,
+  };
+  return transporter.sendMail(mailOptions);
+}
+
 export async function sendAlertNotificationEmail(email: string, name: string, alert: any, matches: any[]) {
   const mailOptions = {
     from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',

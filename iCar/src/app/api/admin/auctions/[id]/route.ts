@@ -4,7 +4,7 @@ import prisma from "@/lib/db";
 
 
 export async function GET(req: NextRequest, context: any) {
-  const { params } = context;
+  const params = await context.params;
   const id = parseInt(params.id);
 
   const session = await getAdminSession();
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest, context: any) {
 }
 
 export async function PATCH(req: NextRequest, context: any) {
-  const { params } = context;
+  const params = await context.params;
   const id = parseInt(params.id);
 
   const session = await getAdminSession();
@@ -55,6 +55,7 @@ export async function PATCH(req: NextRequest, context: any) {
     const body = await req.json();
     
     // Convert dates if provided
+    // Convert dates if provided
     const updateData: any = { ...body };
     if (body.startAt) updateData.startAt = new Date(body.startAt);
     if (body.endAt) updateData.endAt = new Date(body.endAt);
@@ -66,6 +67,18 @@ export async function PATCH(req: NextRequest, context: any) {
     delete updateData.winnerDealerId;
     delete updateData.outcome;
     delete updateData.closedAt;
+
+    // Handle nested images update if provided
+    if (body.images && Array.isArray(body.images)) {
+      updateData.images = {
+        deleteMany: {},
+        create: body.images.map((img: any) => ({
+          url: img.url,
+          isPrimary: img.isPrimary || false,
+          order: img.order || 0
+        }))
+      };
+    }
 
     const updatedAuction = await prisma.auction.update({
       where: { id },

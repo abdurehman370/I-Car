@@ -164,6 +164,21 @@ export async function POST(request: Request) {
       ? "Signup successful! Your account and dealership license are pending admin review."
       : "Signup successful! You can log in now.";
 
+    // Import dynamically to avoid circular dependencies if any
+    const { sendDealerSignupEmail, sendAdminNewDealerEmail } = await import("@/lib/mail");
+
+    // Send signup emails
+    if (requiresAdminApproval(role)) {
+      await sendDealerSignupEmail(email, contactPerson).catch(console.error);
+      
+      const admins = await prisma.user.findMany({ where: { role: 'admin' } });
+      await Promise.all(admins.map(async (admin) => {
+        if (admin.username.includes('@')) {
+          await sendAdminNewDealerEmail(admin.username, contactPerson, dealershipName || 'N/A').catch(console.error);
+        }
+      }));
+    }
+
     return NextResponse.json({ message: successMessage }, { status: 201 });
   } catch (error) {
     if (createdDealerId !== null) {

@@ -4987,3 +4987,1445 @@
 [2026-06-12T17:43:23.999Z] [INFO] [job:alert-3-5935611] Completed successfully
 [2026-06-12T17:43:24.225Z] [INFO] [job:alert-3-5935614] Done — sent email with 3 matches
 [2026-06-12T17:43:24.227Z] [INFO] [job:alert-3-5935614] Completed successfully
+[2026-06-15T11:31:39.259Z] [INFO] [job:alert-3-5935616] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:31:39.264Z] [INFO] [job:alert-3-5935617] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:31:39.264Z] [INFO] [job:alert-3-5935618] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:31:39.264Z] [INFO] [job:alert-3-5935619] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:31:39.265Z] [INFO] [job:alert-3-5936676] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:31:39.573Z] [INFO] [job:alert-3-5935616] Internal matches: 0
+[2026-06-15T11:31:39.613Z] [INFO] [job:alert-3-5935617] Internal matches: 0
+[2026-06-15T11:31:39.617Z] [INFO] [job:alert-3-5935618] Internal matches: 0
+[2026-06-15T11:31:39.620Z] [INFO] [job:alert-3-5935619] Internal matches: 0
+[2026-06-15T11:31:39.625Z] [INFO] [job:alert-3-5936676] Internal matches: 0
+[2026-06-15T11:32:00.287Z] [INFO] [job:alert-3-5935619] Scraper matches: 5
+[2026-06-15T11:32:00.389Z] [INFO] [job:alert-3-5935617] Scraper matches: 5
+[2026-06-15T11:32:00.469Z] [INFO] [job:alert-3-5935616] Scraper matches: 5
+[2026-06-15T11:32:00.602Z] [INFO] [job:alert-3-5936676] Scraper matches: 5
+[2026-06-15T11:32:00.764Z] [INFO] [job:alert-3-5935618] Scraper matches: 5
+[2026-06-15T11:32:02.715Z] [INFO] [job:alert-3-5935619] Done — sent email with 5 matches
+[2026-06-15T11:32:02.719Z] [INFO] [job:alert-3-5935619] Completed successfully
+[2026-06-15T11:32:02.720Z] [INFO] [job:alert-3-5936677] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.725Z] [INFO] [job:alert-3-5936677] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.679Z) — skipping
+[2026-06-15T11:32:02.726Z] [INFO] [job:alert-3-5936677] Completed successfully
+[2026-06-15T11:32:02.726Z] [INFO] [job:alert-3-5936678] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.729Z] [INFO] [job:alert-3-5936678] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.679Z) — skipping
+[2026-06-15T11:32:02.731Z] [INFO] [job:alert-3-5936678] Completed successfully
+[2026-06-15T11:32:02.731Z] [INFO] [job:alert-3-5936679] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.735Z] [INFO] [job:alert-3-5936679] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.679Z) — skipping
+[2026-06-15T11:32:02.736Z] [INFO] [job:alert-3-5936679] Completed successfully
+[2026-06-15T11:32:02.737Z] [INFO] [job:alert-3-5936680] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.740Z] [INFO] [job:alert-3-5936680] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.679Z) — skipping
+[2026-06-15T11:32:02.742Z] [INFO] [job:alert-3-5936680] Completed successfully
+[2026-06-15T11:32:02.742Z] [INFO] [job:alert-3-5936681] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.744Z] [INFO] [job:alert-3-5936681] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.679Z) — skipping
+[2026-06-15T11:32:02.746Z] [INFO] [job:alert-3-5936681] Completed successfully
+[2026-06-15T11:32:02.746Z] [INFO] [job:alert-3-5936682] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.750Z] [INFO] [job:alert-3-5936682] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.679Z) — skipping
+[2026-06-15T11:32:02.751Z] [INFO] [job:alert-3-5936682] Completed successfully
+[2026-06-15T11:32:02.752Z] [INFO] [job:alert-3-5936683] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.754Z] [INFO] [job:alert-3-5936683] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.679Z) — skipping
+[2026-06-15T11:32:02.755Z] [INFO] [job:alert-3-5936683] Completed successfully
+[2026-06-15T11:32:02.756Z] [INFO] [job:alert-3-5936684] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.763Z] [INFO] [job:alert-3-5936684] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.679Z) — skipping
+[2026-06-15T11:32:02.765Z] [INFO] [job:alert-3-5936684] Completed successfully
+[2026-06-15T11:32:02.766Z] [INFO] [job:alert-3-5936685] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.768Z] [INFO] [job:alert-3-5936685] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.679Z) — skipping
+[2026-06-15T11:32:02.769Z] [INFO] [job:alert-3-5936685] Completed successfully
+[2026-06-15T11:32:02.769Z] [INFO] [job:alert-3-5936686] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.771Z] [INFO] [job:alert-3-5936686] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.679Z) — skipping
+[2026-06-15T11:32:02.774Z] [INFO] [job:alert-3-5936686] Completed successfully
+[2026-06-15T11:32:02.775Z] [INFO] [job:alert-3-5936687] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.776Z] [INFO] [job:alert-3-5936687] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.679Z) — skipping
+[2026-06-15T11:32:02.778Z] [INFO] [job:alert-3-5936687] Completed successfully
+[2026-06-15T11:32:02.778Z] [INFO] [job:alert-3-5936688] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.779Z] [INFO] [job:alert-3-5935617] Done — sent email with 5 matches
+[2026-06-15T11:32:02.782Z] [INFO] [job:alert-3-5936688] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.783Z] [INFO] [job:alert-3-5935617] Completed successfully
+[2026-06-15T11:32:02.783Z] [INFO] [job:alert-3-5936689] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.784Z] [INFO] [job:alert-3-5936688] Completed successfully
+[2026-06-15T11:32:02.784Z] [INFO] [job:alert-3-5936690] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.786Z] [INFO] [job:alert-3-5936689] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.787Z] [INFO] [job:alert-3-5936690] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.787Z] [INFO] [job:alert-3-5936689] Completed successfully
+[2026-06-15T11:32:02.787Z] [INFO] [job:alert-3-5936690] Completed successfully
+[2026-06-15T11:32:02.788Z] [INFO] [job:alert-3-5936691] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.788Z] [INFO] [job:alert-3-5936692] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.794Z] [INFO] [job:alert-3-5936691] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.794Z] [INFO] [job:alert-3-5936692] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.796Z] [INFO] [job:alert-3-5936691] Completed successfully
+[2026-06-15T11:32:02.796Z] [INFO] [job:alert-3-5936692] Completed successfully
+[2026-06-15T11:32:02.797Z] [INFO] [job:alert-3-5936693] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.797Z] [INFO] [job:alert-3-5936694] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.801Z] [INFO] [job:alert-3-5936693] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.801Z] [INFO] [job:alert-3-5936694] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.803Z] [INFO] [job:alert-3-5936693] Completed successfully
+[2026-06-15T11:32:02.803Z] [INFO] [job:alert-3-5936694] Completed successfully
+[2026-06-15T11:32:02.803Z] [INFO] [job:alert-3-5936695] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.804Z] [INFO] [job:alert-3-5936696] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.807Z] [INFO] [job:alert-3-5936695] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.807Z] [INFO] [job:alert-3-5936696] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.809Z] [INFO] [job:alert-3-5936695] Completed successfully
+[2026-06-15T11:32:02.809Z] [INFO] [job:alert-3-5936696] Completed successfully
+[2026-06-15T11:32:02.809Z] [INFO] [job:alert-3-5936697] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.810Z] [INFO] [job:alert-3-5936698] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.812Z] [INFO] [job:alert-3-5936697] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.812Z] [INFO] [job:alert-3-5936698] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.814Z] [INFO] [job:alert-3-5936697] Completed successfully
+[2026-06-15T11:32:02.815Z] [INFO] [job:alert-3-5936699] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.816Z] [INFO] [job:alert-3-5936698] Completed successfully
+[2026-06-15T11:32:02.816Z] [INFO] [job:alert-3-5936700] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.817Z] [INFO] [job:alert-3-5936699] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.818Z] [INFO] [job:alert-3-5936700] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.819Z] [INFO] [job:alert-3-5936699] Completed successfully
+[2026-06-15T11:32:02.819Z] [INFO] [job:alert-3-5936701] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.820Z] [INFO] [job:alert-3-5936700] Completed successfully
+[2026-06-15T11:32:02.820Z] [INFO] [job:alert-3-5936702] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.822Z] [INFO] [job:alert-3-5936701] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.824Z] [INFO] [job:alert-3-5936702] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.825Z] [INFO] [job:alert-3-5936701] Completed successfully
+[2026-06-15T11:32:02.825Z] [INFO] [job:alert-3-5936702] Completed successfully
+[2026-06-15T11:32:02.825Z] [INFO] [job:alert-3-5936703] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.826Z] [INFO] [job:alert-3-5936704] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.827Z] [INFO] [job:alert-3-5936703] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.828Z] [INFO] [job:alert-3-5936704] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.829Z] [INFO] [job:alert-3-5936703] Completed successfully
+[2026-06-15T11:32:02.829Z] [INFO] [job:alert-3-5936704] Completed successfully
+[2026-06-15T11:32:02.830Z] [INFO] [job:alert-3-5936705] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.831Z] [INFO] [job:alert-3-5936706] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.833Z] [INFO] [job:alert-3-5936705] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.833Z] [INFO] [job:alert-3-5936706] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.834Z] [INFO] [job:alert-3-5936705] Completed successfully
+[2026-06-15T11:32:02.834Z] [INFO] [job:alert-3-5936707] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.835Z] [INFO] [job:alert-3-5936706] Completed successfully
+[2026-06-15T11:32:02.835Z] [INFO] [job:alert-3-5936708] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.837Z] [INFO] [job:alert-3-5936707] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.837Z] [INFO] [job:alert-3-5936708] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.838Z] [INFO] [job:alert-3-5936707] Completed successfully
+[2026-06-15T11:32:02.839Z] [INFO] [job:alert-3-5936709] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.841Z] [INFO] [job:alert-3-5936708] Completed successfully
+[2026-06-15T11:32:02.841Z] [INFO] [job:alert-3-5936710] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.842Z] [INFO] [job:alert-3-5936709] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.843Z] [INFO] [job:alert-3-5936710] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.844Z] [INFO] [job:alert-3-5936709] Completed successfully
+[2026-06-15T11:32:02.844Z] [INFO] [job:alert-3-5936711] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.845Z] [INFO] [job:alert-3-5936710] Completed successfully
+[2026-06-15T11:32:02.846Z] [INFO] [job:alert-3-5936712] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.848Z] [INFO] [job:alert-3-5936711] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.849Z] [INFO] [job:alert-3-5936712] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.850Z] [INFO] [job:alert-3-5936711] Completed successfully
+[2026-06-15T11:32:02.850Z] [INFO] [job:alert-3-5936712] Completed successfully
+[2026-06-15T11:32:02.850Z] [INFO] [job:alert-3-5936713] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.851Z] [INFO] [job:alert-3-5936714] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.852Z] [INFO] [job:alert-3-5936713] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.853Z] [INFO] [job:alert-3-5936714] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.854Z] [INFO] [job:alert-3-5936713] Completed successfully
+[2026-06-15T11:32:02.854Z] [INFO] [job:alert-3-5936714] Completed successfully
+[2026-06-15T11:32:02.854Z] [INFO] [job:alert-3-5936715] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.855Z] [INFO] [job:alert-3-5936716] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.858Z] [INFO] [job:alert-3-5936715] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.858Z] [INFO] [job:alert-3-5936716] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.859Z] [INFO] [job:alert-3-5936715] Completed successfully
+[2026-06-15T11:32:02.859Z] [INFO] [job:alert-3-5936716] Completed successfully
+[2026-06-15T11:32:02.859Z] [INFO] [job:alert-3-5936717] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.860Z] [INFO] [job:alert-3-5936718] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.862Z] [INFO] [job:alert-3-5936717] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.863Z] [INFO] [job:alert-3-5936718] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.864Z] [INFO] [job:alert-3-5936717] Completed successfully
+[2026-06-15T11:32:02.864Z] [INFO] [job:alert-3-5936718] Completed successfully
+[2026-06-15T11:32:02.864Z] [INFO] [job:alert-3-5936719] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.865Z] [INFO] [job:alert-3-5936720] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.867Z] [INFO] [job:alert-3-5936719] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.867Z] [INFO] [job:alert-3-5936720] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.868Z] [INFO] [job:alert-3-5936719] Completed successfully
+[2026-06-15T11:32:02.869Z] [INFO] [job:alert-3-5936720] Completed successfully
+[2026-06-15T11:32:02.869Z] [INFO] [job:alert-3-5936721] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.869Z] [INFO] [job:alert-3-5936722] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.870Z] [INFO] [job:alert-3-5936721] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.871Z] [INFO] [job:alert-3-5936722] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.872Z] [INFO] [job:alert-3-5936721] Completed successfully
+[2026-06-15T11:32:02.872Z] [INFO] [job:alert-3-5936722] Completed successfully
+[2026-06-15T11:32:02.872Z] [INFO] [job:alert-3-5936723] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.872Z] [INFO] [job:alert-3-5936724] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.875Z] [INFO] [job:alert-3-5936723] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.875Z] [INFO] [job:alert-3-5936724] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.877Z] [INFO] [job:alert-3-5936723] Completed successfully
+[2026-06-15T11:32:02.877Z] [INFO] [job:alert-3-5936724] Completed successfully
+[2026-06-15T11:32:02.877Z] [INFO] [job:alert-3-5936725] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.878Z] [INFO] [job:alert-3-5936726] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.879Z] [INFO] [job:alert-3-5936725] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.879Z] [INFO] [job:alert-3-5936726] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.881Z] [INFO] [job:alert-3-5936725] Completed successfully
+[2026-06-15T11:32:02.881Z] [INFO] [job:alert-3-5936726] Completed successfully
+[2026-06-15T11:32:02.882Z] [INFO] [job:alert-3-5936727] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.882Z] [INFO] [job:alert-3-5936728] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.884Z] [INFO] [job:alert-3-5936727] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.884Z] [INFO] [job:alert-3-5936728] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.886Z] [INFO] [job:alert-3-5936727] Completed successfully
+[2026-06-15T11:32:02.886Z] [INFO] [job:alert-3-5936728] Completed successfully
+[2026-06-15T11:32:02.886Z] [INFO] [job:alert-3-5936729] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.886Z] [INFO] [job:alert-3-5936730] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.888Z] [INFO] [job:alert-3-5936729] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.888Z] [INFO] [job:alert-3-5936730] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.892Z] [INFO] [job:alert-3-5936729] Completed successfully
+[2026-06-15T11:32:02.892Z] [INFO] [job:alert-3-5936730] Completed successfully
+[2026-06-15T11:32:02.892Z] [INFO] [job:alert-3-5936731] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.893Z] [INFO] [job:alert-3-5936732] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.894Z] [INFO] [job:alert-3-5936731] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.894Z] [INFO] [job:alert-3-5936732] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.896Z] [INFO] [job:alert-3-5936731] Completed successfully
+[2026-06-15T11:32:02.897Z] [INFO] [job:alert-3-5936732] Completed successfully
+[2026-06-15T11:32:02.897Z] [INFO] [job:alert-3-5936733] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.897Z] [INFO] [job:alert-3-5936734] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.899Z] [INFO] [job:alert-3-5936733] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.899Z] [INFO] [job:alert-3-5936734] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.901Z] [INFO] [job:alert-3-5936733] Completed successfully
+[2026-06-15T11:32:02.901Z] [INFO] [job:alert-3-5936734] Completed successfully
+[2026-06-15T11:32:02.901Z] [INFO] [job:alert-3-5936735] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.902Z] [INFO] [job:alert-3-5936736] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.903Z] [INFO] [job:alert-3-5936735] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.903Z] [INFO] [job:alert-3-5936736] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.904Z] [INFO] [job:alert-3-5936735] Completed successfully
+[2026-06-15T11:32:02.904Z] [INFO] [job:alert-3-5936736] Completed successfully
+[2026-06-15T11:32:02.904Z] [INFO] [job:alert-3-5936737] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.905Z] [INFO] [job:alert-3-5936738] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.907Z] [INFO] [job:alert-3-5936737] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.908Z] [INFO] [job:alert-3-5936738] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.909Z] [INFO] [job:alert-3-5936737] Completed successfully
+[2026-06-15T11:32:02.909Z] [INFO] [job:alert-3-5936738] Completed successfully
+[2026-06-15T11:32:02.910Z] [INFO] [job:alert-3-5936739] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.910Z] [INFO] [job:alert-3-5936740] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.912Z] [INFO] [job:alert-3-5936739] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.912Z] [INFO] [job:alert-3-5936740] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.913Z] [INFO] [job:alert-3-5936739] Completed successfully
+[2026-06-15T11:32:02.913Z] [INFO] [job:alert-3-5936740] Completed successfully
+[2026-06-15T11:32:02.913Z] [INFO] [job:alert-3-5936741] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.913Z] [INFO] [job:alert-3-5936742] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.915Z] [INFO] [job:alert-3-5936741] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.915Z] [INFO] [job:alert-3-5936742] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.916Z] [INFO] [job:alert-3-5936741] Completed successfully
+[2026-06-15T11:32:02.917Z] [INFO] [job:alert-3-5936742] Completed successfully
+[2026-06-15T11:32:02.917Z] [INFO] [job:alert-3-5936743] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.917Z] [INFO] [job:alert-3-5936744] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.919Z] [INFO] [job:alert-3-5936743] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.919Z] [INFO] [job:alert-3-5936744] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.920Z] [INFO] [job:alert-3-5936743] Completed successfully
+[2026-06-15T11:32:02.920Z] [INFO] [job:alert-3-5936744] Completed successfully
+[2026-06-15T11:32:02.920Z] [INFO] [job:alert-3-5936745] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.920Z] [INFO] [job:alert-3-5936746] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.922Z] [INFO] [job:alert-3-5936745] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.922Z] [INFO] [job:alert-3-5936746] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.924Z] [INFO] [job:alert-3-5936745] Completed successfully
+[2026-06-15T11:32:02.924Z] [INFO] [job:alert-3-5936746] Completed successfully
+[2026-06-15T11:32:02.924Z] [INFO] [job:alert-3-5936747] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.925Z] [INFO] [job:alert-3-5936748] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.927Z] [INFO] [job:alert-3-5936747] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.927Z] [INFO] [job:alert-3-5936748] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.928Z] [INFO] [job:alert-3-5936747] Completed successfully
+[2026-06-15T11:32:02.928Z] [INFO] [job:alert-3-5936748] Completed successfully
+[2026-06-15T11:32:02.928Z] [INFO] [job:alert-3-5936749] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.928Z] [INFO] [job:alert-3-5936750] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.930Z] [INFO] [job:alert-3-5936749] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.930Z] [INFO] [job:alert-3-5936750] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.761Z) — skipping
+[2026-06-15T11:32:02.931Z] [INFO] [job:alert-3-5936749] Completed successfully
+[2026-06-15T11:32:02.932Z] [INFO] [job:alert-3-5936750] Completed successfully
+[2026-06-15T11:32:02.932Z] [INFO] [job:alert-3-5936751] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.932Z] [INFO] [job:alert-3-5936752] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.934Z] [INFO] [job:alert-3-5935616] Done — sent email with 5 matches
+[2026-06-15T11:32:02.934Z] [INFO] [job:alert-3-5936751] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.934Z] [INFO] [job:alert-3-5936752] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.935Z] [INFO] [job:alert-3-5935616] Completed successfully
+[2026-06-15T11:32:02.935Z] [INFO] [job:alert-3-5936751] Completed successfully
+[2026-06-15T11:32:02.935Z] [INFO] [job:alert-3-5936752] Completed successfully
+[2026-06-15T11:32:02.936Z] [INFO] [job:alert-3-5936753] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.936Z] [INFO] [job:alert-3-5936754] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.936Z] [INFO] [job:alert-3-5936755] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.940Z] [INFO] [job:alert-3-5936753] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.940Z] [INFO] [job:alert-3-5936754] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.940Z] [INFO] [job:alert-3-5936755] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.942Z] [INFO] [job:alert-3-5936753] Completed successfully
+[2026-06-15T11:32:02.942Z] [INFO] [job:alert-3-5936756] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.943Z] [INFO] [job:alert-3-5936754] Completed successfully
+[2026-06-15T11:32:02.943Z] [INFO] [job:alert-3-5936755] Completed successfully
+[2026-06-15T11:32:02.943Z] [INFO] [job:alert-3-5936757] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.943Z] [INFO] [job:alert-3-5936758] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.945Z] [INFO] [job:alert-3-5936756] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.945Z] [INFO] [job:alert-3-5936757] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.946Z] [INFO] [job:alert-3-5936758] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.946Z] [INFO] [job:alert-3-5936756] Completed successfully
+[2026-06-15T11:32:02.947Z] [INFO] [job:alert-3-5936759] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.948Z] [INFO] [job:alert-3-5936757] Completed successfully
+[2026-06-15T11:32:02.949Z] [INFO] [job:alert-3-5936758] Completed successfully
+[2026-06-15T11:32:02.949Z] [INFO] [job:alert-3-5936760] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.949Z] [INFO] [job:alert-3-5936761] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.950Z] [INFO] [job:alert-3-5936759] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.951Z] [INFO] [job:alert-3-5936760] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.951Z] [INFO] [job:alert-3-5936761] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.952Z] [INFO] [job:alert-3-5936759] Completed successfully
+[2026-06-15T11:32:02.952Z] [INFO] [job:alert-3-5936760] Completed successfully
+[2026-06-15T11:32:02.952Z] [INFO] [job:alert-3-5936761] Completed successfully
+[2026-06-15T11:32:02.952Z] [INFO] [job:alert-3-5936762] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.953Z] [INFO] [job:alert-3-5936763] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.953Z] [INFO] [job:alert-3-5936764] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.955Z] [INFO] [job:alert-3-5936762] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.956Z] [INFO] [job:alert-3-5936763] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.956Z] [INFO] [job:alert-3-5936764] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.958Z] [INFO] [job:alert-3-5936762] Completed successfully
+[2026-06-15T11:32:02.958Z] [INFO] [job:alert-3-5936765] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.959Z] [INFO] [job:alert-3-5936763] Completed successfully
+[2026-06-15T11:32:02.960Z] [INFO] [job:alert-3-5936764] Completed successfully
+[2026-06-15T11:32:02.960Z] [INFO] [job:alert-3-5936766] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.960Z] [INFO] [job:alert-3-5936767] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.961Z] [INFO] [job:alert-3-5936765] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.962Z] [INFO] [job:alert-3-5936766] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.963Z] [INFO] [job:alert-3-5936767] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.964Z] [INFO] [job:alert-3-5936765] Completed successfully
+[2026-06-15T11:32:02.964Z] [INFO] [job:alert-3-5936766] Completed successfully
+[2026-06-15T11:32:02.964Z] [INFO] [job:alert-3-5936768] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.965Z] [INFO] [job:alert-3-5936769] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.966Z] [INFO] [job:alert-3-5936767] Completed successfully
+[2026-06-15T11:32:02.966Z] [INFO] [job:alert-3-5936770] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.967Z] [INFO] [job:alert-3-5936768] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.968Z] [INFO] [job:alert-3-5936769] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.968Z] [INFO] [job:alert-3-5936770] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.969Z] [INFO] [job:alert-3-5936768] Completed successfully
+[2026-06-15T11:32:02.969Z] [INFO] [job:alert-3-5936769] Completed successfully
+[2026-06-15T11:32:02.969Z] [INFO] [job:alert-3-5936770] Completed successfully
+[2026-06-15T11:32:02.969Z] [INFO] [job:alert-3-5936965] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.969Z] [INFO] [job:alert-3-5936966] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.970Z] [INFO] [job:alert-3-5936967] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.971Z] [INFO] [job:alert-3-5936965] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.971Z] [INFO] [job:alert-3-5936966] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.971Z] [INFO] [job:alert-3-5936967] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.974Z] [INFO] [job:alert-3-5936965] Completed successfully
+[2026-06-15T11:32:02.974Z] [INFO] [job:alert-3-5936966] Completed successfully
+[2026-06-15T11:32:02.974Z] [INFO] [job:alert-3-5936967] Completed successfully
+[2026-06-15T11:32:02.975Z] [INFO] [job:alert-3-5936968] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.975Z] [INFO] [job:alert-3-5936969] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.975Z] [INFO] [job:alert-3-5936970] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.977Z] [INFO] [job:alert-3-5936968] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.977Z] [INFO] [job:alert-3-5936969] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.977Z] [INFO] [job:alert-3-5936970] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.978Z] [INFO] [job:alert-3-5936968] Completed successfully
+[2026-06-15T11:32:02.979Z] [INFO] [job:alert-3-5936971] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.980Z] [INFO] [job:alert-3-5936969] Completed successfully
+[2026-06-15T11:32:02.980Z] [INFO] [job:alert-3-5936970] Completed successfully
+[2026-06-15T11:32:02.981Z] [INFO] [job:alert-3-5936972] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.981Z] [INFO] [job:alert-3-5936973] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.983Z] [INFO] [job:alert-3-5936971] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.984Z] [INFO] [job:alert-3-5936972] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.984Z] [INFO] [job:alert-3-5936973] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.985Z] [INFO] [job:alert-3-5936971] Completed successfully
+[2026-06-15T11:32:02.985Z] [INFO] [job:alert-3-5936972] Completed successfully
+[2026-06-15T11:32:02.985Z] [INFO] [job:alert-3-5936973] Completed successfully
+[2026-06-15T11:32:02.986Z] [INFO] [job:alert-3-5936974] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.986Z] [INFO] [job:alert-3-5936975] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.986Z] [INFO] [job:alert-3-5936976] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.988Z] [INFO] [job:alert-3-5936974] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.988Z] [INFO] [job:alert-3-5936975] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.988Z] [INFO] [job:alert-3-5936976] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.990Z] [INFO] [job:alert-3-5936974] Completed successfully
+[2026-06-15T11:32:02.991Z] [INFO] [job:alert-3-5936975] Completed successfully
+[2026-06-15T11:32:02.991Z] [INFO] [job:alert-3-5936976] Completed successfully
+[2026-06-15T11:32:02.991Z] [INFO] [job:alert-3-5936977] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.991Z] [INFO] [job:alert-3-5936978] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.992Z] [INFO] [job:alert-3-5936979] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.993Z] [INFO] [job:alert-3-5936977] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.994Z] [INFO] [job:alert-3-5936978] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.994Z] [INFO] [job:alert-3-5936979] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.995Z] [INFO] [job:alert-3-5936977] Completed successfully
+[2026-06-15T11:32:02.995Z] [INFO] [job:alert-3-5936978] Completed successfully
+[2026-06-15T11:32:02.995Z] [INFO] [job:alert-3-5936979] Completed successfully
+[2026-06-15T11:32:02.995Z] [INFO] [job:alert-3-5936980] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.996Z] [INFO] [job:alert-3-5936981] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.996Z] [INFO] [job:alert-3-5936982] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:02.998Z] [INFO] [job:alert-3-5936980] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.999Z] [INFO] [job:alert-3-5936981] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:02.999Z] [INFO] [job:alert-3-5936982] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.000Z] [INFO] [job:alert-3-5936980] Completed successfully
+[2026-06-15T11:32:03.000Z] [INFO] [job:alert-3-5936983] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.002Z] [INFO] [job:alert-3-5936981] Completed successfully
+[2026-06-15T11:32:03.002Z] [INFO] [job:alert-3-5936982] Completed successfully
+[2026-06-15T11:32:03.002Z] [INFO] [job:alert-3-5936984] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.002Z] [INFO] [job:alert-3-5936985] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.004Z] [INFO] [job:alert-3-5936983] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.004Z] [INFO] [job:alert-3-5936984] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.005Z] [INFO] [job:alert-3-5936985] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.006Z] [INFO] [job:alert-3-5936983] Completed successfully
+[2026-06-15T11:32:03.007Z] [INFO] [job:alert-3-5936984] Completed successfully
+[2026-06-15T11:32:03.007Z] [INFO] [job:alert-3-5936985] Completed successfully
+[2026-06-15T11:32:03.007Z] [INFO] [job:alert-3-5936986] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.008Z] [INFO] [job:alert-3-5936987] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.008Z] [INFO] [job:alert-3-5936988] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.011Z] [INFO] [job:alert-3-5936986] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.011Z] [INFO] [job:alert-3-5936987] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.011Z] [INFO] [job:alert-3-5936988] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.013Z] [INFO] [job:alert-3-5936986] Completed successfully
+[2026-06-15T11:32:03.013Z] [INFO] [job:alert-3-5936989] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.014Z] [INFO] [job:alert-3-5936987] Completed successfully
+[2026-06-15T11:32:03.015Z] [INFO] [job:alert-3-5936988] Completed successfully
+[2026-06-15T11:32:03.015Z] [INFO] [job:alert-3-5936990] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.015Z] [INFO] [job:alert-3-5936991] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.016Z] [INFO] [job:alert-3-5936989] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.017Z] [INFO] [job:alert-3-5936990] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.017Z] [INFO] [job:alert-3-5936991] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.017Z] [INFO] [job:alert-3-5936989] Completed successfully
+[2026-06-15T11:32:03.018Z] [INFO] [job:alert-3-5936990] Completed successfully
+[2026-06-15T11:32:03.018Z] [INFO] [job:alert-3-5936992] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.018Z] [INFO] [job:alert-3-5936993] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.019Z] [INFO] [job:alert-3-5936991] Completed successfully
+[2026-06-15T11:32:03.019Z] [INFO] [job:alert-3-5936994] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.020Z] [INFO] [job:alert-3-5936992] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.020Z] [INFO] [job:alert-3-5936993] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.021Z] [INFO] [job:alert-3-5936994] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.021Z] [INFO] [job:alert-3-5936992] Completed successfully
+[2026-06-15T11:32:03.021Z] [INFO] [job:alert-3-5936993] Completed successfully
+[2026-06-15T11:32:03.022Z] [INFO] [job:alert-3-5936995] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.023Z] [INFO] [job:alert-3-5936996] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.026Z] [INFO] [job:alert-3-5936994] Completed successfully
+[2026-06-15T11:32:03.026Z] [INFO] [job:alert-3-5936997] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.027Z] [INFO] [job:alert-3-5936995] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.027Z] [INFO] [job:alert-3-5936996] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.028Z] [INFO] [job:alert-3-5936997] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.028Z] [INFO] [job:alert-3-5936995] Completed successfully
+[2026-06-15T11:32:03.029Z] [INFO] [job:alert-3-5936996] Completed successfully
+[2026-06-15T11:32:03.029Z] [INFO] [job:alert-3-5936997] Completed successfully
+[2026-06-15T11:32:03.029Z] [INFO] [job:alert-3-5936998] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.029Z] [INFO] [job:alert-3-5936999] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.029Z] [INFO] [job:alert-3-5937000] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.032Z] [INFO] [job:alert-3-5936998] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.032Z] [INFO] [job:alert-3-5936999] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.032Z] [INFO] [job:alert-3-5937000] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.033Z] [INFO] [job:alert-3-5936998] Completed successfully
+[2026-06-15T11:32:03.033Z] [INFO] [job:alert-3-5937001] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.034Z] [INFO] [job:alert-3-5936999] Completed successfully
+[2026-06-15T11:32:03.034Z] [INFO] [job:alert-3-5937000] Completed successfully
+[2026-06-15T11:32:03.035Z] [INFO] [job:alert-3-5937002] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.035Z] [INFO] [job:alert-3-5937003] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.036Z] [INFO] [job:alert-3-5937001] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.037Z] [INFO] [job:alert-3-5937002] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.037Z] [INFO] [job:alert-3-5937003] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.037Z] [INFO] [job:alert-3-5937001] Completed successfully
+[2026-06-15T11:32:03.038Z] [INFO] [job:alert-3-5937004] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.039Z] [INFO] [job:alert-3-5937002] Completed successfully
+[2026-06-15T11:32:03.040Z] [INFO] [job:alert-3-5937003] Completed successfully
+[2026-06-15T11:32:03.040Z] [INFO] [job:alert-3-5937005] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.040Z] [INFO] [job:alert-3-5937006] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.041Z] [INFO] [job:alert-3-5937004] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.042Z] [INFO] [job:alert-3-5937005] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.042Z] [INFO] [job:alert-3-5937006] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.043Z] [INFO] [job:alert-3-5937004] Completed successfully
+[2026-06-15T11:32:03.043Z] [INFO] [job:alert-3-5937007] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.044Z] [INFO] [job:alert-3-5937005] Completed successfully
+[2026-06-15T11:32:03.044Z] [INFO] [job:alert-3-5937006] Completed successfully
+[2026-06-15T11:32:03.044Z] [INFO] [job:alert-3-5937008] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.045Z] [INFO] [job:alert-3-5937009] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.046Z] [INFO] [job:alert-3-5937007] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.047Z] [INFO] [job:alert-3-5937008] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.047Z] [INFO] [job:alert-3-5937009] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.047Z] [INFO] [job:alert-3-5937007] Completed successfully
+[2026-06-15T11:32:03.048Z] [INFO] [job:alert-3-5937008] Completed successfully
+[2026-06-15T11:32:03.048Z] [INFO] [job:alert-3-5937010] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.048Z] [INFO] [job:alert-3-5937011] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.050Z] [INFO] [job:alert-3-5937009] Completed successfully
+[2026-06-15T11:32:03.050Z] [INFO] [job:alert-3-5937012] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.052Z] [INFO] [job:alert-3-5937010] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.052Z] [INFO] [job:alert-3-5937011] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.053Z] [INFO] [job:alert-3-5937012] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.053Z] [INFO] [job:alert-3-5937010] Completed successfully
+[2026-06-15T11:32:03.053Z] [INFO] [job:alert-3-5937011] Completed successfully
+[2026-06-15T11:32:03.054Z] [INFO] [job:alert-3-5937012] Completed successfully
+[2026-06-15T11:32:03.054Z] [INFO] [job:alert-3-5937014] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.054Z] [INFO] [job:alert-3-5937015] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.054Z] [INFO] [job:alert-3-5937016] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.056Z] [INFO] [job:alert-3-5937014] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.056Z] [INFO] [job:alert-3-5937015] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.056Z] [INFO] [job:alert-3-5937016] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.057Z] [INFO] [job:alert-3-5937014] Completed successfully
+[2026-06-15T11:32:03.058Z] [INFO] [job:alert-3-5937017] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.058Z] [INFO] [job:alert-3-5937015] Completed successfully
+[2026-06-15T11:32:03.059Z] [INFO] [job:alert-3-5937016] Completed successfully
+[2026-06-15T11:32:03.059Z] [INFO] [job:alert-3-5937018] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.059Z] [INFO] [job:alert-3-5937019] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.060Z] [INFO] [job:alert-3-5937017] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.061Z] [INFO] [job:alert-3-5937018] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.061Z] [INFO] [job:alert-3-5937019] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.061Z] [INFO] [job:alert-3-5937017] Completed successfully
+[2026-06-15T11:32:03.062Z] [INFO] [job:alert-3-5937020] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.063Z] [INFO] [job:alert-3-5937018] Completed successfully
+[2026-06-15T11:32:03.063Z] [INFO] [job:alert-3-5937019] Completed successfully
+[2026-06-15T11:32:03.063Z] [INFO] [job:alert-3-5937021] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.064Z] [INFO] [job:alert-3-5937022] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.065Z] [INFO] [job:alert-3-5937020] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.066Z] [INFO] [job:alert-3-5937021] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.066Z] [INFO] [job:alert-3-5937022] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.067Z] [INFO] [job:alert-3-5937020] Completed successfully
+[2026-06-15T11:32:03.067Z] [INFO] [job:alert-3-5937021] Completed successfully
+[2026-06-15T11:32:03.067Z] [INFO] [job:alert-3-5937023] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.067Z] [INFO] [job:alert-3-5937024] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.068Z] [INFO] [job:alert-3-5937022] Completed successfully
+[2026-06-15T11:32:03.068Z] [INFO] [job:alert-3-5937025] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.069Z] [INFO] [job:alert-3-5937023] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.070Z] [INFO] [job:alert-3-5937024] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.070Z] [INFO] [job:alert-3-5937025] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.071Z] [INFO] [job:alert-3-5937023] Completed successfully
+[2026-06-15T11:32:03.071Z] [INFO] [job:alert-3-5937024] Completed successfully
+[2026-06-15T11:32:03.071Z] [INFO] [job:alert-3-5937025] Completed successfully
+[2026-06-15T11:32:03.071Z] [INFO] [job:alert-3-5937026] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.071Z] [INFO] [job:alert-3-5937027] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.072Z] [INFO] [job:alert-3-5937028] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.074Z] [INFO] [job:alert-3-5937026] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.074Z] [INFO] [job:alert-3-5937027] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.074Z] [INFO] [job:alert-3-5937028] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.075Z] [INFO] [job:alert-3-5937026] Completed successfully
+[2026-06-15T11:32:03.075Z] [INFO] [job:alert-3-5937027] Completed successfully
+[2026-06-15T11:32:03.075Z] [INFO] [job:alert-3-5937028] Completed successfully
+[2026-06-15T11:32:03.075Z] [INFO] [job:alert-3-5937029] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.076Z] [INFO] [job:alert-3-5937030] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.076Z] [INFO] [job:alert-3-5937031] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.079Z] [INFO] [job:alert-3-5937029] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.079Z] [INFO] [job:alert-3-5937030] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.079Z] [INFO] [job:alert-3-5937031] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.081Z] [INFO] [job:alert-3-5937029] Completed successfully
+[2026-06-15T11:32:03.082Z] [INFO] [job:alert-3-5937030] Completed successfully
+[2026-06-15T11:32:03.082Z] [INFO] [job:alert-3-5937031] Completed successfully
+[2026-06-15T11:32:03.082Z] [INFO] [job:alert-3-5937032] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.082Z] [INFO] [job:alert-3-5937033] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.083Z] [INFO] [job:alert-3-5937034] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.085Z] [INFO] [job:alert-3-5937032] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.085Z] [INFO] [job:alert-3-5937033] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.085Z] [INFO] [job:alert-3-5937034] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.086Z] [INFO] [job:alert-3-5937032] Completed successfully
+[2026-06-15T11:32:03.087Z] [INFO] [job:alert-3-5937035] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.088Z] [INFO] [job:alert-3-5937033] Completed successfully
+[2026-06-15T11:32:03.089Z] [INFO] [job:alert-3-5937034] Completed successfully
+[2026-06-15T11:32:03.089Z] [INFO] [job:alert-3-5937036] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.090Z] [INFO] [job:alert-3-5937037] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.092Z] [INFO] [job:alert-3-5937035] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.095Z] [INFO] [job:alert-3-5937036] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.095Z] [INFO] [job:alert-3-5937037] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.097Z] [INFO] [job:alert-3-5937035] Completed successfully
+[2026-06-15T11:32:03.097Z] [INFO] [job:alert-3-5937036] Completed successfully
+[2026-06-15T11:32:03.097Z] [INFO] [job:alert-3-5937038] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.098Z] [INFO] [job:alert-3-5937040] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.100Z] [INFO] [job:alert-3-5937037] Completed successfully
+[2026-06-15T11:32:03.100Z] [INFO] [job:alert-3-5937041] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.101Z] [INFO] [job:alert-3-5937038] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.101Z] [INFO] [job:alert-3-5937040] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.102Z] [INFO] [job:alert-3-5937041] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.102Z] [INFO] [job:alert-3-5937038] Completed successfully
+[2026-06-15T11:32:03.102Z] [INFO] [job:alert-3-5937040] Completed successfully
+[2026-06-15T11:32:03.103Z] [INFO] [job:alert-3-5937041] Completed successfully
+[2026-06-15T11:32:03.103Z] [INFO] [job:alert-3-5937042] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.103Z] [INFO] [job:alert-3-5937043] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.103Z] [INFO] [job:alert-3-5937044] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.105Z] [INFO] [job:alert-3-5937042] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.105Z] [INFO] [job:alert-3-5937043] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.105Z] [INFO] [job:alert-3-5937044] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.107Z] [INFO] [job:alert-3-5937042] Completed successfully
+[2026-06-15T11:32:03.107Z] [INFO] [job:alert-3-5937043] Completed successfully
+[2026-06-15T11:32:03.107Z] [INFO] [job:alert-3-5937044] Completed successfully
+[2026-06-15T11:32:03.107Z] [INFO] [job:alert-3-5937045] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.108Z] [INFO] [job:alert-3-5937046] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.108Z] [INFO] [job:alert-3-5937047] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.109Z] [INFO] [job:alert-3-5937045] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.109Z] [INFO] [job:alert-3-5937046] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.109Z] [INFO] [job:alert-3-5937047] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.110Z] [INFO] [job:alert-3-5937045] Completed successfully
+[2026-06-15T11:32:03.110Z] [INFO] [job:alert-3-5937048] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.111Z] [INFO] [job:alert-3-5937046] Completed successfully
+[2026-06-15T11:32:03.111Z] [INFO] [job:alert-3-5937047] Completed successfully
+[2026-06-15T11:32:03.111Z] [INFO] [job:alert-3-5937049] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.112Z] [INFO] [job:alert-3-5937050] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.113Z] [INFO] [job:alert-3-5937048] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.114Z] [INFO] [job:alert-3-5937049] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.114Z] [INFO] [job:alert-3-5937050] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.115Z] [INFO] [job:alert-3-5937048] Completed successfully
+[2026-06-15T11:32:03.115Z] [INFO] [job:alert-3-5937049] Completed successfully
+[2026-06-15T11:32:03.116Z] [INFO] [job:alert-3-5937051] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.116Z] [INFO] [job:alert-3-5937052] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.117Z] [INFO] [job:alert-3-5937050] Completed successfully
+[2026-06-15T11:32:03.117Z] [INFO] [job:alert-3-5937053] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.118Z] [INFO] [job:alert-3-5937051] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.118Z] [INFO] [job:alert-3-5937052] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.118Z] [INFO] [job:alert-3-5937053] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.119Z] [INFO] [job:alert-3-5937051] Completed successfully
+[2026-06-15T11:32:03.119Z] [INFO] [job:alert-3-5937052] Completed successfully
+[2026-06-15T11:32:03.119Z] [INFO] [job:alert-3-5937053] Completed successfully
+[2026-06-15T11:32:03.119Z] [INFO] [job:alert-3-5937054] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.120Z] [INFO] [job:alert-3-5937055] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.120Z] [INFO] [job:alert-3-5937272] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.121Z] [INFO] [job:alert-3-5937054] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.121Z] [INFO] [job:alert-3-5937055] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.121Z] [INFO] [job:alert-3-5937272] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.123Z] [INFO] [job:alert-3-5937054] Completed successfully
+[2026-06-15T11:32:03.123Z] [INFO] [job:alert-3-5937273] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.125Z] [INFO] [job:alert-3-5937055] Completed successfully
+[2026-06-15T11:32:03.125Z] [INFO] [job:alert-3-5937272] Completed successfully
+[2026-06-15T11:32:03.125Z] [INFO] [job:alert-3-5937274] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.125Z] [INFO] [job:alert-3-5937340] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.127Z] [INFO] [job:alert-3-5937273] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.128Z] [INFO] [job:alert-3-5937274] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.128Z] [INFO] [job:alert-3-5937340] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.129Z] [INFO] [job:alert-3-5937273] Completed successfully
+[2026-06-15T11:32:03.129Z] [INFO] [job:alert-3-5937274] Completed successfully
+[2026-06-15T11:32:03.129Z] [INFO] [job:alert-3-5937341] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.129Z] [INFO] [job:alert-3-5937539] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.131Z] [INFO] [job:alert-3-5937340] Completed successfully
+[2026-06-15T11:32:03.131Z] [INFO] [job:alert-3-5937540] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.133Z] [INFO] [job:alert-3-5937341] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.133Z] [INFO] [job:alert-3-5937539] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.134Z] [INFO] [job:alert-3-5937540] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.135Z] [INFO] [job:alert-3-5937341] Completed successfully
+[2026-06-15T11:32:03.135Z] [INFO] [job:alert-3-5937539] Completed successfully
+[2026-06-15T11:32:03.135Z] [INFO] [job:alert-3-5937540] Completed successfully
+[2026-06-15T11:32:03.135Z] [INFO] [job:alert-3-5937541] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.135Z] [INFO] [job:alert-3-5937542] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.136Z] [INFO] [job:alert-3-5937543] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.137Z] [INFO] [job:alert-3-5937541] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.137Z] [INFO] [job:alert-3-5937542] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.137Z] [INFO] [job:alert-3-5937543] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.138Z] [INFO] [job:alert-3-5937541] Completed successfully
+[2026-06-15T11:32:03.139Z] [INFO] [job:alert-3-5937542] Completed successfully
+[2026-06-15T11:32:03.139Z] [INFO] [job:alert-3-5937543] Completed successfully
+[2026-06-15T11:32:03.140Z] [INFO] [job:alert-3-5937544] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.140Z] [INFO] [job:alert-3-5937545] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.141Z] [INFO] [job:alert-3-5937546] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.142Z] [INFO] [job:alert-3-5937544] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.142Z] [INFO] [job:alert-3-5937545] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.142Z] [INFO] [job:alert-3-5937546] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.143Z] [INFO] [job:alert-3-5937544] Completed successfully
+[2026-06-15T11:32:03.144Z] [INFO] [job:alert-3-5937545] Completed successfully
+[2026-06-15T11:32:03.144Z] [INFO] [job:alert-3-5937546] Completed successfully
+[2026-06-15T11:32:03.144Z] [INFO] [job:alert-3-5937547] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.145Z] [INFO] [job:alert-3-5937548] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.145Z] [INFO] [job:alert-3-5937549] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.147Z] [INFO] [job:alert-3-5937547] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.147Z] [INFO] [job:alert-3-5937548] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.147Z] [INFO] [job:alert-3-5937549] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.148Z] [INFO] [job:alert-3-5937547] Completed successfully
+[2026-06-15T11:32:03.149Z] [INFO] [job:alert-3-5937550] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.150Z] [INFO] [job:alert-3-5937548] Completed successfully
+[2026-06-15T11:32:03.150Z] [INFO] [job:alert-3-5937549] Completed successfully
+[2026-06-15T11:32:03.150Z] [INFO] [job:alert-3-5937551] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.150Z] [INFO] [job:alert-3-5937552] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.151Z] [INFO] [job:alert-3-5937550] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.152Z] [INFO] [job:alert-3-5937551] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.152Z] [INFO] [job:alert-3-5937552] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.153Z] [INFO] [job:alert-3-5937550] Completed successfully
+[2026-06-15T11:32:03.153Z] [INFO] [job:alert-3-5937551] Completed successfully
+[2026-06-15T11:32:03.153Z] [INFO] [job:alert-3-5937552] Completed successfully
+[2026-06-15T11:32:03.153Z] [INFO] [job:alert-3-5937553] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.154Z] [INFO] [job:alert-3-5937554] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.154Z] [INFO] [job:alert-3-5937555] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.156Z] [INFO] [job:alert-3-5937553] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.156Z] [INFO] [job:alert-3-5937554] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.157Z] [INFO] [job:alert-3-5937555] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.158Z] [INFO] [job:alert-3-5937553] Completed successfully
+[2026-06-15T11:32:03.158Z] [INFO] [job:alert-3-5937554] Completed successfully
+[2026-06-15T11:32:03.158Z] [INFO] [job:alert-3-5937555] Completed successfully
+[2026-06-15T11:32:03.158Z] [INFO] [job:alert-3-5937556] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.159Z] [INFO] [job:alert-3-5937557] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.159Z] [INFO] [job:alert-3-5937558] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.161Z] [INFO] [job:alert-3-5937556] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.161Z] [INFO] [job:alert-3-5937557] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.161Z] [INFO] [job:alert-3-5937558] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.164Z] [INFO] [job:alert-3-5937556] Completed successfully
+[2026-06-15T11:32:03.164Z] [INFO] [job:alert-3-5937557] Completed successfully
+[2026-06-15T11:32:03.165Z] [INFO] [job:alert-3-5937558] Completed successfully
+[2026-06-15T11:32:03.165Z] [INFO] [job:alert-3-5937559] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.165Z] [INFO] [job:alert-3-5937560] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.166Z] [INFO] [job:alert-3-5937561] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.170Z] [INFO] [job:alert-3-5937559] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.171Z] [INFO] [job:alert-3-5937560] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.171Z] [INFO] [job:alert-3-5937561] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.173Z] [INFO] [job:alert-3-5937559] Completed successfully
+[2026-06-15T11:32:03.174Z] [INFO] [job:alert-3-5937560] Completed successfully
+[2026-06-15T11:32:03.174Z] [INFO] [job:alert-3-5937561] Completed successfully
+[2026-06-15T11:32:03.174Z] [INFO] [job:alert-3-5937562] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.174Z] [INFO] [job:alert-3-5937563] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.175Z] [INFO] [job:alert-3-5937564] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.177Z] [INFO] [job:alert-3-5937562] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.177Z] [INFO] [job:alert-3-5937563] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.177Z] [INFO] [job:alert-3-5937564] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.178Z] [INFO] [job:alert-3-5937562] Completed successfully
+[2026-06-15T11:32:03.178Z] [INFO] [job:alert-3-5937563] Completed successfully
+[2026-06-15T11:32:03.178Z] [INFO] [job:alert-3-5937564] Completed successfully
+[2026-06-15T11:32:03.179Z] [INFO] [job:alert-3-5937565] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.179Z] [INFO] [job:alert-3-5937566] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.179Z] [INFO] [job:alert-3-5937567] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.181Z] [INFO] [job:alert-3-5937565] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.181Z] [INFO] [job:alert-3-5937566] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.181Z] [INFO] [job:alert-3-5937567] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.183Z] [INFO] [job:alert-3-5937565] Completed successfully
+[2026-06-15T11:32:03.183Z] [INFO] [job:alert-3-5937568] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.185Z] [INFO] [job:alert-3-5937566] Completed successfully
+[2026-06-15T11:32:03.185Z] [INFO] [job:alert-3-5937567] Completed successfully
+[2026-06-15T11:32:03.185Z] [INFO] [job:alert-3-5937569] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.186Z] [INFO] [job:alert-3-5937570] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.187Z] [INFO] [job:alert-3-5937568] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.188Z] [INFO] [job:alert-3-5937569] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.188Z] [INFO] [job:alert-3-5937570] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.190Z] [INFO] [job:alert-3-5937568] Completed successfully
+[2026-06-15T11:32:03.190Z] [INFO] [job:alert-3-5937569] Completed successfully
+[2026-06-15T11:32:03.191Z] [INFO] [job:alert-3-5937571] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.191Z] [INFO] [job:alert-3-5937572] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.192Z] [INFO] [job:alert-3-5937570] Completed successfully
+[2026-06-15T11:32:03.193Z] [INFO] [job:alert-3-5937573] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.194Z] [INFO] [job:alert-3-5937571] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.194Z] [INFO] [job:alert-3-5937572] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.195Z] [INFO] [job:alert-3-5937573] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.196Z] [INFO] [job:alert-3-5937571] Completed successfully
+[2026-06-15T11:32:03.196Z] [INFO] [job:alert-3-5937572] Completed successfully
+[2026-06-15T11:32:03.197Z] [INFO] [job:alert-3-5937573] Completed successfully
+[2026-06-15T11:32:03.197Z] [INFO] [job:alert-3-5937574] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.197Z] [INFO] [job:alert-3-5937575] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.197Z] [INFO] [job:alert-3-5937576] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.200Z] [INFO] [job:alert-3-5937574] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.200Z] [INFO] [job:alert-3-5937575] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.200Z] [INFO] [job:alert-3-5937576] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.201Z] [INFO] [job:alert-3-5937574] Completed successfully
+[2026-06-15T11:32:03.202Z] [INFO] [job:alert-3-5937575] Completed successfully
+[2026-06-15T11:32:03.202Z] [INFO] [job:alert-3-5937576] Completed successfully
+[2026-06-15T11:32:03.202Z] [INFO] [job:alert-3-5937577] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.202Z] [INFO] [job:alert-3-5937578] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.203Z] [INFO] [job:alert-3-5937579] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.205Z] [INFO] [job:alert-3-5937577] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.205Z] [INFO] [job:alert-3-5937578] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.205Z] [INFO] [job:alert-3-5937579] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.208Z] [INFO] [job:alert-3-5937577] Completed successfully
+[2026-06-15T11:32:03.208Z] [INFO] [job:alert-3-5937580] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.210Z] [INFO] [job:alert-3-5937578] Completed successfully
+[2026-06-15T11:32:03.210Z] [INFO] [job:alert-3-5937579] Completed successfully
+[2026-06-15T11:32:03.210Z] [INFO] [job:alert-3-5937581] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.211Z] [INFO] [job:alert-3-5937582] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.213Z] [INFO] [job:alert-3-5937580] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.214Z] [INFO] [job:alert-3-5937581] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.214Z] [INFO] [job:alert-3-5937582] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.215Z] [INFO] [job:alert-3-5937580] Completed successfully
+[2026-06-15T11:32:03.215Z] [INFO] [job:alert-3-5937581] Completed successfully
+[2026-06-15T11:32:03.216Z] [INFO] [job:alert-3-5937583] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.216Z] [INFO] [job:alert-3-5937584] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.218Z] [INFO] [job:alert-3-5937582] Completed successfully
+[2026-06-15T11:32:03.219Z] [INFO] [job:alert-3-5937585] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.221Z] [INFO] [job:alert-3-5937583] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.221Z] [INFO] [job:alert-3-5937584] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.223Z] [INFO] [job:alert-3-5937585] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.224Z] [INFO] [job:alert-3-5937583] Completed successfully
+[2026-06-15T11:32:03.225Z] [INFO] [job:alert-3-5937584] Completed successfully
+[2026-06-15T11:32:03.225Z] [INFO] [job:alert-3-5937585] Completed successfully
+[2026-06-15T11:32:03.225Z] [INFO] [job:alert-3-5937586] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.225Z] [INFO] [job:alert-3-5937587] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.226Z] [INFO] [job:alert-3-5937588] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.227Z] [INFO] [job:alert-3-5937586] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.228Z] [INFO] [job:alert-3-5937587] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.228Z] [INFO] [job:alert-3-5937588] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.229Z] [INFO] [job:alert-3-5937586] Completed successfully
+[2026-06-15T11:32:03.229Z] [INFO] [job:alert-3-5937589] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.231Z] [INFO] [job:alert-3-5937587] Completed successfully
+[2026-06-15T11:32:03.231Z] [INFO] [job:alert-3-5937588] Completed successfully
+[2026-06-15T11:32:03.231Z] [INFO] [job:alert-3-5937590] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.232Z] [INFO] [job:alert-3-5937591] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.233Z] [INFO] [job:alert-3-5937589] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.234Z] [INFO] [job:alert-3-5937590] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.235Z] [INFO] [job:alert-3-5937591] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.235Z] [INFO] [job:alert-3-5937589] Completed successfully
+[2026-06-15T11:32:03.236Z] [INFO] [job:alert-3-5937590] Completed successfully
+[2026-06-15T11:32:03.236Z] [INFO] [job:alert-3-5937592] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.236Z] [INFO] [job:alert-3-5937593] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.237Z] [INFO] [job:alert-3-5937591] Completed successfully
+[2026-06-15T11:32:03.237Z] [INFO] [job:alert-3-5937594] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.240Z] [INFO] [job:alert-3-5937592] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.240Z] [INFO] [job:alert-3-5937593] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.241Z] [INFO] [job:alert-3-5937594] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.245Z] [INFO] [job:alert-3-5937592] Completed successfully
+[2026-06-15T11:32:03.245Z] [INFO] [job:alert-3-5937593] Completed successfully
+[2026-06-15T11:32:03.245Z] [INFO] [job:alert-3-5937594] Completed successfully
+[2026-06-15T11:32:03.245Z] [INFO] [job:alert-3-5937595] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.246Z] [INFO] [job:alert-3-5937596] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.246Z] [INFO] [job:alert-3-5937597] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.248Z] [INFO] [job:alert-3-5937595] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.248Z] [INFO] [job:alert-3-5937596] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.248Z] [INFO] [job:alert-3-5937597] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.249Z] [INFO] [job:alert-3-5937595] Completed successfully
+[2026-06-15T11:32:03.250Z] [INFO] [job:alert-3-5937598] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.251Z] [INFO] [job:alert-3-5937596] Completed successfully
+[2026-06-15T11:32:03.251Z] [INFO] [job:alert-3-5937597] Completed successfully
+[2026-06-15T11:32:03.251Z] [INFO] [job:alert-3-5937599] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.252Z] [INFO] [job:alert-3-5937600] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.254Z] [INFO] [job:alert-3-5937598] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.255Z] [INFO] [job:alert-3-5937599] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.255Z] [INFO] [job:alert-3-5937600] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.257Z] [INFO] [job:alert-3-5937598] Completed successfully
+[2026-06-15T11:32:03.257Z] [INFO] [job:alert-3-5937599] Completed successfully
+[2026-06-15T11:32:03.258Z] [INFO] [job:alert-3-5937601] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.258Z] [INFO] [job:alert-3-5937602] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.259Z] [INFO] [job:alert-3-5937600] Completed successfully
+[2026-06-15T11:32:03.260Z] [INFO] [job:alert-3-5937603] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.261Z] [INFO] [job:alert-3-5937601] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.261Z] [INFO] [job:alert-3-5937602] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.262Z] [INFO] [job:alert-3-5937603] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.262Z] [INFO] [job:alert-3-5937601] Completed successfully
+[2026-06-15T11:32:03.263Z] [INFO] [job:alert-3-5937602] Completed successfully
+[2026-06-15T11:32:03.263Z] [INFO] [job:alert-3-5937603] Completed successfully
+[2026-06-15T11:32:03.263Z] [INFO] [job:alert-3-5937604] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.263Z] [INFO] [job:alert-3-5937605] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.263Z] [INFO] [job:alert-3-5937606] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.265Z] [INFO] [job:alert-3-5937604] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.265Z] [INFO] [job:alert-3-5937605] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.265Z] [INFO] [job:alert-3-5937606] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.269Z] [INFO] [job:alert-3-5937604] Completed successfully
+[2026-06-15T11:32:03.270Z] [INFO] [job:alert-3-5937605] Completed successfully
+[2026-06-15T11:32:03.270Z] [INFO] [job:alert-3-5937606] Completed successfully
+[2026-06-15T11:32:03.270Z] [INFO] [job:alert-3-5937607] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.271Z] [INFO] [job:alert-3-5937608] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.271Z] [INFO] [job:alert-3-5937609] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.274Z] [INFO] [job:alert-3-5937607] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.274Z] [INFO] [job:alert-3-5937608] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.275Z] [INFO] [job:alert-3-5937609] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.276Z] [INFO] [job:alert-3-5937607] Completed successfully
+[2026-06-15T11:32:03.276Z] [INFO] [job:alert-3-5937610] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.277Z] [INFO] [job:alert-3-5937608] Completed successfully
+[2026-06-15T11:32:03.277Z] [INFO] [job:alert-3-5937609] Completed successfully
+[2026-06-15T11:32:03.278Z] [INFO] [job:alert-3-5937611] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.278Z] [INFO] [job:alert-3-5937612] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.280Z] [INFO] [job:alert-3-5937610] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.280Z] [INFO] [job:alert-3-5937611] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.281Z] [INFO] [job:alert-3-5937612] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.281Z] [INFO] [job:alert-3-5937610] Completed successfully
+[2026-06-15T11:32:03.282Z] [INFO] [job:alert-3-5937613] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.283Z] [INFO] [job:alert-3-5937611] Completed successfully
+[2026-06-15T11:32:03.283Z] [INFO] [job:alert-3-5937612] Completed successfully
+[2026-06-15T11:32:03.284Z] [INFO] [job:alert-3-5937614] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.284Z] [INFO] [job:alert-3-5937615] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.285Z] [INFO] [job:alert-3-5937613] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.286Z] [INFO] [job:alert-3-5937614] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.286Z] [INFO] [job:alert-3-5937615] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.287Z] [INFO] [job:alert-3-5937613] Completed successfully
+[2026-06-15T11:32:03.287Z] [INFO] [job:alert-3-5937616] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.289Z] [INFO] [job:alert-3-5937614] Completed successfully
+[2026-06-15T11:32:03.289Z] [INFO] [job:alert-3-5937615] Completed successfully
+[2026-06-15T11:32:03.289Z] [INFO] [job:alert-3-5937617] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.290Z] [INFO] [job:alert-3-5937618] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.291Z] [INFO] [job:alert-3-5937616] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.292Z] [INFO] [job:alert-3-5937617] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.292Z] [INFO] [job:alert-3-5937618] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.293Z] [INFO] [job:alert-3-5937616] Completed successfully
+[2026-06-15T11:32:03.293Z] [INFO] [job:alert-3-5937619] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.295Z] [INFO] [job:alert-3-5937617] Completed successfully
+[2026-06-15T11:32:03.295Z] [INFO] [job:alert-3-5937618] Completed successfully
+[2026-06-15T11:32:03.295Z] [INFO] [job:alert-3-5937620] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.295Z] [INFO] [job:alert-3-5937621] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.296Z] [INFO] [job:alert-3-5937619] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.297Z] [INFO] [job:alert-3-5937620] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.297Z] [INFO] [job:alert-3-5937621] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.298Z] [INFO] [job:alert-3-5937619] Completed successfully
+[2026-06-15T11:32:03.298Z] [INFO] [job:alert-3-5937620] Completed successfully
+[2026-06-15T11:32:03.299Z] [INFO] [job:alert-3-5937622] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.299Z] [INFO] [job:alert-3-5937623] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.300Z] [INFO] [job:alert-3-5937621] Completed successfully
+[2026-06-15T11:32:03.301Z] [INFO] [job:alert-3-5937624] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.305Z] [INFO] [job:alert-3-5937622] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.305Z] [INFO] [job:alert-3-5937623] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.309Z] [INFO] [job:alert-3-5937624] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.310Z] [INFO] [job:alert-3-5937622] Completed successfully
+[2026-06-15T11:32:03.310Z] [INFO] [job:alert-3-5937623] Completed successfully
+[2026-06-15T11:32:03.311Z] [INFO] [job:alert-3-5937625] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.311Z] [INFO] [job:alert-3-5937626] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.312Z] [INFO] [job:alert-3-5937624] Completed successfully
+[2026-06-15T11:32:03.312Z] [INFO] [job:alert-3-5937627] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.313Z] [INFO] [job:alert-3-5937625] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.313Z] [INFO] [job:alert-3-5937626] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.314Z] [INFO] [job:alert-3-5937627] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.316Z] [INFO] [job:alert-3-5937625] Completed successfully
+[2026-06-15T11:32:03.316Z] [INFO] [job:alert-3-5937628] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.317Z] [INFO] [job:alert-3-5937626] Completed successfully
+[2026-06-15T11:32:03.317Z] [INFO] [job:alert-3-5937627] Completed successfully
+[2026-06-15T11:32:03.317Z] [INFO] [job:alert-3-5937629] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.317Z] [INFO] [job:alert-3-5937630] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.321Z] [INFO] [job:alert-3-5937628] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.322Z] [INFO] [job:alert-3-5937629] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.322Z] [INFO] [job:alert-3-5937630] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.323Z] [INFO] [job:alert-3-5937628] Completed successfully
+[2026-06-15T11:32:03.324Z] [INFO] [job:alert-3-5937631] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.325Z] [INFO] [job:alert-3-5937629] Completed successfully
+[2026-06-15T11:32:03.326Z] [INFO] [job:alert-3-5937630] Completed successfully
+[2026-06-15T11:32:03.326Z] [INFO] [job:alert-3-5937632] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.326Z] [INFO] [job:alert-3-5937633] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.327Z] [INFO] [job:alert-3-5937631] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.327Z] [INFO] [job:alert-3-5937632] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.328Z] [INFO] [job:alert-3-5937633] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.329Z] [INFO] [job:alert-3-5937631] Completed successfully
+[2026-06-15T11:32:03.329Z] [INFO] [job:alert-3-5937632] Completed successfully
+[2026-06-15T11:32:03.329Z] [INFO] [job:alert-3-5938409] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.330Z] [INFO] [job:alert-3-5938410] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:32:03.331Z] [INFO] [job:alert-3-5937633] Completed successfully
+[2026-06-15T11:32:03.332Z] [INFO] [job:alert-3-5938409] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.332Z] [INFO] [job:alert-3-5938410] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:02.918Z) — skipping
+[2026-06-15T11:32:03.334Z] [INFO] [job:alert-3-5938409] Completed successfully
+[2026-06-15T11:32:03.334Z] [INFO] [job:alert-3-5938410] Completed successfully
+[2026-06-15T11:32:03.557Z] [INFO] [job:alert-3-5935618] Done — sent email with 5 matches
+[2026-06-15T11:32:03.558Z] [INFO] [job:alert-3-5935618] Completed successfully
+[2026-06-15T11:32:03.601Z] [INFO] [job:alert-3-5936676] Done — sent email with 5 matches
+[2026-06-15T11:32:03.602Z] [INFO] [job:alert-3-5936676] Completed successfully
+[2026-06-15T11:35:02.740Z] [INFO] [job:alert-3-5938411] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:35:02.743Z] [INFO] [job:alert-3-5938411] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T11:35:02.744Z] [INFO] [job:alert-3-5938411] Completed successfully
+[2026-06-15T11:40:02.846Z] [INFO] [job:alert-3-5938412] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:40:02.848Z] [INFO] [job:alert-3-5938412] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T11:40:02.849Z] [INFO] [job:alert-3-5938412] Completed successfully
+[2026-06-15T11:45:02.007Z] [INFO] [job:alert-3-5938413] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:45:02.010Z] [INFO] [job:alert-3-5938413] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T11:45:02.011Z] [INFO] [job:alert-3-5938413] Completed successfully
+[2026-06-15T11:50:02.212Z] [INFO] [job:alert-3-5938414] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:50:02.216Z] [INFO] [job:alert-3-5938414] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T11:50:02.217Z] [INFO] [job:alert-3-5938414] Completed successfully
+[2026-06-15T11:55:02.372Z] [INFO] [job:alert-3-5938415] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T11:55:02.374Z] [INFO] [job:alert-3-5938415] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T11:55:02.375Z] [INFO] [job:alert-3-5938415] Completed successfully
+[2026-06-15T12:00:02.479Z] [INFO] [job:alert-3-5938416] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T12:00:02.481Z] [INFO] [job:alert-3-5938416] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T12:00:02.482Z] [INFO] [job:alert-3-5938416] Completed successfully
+[2026-06-15T12:05:02.557Z] [INFO] [job:alert-3-5938417] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T12:05:02.559Z] [INFO] [job:alert-3-5938417] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T12:05:02.560Z] [INFO] [job:alert-3-5938417] Completed successfully
+[2026-06-15T12:10:02.636Z] [INFO] [job:alert-3-5938418] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T12:10:02.638Z] [INFO] [job:alert-3-5938418] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T12:10:02.639Z] [INFO] [job:alert-3-5938418] Completed successfully
+[2026-06-15T12:15:02.737Z] [INFO] [job:alert-3-5938419] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T12:15:02.740Z] [INFO] [job:alert-3-5938419] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T12:15:02.741Z] [INFO] [job:alert-3-5938419] Completed successfully
+[2026-06-15T12:20:02.801Z] [INFO] [job:alert-3-5938420] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T12:20:02.803Z] [INFO] [job:alert-3-5938420] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T12:20:02.804Z] [INFO] [job:alert-3-5938420] Completed successfully
+[2026-06-15T12:25:01.880Z] [INFO] [job:alert-3-5938421] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T12:25:01.881Z] [INFO] [job:alert-3-5938421] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T12:25:01.882Z] [INFO] [job:alert-3-5938421] Completed successfully
+[2026-06-15T12:30:01.954Z] [INFO] [job:alert-3-5938422] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T12:30:01.956Z] [INFO] [job:alert-3-5938422] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T12:30:01.957Z] [INFO] [job:alert-3-5938422] Completed successfully
+[2026-06-15T12:35:02.024Z] [INFO] [job:alert-3-5938423] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T12:35:02.026Z] [INFO] [job:alert-3-5938423] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T12:35:02.027Z] [INFO] [job:alert-3-5938423] Completed successfully
+[2026-06-15T12:40:02.138Z] [INFO] [job:alert-3-5938424] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T12:40:02.140Z] [INFO] [job:alert-3-5938424] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T12:40:02.140Z] [INFO] [job:alert-3-5938424] Completed successfully
+[2026-06-15T12:45:02.257Z] [INFO] [job:alert-3-5938425] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T12:45:02.260Z] [INFO] [job:alert-3-5938425] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T12:45:02.260Z] [INFO] [job:alert-3-5938425] Completed successfully
+[2026-06-15T12:50:02.304Z] [INFO] [job:alert-3-5938426] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T12:50:02.306Z] [INFO] [job:alert-3-5938426] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T12:50:02.307Z] [INFO] [job:alert-3-5938426] Completed successfully
+[2026-06-15T12:55:02.398Z] [INFO] [job:alert-3-5938427] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T12:55:02.400Z] [INFO] [job:alert-3-5938427] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T12:55:02.401Z] [INFO] [job:alert-3-5938427] Completed successfully
+[2026-06-15T13:00:02.504Z] [INFO] [job:alert-3-5938428] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T13:00:02.514Z] [INFO] [job:alert-3-5938428] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T13:00:02.515Z] [INFO] [job:alert-3-5938428] Completed successfully
+[2026-06-15T13:05:02.588Z] [INFO] [job:alert-3-5938429] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T13:05:02.590Z] [INFO] [job:alert-3-5938429] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T13:05:02.591Z] [INFO] [job:alert-3-5938429] Completed successfully
+[2026-06-15T13:10:02.667Z] [INFO] [job:alert-3-5938430] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T13:10:02.669Z] [INFO] [job:alert-3-5938430] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T13:10:02.669Z] [INFO] [job:alert-3-5938430] Completed successfully
+[2026-06-15T13:15:02.814Z] [INFO] [job:alert-3-5938431] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T13:15:02.816Z] [INFO] [job:alert-3-5938431] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T13:15:02.817Z] [INFO] [job:alert-3-5938431] Completed successfully
+[2026-06-15T13:20:01.929Z] [INFO] [job:alert-3-5938432] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T13:20:01.931Z] [INFO] [job:alert-3-5938432] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T13:20:01.932Z] [INFO] [job:alert-3-5938432] Completed successfully
+[2026-06-15T13:25:01.998Z] [INFO] [job:alert-3-5938433] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T13:25:02.001Z] [INFO] [job:alert-3-5938433] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T13:25:02.002Z] [INFO] [job:alert-3-5938433] Completed successfully
+[2026-06-15T13:30:02.068Z] [INFO] [job:alert-3-5938434] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T13:30:02.078Z] [INFO] [job:alert-3-5938434] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T13:30:02.079Z] [INFO] [job:alert-3-5938434] Completed successfully
+[2026-06-15T13:35:02.142Z] [INFO] [job:alert-3-5938435] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T13:35:02.145Z] [INFO] [job:alert-3-5938435] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T13:35:02.145Z] [INFO] [job:alert-3-5938435] Completed successfully
+[2026-06-15T13:40:01.966Z] [INFO] [job:alert-3-5938436] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-15T13:40:01.968Z] [INFO] [job:alert-3-5938436] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-15T11:32:03.591Z) — skipping
+[2026-06-15T13:40:01.969Z] [INFO] [job:alert-3-5938436] Completed successfully
+[2026-06-16T14:57:35.749Z] [INFO] [job:alert-3-5938437] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:35.752Z] [INFO] [job:alert-3-5938438] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:35.752Z] [INFO] [job:alert-3-5938439] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:35.752Z] [INFO] [job:alert-3-5938440] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:35.753Z] [INFO] [job:alert-3-5938441] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:35.936Z] [INFO] [job:alert-3-5938439] Internal matches: 0
+[2026-06-16T14:57:35.965Z] [INFO] [job:alert-3-5938441] Internal matches: 0
+[2026-06-16T14:57:35.967Z] [INFO] [job:alert-3-5938440] Internal matches: 0
+[2026-06-16T14:57:35.968Z] [INFO] [job:alert-3-5938437] Internal matches: 0
+[2026-06-16T14:57:35.969Z] [INFO] [job:alert-3-5938438] Internal matches: 0
+[2026-06-16T14:57:35.975Z] [WARN] [job:alert-3-5938439] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:35.975Z] [INFO] [job:alert-3-5938439] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:35.977Z] [WARN] [job:alert-3-5938441] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:35.977Z] [INFO] [job:alert-3-5938441] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:35.978Z] [WARN] [job:alert-3-5938440] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:35.978Z] [INFO] [job:alert-3-5938440] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:35.979Z] [WARN] [job:alert-3-5938437] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:35.980Z] [INFO] [job:alert-3-5938437] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:35.981Z] [INFO] [job:alert-3-5938439] Completed successfully
+[2026-06-16T14:57:35.982Z] [INFO] [job:alert-3-5938441] Completed successfully
+[2026-06-16T14:57:35.982Z] [INFO] [job:alert-3-5938440] Completed successfully
+[2026-06-16T14:57:35.982Z] [INFO] [job:alert-3-5938437] Completed successfully
+[2026-06-16T14:57:35.982Z] [INFO] [job:alert-3-5938442] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:35.983Z] [INFO] [job:alert-3-5938443] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:35.983Z] [INFO] [job:alert-3-5938444] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:35.983Z] [INFO] [job:alert-3-5938445] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:35.986Z] [WARN] [job:alert-3-5938438] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:35.986Z] [INFO] [job:alert-3-5938438] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:35.993Z] [INFO] [job:alert-3-5938438] Completed successfully
+[2026-06-16T14:57:35.993Z] [INFO] [job:alert-3-5938446] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:35.998Z] [INFO] [job:alert-3-5938444] Internal matches: 0
+[2026-06-16T14:57:36.003Z] [INFO] [job:alert-3-5938442] Internal matches: 0
+[2026-06-16T14:57:36.006Z] [INFO] [job:alert-3-5938443] Internal matches: 0
+[2026-06-16T14:57:36.009Z] [INFO] [job:alert-3-5938445] Internal matches: 0
+[2026-06-16T14:57:36.013Z] [WARN] [job:alert-3-5938444] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.013Z] [INFO] [job:alert-3-5938444] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.015Z] [WARN] [job:alert-3-5938442] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.015Z] [INFO] [job:alert-3-5938442] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.016Z] [WARN] [job:alert-3-5938443] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.016Z] [INFO] [job:alert-3-5938443] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.017Z] [INFO] [job:alert-3-5938446] Internal matches: 0
+[2026-06-16T14:57:36.020Z] [INFO] [job:alert-3-5938444] Completed successfully
+[2026-06-16T14:57:36.020Z] [INFO] [job:alert-3-5938442] Completed successfully
+[2026-06-16T14:57:36.021Z] [INFO] [job:alert-3-5938443] Completed successfully
+[2026-06-16T14:57:36.021Z] [INFO] [job:alert-3-5938447] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.022Z] [INFO] [job:alert-3-5938448] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.022Z] [INFO] [job:alert-3-5938449] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.024Z] [WARN] [job:alert-3-5938445] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.024Z] [INFO] [job:alert-3-5938445] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.029Z] [INFO] [job:alert-3-5938445] Completed successfully
+[2026-06-16T14:57:36.029Z] [INFO] [job:alert-3-5938450] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.030Z] [WARN] [job:alert-3-5938446] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.031Z] [INFO] [job:alert-3-5938446] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.035Z] [INFO] [job:alert-3-5938447] Internal matches: 0
+[2026-06-16T14:57:36.037Z] [INFO] [job:alert-3-5938446] Completed successfully
+[2026-06-16T14:57:36.037Z] [INFO] [job:alert-3-5938451] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.038Z] [INFO] [job:alert-3-5938448] Internal matches: 0
+[2026-06-16T14:57:36.039Z] [INFO] [job:alert-3-5938449] Internal matches: 0
+[2026-06-16T14:57:36.042Z] [INFO] [job:alert-3-5938450] Internal matches: 0
+[2026-06-16T14:57:36.044Z] [WARN] [job:alert-3-5938447] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.044Z] [INFO] [job:alert-3-5938447] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.045Z] [WARN] [job:alert-3-5938448] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.045Z] [INFO] [job:alert-3-5938448] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.046Z] [WARN] [job:alert-3-5938449] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.046Z] [INFO] [job:alert-3-5938449] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.048Z] [INFO] [job:alert-3-5938447] Completed successfully
+[2026-06-16T14:57:36.048Z] [INFO] [job:alert-3-5938448] Completed successfully
+[2026-06-16T14:57:36.048Z] [INFO] [job:alert-3-5938449] Completed successfully
+[2026-06-16T14:57:36.048Z] [INFO] [job:alert-3-5938452] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.049Z] [INFO] [job:alert-3-5938453] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.049Z] [INFO] [job:alert-3-5938454] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.051Z] [INFO] [job:alert-3-5938451] Internal matches: 0
+[2026-06-16T14:57:36.052Z] [WARN] [job:alert-3-5938450] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.052Z] [INFO] [job:alert-3-5938450] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.055Z] [INFO] [job:alert-3-5938450] Completed successfully
+[2026-06-16T14:57:36.055Z] [INFO] [job:alert-3-5938455] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.057Z] [WARN] [job:alert-3-5938451] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.057Z] [INFO] [job:alert-3-5938451] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.059Z] [INFO] [job:alert-3-5938452] Internal matches: 0
+[2026-06-16T14:57:36.060Z] [INFO] [job:alert-3-5938453] Internal matches: 0
+[2026-06-16T14:57:36.061Z] [INFO] [job:alert-3-5938451] Completed successfully
+[2026-06-16T14:57:36.062Z] [INFO] [job:alert-3-5938456] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.063Z] [INFO] [job:alert-3-5938454] Internal matches: 0
+[2026-06-16T14:57:36.065Z] [INFO] [job:alert-3-5938455] Internal matches: 0
+[2026-06-16T14:57:36.067Z] [WARN] [job:alert-3-5938452] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.067Z] [INFO] [job:alert-3-5938452] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.068Z] [WARN] [job:alert-3-5938453] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.068Z] [INFO] [job:alert-3-5938453] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.069Z] [WARN] [job:alert-3-5938454] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.069Z] [INFO] [job:alert-3-5938454] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.070Z] [INFO] [job:alert-3-5938452] Completed successfully
+[2026-06-16T14:57:36.070Z] [INFO] [job:alert-3-5938453] Completed successfully
+[2026-06-16T14:57:36.070Z] [INFO] [job:alert-3-5938454] Completed successfully
+[2026-06-16T14:57:36.070Z] [INFO] [job:alert-3-5938457] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.071Z] [INFO] [job:alert-3-5938458] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.071Z] [INFO] [job:alert-3-5938459] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.072Z] [INFO] [job:alert-3-5938456] Internal matches: 0
+[2026-06-16T14:57:36.073Z] [WARN] [job:alert-3-5938455] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.074Z] [INFO] [job:alert-3-5938455] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.076Z] [INFO] [job:alert-3-5938455] Completed successfully
+[2026-06-16T14:57:36.077Z] [INFO] [job:alert-3-5938460] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.078Z] [WARN] [job:alert-3-5938456] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.078Z] [INFO] [job:alert-3-5938456] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.081Z] [INFO] [job:alert-3-5938457] Internal matches: 0
+[2026-06-16T14:57:36.082Z] [INFO] [job:alert-3-5938458] Internal matches: 0
+[2026-06-16T14:57:36.083Z] [INFO] [job:alert-3-5938459] Internal matches: 0
+[2026-06-16T14:57:36.085Z] [INFO] [job:alert-3-5938456] Completed successfully
+[2026-06-16T14:57:36.085Z] [INFO] [job:alert-3-5938461] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.087Z] [INFO] [job:alert-3-5938460] Internal matches: 0
+[2026-06-16T14:57:36.088Z] [WARN] [job:alert-3-5938457] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.088Z] [INFO] [job:alert-3-5938457] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.089Z] [WARN] [job:alert-3-5938458] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.089Z] [INFO] [job:alert-3-5938458] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.090Z] [WARN] [job:alert-3-5938459] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.090Z] [INFO] [job:alert-3-5938459] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.091Z] [INFO] [job:alert-3-5938457] Completed successfully
+[2026-06-16T14:57:36.091Z] [INFO] [job:alert-3-5938458] Completed successfully
+[2026-06-16T14:57:36.092Z] [INFO] [job:alert-3-5938459] Completed successfully
+[2026-06-16T14:57:36.092Z] [INFO] [job:alert-3-5938462] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.092Z] [INFO] [job:alert-3-5938463] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.092Z] [INFO] [job:alert-3-5938464] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.093Z] [INFO] [job:alert-3-5938461] Internal matches: 0
+[2026-06-16T14:57:36.094Z] [WARN] [job:alert-3-5938460] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.095Z] [INFO] [job:alert-3-5938460] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.097Z] [INFO] [job:alert-3-5938460] Completed successfully
+[2026-06-16T14:57:36.098Z] [INFO] [job:alert-3-5938465] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.100Z] [WARN] [job:alert-3-5938461] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.100Z] [INFO] [job:alert-3-5938461] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.102Z] [INFO] [job:alert-3-5938463] Internal matches: 0
+[2026-06-16T14:57:36.103Z] [INFO] [job:alert-3-5938462] Internal matches: 0
+[2026-06-16T14:57:36.104Z] [INFO] [job:alert-3-5938461] Completed successfully
+[2026-06-16T14:57:36.104Z] [INFO] [job:alert-3-5938466] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.105Z] [INFO] [job:alert-3-5938464] Internal matches: 0
+[2026-06-16T14:57:36.108Z] [WARN] [job:alert-3-5938463] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.108Z] [INFO] [job:alert-3-5938463] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.109Z] [WARN] [job:alert-3-5938462] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.109Z] [INFO] [job:alert-3-5938462] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.110Z] [WARN] [job:alert-3-5938464] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.110Z] [INFO] [job:alert-3-5938464] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.110Z] [INFO] [job:alert-3-5938465] Internal matches: 0
+[2026-06-16T14:57:36.112Z] [INFO] [job:alert-3-5938463] Completed successfully
+[2026-06-16T14:57:36.112Z] [INFO] [job:alert-3-5938462] Completed successfully
+[2026-06-16T14:57:36.112Z] [INFO] [job:alert-3-5938464] Completed successfully
+[2026-06-16T14:57:36.112Z] [INFO] [job:alert-3-5938467] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.113Z] [INFO] [job:alert-3-5938468] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.113Z] [INFO] [job:alert-3-5938469] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.114Z] [INFO] [job:alert-3-5938466] Internal matches: 0
+[2026-06-16T14:57:36.118Z] [WARN] [job:alert-3-5938465] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.119Z] [INFO] [job:alert-3-5938465] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.121Z] [INFO] [job:alert-3-5938465] Completed successfully
+[2026-06-16T14:57:36.121Z] [INFO] [job:alert-3-5938470] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.122Z] [INFO] [job:alert-3-5938467] Internal matches: 0
+[2026-06-16T14:57:36.124Z] [INFO] [job:alert-3-5938468] Internal matches: 0
+[2026-06-16T14:57:36.125Z] [WARN] [job:alert-3-5938466] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.125Z] [INFO] [job:alert-3-5938466] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.126Z] [INFO] [job:alert-3-5938469] Internal matches: 0
+[2026-06-16T14:57:36.128Z] [INFO] [job:alert-3-5938466] Completed successfully
+[2026-06-16T14:57:36.129Z] [INFO] [job:alert-3-5938471] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.130Z] [WARN] [job:alert-3-5938467] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.130Z] [INFO] [job:alert-3-5938467] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.132Z] [WARN] [job:alert-3-5938468] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.132Z] [INFO] [job:alert-3-5938468] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.133Z] [WARN] [job:alert-3-5938469] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.133Z] [INFO] [job:alert-3-5938469] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.134Z] [INFO] [job:alert-3-5938467] Completed successfully
+[2026-06-16T14:57:36.134Z] [INFO] [job:alert-3-5938468] Completed successfully
+[2026-06-16T14:57:36.134Z] [INFO] [job:alert-3-5938469] Completed successfully
+[2026-06-16T14:57:36.134Z] [INFO] [job:alert-3-5938472] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.135Z] [INFO] [job:alert-3-5938473] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.135Z] [INFO] [job:alert-3-5938474] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.139Z] [INFO] [job:alert-3-5938470] Internal matches: 0
+[2026-06-16T14:57:36.141Z] [INFO] [job:alert-3-5938471] Internal matches: 0
+[2026-06-16T14:57:36.142Z] [INFO] [job:alert-3-5938472] Internal matches: 0
+[2026-06-16T14:57:36.143Z] [INFO] [job:alert-3-5938473] Internal matches: 0
+[2026-06-16T14:57:36.144Z] [INFO] [job:alert-3-5938474] Internal matches: 0
+[2026-06-16T14:57:36.145Z] [WARN] [job:alert-3-5938470] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.145Z] [INFO] [job:alert-3-5938470] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.146Z] [WARN] [job:alert-3-5938471] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.146Z] [INFO] [job:alert-3-5938471] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.147Z] [WARN] [job:alert-3-5938472] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.147Z] [INFO] [job:alert-3-5938472] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.148Z] [INFO] [job:alert-3-5938470] Completed successfully
+[2026-06-16T14:57:36.148Z] [INFO] [job:alert-3-5938471] Completed successfully
+[2026-06-16T14:57:36.148Z] [INFO] [job:alert-3-5938472] Completed successfully
+[2026-06-16T14:57:36.149Z] [INFO] [job:alert-3-5938475] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.149Z] [INFO] [job:alert-3-5938476] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.149Z] [INFO] [job:alert-3-5938477] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.150Z] [WARN] [job:alert-3-5938473] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.150Z] [INFO] [job:alert-3-5938473] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.151Z] [WARN] [job:alert-3-5938474] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.151Z] [INFO] [job:alert-3-5938474] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.152Z] [INFO] [job:alert-3-5938473] Completed successfully
+[2026-06-16T14:57:36.152Z] [INFO] [job:alert-3-5938474] Completed successfully
+[2026-06-16T14:57:36.152Z] [INFO] [job:alert-3-5938478] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.152Z] [INFO] [job:alert-3-5938479] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.159Z] [INFO] [job:alert-3-5938475] Internal matches: 0
+[2026-06-16T14:57:36.160Z] [INFO] [job:alert-3-5938476] Internal matches: 0
+[2026-06-16T14:57:36.161Z] [INFO] [job:alert-3-5938477] Internal matches: 0
+[2026-06-16T14:57:36.161Z] [INFO] [job:alert-3-5938478] Internal matches: 0
+[2026-06-16T14:57:36.162Z] [INFO] [job:alert-3-5938479] Internal matches: 0
+[2026-06-16T14:57:36.164Z] [WARN] [job:alert-3-5938475] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.164Z] [INFO] [job:alert-3-5938475] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.164Z] [WARN] [job:alert-3-5938476] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.165Z] [INFO] [job:alert-3-5938476] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.165Z] [WARN] [job:alert-3-5938477] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.165Z] [INFO] [job:alert-3-5938477] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.166Z] [WARN] [job:alert-3-5938478] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.166Z] [INFO] [job:alert-3-5938478] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.166Z] [INFO] [job:alert-3-5938475] Completed successfully
+[2026-06-16T14:57:36.167Z] [INFO] [job:alert-3-5938476] Completed successfully
+[2026-06-16T14:57:36.167Z] [INFO] [job:alert-3-5938477] Completed successfully
+[2026-06-16T14:57:36.167Z] [INFO] [job:alert-3-5938478] Completed successfully
+[2026-06-16T14:57:36.167Z] [INFO] [job:alert-3-5938480] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.167Z] [INFO] [job:alert-3-5938481] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.167Z] [INFO] [job:alert-3-5938482] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.168Z] [INFO] [job:alert-3-5938483] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.169Z] [WARN] [job:alert-3-5938479] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.169Z] [INFO] [job:alert-3-5938479] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.172Z] [INFO] [job:alert-3-5938479] Completed successfully
+[2026-06-16T14:57:36.172Z] [INFO] [job:alert-3-5938484] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.177Z] [INFO] [job:alert-3-5938480] Internal matches: 0
+[2026-06-16T14:57:36.178Z] [INFO] [job:alert-3-5938481] Internal matches: 0
+[2026-06-16T14:57:36.179Z] [INFO] [job:alert-3-5938482] Internal matches: 0
+[2026-06-16T14:57:36.181Z] [INFO] [job:alert-3-5938483] Internal matches: 0
+[2026-06-16T14:57:36.182Z] [WARN] [job:alert-3-5938480] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.182Z] [INFO] [job:alert-3-5938480] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.183Z] [WARN] [job:alert-3-5938481] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.183Z] [INFO] [job:alert-3-5938481] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.184Z] [WARN] [job:alert-3-5938482] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.184Z] [INFO] [job:alert-3-5938482] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.185Z] [WARN] [job:alert-3-5938483] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.185Z] [INFO] [job:alert-3-5938483] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.185Z] [INFO] [job:alert-3-5938484] Internal matches: 0
+[2026-06-16T14:57:36.186Z] [INFO] [job:alert-3-5938480] Completed successfully
+[2026-06-16T14:57:36.186Z] [INFO] [job:alert-3-5938481] Completed successfully
+[2026-06-16T14:57:36.186Z] [INFO] [job:alert-3-5938482] Completed successfully
+[2026-06-16T14:57:36.187Z] [INFO] [job:alert-3-5938483] Completed successfully
+[2026-06-16T14:57:36.187Z] [INFO] [job:alert-3-5938485] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.187Z] [INFO] [job:alert-3-5938486] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.187Z] [INFO] [job:alert-3-5938487] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.187Z] [INFO] [job:alert-3-5938488] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.191Z] [WARN] [job:alert-3-5938484] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.191Z] [INFO] [job:alert-3-5938484] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.193Z] [INFO] [job:alert-3-5938484] Completed successfully
+[2026-06-16T14:57:36.193Z] [INFO] [job:alert-3-5938489] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.193Z] [INFO] [job:alert-3-5938485] Internal matches: 0
+[2026-06-16T14:57:36.194Z] [INFO] [job:alert-3-5938486] Internal matches: 0
+[2026-06-16T14:57:36.195Z] [INFO] [job:alert-3-5938487] Internal matches: 0
+[2026-06-16T14:57:36.196Z] [INFO] [job:alert-3-5938488] Internal matches: 0
+[2026-06-16T14:57:36.199Z] [WARN] [job:alert-3-5938485] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.199Z] [INFO] [job:alert-3-5938485] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.200Z] [WARN] [job:alert-3-5938486] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.200Z] [INFO] [job:alert-3-5938486] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.201Z] [WARN] [job:alert-3-5938487] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.201Z] [INFO] [job:alert-3-5938487] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.201Z] [WARN] [job:alert-3-5938488] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.201Z] [INFO] [job:alert-3-5938488] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.202Z] [INFO] [job:alert-3-5938489] Internal matches: 0
+[2026-06-16T14:57:36.203Z] [INFO] [job:alert-3-5938485] Completed successfully
+[2026-06-16T14:57:36.203Z] [INFO] [job:alert-3-5938486] Completed successfully
+[2026-06-16T14:57:36.203Z] [INFO] [job:alert-3-5938487] Completed successfully
+[2026-06-16T14:57:36.203Z] [INFO] [job:alert-3-5938488] Completed successfully
+[2026-06-16T14:57:36.203Z] [INFO] [job:alert-3-5938490] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.203Z] [INFO] [job:alert-3-5938491] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.203Z] [INFO] [job:alert-3-5938492] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.204Z] [INFO] [job:alert-3-5938493] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.207Z] [WARN] [job:alert-3-5938489] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.207Z] [INFO] [job:alert-3-5938489] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.209Z] [INFO] [job:alert-3-5938489] Completed successfully
+[2026-06-16T14:57:36.209Z] [INFO] [job:alert-3-5938494] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.210Z] [INFO] [job:alert-3-5938490] Internal matches: 0
+[2026-06-16T14:57:36.210Z] [INFO] [job:alert-3-5938491] Internal matches: 0
+[2026-06-16T14:57:36.211Z] [INFO] [job:alert-3-5938492] Internal matches: 0
+[2026-06-16T14:57:36.212Z] [INFO] [job:alert-3-5938493] Internal matches: 0
+[2026-06-16T14:57:36.215Z] [WARN] [job:alert-3-5938490] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.215Z] [INFO] [job:alert-3-5938490] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.216Z] [WARN] [job:alert-3-5938491] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.216Z] [INFO] [job:alert-3-5938491] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.217Z] [WARN] [job:alert-3-5938492] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.217Z] [INFO] [job:alert-3-5938492] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.217Z] [WARN] [job:alert-3-5938493] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.217Z] [INFO] [job:alert-3-5938493] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.218Z] [INFO] [job:alert-3-5938490] Completed successfully
+[2026-06-16T14:57:36.219Z] [INFO] [job:alert-3-5938491] Completed successfully
+[2026-06-16T14:57:36.219Z] [INFO] [job:alert-3-5938492] Completed successfully
+[2026-06-16T14:57:36.219Z] [INFO] [job:alert-3-5938493] Completed successfully
+[2026-06-16T14:57:36.219Z] [INFO] [job:alert-3-5938495] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.219Z] [INFO] [job:alert-3-5938496] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.219Z] [INFO] [job:alert-3-5938712] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.219Z] [INFO] [job:alert-3-5938713] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.220Z] [INFO] [job:alert-3-5938494] Internal matches: 0
+[2026-06-16T14:57:36.225Z] [INFO] [job:alert-3-5938495] Internal matches: 0
+[2026-06-16T14:57:36.226Z] [INFO] [job:alert-3-5938496] Internal matches: 0
+[2026-06-16T14:57:36.227Z] [WARN] [job:alert-3-5938494] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.227Z] [INFO] [job:alert-3-5938494] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.227Z] [INFO] [job:alert-3-5938712] Internal matches: 0
+[2026-06-16T14:57:36.228Z] [INFO] [job:alert-3-5938713] Internal matches: 0
+[2026-06-16T14:57:36.230Z] [INFO] [job:alert-3-5938494] Completed successfully
+[2026-06-16T14:57:36.230Z] [INFO] [job:alert-3-5938714] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.231Z] [WARN] [job:alert-3-5938495] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.231Z] [INFO] [job:alert-3-5938495] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.232Z] [WARN] [job:alert-3-5938496] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.232Z] [INFO] [job:alert-3-5938496] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.232Z] [WARN] [job:alert-3-5938712] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.232Z] [INFO] [job:alert-3-5938712] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.233Z] [INFO] [job:alert-3-5938495] Completed successfully
+[2026-06-16T14:57:36.233Z] [INFO] [job:alert-3-5938496] Completed successfully
+[2026-06-16T14:57:36.233Z] [INFO] [job:alert-3-5938712] Completed successfully
+[2026-06-16T14:57:36.233Z] [INFO] [job:alert-3-5938715] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.234Z] [INFO] [job:alert-3-5938716] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.234Z] [INFO] [job:alert-3-5938717] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.235Z] [WARN] [job:alert-3-5938713] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.235Z] [INFO] [job:alert-3-5938713] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.238Z] [INFO] [job:alert-3-5938713] Completed successfully
+[2026-06-16T14:57:36.238Z] [INFO] [job:alert-3-5938718] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.240Z] [INFO] [job:alert-3-5938714] Internal matches: 0
+[2026-06-16T14:57:36.241Z] [INFO] [job:alert-3-5938715] Internal matches: 0
+[2026-06-16T14:57:36.242Z] [INFO] [job:alert-3-5938716] Internal matches: 0
+[2026-06-16T14:57:36.243Z] [INFO] [job:alert-3-5938717] Internal matches: 0
+[2026-06-16T14:57:36.245Z] [WARN] [job:alert-3-5938714] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.245Z] [INFO] [job:alert-3-5938714] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.245Z] [WARN] [job:alert-3-5938715] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.246Z] [INFO] [job:alert-3-5938715] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.246Z] [WARN] [job:alert-3-5938716] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.246Z] [INFO] [job:alert-3-5938716] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.247Z] [INFO] [job:alert-3-5938718] Internal matches: 0
+[2026-06-16T14:57:36.248Z] [INFO] [job:alert-3-5938714] Completed successfully
+[2026-06-16T14:57:36.248Z] [INFO] [job:alert-3-5938715] Completed successfully
+[2026-06-16T14:57:36.248Z] [INFO] [job:alert-3-5938716] Completed successfully
+[2026-06-16T14:57:36.248Z] [INFO] [job:alert-3-5938719] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.248Z] [INFO] [job:alert-3-5938720] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.249Z] [INFO] [job:alert-3-5938721] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.249Z] [WARN] [job:alert-3-5938717] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.250Z] [INFO] [job:alert-3-5938717] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.253Z] [INFO] [job:alert-3-5938717] Completed successfully
+[2026-06-16T14:57:36.253Z] [INFO] [job:alert-3-5938722] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.254Z] [WARN] [job:alert-3-5938718] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.255Z] [INFO] [job:alert-3-5938718] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.256Z] [INFO] [job:alert-3-5938719] Internal matches: 0
+[2026-06-16T14:57:36.257Z] [INFO] [job:alert-3-5938720] Internal matches: 0
+[2026-06-16T14:57:36.258Z] [INFO] [job:alert-3-5938718] Completed successfully
+[2026-06-16T14:57:36.259Z] [INFO] [job:alert-3-5938723] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.259Z] [INFO] [job:alert-3-5938721] Internal matches: 0
+[2026-06-16T14:57:36.262Z] [WARN] [job:alert-3-5938719] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.262Z] [INFO] [job:alert-3-5938719] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.262Z] [WARN] [job:alert-3-5938720] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.263Z] [INFO] [job:alert-3-5938720] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.263Z] [WARN] [job:alert-3-5938721] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.263Z] [INFO] [job:alert-3-5938721] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.264Z] [INFO] [job:alert-3-5938722] Internal matches: 0
+[2026-06-16T14:57:36.265Z] [INFO] [job:alert-3-5938719] Completed successfully
+[2026-06-16T14:57:36.266Z] [INFO] [job:alert-3-5938720] Completed successfully
+[2026-06-16T14:57:36.266Z] [INFO] [job:alert-3-5938721] Completed successfully
+[2026-06-16T14:57:36.266Z] [INFO] [job:alert-3-5938724] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.266Z] [INFO] [job:alert-3-5938725] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.266Z] [INFO] [job:alert-3-5938726] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.268Z] [INFO] [job:alert-3-5938723] Internal matches: 0
+[2026-06-16T14:57:36.270Z] [WARN] [job:alert-3-5938722] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.270Z] [INFO] [job:alert-3-5938722] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.271Z] [INFO] [job:alert-3-5938722] Completed successfully
+[2026-06-16T14:57:36.272Z] [INFO] [job:alert-3-5938727] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.272Z] [INFO] [job:alert-3-5938724] Internal matches: 0
+[2026-06-16T14:57:36.273Z] [INFO] [job:alert-3-5938725] Internal matches: 0
+[2026-06-16T14:57:36.274Z] [WARN] [job:alert-3-5938723] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.274Z] [INFO] [job:alert-3-5938723] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.275Z] [INFO] [job:alert-3-5938726] Internal matches: 0
+[2026-06-16T14:57:36.277Z] [INFO] [job:alert-3-5938723] Completed successfully
+[2026-06-16T14:57:36.277Z] [INFO] [job:alert-3-5938728] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.278Z] [WARN] [job:alert-3-5938724] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.278Z] [INFO] [job:alert-3-5938724] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.278Z] [WARN] [job:alert-3-5938725] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.279Z] [INFO] [job:alert-3-5938725] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.279Z] [WARN] [job:alert-3-5938726] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.279Z] [INFO] [job:alert-3-5938726] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.279Z] [INFO] [job:alert-3-5938724] Completed successfully
+[2026-06-16T14:57:36.280Z] [INFO] [job:alert-3-5938725] Completed successfully
+[2026-06-16T14:57:36.280Z] [INFO] [job:alert-3-5938729] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.280Z] [INFO] [job:alert-3-5938730] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.281Z] [INFO] [job:alert-3-5938726] Completed successfully
+[2026-06-16T14:57:36.282Z] [INFO] [job:alert-3-5938731] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.284Z] [INFO] [job:alert-3-5938727] Internal matches: 0
+[2026-06-16T14:57:36.286Z] [INFO] [job:alert-3-5938728] Internal matches: 0
+[2026-06-16T14:57:36.287Z] [INFO] [job:alert-3-5938729] Internal matches: 0
+[2026-06-16T14:57:36.288Z] [INFO] [job:alert-3-5938730] Internal matches: 0
+[2026-06-16T14:57:36.289Z] [INFO] [job:alert-3-5938731] Internal matches: 0
+[2026-06-16T14:57:36.289Z] [WARN] [job:alert-3-5938727] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.289Z] [INFO] [job:alert-3-5938727] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.290Z] [WARN] [job:alert-3-5938728] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.290Z] [INFO] [job:alert-3-5938728] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.291Z] [INFO] [job:alert-3-5938727] Completed successfully
+[2026-06-16T14:57:36.291Z] [INFO] [job:alert-3-5938728] Completed successfully
+[2026-06-16T14:57:36.291Z] [INFO] [job:alert-3-5938732] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.291Z] [INFO] [job:alert-3-5938733] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.292Z] [WARN] [job:alert-3-5938729] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.292Z] [INFO] [job:alert-3-5938729] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.293Z] [WARN] [job:alert-3-5938730] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.293Z] [INFO] [job:alert-3-5938730] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.294Z] [WARN] [job:alert-3-5938731] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.294Z] [INFO] [job:alert-3-5938731] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.294Z] [INFO] [job:alert-3-5938729] Completed successfully
+[2026-06-16T14:57:36.294Z] [INFO] [job:alert-3-5938730] Completed successfully
+[2026-06-16T14:57:36.295Z] [INFO] [job:alert-3-5938731] Completed successfully
+[2026-06-16T14:57:36.295Z] [INFO] [job:alert-3-5938734] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.295Z] [INFO] [job:alert-3-5938735] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.295Z] [INFO] [job:alert-3-5938736] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.300Z] [INFO] [job:alert-3-5938732] Internal matches: 0
+[2026-06-16T14:57:36.301Z] [INFO] [job:alert-3-5938733] Internal matches: 0
+[2026-06-16T14:57:36.301Z] [INFO] [job:alert-3-5938734] Internal matches: 0
+[2026-06-16T14:57:36.302Z] [INFO] [job:alert-3-5938735] Internal matches: 0
+[2026-06-16T14:57:36.302Z] [INFO] [job:alert-3-5938736] Internal matches: 0
+[2026-06-16T14:57:36.303Z] [WARN] [job:alert-3-5938732] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.303Z] [INFO] [job:alert-3-5938732] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.304Z] [WARN] [job:alert-3-5938733] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.304Z] [INFO] [job:alert-3-5938733] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.304Z] [WARN] [job:alert-3-5938734] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.305Z] [INFO] [job:alert-3-5938734] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.305Z] [WARN] [job:alert-3-5938735] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.305Z] [INFO] [job:alert-3-5938735] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.306Z] [INFO] [job:alert-3-5938732] Completed successfully
+[2026-06-16T14:57:36.306Z] [INFO] [job:alert-3-5938733] Completed successfully
+[2026-06-16T14:57:36.306Z] [INFO] [job:alert-3-5938734] Completed successfully
+[2026-06-16T14:57:36.306Z] [INFO] [job:alert-3-5938735] Completed successfully
+[2026-06-16T14:57:36.306Z] [INFO] [job:alert-3-5938737] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.307Z] [INFO] [job:alert-3-5938738] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.307Z] [INFO] [job:alert-3-5938739] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T14:57:36.308Z] [WARN] [job:alert-3-5938736] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.308Z] [INFO] [job:alert-3-5938736] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.312Z] [INFO] [job:alert-3-5938736] Completed successfully
+[2026-06-16T14:57:36.313Z] [INFO] [job:alert-3-5938737] Internal matches: 0
+[2026-06-16T14:57:36.313Z] [INFO] [job:alert-3-5938738] Internal matches: 0
+[2026-06-16T14:57:36.314Z] [INFO] [job:alert-3-5938739] Internal matches: 0
+[2026-06-16T14:57:36.315Z] [WARN] [job:alert-3-5938737] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.315Z] [INFO] [job:alert-3-5938737] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.315Z] [WARN] [job:alert-3-5938738] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.316Z] [INFO] [job:alert-3-5938738] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.316Z] [INFO] [job:alert-3-5938737] Completed successfully
+[2026-06-16T14:57:36.316Z] [INFO] [job:alert-3-5938738] Completed successfully
+[2026-06-16T14:57:36.316Z] [WARN] [job:alert-3-5938739] Scraper error (non-fatal): fetch failed
+[2026-06-16T14:57:36.316Z] [INFO] [job:alert-3-5938739] No matches — skipping email, lastRun not updated
+[2026-06-16T14:57:36.317Z] [INFO] [job:alert-3-5938739] Completed successfully
+[2026-06-16T15:00:02.300Z] [INFO] [job:alert-3-5938740] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T15:00:02.308Z] [INFO] [job:alert-3-5938740] Internal matches: 0
+[2026-06-16T15:00:08.330Z] [INFO] [job:alert-3-5938740] Scraper matches: 4
+[2026-06-16T15:00:11.767Z] [INFO] [job:alert-3-5938740] Done — sent email with 4 matches
+[2026-06-16T15:00:11.769Z] [INFO] [job:alert-3-5938740] Completed successfully
+[2026-06-16T15:05:02.425Z] [INFO] [job:alert-3-5938741] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T15:05:02.427Z] [INFO] [job:alert-3-5938741] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T15:05:02.428Z] [INFO] [job:alert-3-5938741] Completed successfully
+[2026-06-16T15:10:02.694Z] [INFO] [job:alert-3-5938742] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T15:10:02.697Z] [INFO] [job:alert-3-5938742] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T15:10:02.698Z] [INFO] [job:alert-3-5938742] Completed successfully
+[2026-06-16T15:15:02.900Z] [INFO] [job:alert-3-5938743] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T15:15:02.904Z] [INFO] [job:alert-3-5938743] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T15:15:02.905Z] [INFO] [job:alert-3-5938743] Completed successfully
+[2026-06-16T15:20:02.072Z] [INFO] [job:alert-3-5938744] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T15:20:02.076Z] [INFO] [job:alert-3-5938744] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T15:20:02.077Z] [INFO] [job:alert-3-5938744] Completed successfully
+[2026-06-16T15:25:02.119Z] [INFO] [job:alert-3-5938745] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T15:25:02.121Z] [INFO] [job:alert-3-5938745] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T15:25:02.122Z] [INFO] [job:alert-3-5938745] Completed successfully
+[2026-06-16T15:30:01.950Z] [INFO] [job:alert-3-5938746] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T15:30:01.953Z] [INFO] [job:alert-3-5938746] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T15:30:01.954Z] [INFO] [job:alert-3-5938746] Completed successfully
+[2026-06-16T15:35:01.721Z] [INFO] [job:alert-3-5938747] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T15:35:01.728Z] [INFO] [job:alert-3-5938747] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T15:35:01.729Z] [INFO] [job:alert-3-5938747] Completed successfully
+[2026-06-16T15:40:02.574Z] [INFO] [job:alert-3-5938748] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T15:40:02.577Z] [INFO] [job:alert-3-5938748] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T15:40:02.578Z] [INFO] [job:alert-3-5938748] Completed successfully
+[2026-06-16T15:45:02.324Z] [INFO] [job:alert-3-5938749] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T15:45:02.328Z] [INFO] [job:alert-3-5938749] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T15:45:02.329Z] [INFO] [job:alert-3-5938749] Completed successfully
+[2026-06-16T15:50:02.106Z] [INFO] [job:alert-3-5938750] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T15:50:02.110Z] [INFO] [job:alert-3-5938750] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T15:50:02.112Z] [INFO] [job:alert-3-5938750] Completed successfully
+[2026-06-16T15:55:01.876Z] [INFO] [job:alert-3-5938751] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T15:55:01.882Z] [INFO] [job:alert-3-5938751] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T15:55:01.883Z] [INFO] [job:alert-3-5938751] Completed successfully
+[2026-06-16T16:00:01.726Z] [INFO] [job:alert-3-5938752] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T16:00:01.729Z] [INFO] [job:alert-3-5938752] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T16:00:01.732Z] [INFO] [job:alert-3-5938752] Completed successfully
+[2026-06-16T16:05:02.562Z] [INFO] [job:alert-3-5938753] Starting — alert #3 (bmw 3-series, UAE)
+[2026-06-16T16:05:02.566Z] [INFO] [job:alert-3-5938753] Alert #3 is within cooldown (freq=daily, lastRun=2026-06-16T15:00:11.707Z) — skipping
+[2026-06-16T16:05:02.567Z] [INFO] [job:alert-3-5938753] Completed successfully

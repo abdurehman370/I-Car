@@ -36,10 +36,15 @@ export async function POST(req: NextRequest, context: any) {
       where: { approvalStatus: 'approved' }
     });
 
-    // We do this asynchronously to avoid blocking the response
-    Promise.resolve().then(async () => {
-      for (const dealer of approvedDealers) {
-        await sendAuctionPublishedEmail(dealer.email, dealer.contactPerson || 'User', updatedAuction).catch(console.error);
+    // Notify standard users (assuming username is email)
+    const users = await prisma.user.findMany({
+      where: { role: 'user' } // Assuming 'user' is the role for regular users
+    });
+
+    // Await notifications to prevent serverless premature termination
+    await Promise.all([
+      ...approvedDealers.map(async (dealer) => {
+        await sendAuctionPublishedEmail(dealer.email, dealer.contactPerson || 'Dealer', updatedAuction).catch(console.error);
         await prisma.auctionNotification.create({
           data: {
             auctionId: updatedAuction.id,
@@ -48,9 +53,24 @@ export async function POST(req: NextRequest, context: any) {
             title: 'New Auction Published',
             message: `A new auction for ${updatedAuction.year} ${updatedAuction.make} ${updatedAuction.model} is now scheduled.`,
           }
-        });
-      }
-    });
+        }).catch(console.error);
+      }),
+      ...users.map(async (user) => {
+        if (user.username.includes('@')) {
+          await sendAuctionPublishedEmail(user.username, 'User', updatedAuction).catch(console.error);
+          await prisma.auctionNotification.create({
+            data: {
+              auctionId: updatedAuction.id,
+              userId: user.id,
+              userType: 'user',
+              type: 'auction_published',
+              title: 'New Auction Published',
+              message: `A new auction for ${updatedAuction.year} ${updatedAuction.make} ${updatedAuction.model} is now scheduled.`,
+            }
+          }).catch(console.error);
+        }
+      })
+    ]);
 
     return NextResponse.json({ auction: updatedAuction, message: "Auction published successfully" });
   } catch (error: any) {
