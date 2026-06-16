@@ -1,224 +1,424 @@
 import OpenAI from 'openai';
-import { OPENAI_JSON_SCHEMA, ValuationResultSchema, ValuationResult } from './schema';
+import {
+    OPENAI_JSON_SCHEMA,
+    ValuationResultSchema,
+    ValuationResult,
+} from './schema';
 import { GLOBAL_PROMPT } from './prompts/global';
 import { LEBANON_PROMPT } from './prompts/lebanon';
 import { UAE_PROMPT } from './prompts/uae';
 import { EUROPE_PROMPT } from './prompts/europe';
 import { buildMarkdownFromValuationJson } from './formatMarkdown';
-import { extractWebSources } from './sourceExtraction';
+import { extractWebSources, responseUsedWebSearch } from './sourceExtraction';
 import { estimateOpenAICost } from './cost';
-import { getValuationFromCache, saveValuationToCache, buildCacheKey } from './cache';
+import {
+    getValuationFromCache,
+    saveValuationToCache,
+    buildCacheKey,
+} from './cache';
 
-// Initialize OpenAI client dynamically in the function to pick up env vars if they change
+type Region = 'LEBANON' | 'UAE' | 'EUROPE';
+
+type EvaluateVehiclePayload = {
+    region: Region | string;
+    make: string;
+    model: string;
+    variant?: string | null;
+    year: number;
+    mileage?: number | null;
+    mileageMin?: number | null;
+    mileageMax?: number | null;
+    specs?: string | null;
+    notes?: string | null;
+    images?: Array<string | { url?: string }>;
+    mode?: 'quick' | 'listing' | 'partner' | string;
+};
+
 function getOpenAIClient() {
     return new OpenAI({
         apiKey: process.env.OPEN_AI_KEY || process.env.OPENAI_API_KEY,
     });
 }
 
-function getWebSearchTool(region: string): OpenAI.Chat.Completions.ChatCompletionTool {
-    // Basic web_search tool structure
-    const tool: any = {
-        type: "web_search",
-        web_search: {
-            search_context_size: "high"
-        }
-    };
+function getRegionPrompt(region: Region): string {
+    if (region === 'LEBANON') return LEBANON_PROMPT;
+    if (region === 'UAE') return UAE_PROMPT;
+    if (region === 'EUROPE') return EUROPE_PROMPT;
 
-    // If allowed_domains is supported by the specific model version, it would be added here.
-    // To ensure type safety with the standard SDK, we cast to any and let the API handle it.
-    if (region === 'UAE') {
-        tool.web_search.allowed_domains = [
-            "dubizzle.com", "dubicars.com", "autotraderuae.com", 
-            "audi-dubai.com", "mercedesbenzme.com", "altayermotors.com", "premier-carcare.com"
-        ];
-    } else if (region === 'EUROPE') {
-        tool.web_search.allowed_domains = [
-            "mobile.de", "autoscout24.com", "preowned.ferrari.com"
-        ];
-    }
-    // Lebanon is intentionally kept broader as requested.
-
-    return tool as OpenAI.Chat.Completions.ChatCompletionTool;
+    throw new Error('Unsupported region');
 }
 
-export async function evaluateVehicleWithAI(payload: any, forceNoCache = false) {
-    const region = String(payload.region).toUpperCase();
-    const isQuick = payload.mode === 'quick';
-    
-    let cacheKey = null;
-    if (!forceNoCache) {
-        cacheKey = buildCacheKey(payload);
-        if (cacheKey) {
-            const cached = await getValuationFromCache(cacheKey);
-            if (cached) {
-                return { ...cached, _fromCache: true };
-            }
-        }
+function getWebSearchTool(region: Region) {
+    const tool: Record<string, any> = {
+        type: 'web_search',
+        search_context_size: 'high',
+    };
+
+    if (region === 'UAE') {
+        tool.filters = {
+            allowed_domains: [
+                'dubizzle.com',
+                'dubicars.com',
+                'autotraderuae.com',
+                'audi-dubai.com',
+                'mercedesbenzme.com',
+                'altayermotors.com',
+                'premier-carcare.com',
+            ],
+        };
     }
 
-    const openai = getOpenAIClient();
-    const model = process.env.OPENAI_VALUATION_MODEL || 'gpt-4o'; // Use standard model, overridden by env
-    
-    // Build region instructions
-    let regionPrompt = '';
-    if (region === 'LEBANON') regionPrompt = LEBANON_PROMPT;
-    else if (region === 'UAE') regionPrompt = UAE_PROMPT;
-    else if (region === 'EUROPE') regionPrompt = EUROPE_PROMPT;
-    else throw new Error("Unsupported region");
-
-    const systemInstructions = `${GLOBAL_PROMPT}\n\n${regionPrompt}\n\nReturn structured JSON matching the provided schema.`;
-
-    // Build dynamic user input
-    let mileageLabel = 'Unknown';
-    if (isQuick && payload.mileageMin != null && payload.mileageMax != null) {
-        mileageLabel = `${payload.mileageMin}-${payload.mileageMax} km`;
-    } else if (payload.mileage != null) {
-        mileageLabel = `${payload.mileage} km`;
+    if (region === 'EUROPE') {
+        tool.filters = {
+            allowed_domains: [
+                'mobile.de',
+                'autoscout24.com',
+                'preowned.ferrari.com',
+            ],
+        };
     }
 
-    const userInputText = `Perform valuation for this vehicle.
+    // Lebanon intentionally stays broader because local inventory is fragmented
+    // across OLX, dealer pages, importer sites, Facebook/Instagram, and local websites.
+
+    return tool;
+}
+
+function getMileageLabel(payload: EvaluateVehiclePayload): string {
+    if (payload.mileageMin != null && payload.mileageMax != null) {
+        return `${payload.mileageMin}-${payload.mileageMax} km`;
+    }
+
+    if (payload.mileage != null) {
+        return `${payload.mileage} km`;
+    }
+
+    return 'Unknown';
+}
+
+function getMileageUsed(payload: EvaluateVehiclePayload): number {
+    if (payload.mileage != null) return Number(payload.mileage);
+
+    if (payload.mileageMin != null && payload.mileageMax != null) {
+        return Math.round((Number(payload.mileageMin) + Number(payload.mileageMax)) / 2);
+    }
+
+    return 0;
+}
+
+function buildSystemInstructions(region: Region): string {
+    return [
+        GLOBAL_PROMPT,
+        getRegionPrompt(region),
+        `
+STRUCTURED OUTPUT RULES:
+Return JSON only.
+The JSON must strictly match the provided schema.
+Do not include markdown in the JSON.
+Do not include source URLs inside JSON unless the schema explicitly allows them.
+Always return numeric integer price ranges.
+Dealer buy price must be below market price.
+Do not return "Insufficient verified comparables".
+Use fallback valuation hierarchy if exact comps are unavailable.
+        `.trim(),
+    ].join('\n\n');
+}
+
+function buildDynamicUserText(payload: EvaluateVehiclePayload, region: Region): string {
+    return `
+Perform valuation for this vehicle using current searched marketplace data.
 
 Region: ${region}
 Make: ${payload.make}
 Model: ${payload.model}
-Variant: ${payload.variant || 'Not specified'}
+Variant/Trim: ${payload.variant || 'Not specified'}
 Year: ${payload.year}
-Mileage: ${mileageLabel}
+Mileage: ${getMileageLabel(payload)}
 Specs/source: ${payload.specs || 'Unknown'}
 Condition notes: ${payload.notes || 'Average condition assumed'}
-Mode: ${payload.mode}
+Mode: ${payload.mode || 'listing'}
 
-Return structured JSON only.`;
+Return structured JSON only.
+    `.trim();
+}
 
-    const userContent: Array<OpenAI.Chat.Completions.ChatCompletionContentPart> = [
-        { type: 'text', text: userInputText }
+function buildInputContent(payload: EvaluateVehiclePayload, region: Region): any[] {
+    const content: any[] = [
+        {
+            type: 'input_text',
+            text: buildDynamicUserText(payload, region),
+        },
     ];
 
-    if (!isQuick && payload.images && Array.isArray(payload.images)) {
-        for (const img of payload.images) {
-            const url = typeof img === 'string' ? img : img.url || img;
-            if (url && url.startsWith('data:')) {
-                userContent.push({
-                    type: 'image_url',
-                    image_url: { url, detail: 'auto' },
+    const isQuick = payload.mode === 'quick' || payload.mode === 'partner';
+
+    if (!isQuick && Array.isArray(payload.images)) {
+        for (const img of payload.images.slice(0, 5)) {
+            const imageUrl = typeof img === 'string' ? img : img?.url;
+
+            if (typeof imageUrl === 'string' && imageUrl.startsWith('data:image/')) {
+                content.push({
+                    type: 'input_image',
+                    image_url: imageUrl,
+                    detail: 'auto',
                 });
             }
         }
     }
 
-    // Prepare API call
-    let retryCount = 0;
-    while (retryCount < 2) {
-        try {
-            const response = await openai.chat.completions.create({
-                model,
-                messages: [
-                    { role: 'system', content: systemInstructions },
-                    { role: 'user', content: userContent }
-                ],
-                tools: [getWebSearchTool(region)],
-                tool_choice: "required", // Ensure web search is used
-                response_format: {
-                    type: "json_schema",
-                    json_schema: OPENAI_JSON_SCHEMA
+    return content;
+}
+
+function extractTextFromResponsesApi(response: any): string {
+    if (typeof response?.output_text === 'string' && response.output_text.trim()) {
+        return response.output_text.trim();
+    }
+
+    const output = Array.isArray(response?.output) ? response.output : [];
+
+    for (const item of output) {
+        const content = Array.isArray(item?.content) ? item.content : [];
+
+        for (const part of content) {
+            if (part?.type === 'output_text' && typeof part?.text === 'string') {
+                return part.text.trim();
+            }
+        }
+    }
+
+    return '';
+}
+
+function getUsage(response: any) {
+    const usage = response?.usage || {};
+
+    return {
+        inputTokens: usage.input_tokens || 0,
+        cachedInputTokens: usage.input_tokens_details?.cached_tokens || 0,
+        outputTokens: usage.output_tokens || 0,
+        totalTokens: usage.total_tokens || 0,
+    };
+}
+
+function buildFinalResponse(params: {
+    region: Region;
+    model: string;
+    payload: EvaluateVehiclePayload;
+    valuation: ValuationResult;
+    markdown: string;
+    sources: any[];
+    usage: any;
+    estimatedCostUsd: number | null;
+    cacheHit: boolean;
+}) {
+    const {
+        region,
+        model,
+        payload,
+        valuation,
+        markdown,
+        sources,
+        usage,
+        estimatedCostUsd,
+        cacheHit,
+    } = params;
+
+    return {
+        status: 'ok',
+        region,
+        currency: region === 'UAE' ? 'AED' : region === 'EUROPE' ? 'EUR' : 'USD',
+        valuation,
+        markdown,
+        mileageUsed: getMileageUsed(payload),
+        sources,
+        usage: {
+            inputTokens: usage.inputTokens || 0,
+            cachedInputTokens: usage.cachedInputTokens || 0,
+            outputTokens: usage.outputTokens || 0,
+            totalTokens: usage.totalTokens || 0,
+            estimatedCostUsd,
+        },
+        meta: {
+            model,
+            webSearchUsed: true,
+            cacheHit,
+            fallbackUsed: valuation.fallbackUsed,
+            fallbackLevel: valuation.fallbackLevel,
+            confidence: valuation.confidence,
+        },
+    };
+}
+
+async function callOpenAIValuation(params: {
+    openai: OpenAI;
+    model: string;
+    region: Region;
+    payload: EvaluateVehiclePayload;
+    correction?: string;
+}) {
+    const { openai, model, region, payload, correction } = params;
+
+    const dynamicContent = buildInputContent(payload, region);
+
+    if (correction) {
+        dynamicContent.push({
+            type: 'input_text',
+            text: correction,
+        });
+    }
+
+    return openai.responses.create({
+        model,
+        instructions: buildSystemInstructions(region),
+        input: [
+            {
+                role: 'user',
+                content: dynamicContent,
+            },
+        ],
+        tools: [getWebSearchTool(region)],
+        tool_choice: 'required',
+        include: ['web_search_call.action.sources'],
+        text: {
+            format: {
+                type: 'json_schema',
+                name: 'vehicle_valuation_result',
+                strict: true,
+                schema: OPENAI_JSON_SCHEMA,
+            },
+        },
+        max_output_tokens: 4096,
+        temperature: 0.2,
+    } as any);
+}
+
+export async function evaluateVehicleWithAI(
+    payload: EvaluateVehiclePayload,
+    forceNoCache = false
+) {
+    const region = String(payload.region || '').toUpperCase() as Region;
+
+    if (!['LEBANON', 'UAE', 'EUROPE'].includes(region)) {
+        throw new Error('Unsupported region');
+    }
+
+    const cacheKey = !forceNoCache ? buildCacheKey({ ...payload, region }) : null;
+
+    if (cacheKey) {
+        const cached = await getValuationFromCache(cacheKey);
+
+        if (cached) {
+            return {
+                ...cached,
+                meta: {
+                    ...(cached.meta || {}),
+                    cacheHit: true,
                 },
-                max_tokens: 4096,
-                temperature: 0.3
-            }) as any; // Cast to any to handle extra annotations/fields if returned
+            };
+        }
+    }
 
-            const message = response.choices?.[0]?.message;
-            if (!message) {
-                throw new Error("Empty response from OpenAI");
+    const openai = getOpenAIClient();
+    const model = process.env.OPENAI_VALUATION_MODEL || 'gpt-5.4-2026-03-05';
+
+    let lastError: unknown;
+
+    for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+            const response = await callOpenAIValuation({
+                openai,
+                model,
+                region,
+                payload,
+                correction:
+                    attempt === 0
+                        ? undefined
+                        : 'Your previous output failed validation. Return valid JSON matching the schema exactly. Keep currencies correct for the region and ensure dealer buy price is lower than market price.',
+            });
+
+            if (!responseUsedWebSearch(response)) {
+                throw new Error('Marketplace search could not be completed. Please try again.');
             }
 
-            // Verify web search was called
-            const toolCalls = message.tool_calls || [];
-            const hasWebSearch = toolCalls.some((tc: any) => tc.function?.name?.includes('web_search') || tc.type === 'web_search');
-            
-            // Note: If the tool_choice is strictly honored, this shouldn't happen, but we verify as requested.
-            if (!hasWebSearch && !response.choices?.[0]?.message?.content_annotations) {
-                // Some models return it in annotations instead of tool_calls
-                const annotations = message.annotations || message.content_annotations || [];
-                const hasUrl = annotations.some((a: any) => a.url);
-                if (!hasUrl && toolCalls.length === 0) {
-                     // Fail if no search was done
-                     throw new Error("Marketplace search could not be completed. Please try again.");
-                }
+            const jsonText = extractTextFromResponsesApi(response);
+
+            if (!jsonText) {
+                throw new Error('Empty response from OpenAI');
             }
 
-            const jsonStr = message.content;
-            let parsedJson: any;
+            let parsedJson: unknown;
+
             try {
-                parsedJson = JSON.parse(jsonStr);
-            } catch (e) {
-                throw new Error("Failed to parse JSON output");
+                parsedJson = JSON.parse(jsonText);
+            } catch {
+                throw new Error('Failed to parse JSON output');
             }
 
-            // Validate with Zod
-            const validationResult = ValuationResultSchema.safeParse(parsedJson);
-            if (!validationResult.success) {
-                console.error("Zod validation failed:", validationResult.error);
-                // Retry requested in requirements
-                if (retryCount === 0) {
-                    retryCount++;
-                    // Append correction instruction for next loop
-                    userContent.push({
-                        type: 'text',
-                        text: 'Your previous output was invalid JSON schema. Please correct it.'
-                    });
+            const validation = ValuationResultSchema.safeParse(parsedJson);
+
+            if (!validation.success) {
+                console.error('Structured JSON validation failed:', validation.error.flatten());
+
+                if (attempt === 0) {
+                    lastError = validation.error;
                     continue;
                 }
-                throw new Error("Structured JSON invalid after retry");
+
+                throw new Error('Structured JSON invalid after retry');
             }
 
-            const validData: ValuationResult = validationResult.data;
-
-            // Generate Markdown from valid JSON (Backend-generated)
-            const markdown = buildMarkdownFromValuationJson(validData);
-            validData.markdown = markdown; // Replace AI markdown with ours as source of truth
-
+            const valuation = validation.data;
+            const markdown = buildMarkdownFromValuationJson(valuation);
             const sources = extractWebSources(response);
-            const usage = response.usage || {};
-            const estimatedCostUsd = estimateOpenAICost(usage, model);
-
-            const finalResult = {
-                status: 'ok',
-                region,
-                currency: region === 'UAE' ? 'AED' : (region === 'EUROPE' ? 'EUR' : 'USD'),
-                valuation: validData,
-                markdown,
-                mileageUsed: payload.mileage != null ? Number(payload.mileage) : (payload.mileageMin != null && payload.mileageMax != null ? Math.round((payload.mileageMin + payload.mileageMax) / 2) : 0),
-                sources,
-                usage: {
-                    inputTokens: usage.prompt_tokens || 0,
-                    cachedInputTokens: usage.prompt_tokens_details?.cached_tokens || 0,
-                    outputTokens: usage.completion_tokens || 0,
-                    totalTokens: usage.total_tokens || 0,
-                    estimatedCostUsd
+            const usage = getUsage(response);
+            const estimatedCostUsd = estimateOpenAICost(
+                {
+                    input_tokens: usage.inputTokens,
+                    output_tokens: usage.outputTokens,
+                    total_tokens: usage.totalTokens,
+                    input_tokens_details: {
+                        cached_tokens: usage.cachedInputTokens,
+                    },
                 },
-                meta: {
-                    model,
-                    webSearchUsed: true,
-                    fallbackUsed: validData.fallbackUsed,
-                    fallbackLevel: validData.fallbackLevel,
-                    confidence: validData.confidence
-                }
-            };
+                model
+            );
 
-            // Cache it if key exists
+            const finalResult = buildFinalResponse({
+                region,
+                model,
+                payload,
+                valuation,
+                markdown,
+                sources,
+                usage,
+                estimatedCostUsd,
+                cacheHit: false,
+            });
+
             if (cacheKey) {
-                await saveValuationToCache(cacheKey, finalResult, region, payload.make);
+                await saveValuationToCache(cacheKey, finalResult, payload.make);
             }
 
             return finalResult;
+        } catch (error) {
+            lastError = error;
 
-        } catch (error: any) {
-            if (error.message.includes("Marketplace search could not be completed") || error.message.includes("Structured JSON invalid")) {
-                if (retryCount >= 1) throw error; // Throw to route handler for 502
+            const message = error instanceof Error ? error.message : String(error);
+
+            if (
+                message.includes('Marketplace search could not be completed') ||
+                message.includes('OpenAI request failed')
+            ) {
+                throw error;
             }
-            console.error("OpenAI Valuation Error:", error);
-            throw error; // Let route handler catch and return 502
+
+            if (attempt === 1) {
+                throw error;
+            }
         }
     }
+
+    throw lastError instanceof Error
+        ? lastError
+        : new Error('Failed to evaluate vehicle');
 }

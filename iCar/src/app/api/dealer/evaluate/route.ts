@@ -3,6 +3,29 @@ import { requireValuationSession } from '@/lib/require-dealer-portal';
 import { isPartnerRole } from '@/lib/portal-access';
 import { evaluateVehicleWithAI } from '@/lib/valuation/openaiValuation';
 
+type EvaluationMode = 'quick' | 'listing' | 'partner';
+
+function parseInteger(value: unknown): number | null {
+    if (value === null || value === undefined || value === '') return null;
+
+    const parsed = Number.parseInt(String(value), 10);
+    return Number.isFinite(parsed) ? parsed : null;
+}
+
+function normalizeMode(mode: unknown): EvaluationMode {
+    if (mode === 'quick' || mode === 'listing' || mode === 'partner') {
+        return mode;
+    }
+
+    return 'listing';
+}
+
+function isValidDataUrlImage(value: unknown): boolean {
+    if (typeof value !== 'string') return false;
+
+    return /^data:image\/(png|jpe?g|webp);base64,/i.test(value);
+}
+
 export async function POST(request: Request) {
     try {
         const auth = await requireValuationSession();
@@ -10,6 +33,7 @@ export async function POST(request: Request) {
 
         const sessionRole = auth.session.user.role as string;
         const payload = await request.json();
+
         const {
             region,
             make,
@@ -19,8 +43,10 @@ export async function POST(request: Request) {
             mileageMin,
             mileageMax,
             images = [],
-            mode = 'listing',
         } = payload;
+
+        const mode = normalizeMode(payload.mode);
+        const regionUpper = String(region || '').toUpperCase();
 
         const isPartner = isPartnerRole(sessionRole) || mode === 'partner';
         const isQuick = isPartner || mode === 'quick';
@@ -40,31 +66,48 @@ export async function POST(request: Request) {
         }
 
         const validRegions = ['LEBANON', 'UAE', 'EUROPE'];
-        if (!validRegions.includes(String(region).toUpperCase())) {
+        if (!validRegions.includes(regionUpper)) {
             return NextResponse.json(
                 { message: 'Unsupported region' },
                 { status: 400 }
             );
         }
 
+        const parsedYear = parseInteger(year);
+        if (parsedYear === null || parsedYear < 1900 || parsedYear > new Date().getFullYear() + 2) {
+            return NextResponse.json(
+                { message: 'Missing or invalid year' },
+                { status: 400 }
+            );
+        }
+
+        const parsedMileage = parseInteger(mileage);
+        const parsedMileageMin = parseInteger(mileageMin);
+        const parsedMileageMax = parseInteger(mileageMax);
+
         if (isQuick) {
-            const min = mileageMin != null ? parseInt(String(mileageMin), 10) : NaN;
-            const max = mileageMax != null ? parseInt(String(mileageMax), 10) : NaN;
-            if (Number.isNaN(min) || Number.isNaN(max) || min < 0 || max < 0) {
+            const hasSingleMileage = parsedMileage !== null && parsedMileage >= 0;
+            const hasMileageRange =
+                parsedMileageMin !== null &&
+                parsedMileageMax !== null &&
+                parsedMileageMin >= 0 &&
+                parsedMileageMax >= 0;
+
+            if (!hasSingleMileage && !hasMileageRange) {
                 return NextResponse.json(
-                    { message: 'Please provide valid mileage min and max (km)' },
+                    { message: 'Please provide either mileage or valid mileage min and max (km)' },
                     { status: 400 }
                 );
             }
-            if (min > max) {
+
+            if (hasMileageRange && parsedMileageMin > parsedMileageMax) {
                 return NextResponse.json(
                     { message: 'Minimum mileage cannot exceed maximum mileage' },
                     { status: 400 }
                 );
             }
         } else {
-            const km = parseInt(String(mileage), 10);
-            if (Number.isNaN(km) || km < 0) {
+            if (parsedMileage === null || parsedMileage < 0) {
                 return NextResponse.json(
                     { message: 'Missing or invalid mileage' },
                     { status: 400 }
@@ -81,9 +124,20 @@ export async function POST(request: Request) {
                     { status: 400 }
                 );
             }
+
+            const invalidImage = imageList.some((img: unknown) => {
+                const url = typeof img === 'string' ? img : (img as any)?.url;
+                return !isValidDataUrlImage(url);
+            });
+
+            if (invalidImage) {
+                return NextResponse.json(
+                    { message: 'Invalid image format. Please upload PNG, JPG, JPEG, or WEBP images.' },
+                    { status: 400 }
+                );
+            }
         }
 
-        // The OPEN_AI_KEY check is now handled in openaiValuation.ts implicitly via process.env 
         if (!process.env.OPEN_AI_KEY && !process.env.OPENAI_API_KEY) {
             return NextResponse.json(
                 { message: 'OpenAI API key not configured' },
@@ -91,19 +145,33 @@ export async function POST(request: Request) {
             );
         }
 
-        // Proceed to AI evaluation service
-        const result = await evaluateVehicleWithAI(payload);
+        const normalizedPayload = {
+            ...payload,
+            region: regionUpper,
+            mode: isQuick ? 'quick' : 'listing',
+            year: parsedYear,
+            mileage: parsedMileage,
+            mileageMin: parsedMileageMin,
+            mileageMax: parsedMileageMax,
+            images: imageList,
+        };
+
+        const result = await evaluateVehicleWithAI(normalizedPayload);
 
         return NextResponse.json(result);
-
     } catch (error: any) {
         console.error('Valuation API error:', error);
-        
+
+        const msg = error?.message || 'Failed to evaluate vehicle';
+
         let status = 500;
-        const msg = error.message || 'Failed to evaluate vehicle';
-        
-        // Return clean 502 for specific upstream failures
-        if (msg.includes('Marketplace search could not be completed') || msg.includes('Structured JSON invalid') || msg.includes('Empty response')) {
+
+        if (
+            msg.includes('Marketplace search could not be completed') ||
+            msg.includes('Structured JSON invalid') ||
+            msg.includes('Empty response') ||
+            msg.includes('OpenAI request failed')
+        ) {
             status = 502;
         }
 

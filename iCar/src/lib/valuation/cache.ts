@@ -1,72 +1,135 @@
 import { redisConnection } from '../queue';
 import crypto from 'crypto';
 
-function generateHash(data: string) {
-    return crypto.createHash('md5').update(data).digest('hex');
+const CACHE_VERSION = 'v2';
+
+function normalize(value: unknown): string {
+    if (value === null || value === undefined || value === '') return 'none';
+
+    return String(value)
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9+._-]/g, '');
+}
+
+function generateHash(data: string): string {
+    return crypto.createHash('sha256').update(data).digest('hex');
+}
+
+function getMileageBand(payload: any): string {
+    const mode = payload.mode || 'listing';
+
+    if (mode === 'quick' && payload.mileageMin != null && payload.mileageMax != null) {
+        return `${payload.mileageMin}-${payload.mileageMax}`;
+    }
+
+    if (payload.mileage == null) return 'unknown';
+
+    const m = Number(payload.mileage);
+
+    if (!Number.isFinite(m) || m < 0) return 'unknown';
+    if (m === 0) return '0';
+    if (m <= 5000) return '1-5000';
+    if (m <= 10000) return '5001-10000';
+    if (m <= 25000) return '10001-25000';
+    if (m <= 50000) return '25001-50000';
+    if (m <= 75000) return '50001-75000';
+    if (m <= 100000) return '75001-100000';
+
+    return '100000+';
+}
+
+function getTtlSeconds(make: string): number {
+    const makeLower = make.toLowerCase();
+
+    const luxuryBrands = [
+        'audi',
+        'bmw',
+        'mercedes',
+        'mercedes-benz',
+        'porsche',
+        'lexus',
+        'land-rover',
+        'range-rover',
+        'jaguar',
+    ];
+
+    const exoticBrands = [
+        'ferrari',
+        'lamborghini',
+        'rolls-royce',
+        'rolls',
+        'bentley',
+        'mclaren',
+        'aston-martin',
+        'brabus',
+        'mansory',
+    ];
+
+    if (exoticBrands.includes(makeLower)) return 24 * 60 * 60;
+    if (luxuryBrands.includes(makeLower)) return 48 * 60 * 60;
+
+    return 72 * 60 * 60;
 }
 
 export async function getValuationFromCache(key: string) {
     try {
         const cached = await redisConnection.get(key);
-        if (cached) {
-            return JSON.parse(cached);
-        }
+        if (!cached) return null;
+
+        return JSON.parse(cached);
     } catch (err) {
-        console.error("Redis cache get error:", err);
+        console.error('Redis cache get error:', err);
+        return null;
     }
-    return null;
 }
 
-export async function saveValuationToCache(key: string, data: any, region: string, make: string) {
+export async function saveValuationToCache(key: string, data: any, make: string) {
     try {
-        // Normal: 3 days, Luxury: 2 days, Exotic: 24 hours
-        let ttlHours = 72; // 3 days
-        
-        const makeLower = make.toLowerCase();
-        const luxuryBrands = ['audi', 'bmw', 'mercedes', 'porsche', 'lexus', 'land rover', 'jaguar'];
-        const exoticBrands = ['ferrari', 'lamborghini', 'rolls-royce', 'bentley', 'mclaren', 'aston martin'];
-        
-        if (exoticBrands.includes(makeLower)) {
-            ttlHours = 24;
-        } else if (luxuryBrands.includes(makeLower)) {
-            ttlHours = 48;
-        }
+        const ttlSeconds = getTtlSeconds(normalize(make));
 
-        await redisConnection.setex(key, ttlHours * 3600, JSON.stringify(data));
+        await redisConnection.setex(key, ttlSeconds, JSON.stringify(data));
     } catch (err) {
-        console.error("Redis cache save error:", err);
+        console.error('Redis cache save error:', err);
     }
 }
 
 export function buildCacheKey(payload: any): string | null {
-    const { region, make, model, variant, year, mileage, mileageMin, mileageMax, specs, mode, images } = payload;
-    
-    let mileageBand = 'unknown';
-    if (mode === 'quick' && mileageMin != null && mileageMax != null) {
-        mileageBand = `${mileageMin}-${mileageMax}`;
-    } else if (mileage != null) {
-        const m = Number(mileage);
-        if (m === 0) mileageBand = '0';
-        else if (m <= 5000) mileageBand = '1-5000';
-        else if (m <= 10000) mileageBand = '5001-10000';
-        else if (m <= 25000) mileageBand = '10001-25000';
-        else if (m <= 50000) mileageBand = '25001-50000';
-        else if (m <= 75000) mileageBand = '50001-75000';
-        else if (m <= 100000) mileageBand = '75001-100000';
-        else mileageBand = '100000+';
-    }
+    const {
+        region,
+        make,
+        model,
+        variant,
+        year,
+        specs,
+        mode,
+        images,
+    } = payload;
 
-    let imageConditionHash = 'none';
-    if (mode === 'listing' && images && images.length > 0) {
-        // If image hashing is required, we do it here.
-        // For simplicity, we can hash the concatenated base64 strings
-        const concatImages = images.map((img: any) => typeof img === 'string' ? img : img.url).join('');
-        imageConditionHash = generateHash(concatImages);
-        // Note: As per instructions: "If image hash is hard to implement now, do not cache listing mode yet."
-        // We will just not cache listing mode to be safe and avoid giant redis payloads
+    const normalizedMode = mode || 'listing';
+
+    if (normalizedMode === 'listing' && Array.isArray(images) && images.length > 0) {
+        // Safer for production: do not cache photo-based inspections yet.
+        // Different photos can change condition adjustment significantly.
         return null;
     }
 
-    const key = `valuation:v1:${region}:${make}:${model}:${variant || 'none'}:${year}:${mileageBand}:${specs || 'none'}:${mode}:${imageConditionHash}`;
-    return key.replace(/\s+/g, '-').toLowerCase();
+    const keyParts = [
+        'valuation',
+        CACHE_VERSION,
+        normalize(region),
+        normalize(make),
+        normalize(model),
+        normalize(variant),
+        normalize(year),
+        normalize(getMileageBand(payload)),
+        normalize(specs),
+        normalize(normalizedMode),
+        generateHash(JSON.stringify({
+            notes: payload.notes || '',
+        })).slice(0, 12),
+    ];
+
+    return keyParts.join(':');
 }

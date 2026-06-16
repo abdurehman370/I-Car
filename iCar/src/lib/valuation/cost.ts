@@ -1,34 +1,47 @@
-export function estimateOpenAICost(usage: any, model: string): number | null {
-    if (!usage) return null;
+type OpenAIUsage = {
+    input_tokens?: number;
+    output_tokens?: number;
+    total_tokens?: number;
+    prompt_tokens?: number;
+    completion_tokens?: number;
+    prompt_tokens_details?: {
+        cached_tokens?: number;
+    };
+    input_tokens_details?: {
+        cached_tokens?: number;
+    };
+};
 
-    const inputPricePer1M = process.env.OPENAI_INPUT_PRICE_PER_1M 
-        ? parseFloat(process.env.OPENAI_INPUT_PRICE_PER_1M) 
-        : 2.50; // gpt-4o default input price as fallback
+function numberFromEnv(name: string): number | null {
+    const raw = process.env[name];
+    if (!raw) return null;
 
-    const cachedInputPricePer1M = process.env.OPENAI_CACHED_INPUT_PRICE_PER_1M 
-        ? parseFloat(process.env.OPENAI_CACHED_INPUT_PRICE_PER_1M) 
-        : 1.25;
+    const parsed = Number(raw);
+    return Number.isFinite(parsed) ? parsed : null;
+}
 
-    const outputPricePer1M = process.env.OPENAI_OUTPUT_PRICE_PER_1M 
-        ? parseFloat(process.env.OPENAI_OUTPUT_PRICE_PER_1M) 
-        : 10.00;
+export function estimateOpenAICost(usage: OpenAIUsage, _model: string): number | null {
+    const inputPrice = numberFromEnv('OPENAI_INPUT_PRICE_PER_1M');
+    const cachedInputPrice = numberFromEnv('OPENAI_CACHED_INPUT_PRICE_PER_1M');
+    const outputPrice = numberFromEnv('OPENAI_OUTPUT_PRICE_PER_1M');
+    const webSearchPrice = numberFromEnv('OPENAI_WEB_SEARCH_PRICE_PER_CALL') || 0;
 
-    const webSearchPricePerCall = process.env.OPENAI_WEB_SEARCH_PRICE_PER_CALL 
-        ? parseFloat(process.env.OPENAI_WEB_SEARCH_PRICE_PER_CALL) 
-        : 0;
+    if (inputPrice === null || cachedInputPrice === null || outputPrice === null) {
+        return null;
+    }
 
-    const inputTokens = usage.prompt_tokens || 0;
-    const cachedTokens = usage.prompt_tokens_details?.cached_tokens || 0;
-    const outputTokens = usage.completion_tokens || 0;
-    const standardInputTokens = Math.max(0, inputTokens - cachedTokens);
+    const inputTokens = usage.input_tokens ?? usage.prompt_tokens ?? 0;
+    const outputTokens = usage.output_tokens ?? usage.completion_tokens ?? 0;
+    const cachedTokens =
+        usage.input_tokens_details?.cached_tokens ??
+        usage.prompt_tokens_details?.cached_tokens ??
+        0;
 
-    let cost = 0;
-    cost += (standardInputTokens / 1_000_000) * inputPricePer1M;
-    cost += (cachedTokens / 1_000_000) * cachedInputPricePer1M;
-    cost += (outputTokens / 1_000_000) * outputPricePer1M;
+    const nonCachedInputTokens = Math.max(inputTokens - cachedTokens, 0);
 
-    // Add web search cost if applicable (assuming 1 call if not specified)
-    // Often we don't have exact counts, so we can just add the fixed cost if webSearchUsed is true (handled higher up)
-    
-    return cost;
+    const inputCost = (nonCachedInputTokens / 1_000_000) * inputPrice;
+    const cachedInputCost = (cachedTokens / 1_000_000) * cachedInputPrice;
+    const outputCost = (outputTokens / 1_000_000) * outputPrice;
+
+    return Number((inputCost + cachedInputCost + outputCost + webSearchPrice).toFixed(8));
 }

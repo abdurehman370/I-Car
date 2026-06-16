@@ -1,43 +1,53 @@
 import { ValuationResult } from './schema';
 
+function formatPrice(value: number): string {
+    return new Intl.NumberFormat('en-US', {
+        maximumFractionDigits: 0,
+    }).format(value);
+}
+
+function formatRange(currency: string, min: number, max: number): string {
+    return `${currency} ${formatPrice(min)} – ${formatPrice(max)}`;
+}
+
 export function buildMarkdownFromValuationJson(result: ValuationResult): string {
-    const formatPrice = (value: number) => {
-        return new Intl.NumberFormat('en-US').format(value);
-    };
-
-    let markdown = '';
-
     if (result.region === 'UAE') {
-        markdown += '💰 Market Price\n';
-        markdown += `AED ${formatPrice(result.marketPrice.min)} – ${formatPrice(result.marketPrice.max)}\n`;
-        if (result.marketPriceUsd) {
-            markdown += `USD ${formatPrice(result.marketPriceUsd.min)} – ${formatPrice(result.marketPriceUsd.max)}\n`;
-        }
-
-        markdown += '\n🏷️ Dealer Buy Price\n';
-        markdown += `AED ${formatPrice(result.dealerBuyPrice.min)} – ${formatPrice(result.dealerBuyPrice.max)}\n`;
-        if (result.dealerBuyPriceUsd) {
-            markdown += `USD ${formatPrice(result.dealerBuyPriceUsd.min)} – ${formatPrice(result.dealerBuyPriceUsd.max)}`;
-        }
-    } else if (result.region === 'LEBANON') {
-        markdown += '💰 Market Price\n';
-        markdown += `USD ${formatPrice(result.marketPrice.min)} – ${formatPrice(result.marketPrice.max)}\n`;
-
-        markdown += '\n🏷️ Dealer Buy Price\n';
-        markdown += `USD ${formatPrice(result.dealerBuyPrice.min)} – ${formatPrice(result.dealerBuyPrice.max)}`;
-    } else if (result.region === 'EUROPE') {
-        markdown += '💰 Market Price\n';
-        markdown += `EUR ${formatPrice(result.marketPrice.min)} – ${formatPrice(result.marketPrice.max)}\n`;
-        if (result.marketPriceUsd) {
-            markdown += `USD ${formatPrice(result.marketPriceUsd.min)} – ${formatPrice(result.marketPriceUsd.max)}\n`;
-        }
-
-        markdown += '\n🏷️ Dealer Buy Price\n';
-        markdown += `EUR ${formatPrice(result.dealerBuyPrice.min)} – ${formatPrice(result.dealerBuyPrice.max)}\n`;
-        if (result.dealerBuyPriceUsd) {
-            markdown += `USD ${formatPrice(result.dealerBuyPriceUsd.min)} – ${formatPrice(result.dealerBuyPriceUsd.max)}`;
-        }
+        return [
+            '💰 Market Price',
+            formatRange('AED', result.marketPrice.min, result.marketPrice.max),
+            result.marketPriceUsd
+                ? formatRange('USD', result.marketPriceUsd.min, result.marketPriceUsd.max)
+                : null,
+            '',
+            '🏷️ Dealer Buy Price',
+            formatRange('AED', result.dealerBuyPrice.min, result.dealerBuyPrice.max),
+            result.dealerBuyPriceUsd
+                ? formatRange('USD', result.dealerBuyPriceUsd.min, result.dealerBuyPriceUsd.max)
+                : null,
+        ].filter((line) => line !== null).join('\n');
     }
 
-    return markdown;
+    if (result.region === 'EUROPE') {
+        return [
+            '💰 Market Price',
+            formatRange('EUR', result.marketPrice.min, result.marketPrice.max),
+            result.marketPriceUsd
+                ? formatRange('USD', result.marketPriceUsd.min, result.marketPriceUsd.max)
+                : null,
+            '',
+            '🏷️ Dealer Buy Price',
+            formatRange('EUR', result.dealerBuyPrice.min, result.dealerBuyPrice.max),
+            result.dealerBuyPriceUsd
+                ? formatRange('USD', result.dealerBuyPriceUsd.min, result.dealerBuyPriceUsd.max)
+                : null,
+        ].filter((line) => line !== null).join('\n');
+    }
+
+    return [
+        '💰 Market Price',
+        formatRange('USD', result.marketPrice.min, result.marketPrice.max),
+        '',
+        '🏷️ Dealer Buy Price',
+        formatRange('USD', result.dealerBuyPrice.min, result.dealerBuyPrice.max),
+    ].join('\n');
 }
