@@ -4,7 +4,7 @@ import prisma from "@/lib/db";
 
 
 export async function POST(req: NextRequest, context: any) {
-  const { params } = context;
+  const params = await context.params;
   const id = parseInt(params.id);
 
   const session = await getDealerSession();

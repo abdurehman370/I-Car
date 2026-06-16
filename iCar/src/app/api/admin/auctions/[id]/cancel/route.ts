@@ -5,7 +5,7 @@ import { sendAuctionCancelledEmail } from "@/lib/mail";
 
 
 export async function POST(req: NextRequest, context: any) {
-  const { params } = context;
+  const params = await context.params;
   const id = parseInt(params.id);
 
   const session = await getAdminSession();
