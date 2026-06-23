@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getAdminSession } from '@/lib/auth';
 import prisma from '@/lib/db';
 
 export async function POST(request: NextRequest) {
     try {
+        const adminSession = await getAdminSession();
+        if (!adminSession) {
+            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+        }
+
         const { name } = await request.json();
         if (!name) {
             return NextResponse.json({ error: 'Name is required' }, { status: 400 });
@@ -22,8 +28,12 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-    // Basic delete logic - in a real app would need more safety
     try {
+        const adminSession = await getAdminSession();
+        if (!adminSession) {
+            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+        }
+
         const { id } = await request.json();
         await prisma.carMake.delete({ where: { id: parseInt(id) } });
         return NextResponse.json({ success: true });

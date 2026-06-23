@@ -1,9 +1,24 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { sessionCookieOptions } from '@/lib/session-cookie';
 
-const secretKey = process.env.JWT_SECRET || 'secret'; // TODO: Move to .env
-const key = new TextEncoder().encode(secretKey);
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (process.env.NODE_ENV === 'production') {
+    if (!secret || secret.length < 32) {
+      throw new Error(
+        'JWT_SECRET must be set to a strong value (32+ chars) in production'
+      );
+    }
+    return secret;
+  }
+  return secret || 'secret';
+}
+
+function getSigningKey(): Uint8Array {
+  return new TextEncoder().encode(getJwtSecret());
+}
 
 // Cookie names for different user types
 const ADMIN_COOKIE_NAME = 'admin-session';
@@ -35,11 +50,11 @@ export async function encrypt(payload: any) {
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('1d') // Session expires in 1 day
-    .sign(key);
+    .sign(getSigningKey());
 }
 
 export async function decrypt(input: string): Promise<any> {
-  const { payload } = await jwtVerify(input, key, {
+  const { payload } = await jwtVerify(input, getSigningKey(), {
     algorithms: ['HS256'],
   });
   return payload;
@@ -58,12 +73,11 @@ export async function loginAdmin(userData: AdminData) {
   });
 
   // Set admin cookie
-  (await cookies()).set(ADMIN_COOKIE_NAME, session, { 
-    expires: new Date(Date.now() + SESSION_DURATION), 
-    httpOnly: true, 
-    sameSite: 'lax', 
-    path: '/' 
-  });
+  (await cookies()).set(
+    ADMIN_COOKIE_NAME,
+    session,
+    sessionCookieOptions(new Date(Date.now() + SESSION_DURATION))
+  );
 }
 
 export async function logoutAdmin() {
@@ -99,10 +113,7 @@ export async function updateAdminSession(request: NextRequest) {
     res.cookies.set({
       name: ADMIN_COOKIE_NAME,
       value: await encrypt(parsed),
-      httpOnly: true,
-      expires: parsed.expires,
-      sameSite: 'lax',
-      path: '/',
+      ...sessionCookieOptions(parsed.expires),
     });
     return res;
   } catch (error) {
@@ -133,12 +144,11 @@ export async function loginDealer(userData: DealerData) {
   });
 
   // Set dealer cookie
-  (await cookies()).set(DEALER_COOKIE_NAME, session, { 
-    expires: new Date(Date.now() + SESSION_DURATION),                    
-    httpOnly: true, 
-    sameSite: 'lax', 
-    path: '/' 
-  });
+  (await cookies()).set(
+    DEALER_COOKIE_NAME,
+    session,
+    sessionCookieOptions(new Date(Date.now() + SESSION_DURATION))
+  );
 }
 
 export async function logoutDealer() {
@@ -186,10 +196,7 @@ export async function updateDealerSession(request: NextRequest) {
     res.cookies.set({
       name: DEALER_COOKIE_NAME,
       value: await encrypt(parsed),
-      httpOnly: true,
-      expires: parsed.expires,
-      sameSite: 'lax',
-      path: '/',
+      ...sessionCookieOptions(parsed.expires),
     });
     return res;
   } catch (error) {

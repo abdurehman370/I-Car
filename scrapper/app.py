@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Query, Security, Depends
+from fastapi import FastAPI, HTTPException, Query, Security, Depends, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -68,7 +68,7 @@ def get_api_key(api_key: str = Security(api_key_header)):
     expected_key = expected_key.strip('"').strip("'")
     if api_key == expected_key:
         return api_key
-    print(f"AUTH FAILED - received: '{api_key}', expected: '{expected_key}'")
+    logger.warning("API key authentication failed")
     raise HTTPException(
         status_code=HTTP_403_FORBIDDEN, detail="Could not validate credentials"
     )
@@ -117,8 +117,12 @@ async def read_index():
     return FileResponse("static/index.html")
 
 @app.get("/api/config")
-async def get_config():
-    """Returns the API key for the embedded web UI. Only expose to localhost."""
+async def get_config(request: Request):
+    """Returns the API key for the local dev UI only (127.0.0.1)."""
+    client_host = request.client.host if request.client else None
+    if client_host not in ("127.0.0.1", "::1"):
+        raise HTTPException(status_code=404, detail="Not found")
+
     key = os.environ.get("SCRAPER_API_KEY", "default_dev_key").strip('"').strip("'")
     return {"api_key": key}
 

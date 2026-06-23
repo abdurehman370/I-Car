@@ -3,6 +3,7 @@ import { Worker, Job } from 'bullmq';
 import { redisConnection, AlertJobData } from './queue';
 import prisma from './db';
 import { sendAlertNotificationEmail } from './mail';
+import { getScraperApiKey, getScraperBaseUrl } from './scraper';
 import fs from 'fs';
 import path from 'path';
 
@@ -51,11 +52,11 @@ async function fetchScraperMatches(data: AlertJobData): Promise<any[]> {
     const timeout = setTimeout(() => controller.abort(), SCRAPER_TIMEOUT_MS);
 
     try {
-        const res = await fetch('http://localhost:8000/api/scrape', {
+        const res = await fetch(`${getScraperBaseUrl()}/api/scrape`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-API-Key': process.env.SCRAPER_API_KEY || 'default_dev_key'
+                'X-API-Key': getScraperApiKey()
             },
             body: JSON.stringify({
                 make: data.make,

@@ -1,17 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getAdminSession } from "@/lib/auth";
 import prisma from "@/lib/db";
 import {
   sendAuctionStartedEmail,
   sendAuctionWonEmail,
 } from "@/lib/mail";
 
-// Secure the endpoint so only an admin or cron secret can call it
+async function authorizeCronRequest(req: NextRequest): Promise<boolean> {
+  const cronSecret = process.env.CRON_SECRET;
+  const authHeader = req.headers.get("authorization");
+
+  if (cronSecret && authHeader === `Bearer ${cronSecret}`) {
+    return true;
+  }
+
+  const adminSession = await getAdminSession();
+  return !!adminSession;
+}
+
+// Secured: requires CRON_SECRET bearer token or logged-in admin session.
+// VPS cron uses src/scripts/cron-push-auctions.ts directly (not this route).
 export async function GET(req: NextRequest) {
-  // You can optionally add an Authorization header check here if calling via Vercel Cron
-  // const authHeader = req.headers.get('authorization');
-  // if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-  //   return new Response('Unauthorized', { status: 401 });
-  // }
+  if (!(await authorizeCronRequest(req))) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
 
   console.log('[API Cron] Running push:auctions at', new Date().toISOString());
 

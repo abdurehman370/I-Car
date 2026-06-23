@@ -1,6 +1,7 @@
 import prisma from "@/lib/db";
 import { getDealerSession } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
+import { getScraperApiKey, getScraperBaseUrl } from "@/lib/scraper";
 
 export async function GET(
     _request: NextRequest,
@@ -57,11 +58,11 @@ export async function GET(
         // 2. Scraper results
         let scraperFormatted: any[] = [];
         try {
-            const scraperRes = await fetch("http://localhost:8000/api/scrape", {
+            const scraperRes = await fetch(`${getScraperBaseUrl()}/api/scrape`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-API-Key": process.env.SCRAPER_API_KEY || "default_dev_key"
+                    "X-API-Key": getScraperApiKey()
                 },
                 body: JSON.stringify({
                     make: alert.make,

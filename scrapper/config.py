@@ -1,9 +1,11 @@
 import os
-# Dubizzle Scraper Configuration
 
-# API Constants
-ALGOLIA_APP_ID = "WD0PTZ13ZS"
-ALGOLIA_API_KEY = "cef139620248f1bc328a00fddc7107a6"
+# Dubizzle Scraper Configuration
+# Override via environment variables in production (rotate keys without code changes).
+
+# API Constants — set ALGOLIA_APP_ID and ALGOLIA_API_KEY in scrapper/.env on the VPS
+ALGOLIA_APP_ID = os.getenv("ALGOLIA_APP_ID", "WD0PTZ13ZS")
+ALGOLIA_API_KEY = os.getenv("ALGOLIA_API_KEY", "cef139620248f1bc328a00fddc7107a6")
 ALGOLIA_BASE_URL = f"https://{ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/*/queries"
 
 # Search Indexes
