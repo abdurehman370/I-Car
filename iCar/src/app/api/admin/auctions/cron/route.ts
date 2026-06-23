@@ -5,6 +5,7 @@ import {
   sendAuctionStartedEmail,
   sendAuctionWonEmail,
 } from "@/lib/mail";
+import { sendPushToDealer } from "@/lib/web-push";
 
 async function authorizeCronRequest(req: NextRequest): Promise<boolean> {
   const cronSecret = process.env.CRON_SECRET;
@@ -71,6 +72,13 @@ export async function GET(req: NextRequest) {
               message: `The auction for ${auction.year} ${auction.make} ${auction.model} is now live! Place your bids before time runs out.`,
             },
           });
+
+          await sendPushToDealer(dealer.id, {
+            title: 'Auction started!',
+            body: `${auction.year} ${auction.make} ${auction.model} is now live.`,
+            url: `/auctions/${auction.id}`,
+            tag: `auction-${auction.id}-started`,
+          }).catch(console.error);
         }));
         startedCount++;
       }
@@ -155,6 +163,13 @@ export async function GET(req: NextRequest) {
                 message: `Congratulations! You won the auction for ${auction.year} ${auction.make} ${auction.model} with a final bid of ${highestBid.amount.toString()} ${auction.currency}.`,
               },
             });
+
+            await sendPushToDealer(winner.id, {
+              title: 'You won the auction!',
+              body: `You won ${auction.year} ${auction.make} ${auction.model}.`,
+              url: `/auctions/${auction.id}`,
+              tag: `auction-${auction.id}-won`,
+            }).catch(console.error);
           }
         }
         closedCount++;

@@ -10,6 +10,7 @@ import {
   User, Briefcase, BellRing, Sun, Moon, DollarSign, Gavel
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { DealerNotificationBell } from "@/components/dealer/DealerNotificationBell";
 
 interface Props {
   children: ReactNode;
@@ -254,10 +255,7 @@ export default function DealerPortalLayout({ children }: Props) {
                {isLight ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
              </button>
 
-             <button className="relative h-10 w-10 rounded-xl flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/5 transition-colors">
-                <BellRing className="h-5 w-5" />
-                <span className={cn("absolute top-2.5 right-2.5 h-2 w-2 rounded-full bg-cyan-400 border-2 animate-pulse", isLight ? "border-white" : "border-[#050b14]")} />
-             </button>
+             <DealerNotificationBell isLight={isLight} />
 
              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-cyan-400/20 to-teal-500/20 border border-cyan-400/30 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-cyan-400">D</span>

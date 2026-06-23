@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Loader2, User as UserIcon } from "lucide-react";
 import { USER_ROLE } from "@/lib/dealer-roles";
+import { PushNotificationToggle } from "@/components/dealer/PushNotificationToggle";
 
 type ProfileForm = {
   email: string;
@@ -213,6 +214,8 @@ export default function ProfilePage() {
                 />
               </div>
             </div>
+
+            <PushNotificationToggle className="mt-2" />
 
             <div className="flex justify-end gap-4 pt-4">
               <button

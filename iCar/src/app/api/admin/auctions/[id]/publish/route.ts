@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { sendAuctionPublishedEmail } from "@/lib/mail";
+import { sendPushToDealer } from "@/lib/web-push";
 
 
 export async function POST(req: NextRequest, context: any) {
@@ -53,6 +54,13 @@ export async function POST(req: NextRequest, context: any) {
             title: 'New Auction Published',
             message: `A new auction for ${updatedAuction.year} ${updatedAuction.make} ${updatedAuction.model} is now scheduled.`,
           }
+        }).catch(console.error);
+
+        await sendPushToDealer(dealer.id, {
+          title: 'New auction published',
+          body: `${updatedAuction.year} ${updatedAuction.make} ${updatedAuction.model} is scheduled.`,
+          url: `/auctions/${updatedAuction.id}`,
+          tag: `auction-${updatedAuction.id}-published`,
         }).catch(console.error);
       }),
       ...users.map(async (user) => {

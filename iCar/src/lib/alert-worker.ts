@@ -3,6 +3,7 @@ import { Worker, Job } from 'bullmq';
 import { redisConnection, AlertJobData } from './queue';
 import prisma from './db';
 import { sendAlertNotificationEmail } from './mail';
+import { sendPushToDealer } from './web-push';
 import { getScraperApiKey, getScraperBaseUrl } from './scraper';
 import fs from 'fs';
 import path from 'path';
@@ -163,6 +164,15 @@ async function processAlertJob(job: Job<AlertJobData>): Promise<void> {
         freshAlert,
         allMatches.slice(0, 10),
     );
+
+    await sendPushToDealer(freshAlert.dealerId, {
+        title: `Car alert: ${allMatches.length} matches`,
+        body: `${allMatches.length} listings found for ${freshAlert.make} ${freshAlert.model} in ${freshAlert.region}.`,
+        url: `/alerts/${alertId}/results`,
+        tag: `alert-${alertId}`,
+    }).catch((err) => {
+        log('WARN', job.id, `Push notification failed (non-fatal): ${err.message}`);
+    });
 
     // ------------------------------------------------------------------
     // 4. Stamp lastRun — only after successful email send

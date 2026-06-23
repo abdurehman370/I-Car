@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import prisma from "@/lib/db";
 import { canAccessAuctions } from "@/lib/portal-access";
 import { sendAuctionOutbidEmail } from "@/lib/mail";
+import { sendPushToDealer } from "@/lib/web-push";
 
 
 export async function POST(req: NextRequest, context: any) {
@@ -135,6 +136,13 @@ export async function POST(req: NextRequest, context: any) {
                 message: `Someone placed a higher bid of ${bidAmount} ${result.updatedAuction.currency} on ${result.updatedAuction.year} ${result.updatedAuction.make}.`,
               }
             });
+
+            await sendPushToDealer(previousBidder.id, {
+              title: 'You have been outbid',
+              body: `New highest bid: ${bidAmount} ${result.updatedAuction.currency} on ${result.updatedAuction.make} ${result.updatedAuction.model}.`,
+              url: `/auctions/${id}`,
+              tag: `auction-${id}-outbid`,
+            }).catch(console.error);
           }
         }
       });

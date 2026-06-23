@@ -9,13 +9,15 @@
     "lint": "next lint",
     "worker": "tsx src/scripts/start-worker.ts",
     "push:alerts": "tsx src/scripts/cron-push-alerts.ts",
-    "push:auctions": "tsx src/scripts/cron-push-auctions.ts"
+    "push:auctions": "tsx src/scripts/cron-push-auctions.ts",
+    "generate:vapid": "tsx src/scripts/generate-vapid-keys.ts"
   },
   "dependencies": {
     "@bull-board/api": "^6.19.0",
     "@bull-board/express": "^6.19.0",
     "@prisma/adapter-mariadb": "^7.4.1",
     "@prisma/client": "^7.4.1",
+    "@types/web-push": "^3.6.4",
     "apexcharts": "^4.5.0",
     "bcryptjs": "^3.0.3",
     "bullmq": "^5.70.1",
@@ -45,6 +47,7 @@
     "recharts": "^3.8.1",
     "tailwind-merge": "^2.6.0",
     "uuid": "^13.0.0",
+    "web-push": "^3.6.7",
     "xlsx": "^0.18.5",
     "zod": "^4.4.3"
   },

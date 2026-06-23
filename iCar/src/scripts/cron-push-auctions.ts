@@ -19,6 +19,7 @@ import {
   sendAuctionStartedEmail,
   sendAuctionWonEmail,
 } from '../lib/mail';
+import { sendPushToDealer } from '../lib/web-push';
 
 async function main() {
   console.log('[Cron] Running push:auctions at', new Date().toISOString());
@@ -66,6 +67,13 @@ async function main() {
               message: `The auction for ${auction.year} ${auction.make} ${auction.model} is now live! Place your bids before time runs out.`,
             },
           });
+
+          await sendPushToDealer(dealer.id, {
+            title: 'Auction started!',
+            body: `${auction.year} ${auction.make} ${auction.model} is now live.`,
+            url: `/auctions/${auction.id}`,
+            tag: `auction-${auction.id}-started`,
+          }).catch(console.error);
         }
         console.log(`[Cron] Started auction #${auction.id}: ${auction.title}`);
       }
@@ -151,6 +159,13 @@ async function main() {
                 message: `Congratulations! You won the auction for ${auction.year} ${auction.make} ${auction.model} with a final bid of ${highestBid.amount.toString()} ${auction.currency}.`,
               },
             });
+
+            await sendPushToDealer(winner.id, {
+              title: 'You won the auction!',
+              body: `You won ${auction.year} ${auction.make} ${auction.model}.`,
+              url: `/auctions/${auction.id}`,
+              tag: `auction-${auction.id}-won`,
+            }).catch(console.error);
           }
         }
 
