@@ -41,10 +41,10 @@ export default function DealerAuctionBiddingPage() {
     fetchAuction();
 
     const interval = setInterval(() => {
-      if (auction?.status === "LIVE") {
+      if (auction?.status === "LIVE" || auction?.status === "SCHEDULED") {
         fetchAuction();
       }
-    }, 3000); // Poll every 3 seconds for live updates
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [id, auction?.status]);

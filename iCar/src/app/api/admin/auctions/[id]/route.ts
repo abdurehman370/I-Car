@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth";
+import { parseAuctionDateTime } from "@/lib/auction-datetime";
+import { syncAuctionById } from "@/lib/auction-scheduler";
 import prisma from "@/lib/db";
 import fs from "fs/promises";
 import path from "path";
@@ -16,6 +18,8 @@ export async function GET(req: NextRequest, context: any) {
   }
 
   try {
+    await syncAuctionById(id);
+
     const auction = await prisma.auction.findUnique({
       where: { id },
       include: {
@@ -60,8 +64,8 @@ export async function PATCH(req: NextRequest, context: any) {
     // Convert dates if provided
     // Convert dates if provided
     const updateData: any = { ...body };
-    if (body.startAt) updateData.startAt = new Date(body.startAt);
-    if (body.endAt) updateData.endAt = new Date(body.endAt);
+    if (body.startAt) updateData.startAt = parseAuctionDateTime(String(body.startAt));
+    if (body.endAt) updateData.endAt = parseAuctionDateTime(String(body.endAt));
     
     // Prevent updating protected fields
     delete updateData.id;

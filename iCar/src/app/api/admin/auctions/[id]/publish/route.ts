@@ -25,7 +25,14 @@ export async function POST(req: NextRequest, context: any) {
     }
 
     const now = new Date();
-    const newStatus = auction.startAt <= now ? (auction.endAt > now ? "LIVE" : "CLOSED") : "SCHEDULED";
+    let newStatus: string;
+    if (auction.startAt <= now && auction.endAt > now) {
+      newStatus = "LIVE";
+    } else if (auction.endAt <= now) {
+      newStatus = "CLOSED";
+    } else {
+      newStatus = "SCHEDULED";
+    }
 
     const updatedAuction = await prisma.auction.update({
       where: { id },

@@ -42,9 +42,8 @@ export default function AdminAuctionMonitorPage() {
     fetchAuction();
     fetchBids();
 
-    // Poll every 5 seconds if LIVE
     const interval = setInterval(() => {
-      if (auction?.status === "LIVE") {
+      if (auction?.status === "LIVE" || auction?.status === "SCHEDULED") {
         fetchAuction();
         fetchBids();
       }

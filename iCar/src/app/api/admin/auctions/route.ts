@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { Prisma } from "@prisma/client";
 import { getAdminSession } from "@/lib/auth";
+import { parseAuctionDateTime } from "@/lib/auction-datetime";
 import prisma from "@/lib/db";
 import fs from "fs/promises";
 import path from "path";
@@ -153,8 +154,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const start = new Date(startAt);
-    const end = new Date(endAt);
+    const start = parseAuctionDateTime(String(startAt));
+    const end = parseAuctionDateTime(String(endAt));
 
     if (Number.isNaN(start.getTime())) {
       return NextResponse.json(

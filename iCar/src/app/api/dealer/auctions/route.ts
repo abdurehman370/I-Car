@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDealerSession } from "@/lib/auth";
+import { runAuctionScheduler } from "@/lib/auction-scheduler";
 import prisma from "@/lib/db";
 import { canAccessAuctions } from "@/lib/portal-access";
 
@@ -22,6 +23,8 @@ export async function GET(req: NextRequest) {
   const skip = (page - 1) * limit;
 
   try {
+    await runAuctionScheduler();
+
     const [auctions, total] = await Promise.all([
       prisma.auction.findMany({
         where: {

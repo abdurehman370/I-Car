@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDealerSession } from "@/lib/auth";
+import { syncAuctionById } from "@/lib/auction-scheduler";
 import prisma from "@/lib/db";
 
 
@@ -13,6 +14,8 @@ export async function GET(req: NextRequest, context: any) {
   }
 
   try {
+    await syncAuctionById(id);
+
     const auction = await prisma.auction.findUnique({
       where: { id },
       include: {
