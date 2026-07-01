@@ -59,7 +59,7 @@ export default function DealerAuctionBiddingPage() {
       const primary = auction.images.find((i: any) => i.isPrimary) || auction.images[0];
       if (!activeImage) setActiveImage(primary.url);
     } else {
-      if (!activeImage) setActiveImage("/car-placeholder.png");
+      if (!activeImage) setActiveImage("/car-placeholder.jpg");
     }
 
     const timer = setInterval(() => {
@@ -145,7 +145,7 @@ export default function DealerAuctionBiddingPage() {
         <div className="lg:col-span-2 space-y-6">
           <div className="panel border-white/5 bg-white/[0.02] overflow-hidden rounded-2xl">
             <div className="relative aspect-video w-full bg-black/50">
-              <Image src={activeImage || "/car-placeholder.png"} alt={auction.title || "Vehicle"} fill className="object-cover" />
+              <Image src={activeImage || "/car-placeholder.jpg"} alt={auction.title || "Vehicle"} fill className="object-cover" />
               <div className="absolute top-4 left-4">
                 <span className={`px-3 py-1.5 rounded-lg text-xs font-bold tracking-widest backdrop-blur-md border ${
                   auction.status === "LIVE" ? "bg-green-500/80 text-white border-green-400" :

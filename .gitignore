@@ -1,3 +1,19 @@
 iCar/logs/*.log
 .vscode/
 iCar/.vscode/
+# Runtime logs
+iCar/logs/
+*.log
+
+# User uploaded files
+iCar/public/uploads/
+
+# Local/server-only files
+ecosystem.config.js
+
+# Build/dependencies
+iCar/.next/
+iCar/node_modules/
+iCar/.env
+scrapper/.env
+scrapper/.venv/

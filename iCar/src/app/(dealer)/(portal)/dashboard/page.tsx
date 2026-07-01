@@ -360,7 +360,7 @@ function HeroKpi({ label, value, delta, trend, prefix, suffix }: any) {
 }
 
 function VehicleCard({ v, delay, onEdit, onToggleStatus, onDelete, deleting, toggling }: any) {
-  const primaryImage = v.images?.find((i: any) => i.isPrimary)?.url || v.images?.[0]?.url || '/car-placeholder.png';
+  const primaryImage = v.images?.find((i: any) => i.isPrimary)?.url || v.images?.[0]?.url || '/car-placeholder.jpg';
   const isActive = v.status === 'ACTIVE';
   const canToggle = v.status === 'ACTIVE' || v.status === 'DRAFT';
   const [imgSrc, setImgSrc] = useState(primaryImage);
@@ -380,7 +380,7 @@ function VehicleCard({ v, delay, onEdit, onToggleStatus, onDelete, deleting, tog
           fill
           unoptimized
           className="object-cover transition-transform duration-700 group-hover:scale-110"
-          onError={() => setImgSrc('/car-placeholder.png')}
+          onError={() => setImgSrc('/car-placeholder.jpg')}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         <div className="absolute top-3 left-3">

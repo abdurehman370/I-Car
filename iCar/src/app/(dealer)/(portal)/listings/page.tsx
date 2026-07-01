@@ -291,7 +291,7 @@ function InventoryCard({
   toggling: boolean;
 }) {
   const primaryImage =
-    v.images?.find((i) => i.isPrimary)?.url || v.images?.[0]?.url || "/car-placeholder.png";
+    v.images?.find((i) => i.isPrimary)?.url || v.images?.[0]?.url || "/car-placeholder.jpg";
   const [imgSrc, setImgSrc] = useState(primaryImage);
   const isActive = v.status === "ACTIVE";
   const canToggle = v.status === "ACTIVE" || v.status === "DRAFT";
@@ -313,7 +313,7 @@ function InventoryCard({
           fill
           unoptimized
           className="object-cover transition-transform duration-700 group-hover:scale-110"
-          onError={() => setImgSrc("/car-placeholder.png")}
+          onError={() => setImgSrc("/car-placeholder.jpg")}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
 

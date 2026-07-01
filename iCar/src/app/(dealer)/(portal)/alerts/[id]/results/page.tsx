@@ -252,7 +252,7 @@ function ResultCard({ result }: { result: MatchResult }) {
     const isInternal = result.source === 'iCar';
     const href = isInternal && result.id ? `/listings/${result.id}` : (result.url ?? '#');
     const isExternal = !isInternal && result.url;
-    const [imgSrc, setImgSrc] = useState<string>(result.image || '/car-placeholder.png');
+    const [imgSrc, setImgSrc] = useState<string>(result.image || '/car-placeholder.jpg');
 
     return (
         <div className="group relative bg-white dark:bg-[#0a1526] rounded-[2rem] overflow-hidden border border-gray-200 dark:border-white/5 hover:border-indigo-500/30 shadow-lg hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col h-full">
@@ -262,8 +262,8 @@ function ResultCard({ result }: { result: MatchResult }) {
                 <img
                     src={imgSrc}
                     alt={result.title}
-                    className={`w-full h-full object-cover transition-transform duration-700 ${imgSrc === '/car-placeholder.png' ? 'opacity-60' : 'group-hover:scale-110'}`}
-                    onError={() => setImgSrc('/car-placeholder.png')}
+                    className={`w-full h-full object-cover transition-transform duration-700 ${imgSrc === '/car-placeholder.jpg' ? 'opacity-60' : 'group-hover:scale-110'}`}
+                    onError={() => setImgSrc('/car-placeholder.jpg')}
                 />
 
                 {/* Source Overlay */}
