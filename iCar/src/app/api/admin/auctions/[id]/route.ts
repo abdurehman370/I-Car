@@ -64,8 +64,18 @@ export async function PATCH(req: NextRequest, context: any) {
     // Convert dates if provided
     // Convert dates if provided
     const updateData: any = { ...body };
-    if (body.startAt) updateData.startAt = parseAuctionDateTime(String(body.startAt));
-    if (body.endAt) updateData.endAt = parseAuctionDateTime(String(body.endAt));
+    if (body.startAt) {
+      updateData.startAt = parseAuctionDateTime(String(body.startAt), {
+        region: body.region ?? auction.region,
+        city: body.city ?? auction.city,
+      });
+    }
+    if (body.endAt) {
+      updateData.endAt = parseAuctionDateTime(String(body.endAt), {
+        region: body.region ?? auction.region,
+        city: body.city ?? auction.city,
+      });
+    }
     
     // Prevent updating protected fields
     delete updateData.id;

@@ -5,6 +5,7 @@ import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Loader2, ArrowLeft, Clock, Info, AlertTriangle, CheckCircle } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { AuctionTimeDisplay } from "@/components/auctions/AuctionTimeDisplay";
 import Image from "next/image";
 
 export default function DealerAuctionBiddingPage() {
@@ -186,11 +187,11 @@ export default function DealerAuctionBiddingPage() {
                 </div>
                 <div className="bg-white/5 p-4 rounded-xl border border-white/10">
                   <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">Start Time</span>
-                  <span className="text-white font-semibold text-sm">{new Date(auction.startAt).toLocaleString()}</span>
+                  <AuctionTimeDisplay date={auction.startAt} market={auction.region} />
                 </div>
                 <div className="bg-white/5 p-4 rounded-xl border border-white/10">
                   <span className="text-xs text-gray-500 uppercase tracking-wider block mb-1">End Time</span>
-                  <span className="text-white font-semibold text-sm">{new Date(auction.endAt).toLocaleString()}</span>
+                  <AuctionTimeDisplay date={auction.endAt} market={auction.region} />
                 </div>
               </div>
 

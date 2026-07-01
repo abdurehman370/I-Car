@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { formatAuctionDateTime, getAuctionTimezoneLabel } from '@/lib/auction-datetime';
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.example.com',
@@ -156,8 +157,8 @@ export async function sendAuctionPublishedEmail(email: string, name: string, auc
           <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Region:</strong> ${auction.region} - ${auction.city || ''}</p>
           <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Mileage:</strong> ${auction.mileage} KM</p>
           <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Starting Bid:</strong> ${auction.startingBid} ${auction.currency}</p>
-          <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Starts at:</strong> ${new Date(auction.startAt).toLocaleString()}</p>
-          <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Ends at:</strong> ${new Date(auction.endAt).toLocaleString()}</p>
+          <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Starts at:</strong> ${formatAuctionDateTime(auction.startAt, auction.region)} (${getAuctionTimezoneLabel(auction.region)})</p>
+          <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Ends at:</strong> ${formatAuctionDateTime(auction.endAt, auction.region)} (${getAuctionTimezoneLabel(auction.region)})</p>
         </div>
         <div style="margin: 30px 0;">
           <a href="${APP_URL}/auctions/${auction.id}" style="background-color: #4f46e5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">View Auction</a>

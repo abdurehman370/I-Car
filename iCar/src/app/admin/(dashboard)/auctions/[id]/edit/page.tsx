@@ -5,6 +5,10 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { Loader2, ArrowLeft, Save, Upload, X, PlusCircle } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import {
+  formatAuctionDateTimeForInput,
+  getAuctionTimezoneLabel,
+} from "@/lib/auction-datetime";
 
 export default function EditAuctionPage() {
   const router = useRouter();
@@ -44,12 +48,11 @@ export default function EditAuctionPage() {
         const data = await res.json();
         if (data.auction) {
           const a = data.auction;
-          // Format dates for datetime-local input
-          const formatDate = (dateString: string) => {
-            if (!dateString) return "";
-            const d = new Date(dateString);
-            return d.toISOString().slice(0, 16);
-          };
+          const formatDate = (dateString: string) =>
+            formatAuctionDateTimeForInput(dateString, {
+              region: a.region,
+              city: a.city,
+            });
 
           setFormData({
             title: a.title || "",
@@ -269,6 +272,8 @@ export default function EditAuctionPage() {
                   <option value="Fujairah">Fujairah</option>
                   <option value="Ras Al Khaimah">Ras Al Khaimah</option>
                   <option value="Umm Al Quwain">Umm Al Quwain</option>
+                  <option value="Lebanon">Lebanon</option>
+                  <option value="Europe">Europe</option>
                 </select>
               </div>
 
@@ -369,7 +374,9 @@ export default function EditAuctionPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-300">Start Date & Time *</label>
+                <label className="text-sm font-semibold text-gray-300">
+                  Start Date & Time * <span className="text-xs font-normal text-gray-500">({getAuctionTimezoneLabel(formData.region)})</span>
+                </label>
                 <input
                   required
                   type="datetime-local"
@@ -381,7 +388,9 @@ export default function EditAuctionPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-300">End Date & Time *</label>
+                <label className="text-sm font-semibold text-gray-300">
+                  End Date & Time * <span className="text-xs font-normal text-gray-500">({getAuctionTimezoneLabel(formData.region)})</span>
+                </label>
                 <input
                   required
                   type="datetime-local"

@@ -12,6 +12,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { formatAuctionDate } from "@/lib/auction-datetime";
 
 interface Auction {
   id: number;
@@ -23,6 +24,7 @@ interface Auction {
   currentHighestBid: string | null;
   currency: string;
   status: string;
+  region: string;
   startAt: string;
   endAt: string;
   images?: { url: string; isPrimary: boolean }[];
@@ -166,13 +168,13 @@ function AdminAuctionCard({ auction }: { auction: Auction }) {
                 <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-white/5 border border-white/5 group-hover:border-white/10 transition-colors">
                     <Calendar className="h-3.5 w-3.5 text-cyan-400" />
                     <span className="text-[10px] font-bold text-gray-300">
-                      Starts: {new Date(auction.startAt).toLocaleDateString()}
+                      Starts: {formatAuctionDate(auction.startAt, auction.region)}
                     </span>
                 </div>
                 <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-white/5 border border-white/5 group-hover:border-white/10 transition-colors">
                     <Clock className="h-3.5 w-3.5 text-cyan-400" />
                     <span className="text-[10px] font-bold text-gray-300">
-                      Ends: {new Date(auction.endAt).toLocaleDateString()}
+                      Ends: {formatAuctionDate(auction.endAt, auction.region)}
                     </span>
                 </div>
             </div>

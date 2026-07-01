@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Loader2, ArrowLeft, Play, XCircle, CheckCircle, Clock } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { formatAuctionDateTime, getAuctionTimezoneLabel } from "@/lib/auction-datetime";
 
 export default function AdminAuctionMonitorPage() {
   const { id } = useParams();
@@ -203,8 +204,8 @@ export default function AdminAuctionMonitorPage() {
           <div className="panel border-white/5 bg-white/[0.02] p-6 rounded-2xl">
             <h3 className="text-lg font-bold text-white mb-4 border-b border-white/10 pb-2">Details</h3>
             <div className="space-y-3 text-sm">
-              <div className="flex justify-between"><span className="text-gray-400">Start Time</span><span className="text-white">{new Date(auction.startAt).toLocaleString()}</span></div>
-              <div className="flex justify-between"><span className="text-gray-400">End Time</span><span className="text-white">{new Date(auction.endAt).toLocaleString()}</span></div>
+              <div className="flex justify-between"><span className="text-gray-400">Start Time</span><span className="text-white">{formatAuctionDateTime(auction.startAt, auction.region)} <span className="text-gray-500 text-xs">({getAuctionTimezoneLabel(auction.region)})</span></span></div>
+              <div className="flex justify-between"><span className="text-gray-400">End Time</span><span className="text-white">{formatAuctionDateTime(auction.endAt, auction.region)} <span className="text-gray-500 text-xs">({getAuctionTimezoneLabel(auction.region)})</span></span></div>
               <div className="flex justify-between"><span className="text-gray-400">Starting Bid</span><span className="text-white">{auction.startingBid} {auction.currency}</span></div>
               <div className="flex justify-between"><span className="text-gray-400">Reserve Price</span><span className="text-white">{auction.reservePrice ? `${auction.reservePrice} ${auction.currency}` : "None"}</span></div>
               <div className="flex justify-between"><span className="text-gray-400">Min Increment</span><span className="text-white">{auction.minIncrement} {auction.currency}</span></div>

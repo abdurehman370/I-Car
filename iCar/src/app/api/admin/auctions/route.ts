@@ -154,8 +154,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const start = parseAuctionDateTime(String(startAt));
-    const end = parseAuctionDateTime(String(endAt));
+    const start = parseAuctionDateTime(String(startAt), region);
+    const end = parseAuctionDateTime(String(endAt), region);
 
     if (Number.isNaN(start.getTime())) {
       return NextResponse.json(

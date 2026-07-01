@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Loader2, ArrowLeft, Save, Upload, X, PlusCircle } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { getAuctionTimezoneLabel } from "@/lib/auction-datetime";
 
 export default function CreateAuctionPage() {
   const router = useRouter();
@@ -209,7 +210,12 @@ export default function CreateAuctionPage() {
                   <option value="Fujairah">Fujairah</option>
                   <option value="Ras Al Khaimah">Ras Al Khaimah</option>
                   <option value="Umm Al Quwain">Umm Al Quwain</option>
+                  <option value="Lebanon">Lebanon</option>
+                  <option value="Europe">Europe</option>
                 </select>
+                <p className="text-xs text-gray-500">
+                  Start/end times use the market timezone for the selected region — not your laptop clock.
+                </p>
               </div>
 
               <div className="space-y-2 md:col-span-2">
@@ -309,7 +315,9 @@ export default function CreateAuctionPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-300">Start Time *</label>
+                <label className="text-sm font-semibold text-gray-300">
+                  Start Time * <span className="text-xs font-normal text-gray-500">({getAuctionTimezoneLabel(formData.region)})</span>
+                </label>
                 <input
                   required
                   type="datetime-local"
@@ -321,7 +329,9 @@ export default function CreateAuctionPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-300">End Time *</label>
+                <label className="text-sm font-semibold text-gray-300">
+                  End Time * <span className="text-xs font-normal text-gray-500">({getAuctionTimezoneLabel(formData.region)})</span>
+                </label>
                 <input
                   required
                   type="datetime-local"

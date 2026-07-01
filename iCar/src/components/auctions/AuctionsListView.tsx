@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Gavel, Loader2, Calendar, Clock, ChevronRight } from "lucide-react";
+import { formatAuctionDate } from "@/lib/auction-datetime";
 
 type Props = {
   /** Base path for auction detail links, e.g. "/user/auctions" or "/auctions" */
@@ -176,13 +177,13 @@ function AuctionCard({
             <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-white/5 border border-white/5">
               <Calendar className={`h-3.5 w-3.5 ${iconClass}`} />
               <span className="text-[10px] font-bold text-gray-300">
-                Starts: {new Date(auction.startAt).toLocaleDateString()}
+                Starts: {formatAuctionDate(auction.startAt, auction.region)}
               </span>
             </div>
             <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-white/5 border border-white/5">
               <Clock className={`h-3.5 w-3.5 ${iconClass}`} />
               <span className="text-[10px] font-bold text-gray-300">
-                Ends: {new Date(auction.endAt).toLocaleDateString()}
+                Ends: {formatAuctionDate(auction.endAt, auction.region)}
               </span>
             </div>
           </div>
