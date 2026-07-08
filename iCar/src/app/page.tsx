@@ -112,7 +112,7 @@ export default function LandingPage() {
         <header className="flex items-center justify-between px-6 py-6 md:px-12">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-2">
             <div className="h-2.5 w-2.5 rounded-full bg-cyan-300 shadow-[0_0_24px_rgba(34,211,238,0.35)]" />
-            <span className="text-lg font-semibold tracking-tight">iCar</span>
+            <span className="text-lg font-semibold tracking-tight">CarQ</span>
             <span className="ml-2 hidden font-mono text-[10px] tracking-[0.2em] text-white/55 sm:block">
               INTELLIGENCE
             </span>
@@ -137,7 +137,7 @@ export default function LandingPage() {
                 AUTOMOTIVE INTELLIGENCE
               </span>
               <h1 className="mb-5 text-5xl font-extrabold tracking-tight text-white md:text-7xl">
-                Welcome to <span className="text-cyan-300">iCar</span>
+                Welcome to <span className="text-cyan-300">CarQ</span>
               </h1>
               <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/60 md:text-lg">
                 AI-powered automotive intelligence for dealers, banking partners, and industry professionals.
@@ -208,7 +208,7 @@ export default function LandingPage() {
         </main>
 
         <footer className="flex items-center justify-between px-6 py-6 text-xs font-mono tracking-widest text-white/50 md:px-12">
-          <span>© 2026 ICAR SYSTEMS</span>
+          <span>© 2026 CARQ SYSTEMS</span>
           <span className="hidden md:block">PROTOCOL · TLS 1.3</span>
         </footer>
       </div>

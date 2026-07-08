@@ -2,13 +2,21 @@
 
 import { useState, useEffect } from "react";
 import {
-    Bell, Plus, Trash2, Calendar, Car, MapPin,
-    AlertCircle, Loader2, X, Pencil, Search, ArrowUpRight
+    Bell, Plus, Trash2, Car,
+    Loader2, X, Pencil, ArrowUpRight, Building2
 } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { cn } from "@/lib/utils";
 import { CarTaxonomyDropdowns } from "@/components/FormElements/CarTaxonomyDropdowns";
+import { MarketRegionSelect } from "@/components/FormElements/MarketRegionSelect";
+import {
+  buildStoredRegion,
+  defaultCityForMarket,
+  getCitiesForMarket,
+  parseStoredRegion,
+  type Market,
+} from "@/lib/regions";
 
 interface Alert {
     id: number;
@@ -22,6 +30,8 @@ interface Alert {
     enabled: boolean;
     lastRun: string | null;
     createdAt: string;
+    dealer?: { dealershipName: string | null; contactPerson: string } | null;
+    user?: { username: string } | null;
 }
 
 type FormData = {
@@ -30,7 +40,8 @@ type FormData = {
     yearMin: string;
     yearMax: string;
     variant: string;
-    region: string;
+    market: Market;
+    country: string;
     frequency: string;
 };
 
@@ -40,11 +51,11 @@ const BLANK_FORM: FormData = {
     yearMin: "",
     yearMax: "",
     variant: "",
-    region: "UAE",
+    market: "UAE",
+    country: "",
     frequency: "daily",
 };
 
-const REGIONS = ["UAE", "Lebanon", "Europe"];
 const FREQUENCIES = [
     { value: "every5min", label: "Every 5 Min" },
     { value: "daily", label: "Daily" },
@@ -52,7 +63,7 @@ const FREQUENCIES = [
     { value: "monthly", label: "Monthly" },
 ];
 
-export default function AlertsPage() {
+export default function AdminAlertsPage() {
     const [alerts, setAlerts] = useState<Alert[]>([]);
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -67,7 +78,7 @@ export default function AlertsPage() {
 
     const fetchAlerts = async () => {
         try {
-            const res = await fetch("/api/dealer/alerts");
+            const res = await fetch("/api/admin/alerts");
             const data = await res.json();
             if (res.ok) {
                 setAlerts(data.data);
@@ -88,6 +99,7 @@ export default function AlertsPage() {
     };
 
     const openEditModal = (alert: Alert) => {
+        const parsed = parseStoredRegion(alert.region);
         setEditingAlert(alert);
         setFormData({
             make: alert.make,
@@ -95,7 +107,8 @@ export default function AlertsPage() {
             yearMin: alert.yearMin?.toString() ?? "",
             yearMax: alert.yearMax?.toString() ?? "",
             variant: alert.variant ?? "",
-            region: alert.region,
+            market: parsed.market,
+            country: parsed.country,
             frequency: alert.frequency,
         });
         setShowModal(true);
@@ -117,13 +130,23 @@ export default function AlertsPage() {
         setSubmitting(true);
         try {
             const isEdit = !!editingAlert;
-            const url = isEdit ? `/api/dealer/alerts/${editingAlert!.id}` : "/api/dealer/alerts";
+            const url = isEdit ? `/api/admin/alerts/${editingAlert!.id}` : "/api/admin/alerts";
             const method = isEdit ? "PATCH" : "POST";
+
+            const payload = {
+                make: formData.make,
+                model: formData.model,
+                yearMin: formData.yearMin,
+                yearMax: formData.yearMax,
+                variant: formData.variant,
+                region: buildStoredRegion(formData.market, formData.country),
+                frequency: formData.frequency,
+            };
 
             const res = await fetch(url, {
                 method,
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(payload),
             });
             const data = await res.json();
 
@@ -149,7 +172,7 @@ export default function AlertsPage() {
         const newEnabled = !(alert.enabled ?? true);
         setTogglingId(alert.id);
         try {
-            const res = await fetch(`/api/dealer/alerts/${alert.id}`, {
+            const res = await fetch(`/api/admin/alerts/${alert.id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ enabled: newEnabled }),
@@ -171,7 +194,7 @@ export default function AlertsPage() {
     const handleDelete = async (id: number) => {
         if (!confirm("Are you sure you want to delete this alert?")) return;
         try {
-            const res = await fetch(`/api/dealer/alerts/${id}`, { method: "DELETE" });
+            const res = await fetch(`/api/admin/alerts/${id}`, { method: "DELETE" });
             if (res.ok) {
                 toast.success("Alert deleted");
                 setAlerts((prev) => prev.filter((a) => a.id !== id));
@@ -191,13 +214,13 @@ export default function AlertsPage() {
                     <div>
                         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-cyan-400/30 text-[10px] font-mono tracking-[0.25em] text-cyan-400 mb-4">
                             <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-glow" />
-                            MARKET MONITOR · ALERTS
+                            MARKET MONITOR · ADMIN
                         </span>
                         <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
                             Car <span className="text-gradient">Alerts</span>
                         </h1>
                         <p className="text-gray-400 mt-2 max-w-lg text-sm">
-                            Get real-time notifications when vehicles matching your criteria hit the market.
+                            Get notified when vehicles matching your criteria hit the market.
                         </p>
                     </div>
                     <button
@@ -273,6 +296,16 @@ export default function AlertsPage() {
                                     </div>
                                 </div>
 
+                                {/* Owner tag — legacy dealer alerts are flagged */}
+                                {alert.dealer && (
+                                    <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                                        <Building2 className="size-3.5 text-amber-400 shrink-0" />
+                                        <span className="text-[10px] font-mono text-amber-400 uppercase tracking-wider truncate">
+                                            Dealer: {alert.dealer.dealershipName || alert.dealer.contactPerson}
+                                        </span>
+                                    </div>
+                                )}
+
                                 <div className="grid grid-cols-2 gap-3 mb-6">
                                     <div className="flex flex-col gap-1 p-3 rounded-xl bg-white/5 border border-white/5">
                                         <span className="text-[9px] font-mono text-gray-500 uppercase tracking-wider">Region</span>
@@ -290,8 +323,8 @@ export default function AlertsPage() {
                                         disabled={togglingId === alert.id}
                                         className={cn(
                                             "flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all",
-                                            (alert.enabled ?? true) 
-                                                ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_10px_rgba(34,211,238,0.1)]" 
+                                            (alert.enabled ?? true)
+                                                ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_10px_rgba(34,211,238,0.1)]"
                                                 : "bg-white/5 text-gray-500 border border-white/5"
                                         )}
                                     >
@@ -300,7 +333,7 @@ export default function AlertsPage() {
                                     </button>
 
                                     <Link
-                                        href={`/alerts/${alert.id}/results`}
+                                        href={`/admin/alerts/${alert.id}/results`}
                                         className="text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1.5 group/link"
                                     >
                                         View Matches <ArrowUpRight className="size-3.5 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
@@ -329,8 +362,8 @@ export default function AlertsPage() {
                                         </p>
                                     </div>
                                 </div>
-                                <button 
-                                    onClick={closeModal} 
+                                <button
+                                    onClick={closeModal}
                                     className="h-9 w-9 rounded-xl flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/5 transition-all"
                                 >
                                     <X className="size-5" />
@@ -373,23 +406,21 @@ export default function AlertsPage() {
                                         </div>
                                     </div>
 
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-mono text-gray-400 uppercase tracking-[0.15em] ml-1">Region *</label>
-                                        <div className="relative group">
-                                            <select
-                                                name="region"
-                                                value={formData.region}
-                                                onChange={handleInputChange}
-                                                className="icar-select h-11"
-                                            >
-                                                {REGIONS.map((r) => (
-                                                    <option key={r} value={r}>{r}</option>
-                                                ))}
-                                            </select>
-                                            <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-500 group-focus-within:text-cyan-400 transition-colors">
-                                                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
-                                            </div>
-                                        </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <MarketRegionSelect
+                                            market={formData.market}
+                                            country={formData.country}
+                                            onMarketChange={(market) =>
+                                                setFormData((prev) => ({
+                                                    ...prev,
+                                                    market,
+                                                    country: "",
+                                                }))
+                                            }
+                                            onCountryChange={(country) =>
+                                                setFormData((prev) => ({ ...prev, country }))
+                                            }
+                                        />
                                     </div>
 
                                     <div className="space-y-3">

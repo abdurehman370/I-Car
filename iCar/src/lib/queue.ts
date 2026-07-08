@@ -23,9 +23,9 @@ redisConnection.on('error', (err) => {
 // ---------------------------------------------------------------------------
 export interface AlertJobData {
     alertId: number;
-    dealerId: number;
-    dealerEmail: string;
-    dealerName: string;
+    dealerId: number | null; // null for admin-owned alerts
+    dealerEmail: string | null;
+    dealerName: string | null;
     make: string;
     model: string;
     yearMin: number | null;

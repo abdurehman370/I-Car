@@ -88,6 +88,10 @@ export function getAuctionTimeZone(market?: AuctionMarket | string | null): stri
     return 'Asia/Beirut';
   }
 
+  if (EUROPE_COUNTRY_TIMEZONES[region]) {
+    return EUROPE_COUNTRY_TIMEZONES[region];
+  }
+
   if (region === 'Europe' || country) {
     if (country && EUROPE_COUNTRY_TIMEZONES[country]) {
       return EUROPE_COUNTRY_TIMEZONES[country];

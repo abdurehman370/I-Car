@@ -28,7 +28,7 @@ class CacheManager:
         # Sort keys for consistency
         sorted_params = sorted(params.items())
         param_string = json.dumps(sorted_params)
-        return "icar:scrape:" + hashlib.md5(param_string.encode()).hexdigest()
+        return "carq:scrape:" + hashlib.md5(param_string.encode()).hexdigest()
 
     def get(self, params: dict) -> Optional[Any]:
         """Retrieves cached result if exists."""

@@ -3,6 +3,7 @@ import { Worker, Job } from 'bullmq';
 import { redisConnection, AlertJobData } from './queue';
 import prisma from './db';
 import { sendAlertNotificationEmail } from './mail';
+import { listingRegionWhere, resolveScraperRegionParams } from './regions';
 import { sendPushToDealer } from './web-push';
 import { getScraperApiKey, getScraperBaseUrl } from './scraper';
 import fs from 'fs';
@@ -53,6 +54,8 @@ async function fetchScraperMatches(data: AlertJobData): Promise<any[]> {
     const timeout = setTimeout(() => controller.abort(), SCRAPER_TIMEOUT_MS);
 
     try {
+        const scraperParams = resolveScraperRegionParams(data.region);
+
         const res = await fetch(`${getScraperBaseUrl()}/api/scrape`, {
             method: 'POST',
             headers: {
@@ -62,7 +65,8 @@ async function fetchScraperMatches(data: AlertJobData): Promise<any[]> {
             body: JSON.stringify({
                 make: data.make,
                 model: data.model,
-                region: data.region,
+                region: scraperParams.region,
+                country: scraperParams.country,
                 year_min: data.yearMin,
                 year_max: data.yearMax,
                 variant: data.variant,
@@ -123,7 +127,7 @@ async function processAlertJob(job: Job<AlertJobData>): Promise<void> {
         where: {
             make: { contains: freshAlert.make },
             model: { contains: freshAlert.model },
-            region: freshAlert.region,
+            region: listingRegionWhere(freshAlert.region),
             status: 'ACTIVE',
             ...(freshAlert.yearMin ? { year: { gte: freshAlert.yearMin } } : {}),
             ...(freshAlert.yearMax ? { year: { lte: freshAlert.yearMax } } : {}),
@@ -156,23 +160,38 @@ async function processAlertJob(job: Job<AlertJobData>): Promise<void> {
     }
 
     // ------------------------------------------------------------------
-    // 3. Send email (cap at 10 results)
+    // 3. Notify (cap at 10 results)
+    // Dealer-owned alerts (legacy): email + push to the dealer.
+    // Admin-owned alerts (dealerId null): email the admin address if
+    // configured (ADMIN_ALERT_EMAIL), otherwise matches are simply
+    // available in the admin panel under /admin/alerts/<id>/results.
     // ------------------------------------------------------------------
-    await sendAlertNotificationEmail(
-        dealerEmail,
-        dealerName,
-        freshAlert,
-        allMatches.slice(0, 10),
-    );
+    if (freshAlert.dealerId && dealerEmail) {
+        await sendAlertNotificationEmail(
+            dealerEmail,
+            dealerName ?? 'Dealer',
+            freshAlert,
+            allMatches.slice(0, 10),
+        );
 
-    await sendPushToDealer(freshAlert.dealerId, {
-        title: `Car alert: ${allMatches.length} matches`,
-        body: `${allMatches.length} listings found for ${freshAlert.make} ${freshAlert.model} in ${freshAlert.region}.`,
-        url: `/alerts/${alertId}/results`,
-        tag: `alert-${alertId}`,
-    }).catch((err) => {
-        log('WARN', job.id, `Push notification failed (non-fatal): ${err.message}`);
-    });
+        await sendPushToDealer(freshAlert.dealerId, {
+            title: `Car alert: ${allMatches.length} matches`,
+            body: `${allMatches.length} listings found for ${freshAlert.make} ${freshAlert.model} in ${freshAlert.region}.`,
+            url: `/dashboard`,
+            tag: `alert-${alertId}`,
+        }).catch((err) => {
+            log('WARN', job.id, `Push notification failed (non-fatal): ${err.message}`);
+        });
+    } else if (process.env.ADMIN_ALERT_EMAIL) {
+        await sendAlertNotificationEmail(
+            process.env.ADMIN_ALERT_EMAIL,
+            'Admin',
+            freshAlert,
+            allMatches.slice(0, 10),
+        );
+    } else {
+        log('INFO', job.id, `Admin alert #${alertId}: ${allMatches.length} matches found (no ADMIN_ALERT_EMAIL configured — view in admin panel)`);
+    }
 
     // ------------------------------------------------------------------
     // 4. Stamp lastRun — only after successful email send

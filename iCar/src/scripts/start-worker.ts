@@ -10,7 +10,7 @@
  *   npm run worker
  *
  * Keep this process alive with pm2 or systemd in production:
- *   pm2 start "npm run worker" --name icar-alert-worker
+ *   pm2 start "npm run worker" --name carq-alert-worker
  */
 
 import 'dotenv/config';

@@ -1,5 +1,5 @@
 import prisma from "@/lib/db";
-import { getDealerSession } from "@/lib/auth";
+import { getAdminSession } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { getScraperApiKey, getScraperBaseUrl } from "@/lib/scraper";
 
@@ -8,8 +8,8 @@ export async function GET(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const session = await getDealerSession();
-        if (!session || session.type !== 'dealer') {
+        const session = await getAdminSession();
+        if (!session) {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
@@ -19,9 +19,6 @@ export async function GET(
         const alert = await prisma.alert.findUnique({ where: { id: alertId } });
         if (!alert) {
             return NextResponse.json({ message: "Alert not found" }, { status: 404 });
-        }
-        if (alert.dealerId !== session.user.id) {
-            return NextResponse.json({ message: "Forbidden" }, { status: 403 });
         }
 
         // 1. Internal listings from DB
@@ -42,7 +39,7 @@ export async function GET(
         });
 
         const internalFormatted = internalMatches.map((l) => ({
-            source: 'iCar' as const,
+            source: 'CarQ' as const,
             id: l.id,
             title: `${l.year} ${l.make} ${l.model}${l.variant ? ' ' + l.variant : ''}`,
             price: l.price,

@@ -14,6 +14,7 @@ model User {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   createdAuctions Auction[]
+  alerts          Alert[]
 }
 
 model Dealer {
@@ -105,11 +106,13 @@ model ListingImage {
   @@index([listingId])
 }
 
-// Alert preferences for dealers
+// Market alerts — owned by an admin (userId). dealerId kept nullable for legacy dealer alerts.
 model Alert {
   id       Int     @id @default(autoincrement())
-  dealerId Int
-  dealer   Dealer  @relation(fields: [dealerId], references: [id], onDelete: Cascade)
+  dealerId Int?
+  dealer   Dealer? @relation(fields: [dealerId], references: [id], onDelete: Cascade)
+  userId   Int? // admin (User) who created this alert from the admin panel
+  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   make     String
   model    String
   yearMin  Int?
@@ -124,6 +127,7 @@ model Alert {
   updatedAt DateTime  @updatedAt
 
   @@index([dealerId])
+  @@index([userId])
 }
 
 // Car Taxonomy Models
@@ -183,6 +187,11 @@ model Auction {
   city        String?
   description String  @db.Text
 
+  // Hybrid auction support
+  auctionType  String  @default("ONLINE") // ONLINE, PHYSICAL, HYBRID
+  venue        String? // physical venue name/address (PHYSICAL / HYBRID)
+  displayToken String? @unique // secret token for the public big-screen display page
+
   startingBid  Decimal  @db.Decimal(12, 2)
   reservePrice Decimal? @db.Decimal(12, 2)
   minIncrement Decimal  @db.Decimal(12, 2)
@@ -241,6 +250,9 @@ model AuctionBid {
 
   bidderName  String?
   bidderEmail String?
+
+  source       String  @default("online") // online (dealer portal), floor (entered by admin at physical venue)
+  paddleNumber String? // paddle number for floor bids
 
   amount   Decimal @db.Decimal(12, 2)
   currency String  @default("AED")

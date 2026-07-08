@@ -6,6 +6,7 @@ import prisma from "@/lib/db";
 import fs from "fs/promises";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
+import { randomBytes } from "crypto";
 
 type AuctionImageRecord = Prisma.AuctionImageCreateManyInput;
 
@@ -92,7 +93,13 @@ export async function POST(req: NextRequest) {
       startAt,
       endAt,
       images,
+      auctionType,
+      venue,
     } = body;
+
+    const parsedAuctionType = ["ONLINE", "PHYSICAL", "HYBRID"].includes(String(auctionType))
+      ? String(auctionType)
+      : "ONLINE";
 
     if (
       !title ||
@@ -197,6 +204,9 @@ export async function POST(req: NextRequest) {
         startAt: start,
         endAt: end,
         status: "DRAFT",
+        auctionType: parsedAuctionType,
+        venue: venue ? String(venue) : null,
+        displayToken: randomBytes(24).toString("hex"),
       },
     });
 

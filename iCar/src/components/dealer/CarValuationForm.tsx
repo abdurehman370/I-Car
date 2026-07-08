@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { Car, DollarSign, Loader2 } from "lucide-react";
 import { CarTaxonomyDropdowns } from "@/components/FormElements/CarTaxonomyDropdowns";
+import { MarketRegionSelect } from "@/components/FormElements/MarketRegionSelect";
 import { MileageFields } from "@/components/dealer/MileageFields";
 import { ValuationReport } from "@/components/dealer/ValuationReport";
-
-const EUROPE_COUNTRIES = ["Germany"];
+import { buildStoredRegion, type Market } from "@/lib/regions";
 
 export type ValuationVariant = "dealer" | "partner";
 
@@ -70,7 +70,7 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
     mileageMaxKm: "",
     specs: "Unknown",
     notes: "",
-    region: "UAE",
+    region: "UAE" as Market,
     country: "",
   });
 
@@ -92,10 +92,7 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
     setMarkdown(null);
 
     try {
-      const regionValue =
-        formData.region === "Europe" && formData.country
-          ? formData.country
-          : formData.region;
+      const regionValue = buildStoredRegion(formData.region, formData.country);
 
       const res = await fetch("/api/dealer/evaluate", {
         method: "POST",
@@ -181,43 +178,17 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs font-mono uppercase tracking-[0.1em] text-gray-400 ml-1">
-                  Region *
-                </label>
-                <select
-                  name="region"
-                  value={formData.region}
-                  onChange={handleInputChange}
-                  required
-                  className="icar-select"
-                >
-                  <option value="UAE">UAE</option>
-                  <option value="Lebanon">Lebanon</option>
-                  <option value="Europe">Europe</option>
-                </select>
-              </div>
-              {formData.region === "Europe" && (
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Country *
-                  </label>
-                  <select
-                    name="country"
-                    value={formData.country}
-                    onChange={handleInputChange}
-                    required
-                    className="icar-select"
-                  >
-                    <option value="">Select Country</option>
-                    {EUROPE_COUNTRIES.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
+              <MarketRegionSelect
+                market={formData.region}
+                country={formData.country}
+                onMarketChange={(market) =>
+                  setFormData((prev) => ({ ...prev, region: market, country: "" }))
+                }
+                onCountryChange={(country) =>
+                  setFormData((prev) => ({ ...prev, country }))
+                }
+                labelClassName="text-xs font-mono uppercase tracking-[0.1em] text-gray-400 ml-1"
+              />
             </div>
 
             <CarTaxonomyDropdowns
@@ -240,7 +211,7 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
                   required
                   min={1990}
                   max={2030}
-                  className="icar-input"
+                  className="carq-input"
                   placeholder="e.g. 2022"
                 />
               </div>
@@ -252,7 +223,7 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
                   name="specs"
                   value={formData.specs}
                   onChange={handleInputChange}
-                  className="icar-select"
+                  className="carq-select"
                 >
                   <option value="GCC">GCC</option>
                   <option value="Import">Import</option>
@@ -283,7 +254,7 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
                 value={formData.notes}
                 onChange={handleInputChange}
                 rows={3}
-                className="icar-textarea"
+                className="carq-textarea"
                 placeholder={copy.notesPlaceholder}
               />
             </div>

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth";
 import prisma from "@/lib/db";
+import { sendAuctionWonEmail } from "@/lib/mail";
+import { sendPushToDealer } from "@/lib/web-push";
 
 export async function POST(req: NextRequest, context: any) {
   const params = await context.params;
@@ -59,6 +61,39 @@ export async function POST(req: NextRequest, context: any) {
         data: { status: "winning" }
       })
     ]);
+
+    // Notify the winning dealer (floor winners are handled in the room)
+    if (winningBid.dealerId) {
+      const winnerDealerId = winningBid.dealerId;
+      Promise.resolve().then(async () => {
+        const winner = await prisma.dealer.findUnique({ where: { id: winnerDealerId } });
+        if (!winner) return;
+
+        await sendAuctionWonEmail(
+          winner.email,
+          winner.contactPerson || winner.dealershipName || "User",
+          auction,
+          winningBid.amount.toString()
+        ).catch(console.error);
+
+        await prisma.auctionNotification.create({
+          data: {
+            auctionId: id,
+            dealerId: winner.id,
+            type: "auction_won",
+            title: "🎉 You Won the Auction!",
+            message: `Congratulations! You won the auction for ${auction.year} ${auction.make} ${auction.model} with a final bid of ${winningBid.amount.toString()} ${auction.currency}.`,
+          },
+        }).catch(console.error);
+
+        await sendPushToDealer(winner.id, {
+          title: "You won the auction!",
+          body: `You won ${auction.year} ${auction.make} ${auction.model}.`,
+          url: `/auctions/${id}`,
+          tag: `auction-${id}-won`,
+        }).catch(console.error);
+      }).catch(console.error);
+    }
 
     return NextResponse.json({ message: "Winner selected and auction closed successfully" });
   } catch (error: any) {

@@ -25,7 +25,12 @@ export async function middleware(request: NextRequest) {
 
   const isApi = pathname.startsWith("/api/");
 
-  if (isStatic || isApi) {
+  // Public big-screen broadcast page — token-protected by its own API,
+  // must work on venue screens with no session and regardless of any
+  // logged-in role on the machine.
+  const isAuctionDisplay = pathname.startsWith("/auction-display");
+
+  if (isStatic || isApi || isAuctionDisplay) {
     return NextResponse.next();
   }
 

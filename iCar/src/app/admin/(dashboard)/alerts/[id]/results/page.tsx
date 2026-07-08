@@ -22,7 +22,7 @@ interface AlertInfo {
 }
 
 interface MatchResult {
-    source: 'iCar' | 'External';
+    source: 'CarQ' | 'External';
     id: string | null;
     title: string;
     price: number | string | null;
@@ -38,7 +38,7 @@ interface MatchResult {
 
 type SortOption = 'price-asc' | 'price-desc' | 'year-desc' | 'mileage-asc';
 
-export default function AlertResultsPage() {
+export default function AdminAlertResultsPage() {
     const { id } = useParams<{ id: string }>();
     const router = useRouter();
 
@@ -48,13 +48,13 @@ export default function AlertResultsPage() {
     const [error, setError] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [sortBy, setSortBy] = useState<SortOption>('year-desc');
-    const [filterSource, setFilterSource] = useState<'all' | 'iCar' | 'External'>('all');
+    const [filterSource, setFilterSource] = useState<'all' | 'CarQ' | 'External'>('all');
 
     const fetchResults = async () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await fetch(`/api/dealer/alerts/${id}/results`);
+            const res = await fetch(`/api/admin/alerts/${id}/results`);
             const data = await res.json();
             if (!res.ok) {
                 setError(data.message || "Failed to fetch results");
@@ -104,7 +104,7 @@ export default function AlertResultsPage() {
             {/* Navigation Header */}
             <div className="flex items-center justify-between gap-4">
                 <button
-                    onClick={() => router.push('/alerts')}
+                    onClick={() => router.push('/admin/alerts')}
                     className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-white transition-colors py-2"
                 >
                     <div className="p-1.5 rounded-lg bg-gray-100 dark:bg-white/5 group-hover:bg-indigo-50 dark:group-hover:bg-white/10 border border-gray-200 dark:border-white/5 transition-colors">
@@ -179,7 +179,7 @@ export default function AlertResultsPage() {
                                 className="flex-1 lg:w-32 py-2.5 px-3 bg-gray-100 dark:bg-white/5 border border-transparent dark:border-white/5 rounded-2xl text-sm text-gray-700 dark:text-gray-300 outline-none hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
                             >
                                 <option value="all">All Sources</option>
-                                <option value="iCar">iCar Only</option>
+                                <option value="CarQ">CarQ Only</option>
                                 <option value="External">Market Only</option>
                             </select>
                         </div>
@@ -224,7 +224,7 @@ export default function AlertResultsPage() {
                     </div>
                     <h2 className="text-2xl font-bold text-white mb-3">No matches found</h2>
                     <p className="text-gray-400 max-w-sm">
-                        {searchQuery ? "Try adjusting your search query or filters." : "We couldn't find any listings matching your criteria. We'll alert you as soon as someone lists a matching car."}
+                        {searchQuery ? "Try adjusting your search query or filters." : "We couldn't find any listings matching the criteria. Matches will appear here as soon as a matching car is listed."}
                     </p>
                 </div>
             ) : (
@@ -249,8 +249,8 @@ export default function AlertResultsPage() {
 }
 
 function ResultCard({ result }: { result: MatchResult }) {
-    const isInternal = result.source === 'iCar';
-    const href = isInternal && result.id ? `/listings/${result.id}` : (result.url ?? '#');
+    const isInternal = result.source === 'CarQ';
+    const href = isInternal && result.id ? `/admin/listings/${result.id}` : (result.url ?? '#');
     const isExternal = !isInternal && result.url;
     const [imgSrc, setImgSrc] = useState<string>(result.image || '/car-placeholder.jpg');
 
@@ -323,7 +323,7 @@ function ResultCard({ result }: { result: MatchResult }) {
                             href={href}
                             className="flex items-center justify-center gap-2 w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-sm font-black transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
                         >
-                            Manage iCar Listing
+                            View CarQ Listing
                         </Link>
                     )}
                 </div>

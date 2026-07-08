@@ -4,25 +4,21 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Upload, X, PlusCircle, Save, Send, Car, DollarSign, FileText, ChevronRight, ArrowLeft, Loader2 } from "lucide-react";
 import { CarTaxonomyDropdowns } from "@/components/FormElements/CarTaxonomyDropdowns";
+import { MarketRegionSelect } from "@/components/FormElements/MarketRegionSelect";
 import { MileageFields } from "@/components/dealer/MileageFields";
 import { ValuationReport } from "@/components/dealer/ValuationReport";
 import { formatMileageDisplay } from "@/lib/mileage";
-// --- Types & Constants ---
+import {
+    buildStoredRegion,
+    getCitiesForMarket,
+    defaultCityForMarket,
+    type Market,
+} from "@/lib/regions";
+
 const COMMON_FEATURES = [
     "Air Conditioning", "Power Steering", "Power Windows", "ABS", "Airbags",
     "Alloy Wheels", "Bluetooth", "Cruise Control", "Leather Seats", "Sunroof",
     "Parking Sensors", "Rear Camera", "Navigation System", "Keyless Entry", "Push Start",
-];
-const REGION_CITIES: Record<string, string[]> = {
-    UAE: ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah", "Fujairah", "Umm Al Quwain"],
-    Lebanon: ["Beirut", "Tripoli", "Sidon", "Tyre", "Jounieh", "Byblos", "Zahle"],
-    Europe: [
-        "Berlin", "Munich", "Hamburg"
-    ]
-};
-
-const EUROPE_COUNTRIES = [
-    "Germany"
 ];
 
 // --- Main Component ---
@@ -51,7 +47,7 @@ export default function ListVehicle() {
         currency: "AED",
         description: "",
         condition: "USED",
-        city: "",
+        city: "Dubai",
         region: "UAE",
         country: "", // For Europe
     });
@@ -123,9 +119,7 @@ export default function ListVehicle() {
                 )
             );
 
-            const regionValue = formData.region === "Europe" && formData.country
-                ? `${formData.country}`
-                : formData.region;
+            const regionValue = buildStoredRegion(formData.region as Market, formData.country);
 
             const payload = {
                 mode: "listing",
@@ -222,8 +216,10 @@ export default function ListVehicle() {
         setSuccess("");
 
         try {
+            const needsCity = formData.region !== "Europe";
             if (!formData.make || !formData.model || !formData.year || !formData.mileage ||
-                !formData.price || !formData.description || !formData.city) {
+                !formData.price || !formData.description || (needsCity && !formData.city) ||
+                (formData.region === "Europe" && !formData.country)) {
                 setError("Please fill in all required fields in Step 2");
                 setLoading(false);
                 return;
@@ -233,6 +229,10 @@ export default function ListVehicle() {
 
             const payload = {
                 ...formData,
+                region: buildStoredRegion(formData.region as Market, formData.country),
+                city: formData.region === "Europe" && !formData.city
+                    ? formData.country
+                    : formData.city,
                 year: parseInt(formData.year),
                 mileage: parseInt(formData.mileage),
                 price: parseFloat(formData.price),
@@ -316,25 +316,22 @@ export default function ListVehicle() {
                             </div>
 
                             <form onSubmit={handleGetValuation} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <label className="text-xs font-mono uppercase tracking-[0.1em] text-gray-400 ml-1">Region *</label>
-                                    <select name="region" value={formData.region} onChange={handleInputChange} required className="icar-select">
-                                        <option value="UAE">UAE</option>
-                                        <option value="Lebanon">Lebanon</option>
-                                        <option value="Europe">Europe</option>
-                                    </select>
-                                </div>
-                                {formData.region === "Europe" && (
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Country *</label>
-                                        <select name="country" value={formData.country} onChange={handleInputChange} required className="icar-select">
-                                            <option value="">Select Country</option>
-                                            {EUROPE_COUNTRIES.map(c => (
-                                                <option key={c} value={c}>{c}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                )}
+                                <MarketRegionSelect
+                                    market={formData.region as Market}
+                                    country={formData.country}
+                                    onMarketChange={(market) =>
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            region: market,
+                                            country: "",
+                                            city: defaultCityForMarket(market),
+                                        }))
+                                    }
+                                    onCountryChange={(country) =>
+                                        setFormData((prev) => ({ ...prev, country, city: country }))
+                                    }
+                                    labelClassName="text-xs font-mono uppercase tracking-[0.1em] text-gray-400 ml-1"
+                                />
                                 <div className="col-span-1 md:col-span-2">
                                     <CarTaxonomyDropdowns
                                         selectedMake={formData.make}
@@ -345,7 +342,7 @@ export default function ListVehicle() {
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Year *</label>
-                                    <input type="number" name="year" value={formData.year} onChange={handleInputChange} required className="icar-input" placeholder="e.g. 2022" />
+                                    <input type="number" name="year" value={formData.year} onChange={handleInputChange} required className="carq-input" placeholder="e.g. 2022" />
                                 </div>
                                 <MileageFields
                                     mode="single"
@@ -356,7 +353,7 @@ export default function ListVehicle() {
                                 />
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Specs</label>
-                                    <select name="specs" value={formData.specs} onChange={handleInputChange} className="icar-select">
+                                    <select name="specs" value={formData.specs} onChange={handleInputChange} className="carq-select">
                                         <option value="GCC">GCC</option>
                                         <option value="Import">Import</option>
                                         <option value="Unknown">Unknown</option>
@@ -364,7 +361,7 @@ export default function ListVehicle() {
                                 </div>
                                 <div className="space-y-2 col-span-1 md:col-span-2">
                                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Notes (optional)</label>
-                                    <textarea name="notes" value={formData.notes} onChange={handleInputChange} rows={2} className="icar-textarea" placeholder="Service history, warranty, accidents, repaint, owners, etc." />
+                                    <textarea name="notes" value={formData.notes} onChange={handleInputChange} rows={2} className="carq-textarea" placeholder="Service history, warranty, accidents, repaint, owners, etc." />
                                 </div>
 
                                 {/* Image Upload Step 1 (Mandatory 1-5) */}
@@ -449,12 +446,12 @@ export default function ListVehicle() {
                                 {/* Price */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Price *</label>
-                                    <input type="number" name="price" value={formData.price} onChange={handleInputChange} className="icar-input" placeholder="e.g. 65000" />
+                                    <input type="number" name="price" value={formData.price} onChange={handleInputChange} className="carq-input" placeholder="e.g. 65000" />
                                 </div>
                                 {/* Condition */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Condition *</label>
-                                    <select name="condition" value={formData.condition} onChange={handleInputChange} className="icar-select">
+                                    <select name="condition" value={formData.condition} onChange={handleInputChange} className="carq-select">
                                         <option value="NEW">New</option>
                                         <option value="USED">Used</option>
                                         <option value="CERTIFIED">Certified Pre-Owned</option>
@@ -462,18 +459,30 @@ export default function ListVehicle() {
                                 </div>
                                 {/* City */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">City *</label>
-                                    <select name="city" value={formData.city} onChange={handleInputChange} className="icar-select">
-                                        <option value="">Select City</option>
-                                        {(REGION_CITIES[formData.region] || []).map(c => (
-                                            <option key={c} value={c}>{c}</option>
-                                        ))}
-                                    </select>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        {formData.region === "Europe" ? "City (optional)" : "City *"}
+                                    </label>
+                                    {formData.region === "Europe" ? (
+                                        <input
+                                            name="city"
+                                            value={formData.city}
+                                            onChange={handleInputChange}
+                                            className="carq-input"
+                                            placeholder={`e.g. Berlin (${formData.country || "Europe"})`}
+                                        />
+                                    ) : (
+                                        <select name="city" value={formData.city} onChange={handleInputChange} required className="carq-select">
+                                            <option value="">Select City</option>
+                                            {getCitiesForMarket(formData.region as Market).map((c) => (
+                                                <option key={c} value={c}>{c}</option>
+                                            ))}
+                                        </select>
+                                    )}
                                 </div>
                                 {/* Description */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description *</label>
-                                    <textarea name="description" value={formData.description} onChange={handleInputChange} rows={6} className="icar-textarea" placeholder="Describe your vehicle..." />
+                                    <textarea name="description" value={formData.description} onChange={handleInputChange} rows={6} className="carq-textarea" placeholder="Describe your vehicle..." />
                                 </div>
                                 {/* Features */}
                                 <div>
@@ -487,7 +496,7 @@ export default function ListVehicle() {
                                         ))}
                                     </div>
                                     <div className="flex gap-2">
-                                        <input type="text" value={customFeature} onChange={(e) => setCustomFeature(e.target.value)} onKeyPress={(e) => e.key === "Enter" && addCustomFeature()} className="icar-input flex-1 !h-11" placeholder="Add custom feature..." />
+                                        <input type="text" value={customFeature} onChange={(e) => setCustomFeature(e.target.value)} onKeyPress={(e) => e.key === "Enter" && addCustomFeature()} className="carq-input flex-1 !h-11" placeholder="Add custom feature..." />
                                         <button type="button" onClick={addCustomFeature} className="px-4 py-2 bg-cyan-500 text-black font-bold rounded-xl"><PlusCircle className="size-5" /></button>
                                     </div>
                                 </div>

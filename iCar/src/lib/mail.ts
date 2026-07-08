@@ -15,19 +15,19 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
 export async function sendApprovalEmail(email: string, name: string) {
   const mailOptions = {
-    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    from: process.env.SMTP_FROM || '"CarQ" <noreply@carq.me>',
     to: email,
     subject: 'Congratulations! Your Dealer Application has been Approved',
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-        <h2 style="color: #4f46e5;">Welcome to iCar!</h2>
+        <h2 style="color: #4f46e5;">Welcome to CarQ!</h2>
         <p>Dear ${name},</p>
-        <p>We are thrilled to inform you that your application to become a dealer on iCar has been <strong>approved</strong>.</p>
+        <p>We are thrilled to inform you that your application to become a dealer on CarQ has been <strong>approved</strong>.</p>
         <p>You can now log in to the dealer portal and start managing your listings.</p>
         <div style="margin: 30px 0;">
           <a href="${APP_URL}/login" style="background-color: #4f46e5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Login to Dealer Portal</a>
         </div>
-        <p>Best regards,<br/>The iCar Team</p>
+        <p>Best regards,<br/>The CarQ Team</p>
       </div>
     `,
   };
@@ -37,17 +37,17 @@ export async function sendApprovalEmail(email: string, name: string) {
 
 export async function sendRejectionEmail(email: string, name: string) {
   const mailOptions = {
-    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    from: process.env.SMTP_FROM || '"CarQ" <noreply@carq.me>',
     to: email,
     subject: 'Update Regarding Your Dealer Application',
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
         <h2 style="color: #6b7280;">Application Update</h2>
         <p>Dear ${name},</p>
-        <p>Thank you for your interest in joining iCar.</p>
+        <p>Thank you for your interest in joining CarQ.</p>
         <p>After carefully reviewing your application, we regret to inform you that we are unable to approve your dealer registration at this time.</p>
         <p>If you have any questions or would like to re-apply in the future with more details, please feel free to contact our support team.</p>
-        <p>Best regards,<br/>The iCar Team</p>
+        <p>Best regards,<br/>The CarQ Team</p>
       </div>
     `,
   };
@@ -57,17 +57,17 @@ export async function sendRejectionEmail(email: string, name: string) {
 
 export async function sendDealerSignupEmail(email: string, name: string) {
   const mailOptions = {
-    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    from: process.env.SMTP_FROM || '"CarQ" <noreply@carq.me>',
     to: email,
-    subject: 'Welcome to iCar! Your Application is Received',
+    subject: 'Welcome to CarQ! Your Application is Received',
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-        <h2 style="color: #4f46e5;">Welcome to iCar!</h2>
+        <h2 style="color: #4f46e5;">Welcome to CarQ!</h2>
         <p>Dear ${name},</p>
-        <p>Thank you for signing up to become a dealer on iCar.</p>
+        <p>Thank you for signing up to become a dealer on CarQ.</p>
         <p>We have successfully received your application. Our admin team will review your details and license document shortly.</p>
         <p>You will receive another email once your application has been approved.</p>
-        <p>Best regards,<br/>The iCar Team</p>
+        <p>Best regards,<br/>The CarQ Team</p>
       </div>
     `,
   };
@@ -76,7 +76,7 @@ export async function sendDealerSignupEmail(email: string, name: string) {
 
 export async function sendAdminNewDealerEmail(adminEmail: string, dealerName: string, dealershipName: string) {
   const mailOptions = {
-    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    from: process.env.SMTP_FROM || '"CarQ" <noreply@carq.me>',
     to: adminEmail,
     subject: 'New Dealer Application Received',
     html: `
@@ -96,7 +96,7 @@ export async function sendAdminNewDealerEmail(adminEmail: string, dealerName: st
 
 export async function sendAlertNotificationEmail(email: string, name: string, alert: any, matches: any[]) {
   const mailOptions = {
-    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    from: process.env.SMTP_FROM || '"CarQ" <noreply@carq.me>',
     to: email,
     subject: `Car Alert: ${matches.length} matches found for ${alert.make} ${alert.model}`,
     html: `
@@ -114,7 +114,7 @@ export async function sendAlertNotificationEmail(email: string, name: string, al
               ? externalUrl
               : match.id ? `${APP_URL}/listings/${match.id}` : '#';
             const title = match.title || `${match.make} ${match.model} ${match.year || ''}`.trim();
-            const source = externalUrl ? 'External' : 'iCar';
+            const source = externalUrl ? 'External' : 'CarQ';
             return `
             <div style="padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 12px;">
               <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
@@ -134,7 +134,7 @@ export async function sendAlertNotificationEmail(email: string, name: string, al
         <div style="margin: 30px 0;">
           <a href="${APP_URL}/alerts" style="background-color: #4f46e5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Manage Your Alerts</a>
         </div>
-        <p>Best regards,<br/>The iCar Team</p>
+        <p>Best regards,<br/>The CarQ Team</p>
       </div>
     `,
   };
@@ -144,14 +144,14 @@ export async function sendAlertNotificationEmail(email: string, name: string, al
 
 export async function sendAuctionPublishedEmail(email: string, name: string, auction: any) {
   const mailOptions = {
-    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    from: process.env.SMTP_FROM || '"CarQ" <noreply@carq.me>',
     to: email,
     subject: `New Auction: ${auction.year} ${auction.make} ${auction.model}`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
         <h2 style="color: #4f46e5;">New Auction Published</h2>
         <p>Dear ${name},</p>
-        <p>A new vehicle has been listed for auction on iCar.</p>
+        <p>A new vehicle has been listed for auction on CarQ.</p>
         <div style="padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 20px;">
           <h3 style="margin-top: 0; color: #111827;">${auction.year} ${auction.make} ${auction.model} ${auction.variant || ''}</h3>
           <p style="margin: 4px 0; color: #4b5563; font-size: 14px;"><strong>Region:</strong> ${auction.region} - ${auction.city || ''}</p>
@@ -163,7 +163,7 @@ export async function sendAuctionPublishedEmail(email: string, name: string, auc
         <div style="margin: 30px 0;">
           <a href="${APP_URL}/auctions/${auction.id}" style="background-color: #4f46e5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">View Auction</a>
         </div>
-        <p>Best regards,<br/>The iCar Team</p>
+        <p>Best regards,<br/>The CarQ Team</p>
       </div>
     `,
   };
@@ -172,7 +172,7 @@ export async function sendAuctionPublishedEmail(email: string, name: string, auc
 
 export async function sendAuctionStartedEmail(email: string, name: string, auction: any) {
   const mailOptions = {
-    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    from: process.env.SMTP_FROM || '"CarQ" <noreply@carq.me>',
     to: email,
     subject: `Auction Started: ${auction.year} ${auction.make} ${auction.model}`,
     html: `
@@ -191,7 +191,7 @@ export async function sendAuctionStartedEmail(email: string, name: string, aucti
 
 export async function sendAuctionOutbidEmail(email: string, name: string, auction: any, newHighestBid: string) {
   const mailOptions = {
-    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    from: process.env.SMTP_FROM || '"CarQ" <noreply@carq.me>',
     to: email,
     subject: `You have been outbid on ${auction.make} ${auction.model}`,
     html: `
@@ -211,7 +211,7 @@ export async function sendAuctionOutbidEmail(email: string, name: string, auctio
 
 export async function sendAuctionWonEmail(email: string, name: string, auction: any, amount: string) {
   const mailOptions = {
-    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    from: process.env.SMTP_FROM || '"CarQ" <noreply@carq.me>',
     to: email,
     subject: `Congratulations! You won the auction for ${auction.make} ${auction.model}`,
     html: `
@@ -231,7 +231,7 @@ export async function sendAuctionWonEmail(email: string, name: string, auction: 
 
 export async function sendAuctionClosedEmail(email: string, name: string, auction: any, outcome: string) {
   const mailOptions = {
-    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    from: process.env.SMTP_FROM || '"CarQ" <noreply@carq.me>',
     to: email,
     subject: `Auction Ended: ${auction.year} ${auction.make} ${auction.model}`,
     html: `
@@ -251,7 +251,7 @@ export async function sendAuctionClosedEmail(email: string, name: string, auctio
 
 export async function sendAuctionCancelledEmail(email: string, name: string, auction: any) {
   const mailOptions = {
-    from: process.env.SMTP_FROM || '"iCar" <noreply@icar.com>',
+    from: process.env.SMTP_FROM || '"CarQ" <noreply@carq.me>',
     to: email,
     subject: `Auction Cancelled: ${auction.year} ${auction.make} ${auction.model}`,
     html: `

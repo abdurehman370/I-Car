@@ -79,7 +79,7 @@ function Field({
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="icar-input rounded-2xl placeholder:text-gray-500"
+        className="carq-input rounded-2xl placeholder:text-gray-500"
       />
     </div>
   );
@@ -133,7 +133,7 @@ export default function ListingEditModal({
             <select
               value={form.currency}
               onChange={(e) => onChange({ ...form, currency: e.target.value })}
-              className="icar-select !h-auto py-3 rounded-2xl"
+              className="carq-select !h-auto py-3 rounded-2xl"
             >
               <option value="AED">AED</option>
               <option value="USD">USD</option>
@@ -148,7 +148,7 @@ export default function ListingEditModal({
             <select
               value={form.condition}
               onChange={(e) => onChange({ ...form, condition: e.target.value })}
-              className="icar-select !h-auto py-3 rounded-2xl"
+              className="carq-select !h-auto py-3 rounded-2xl"
             >
               <option value="USED">Used</option>
               <option value="NEW">New</option>
@@ -165,7 +165,7 @@ export default function ListingEditModal({
               value={form.status}
               onChange={(e) => onChange({ ...form, status: e.target.value })}
               disabled={statusLocked}
-              className="icar-select !h-auto py-3 rounded-2xl disabled:opacity-50"
+              className="carq-select !h-auto py-3 rounded-2xl disabled:opacity-50"
             >
               <option value="ACTIVE">Active (visible)</option>
               <option value="DRAFT">Inactive (draft)</option>
@@ -183,7 +183,7 @@ export default function ListingEditModal({
               value={form.description}
               onChange={(e) => onChange({ ...form, description: e.target.value })}
               rows={4}
-              className="icar-textarea rounded-2xl placeholder:text-gray-500"
+              className="carq-textarea rounded-2xl placeholder:text-gray-500"
             />
           </div>
         </div>

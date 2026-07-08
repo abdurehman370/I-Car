@@ -18,8 +18,6 @@ const DEALER_ONLY_PREFIXES = [
   "/listings",
   "/list-vehicle",
   "/vehicle-valuation",
-  "/alerts",
-  "/dealer-tools",
   "/settings",
 ];
 

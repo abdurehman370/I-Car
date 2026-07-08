@@ -51,7 +51,7 @@ export default function AdminSignIn() {
             </div>
             <div className="leading-tight">
               <span className="text-2xl font-bold tracking-tight text-white">
-                iCar<span className="text-cyan-400">.</span>
+                CarQ<span className="text-cyan-400">.</span>
               </span>
               <p className="font-mono text-[9px] tracking-[0.3em] text-cyan-400/80 uppercase">
                 Admin Portal
@@ -89,7 +89,7 @@ export default function AdminSignIn() {
               </div>
               <div className="leading-tight">
                 <span className="text-2xl font-bold tracking-tight text-white">
-                  iCar<span className="text-cyan-400">.</span>
+                  CarQ<span className="text-cyan-400">.</span>
                 </span>
                 <p className="font-mono text-[9px] tracking-[0.3em] text-cyan-400/80 uppercase">
                   Admin Portal

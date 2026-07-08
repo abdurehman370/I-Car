@@ -1,7 +1,7 @@
 self.addEventListener('push', (event) => {
   if (!event.data) return;
 
-  let data = { title: 'iCar', body: 'You have a new notification', url: '/' };
+  let data = { title: 'CarQ', body: 'You have a new notification', url: '/' };
   try {
     data = { ...data, ...event.data.json() };
   } catch {
@@ -12,7 +12,7 @@ self.addEventListener('push', (event) => {
       body: data.body,
       icon: '/images/logo/logo.svg',
       badge: '/images/logo/logo.svg',
-      tag: data.tag || 'icar-notification',
+      tag: data.tag || 'carq-notification',
       data: { url: data.url || '/' },
     }),
   );

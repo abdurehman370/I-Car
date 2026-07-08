@@ -177,7 +177,7 @@ export default function InventoryPage() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="icar-select h-14 rounded-2xl flex-1 min-w-0 w-full max-w-full"
+            className="carq-select h-14 rounded-2xl flex-1 min-w-0 w-full max-w-full"
             aria-label="Filter by status"
           >
             <option value="ALL">All Status</option>

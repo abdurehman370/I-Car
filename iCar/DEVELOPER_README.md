@@ -1,6 +1,6 @@
-# iCar — Developer Guide (Existing Project)
+# CarQ — Developer Guide (Existing Project)
 
-This document describes **how the current iCar application is built** so you can extend it safely (e.g., auctions, partner roles). For environment setup, see the repo root [`SETUP.md`](../SETUP.md). For planned changes, see [`docs/CHANGE_REQUIREMENTS.md`](../docs/CHANGE_REQUIREMENTS.md).
+This document describes **how the current CarQ application is built** so you can extend it safely (e.g., auctions, partner roles). For environment setup, see the repo root [`SETUP.md`](../SETUP.md). For planned changes, see [`docs/CHANGE_REQUIREMENTS.md`](../docs/CHANGE_REQUIREMENTS.md).
 
 ---
 
@@ -444,4 +444,4 @@ When adding **Auctions** or **Partner (insurance/bank)** roles:
 
 ---
 
-*Last updated: April 2026 — reflects codebase as implemented in the iCar Next.js app.*
+*Last updated: April 2026 — reflects codebase as implemented in the CarQ Next.js app.*

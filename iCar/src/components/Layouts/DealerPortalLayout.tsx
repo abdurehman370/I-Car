@@ -4,10 +4,10 @@ import { ReactNode, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Search, Bell, Command, LayoutDashboard, Car, PlusCircle, 
+import {
+  Search, Command, LayoutDashboard, Car, PlusCircle,
   History, Settings, LogOut, Zap, Menu, X, ChevronRight,
-  User, Briefcase, BellRing, Sun, Moon, DollarSign, Gavel
+  User, BellRing, Sun, Moon, DollarSign, Gavel
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DealerNotificationBell } from "@/components/dealer/DealerNotificationBell";
@@ -20,8 +20,6 @@ const dealerItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "Inventory", url: "/(dealer)/(portal)/listings", icon: Car },
   { title: "List Vehicle", url: "/(dealer)/(portal)/list-vehicle", icon: PlusCircle },
-  { title: "Alerts", url: "/(dealer)/(portal)/alerts", icon: Bell },
-  { title: "Dealer Tools", url: "/(dealer)/(portal)/dealer-tools", icon: Briefcase },
   { title: "Profile", url: "/(dealer)/(portal)/profile", icon: User },
 ];
 
@@ -36,8 +34,6 @@ const navItems = [
     { title: "Vehicle Valuation", url: "/vehicle-valuation", icon: DollarSign },
     { title: "Auctions", url: "/auctions", icon: Gavel },
     { title: "Auction Alerts", url: "/auction-notifications", icon: BellRing },
-    { title: "Alerts", url: "/alerts", icon: Bell },
-    { title: "Dealer Tools", url: "/dealer-tools", icon: Briefcase },
     { title: "Profile", url: "/profile", icon: User },
 ];
 
@@ -114,7 +110,7 @@ export default function DealerPortalLayout({ children }: Props) {
           </div>
           {isSidebarOpen && (
             <div className="leading-tight">
-              <p className="text-lg font-bold tracking-tight text-white">iCar</p>
+              <p className="text-lg font-bold tracking-tight text-white">CarQ</p>
               <p className="font-mono text-[9px] tracking-[0.3em] text-cyan-400/70 uppercase">Dealer Portal</p>
             </div>
           )}

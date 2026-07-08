@@ -22,6 +22,8 @@ const adminNavItems = [
     { title: "Listings", url: "/admin/listings", icon: List },
     { title: "Taxonomy", url: "/admin/taxonomy", icon: Database },
     { title: "Auctions", url: "/admin/auctions", icon: Gavel },
+    { title: "Alerts", url: "/admin/alerts", icon: Bell },
+    { title: "Market Search", url: "/admin/market-search", icon: Search },
     { title: "Approvals", url: "/admin/authenticate-dealers", icon: ShieldCheck },
 ];
 
@@ -99,7 +101,7 @@ export default function AdminPortalLayout({ children }: Props) {
           </div>
           {isSidebarOpen && (
             <div className="leading-tight">
-              <p className="text-lg font-bold tracking-tight text-white">iCar</p>
+              <p className="text-lg font-bold tracking-tight text-white">CarQ</p>
               <p className="font-mono text-[9px] tracking-[0.3em] text-cyan-400 uppercase">Admin Portal</p>
             </div>
           )}

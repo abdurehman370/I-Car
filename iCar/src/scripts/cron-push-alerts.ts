@@ -32,8 +32,8 @@ async function pushAlertJobs(): Promise<void> {
             const jobData: AlertJobData = {
                 alertId:     alert.id,
                 dealerId:    alert.dealerId,
-                dealerEmail: alert.dealer.email,
-                dealerName:  alert.dealer.contactPerson,
+                dealerEmail: alert.dealer?.email ?? null,
+                dealerName:  alert.dealer?.contactPerson ?? null,
                 make:        alert.make,
                 model:       alert.model,
                 yearMin:     alert.yearMin,

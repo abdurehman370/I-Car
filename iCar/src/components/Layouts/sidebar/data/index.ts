@@ -34,6 +34,18 @@ export const ADMIN_NAV_DATA = [
         icon: Icons.Table,
         items: [],
       },
+      {
+        title: "Alerts",
+        url: "/admin/alerts",
+        icon: Icons.Authentication,
+        items: [],
+      },
+      {
+        title: "Market Search",
+        url: "/admin/market-search",
+        icon: Icons.PieChart,
+        items: [],
+      },
     ],
   },
   {
@@ -67,18 +79,6 @@ export const DEALER_NAV_DATA = [
         title: "List Vehicle",
         url: "/list-vehicle",
         icon: Icons.FourCircle,
-        items: [],
-      },
-      {
-        title: "Alerts",
-        url: "/alerts",
-        icon: Icons.Authentication,
-        items: [],
-      },
-      {
-        title: "Dealer Tools",
-        url: "/dealer-tools",
-        icon: Icons.PieChart,
         items: [],
       },
       {

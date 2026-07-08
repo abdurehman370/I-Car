@@ -105,7 +105,7 @@ export default function PartnerPortalLayout({ children }: Props) {
           </div>
           {isSidebarOpen && (
             <div className="leading-tight">
-              <p className="text-lg font-bold tracking-tight text-white">iCar</p>
+              <p className="text-lg font-bold tracking-tight text-white">CarQ</p>
               <p className="font-mono text-[9px] tracking-[0.3em] text-purple-400/80 uppercase">
                 Partner Portal
               </p>

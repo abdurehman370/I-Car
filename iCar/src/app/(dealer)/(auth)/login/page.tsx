@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Eye, EyeOff, Lock, Mail, Loader2 } from "lucide-react";
+import { BrandMark } from "@/components/brand-mark";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -74,11 +75,9 @@ export default function LoginPage() {
         {/* Brand/Logo Area */}
         <div className="absolute left-12 top-12 left-logo">
           <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-105">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
-              <span className="text-xl font-bold text-white italic">iC</span>
-            </div>
+            <BrandMark />
             <span className="text-2xl font-bold tracking-tight text-white">
-              iCar<span className="text-blue-500">.</span>
+              CarQ<span className="text-blue-500">.</span>
             </span>
           </Link>
         </div>
@@ -90,11 +89,9 @@ export default function LoginPage() {
           {/* Mobile Logo */}
           <div className="mb-8 flex justify-center lg:hidden">
             <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-105">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 font-bold text-white italic">
-                iC
-              </div>
+              <BrandMark />
               <span className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                iCar<span className="text-blue-500">.</span>
+                CarQ<span className="text-blue-500">.</span>
               </span>
             </Link>
           </div>

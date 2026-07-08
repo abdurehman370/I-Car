@@ -12,8 +12,8 @@ import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | I-car",
-    default: "I-car",
+    template: "%s | CarQ",
+    default: "CarQ",
   },
   description:
     "AI-powered automotive intelligence platform for dealers, banking partners, and industry professionals.",

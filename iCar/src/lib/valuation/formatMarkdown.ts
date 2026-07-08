@@ -29,6 +29,7 @@ export function buildMarkdownFromValuationJson(result: ValuationResult): string 
 
     if (result.region === 'EUROPE') {
         return [
+            console.log(result),
             '💰 Market Price',
             formatRange('EUR', result.marketPrice.min, result.marketPrice.max),
             result.marketPriceUsd

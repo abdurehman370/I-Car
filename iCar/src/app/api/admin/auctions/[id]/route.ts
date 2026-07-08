@@ -6,6 +6,7 @@ import prisma from "@/lib/db";
 import fs from "fs/promises";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
+import { randomBytes } from "crypto";
 
 
 export async function GET(req: NextRequest, context: any) {
@@ -20,7 +21,7 @@ export async function GET(req: NextRequest, context: any) {
   try {
     await syncAuctionById(id);
 
-    const auction = await prisma.auction.findUnique({
+    let auction = await prisma.auction.findUnique({
       where: { id },
       include: {
         images: true,
@@ -31,6 +32,13 @@ export async function GET(req: NextRequest, context: any) {
 
     if (!auction) {
       return NextResponse.json({ error: "Auction not found" }, { status: 404 });
+    }
+
+    // Backfill display token for auctions created before hybrid support
+    if (!auction.displayToken) {
+      const token = randomBytes(24).toString("hex");
+      await prisma.auction.update({ where: { id }, data: { displayToken: token } });
+      auction = { ...auction, displayToken: token };
     }
 
     return NextResponse.json({ auction });
@@ -84,6 +92,13 @@ export async function PATCH(req: NextRequest, context: any) {
     delete updateData.winnerDealerId;
     delete updateData.outcome;
     delete updateData.closedAt;
+    delete updateData.displayToken;
+
+    // Validate auction type if provided
+    if (updateData.auctionType !== undefined &&
+        !["ONLINE", "PHYSICAL", "HYBRID"].includes(String(updateData.auctionType))) {
+      delete updateData.auctionType;
+    }
 
     // Handle nested images update if provided
     if (body.images && Array.isArray(body.images)) {

@@ -5,10 +5,18 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { Loader2, ArrowLeft, Save, Upload, X, PlusCircle } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { MarketRegionSelect } from "@/components/FormElements/MarketRegionSelect";
 import {
   formatAuctionDateTimeForInput,
   getAuctionTimezoneLabel,
 } from "@/lib/auction-datetime";
+import {
+  buildStoredRegion,
+  defaultCityForMarket,
+  getCitiesForMarket,
+  parseStoredRegion,
+  type Market,
+} from "@/lib/regions";
 
 export default function EditAuctionPage() {
   const router = useRouter();
@@ -26,8 +34,9 @@ export default function EditAuctionPage() {
     year: new Date().getFullYear().toString(),
     mileage: "",
     variant: "",
-    region: "Dubai",
+    region: "UAE",
     city: "Dubai",
+    country: "",
     description: "",
     startingBid: "",
     reservePrice: "",
@@ -35,6 +44,8 @@ export default function EditAuctionPage() {
     currency: "AED",
     startAt: "",
     endAt: "",
+    auctionType: "ONLINE",
+    venue: "",
   });
 
   const [images, setImages] = useState<File[]>([]);
@@ -54,6 +65,8 @@ export default function EditAuctionPage() {
               city: a.city,
             });
 
+          const parsed = parseStoredRegion(a.region || "UAE");
+
           setFormData({
             title: a.title || "",
             make: a.make || "",
@@ -61,8 +74,9 @@ export default function EditAuctionPage() {
             year: a.year?.toString() || new Date().getFullYear().toString(),
             mileage: a.mileage?.toString() || "",
             variant: a.variant || "",
-            region: a.region || "Dubai",
-            city: a.city || "Dubai",
+            region: parsed.market,
+            country: parsed.country,
+            city: a.city || parsed.city || defaultCityForMarket(parsed.market, parsed.country),
             description: a.description || "",
             startingBid: a.startingBid?.toString() || "",
             reservePrice: a.reservePrice?.toString() || "",
@@ -70,6 +84,8 @@ export default function EditAuctionPage() {
             currency: a.currency || "AED",
             startAt: formatDate(a.startAt),
             endAt: formatDate(a.endAt),
+            auctionType: a.auctionType || "ONLINE",
+            venue: a.venue || "",
           });
 
           if (a.images && Array.isArray(a.images)) {
@@ -90,6 +106,26 @@ export default function EditAuctionPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const market = formData.region as Market;
+  const storedRegion = buildStoredRegion(market, formData.country);
+
+  const handleMarketChange = (nextMarket: Market) => {
+    setFormData(prev => ({
+      ...prev,
+      region: nextMarket,
+      country: "",
+      city: defaultCityForMarket(nextMarket),
+    }));
+  };
+
+  const handleCountryChange = (country: string) => {
+    setFormData(prev => ({
+      ...prev,
+      country,
+      city: country || prev.city,
+    }));
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,12 +161,15 @@ export default function EditAuctionPage() {
     try {
       const payload: any = {
         ...formData,
+        region: storedRegion,
+        city: market === "Europe" ? (formData.country || formData.city) : formData.city,
         year: parseInt(formData.year),
         mileage: parseInt(formData.mileage),
         startingBid: parseFloat(formData.startingBid),
         reservePrice: formData.reservePrice ? parseFloat(formData.reservePrice) : null,
         minIncrement: parseFloat(formData.minIncrement),
       };
+      delete payload.country;
 
       if (hasImageChanges) {
         payload.images = imagePreviews;
@@ -257,25 +296,34 @@ export default function EditAuctionPage() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-300">Region *</label>
-                <select
-                  name="region"
-                  value={formData.region}
-                  onChange={handleChange}
-                  className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
-                >
-                  <option value="Dubai">Dubai</option>
-                  <option value="Abu Dhabi">Abu Dhabi</option>
-                  <option value="Sharjah">Sharjah</option>
-                  <option value="Ajman">Ajman</option>
-                  <option value="Fujairah">Fujairah</option>
-                  <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-                  <option value="Umm Al Quwain">Umm Al Quwain</option>
-                  <option value="Lebanon">Lebanon</option>
-                  <option value="Europe">Europe</option>
-                </select>
-              </div>
+              <MarketRegionSelect
+                market={market}
+                country={formData.country}
+                onMarketChange={handleMarketChange}
+                onCountryChange={handleCountryChange}
+                label="Region"
+                selectClassName="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
+                labelClassName="text-sm font-semibold text-gray-300"
+              />
+
+              {market !== "Europe" && (
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-300">
+                    {market === "UAE" ? "Emirate *" : "City *"}
+                  </label>
+                  <select
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
+                  >
+                    {getCitiesForMarket(market).map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
 
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-semibold text-gray-300">Description *</label>
@@ -321,6 +369,33 @@ export default function EditAuctionPage() {
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-300">Auction Type *</label>
+                <select
+                  name="auctionType"
+                  value={formData.auctionType}
+                  onChange={handleChange}
+                  className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
+                >
+                  <option value="ONLINE">Online only</option>
+                  <option value="PHYSICAL">Physical (venue only)</option>
+                  <option value="HYBRID">Hybrid (venue + online)</option>
+                </select>
+              </div>
+
+              {(formData.auctionType === "PHYSICAL" || formData.auctionType === "HYBRID") && (
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-300">Venue</label>
+                  <input
+                    name="venue"
+                    value={formData.venue}
+                    onChange={handleChange}
+                    placeholder="e.g. CarQ Auction Hall, Al Quoz, Dubai"
+                    className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
+                  />
+                </div>
+              )}
+
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-300">Starting Bid ({formData.currency}) *</label>
                 <input
@@ -375,7 +450,7 @@ export default function EditAuctionPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-300">
-                  Start Date & Time * <span className="text-xs font-normal text-gray-500">({getAuctionTimezoneLabel(formData.region)})</span>
+                  Start Date & Time * <span className="text-xs font-normal text-gray-500">({getAuctionTimezoneLabel(storedRegion)})</span>
                 </label>
                 <input
                   required
@@ -389,7 +464,7 @@ export default function EditAuctionPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-300">
-                  End Date & Time * <span className="text-xs font-normal text-gray-500">({getAuctionTimezoneLabel(formData.region)})</span>
+                  End Date & Time * <span className="text-xs font-normal text-gray-500">({getAuctionTimezoneLabel(storedRegion)})</span>
                 </label>
                 <input
                   required

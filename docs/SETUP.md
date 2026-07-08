@@ -1,6 +1,6 @@
-# iCar — Local Setup Guide
+# CarQ — Local Setup Guide
 
-Complete steps to clone, configure, and run the iCar project on a new machine (Linux/macOS). The project has two parts: **iCar** (Next.js + Node) and **scrapper** (Python FastAPI).
+Complete steps to clone, configure, and run the CarQ project on a new machine (Linux/macOS). The project has two parts: **CarQ** (Next.js + Node) and **scrapper** (Python FastAPI).
 
 ---
 
@@ -53,8 +53,8 @@ sudo mysql -u root -p
 In the MySQL shell:
 ```sql
 CREATE DATABASE car_evaluator CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'icar'@'localhost' IDENTIFIED BY 'your_password';
-GRANT ALL PRIVILEGES ON car_evaluator.* TO 'icar'@'localhost';
+CREATE USER 'carq'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON car_evaluator.* TO 'carq'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 ```
@@ -106,7 +106,7 @@ sudo apt install -y nodejs
 
 ---
 
-## 5. Configure the Next.js app (iCar)
+## 5. Configure the Next.js app (CarQ)
 
 ```bash
 cd iCar
@@ -127,7 +127,7 @@ Edit `.env` with your values:
 
 ```env
 # Database (must match the DB you created in Step 2)
-DATABASE_URL="mysql://icar:your_password@127.0.0.1:3306/car_evaluator"
+DATABASE_URL="mysql://carq:your_password@127.0.0.1:3306/car_evaluator"
 
 # Redis (default if Redis is local)
 REDIS_URL=redis://127.0.0.1:6379

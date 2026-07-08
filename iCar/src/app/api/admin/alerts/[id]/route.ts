@@ -1,37 +1,40 @@
 import prisma from "@/lib/db";
-import { getDealerSession } from "@/lib/auth";
+import { getAdminSession } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 
-async function getOwnedAlert(alertId: number, dealerId: number) {
-    const alert = await prisma.alert.findUnique({ where: { id: alertId } });
-    if (!alert) return { error: "Alert not found", status: 404 };
-    if (alert.dealerId !== dealerId) return { error: "Forbidden", status: 403 };
-    return { alert };
-}
+const ALERT_INCLUDE = {
+    dealer: { select: { dealershipName: true, contactPerson: true } },
+    user: { select: { username: true } },
+} as const;
 
 export async function PATCH(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const session = await getDealerSession();
-        if (!session || session.type !== 'dealer') {
+        const session = await getAdminSession();
+        if (!session) {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
         const { id } = await params;
         const alertId = parseInt(id);
-        const { error, status } = await getOwnedAlert(alertId, session.user.id) as any;
-        if (error) return NextResponse.json({ message: error }, { status });
+
+        const existing = await prisma.alert.findUnique({ where: { id: alertId } });
+        if (!existing) {
+            return NextResponse.json({ message: "Alert not found" }, { status: 404 });
+        }
 
         const body = await request.json();
         const { make, model, yearMin, yearMax, variant, region, frequency, enabled } = body;
 
         // Partial update: allow toggling enabled without other fields
         if (typeof enabled === 'boolean') {
-            await prisma.$executeRaw`UPDATE \`Alert\` SET \`enabled\` = ${enabled}, \`updatedAt\` = NOW() WHERE id = ${alertId} AND dealerId = ${session.user.id}`;
-            const updated = await prisma.alert.findUnique({ where: { id: alertId } });
-            if (!updated) return NextResponse.json({ message: "Alert not found" }, { status: 404 });
+            const updated = await prisma.alert.update({
+                where: { id: alertId },
+                data: { enabled },
+                include: ALERT_INCLUDE,
+            });
             return NextResponse.json({ data: updated }, { status: 200 });
         }
 
@@ -50,6 +53,7 @@ export async function PATCH(
                 region,
                 frequency: frequency || 'daily',
             },
+            include: ALERT_INCLUDE,
         });
 
         return NextResponse.json({ data: updated }, { status: 200 });
@@ -64,15 +68,18 @@ export async function DELETE(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const session = await getDealerSession();
-        if (!session || session.type !== 'dealer') {
+        const session = await getAdminSession();
+        if (!session) {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
         const { id } = await params;
         const alertId = parseInt(id);
-        const { error, status } = await getOwnedAlert(alertId, session.user.id) as any;
-        if (error) return NextResponse.json({ message: error }, { status });
+
+        const existing = await prisma.alert.findUnique({ where: { id: alertId } });
+        if (!existing) {
+            return NextResponse.json({ message: "Alert not found" }, { status: 404 });
+        }
 
         await prisma.alert.delete({ where: { id: alertId } });
 

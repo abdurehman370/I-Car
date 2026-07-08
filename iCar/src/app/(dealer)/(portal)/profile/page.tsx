@@ -138,7 +138,7 @@ export default function ProfilePage() {
                     Dealership Name
                   </label>
                   <input
-                    className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all icar-input !h-12"
+                    className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all carq-input !h-12"
                     type="text"
                     name="dealershipName"
                     value={formData.dealershipName}
@@ -152,7 +152,7 @@ export default function ProfilePage() {
                   {isUserAccount ? "Full Name" : "Contact Person"}
                 </label>
                 <input
-                  className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all icar-input !h-12"
+                  className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all carq-input !h-12"
                   type="text"
                   name="contactPerson"
                   value={formData.contactPerson}
@@ -165,7 +165,7 @@ export default function ProfilePage() {
                   Phone Number
                 </label>
                 <input
-                  className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all icar-input !h-12"
+                  className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all carq-input !h-12"
                   type="text"
                   name="phoneNumber"
                   value={formData.phoneNumber}
@@ -180,7 +180,7 @@ export default function ProfilePage() {
                 Address
               </label>
               <input
-                className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all icar-input !h-12"
+                className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all carq-input !h-12"
                 type="text"
                 name="address"
                 value={formData.address}
@@ -194,7 +194,7 @@ export default function ProfilePage() {
                   City
                 </label>
                 <input
-                  className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all icar-input !h-12"
+                  className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all carq-input !h-12"
                   type="text"
                   name="city"
                   value={formData.city}
@@ -206,7 +206,7 @@ export default function ProfilePage() {
                   Country
                 </label>
                 <input
-                  className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all icar-input !h-12"
+                  className="w-full h-12 rounded-xl glass border border-white/10 px-4 text-white outline-none focus:border-cyan-400/30 transition-all carq-input !h-12"
                   type="text"
                   name="country"
                   value={formData.country}

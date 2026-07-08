@@ -2,7 +2,7 @@
  * cron-push-auctions.ts
  *
  * Automatically transitions auction statuses and determines outcomes.
- * Also runs inside icar-worker every 30s — this script is a manual/backup trigger.
+ * Also runs inside carq-worker every 30s — this script is a manual/backup trigger.
  *
  * Cron entry (crontab -e) — every minute:
  *   * * * * * cd /var/www/html/iCar/iCar && /usr/bin/node node_modules/.bin/tsx src/scripts/cron-push-auctions.ts >> logs/cron-auctions.log 2>&1

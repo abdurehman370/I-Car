@@ -1,6 +1,6 @@
-# iCar Project — Full Analysis
+# CarQ Project — Full Analysis
 
-This document describes how the **iCar** project works, how the **scraper** works, and how iCar uses the scraper.
+This document describes how the **CarQ** project works, how the **scraper** works, and how CarQ uses the scraper.
 
 ---
 
@@ -10,12 +10,12 @@ The repo contains two main parts:
 
 | Part | Tech | Purpose |
 |------|------|---------|
-| **iCar** | Next.js 14 (App Router), Prisma, MySQL | Dealer portal: auth, list vehicles, get valuations, manage listings |
+| **CarQ** | Next.js 14 (App Router), Prisma, MySQL | Dealer portal: auth, list vehicles, get valuations, manage listings |
 | **scrapper** | Python, FastAPI, uvicorn | Backend API: scrape car listings and compute valuations for UAE, Lebanon, Europe |
 
-- **iCar** is the frontend and business logic (dealers sign up, log in, list cars).
+- **CarQ** is the frontend and business logic (dealers sign up, log in, list cars).
 - **scrapper** is the data/valuation service: it talks to external car listing sources and returns listings + price stats.
-- iCar calls the scrapper only for **valuation** when a dealer is listing a vehicle (`POST /api/evaluate`). Listing creation and storage are done entirely in iCar (Next.js API + DB).
+- CarQ calls the scrapper only for **valuation** when a dealer is listing a vehicle (`POST /api/evaluate`). Listing creation and storage are done entirely in CarQ (Next.js API + DB).
 
 ---
 
@@ -28,15 +28,15 @@ The scraper lives under `scrapper/`. It does **not** use a browser or HTML scrap
 - **CLI (standalone):** `scrapper/scraper.py`  
   - Uses `DubizzleScraper` + `DubizzleClient` only (UAE).  
   - Builds Algolia payloads via `QueryBuilder`, paginates, exports JSON/CSV.  
-  - No direct use from iCar.
+  - No direct use from CarQ.
 
-- **HTTP API (used by iCar):** `scrapper/app.py`  
+- **HTTP API (used by CarQ):** `scrapper/app.py`  
   - FastAPI app on port **8000**.  
   - Two main endpoints:
     - `POST /api/scrape` — scrape listings with filters (region, make, model, year, mileage, etc.).
     - `POST /api/evaluate` — **valuation only**: same filters + vehicle year/mileage; returns estimated value and price range.
 
-iCar uses **only** `POST /api/evaluate`.
+CarQ uses **only** `POST /api/evaluate`.
 
 ### 2.2 Region Clients (Data Sources)
 
@@ -107,16 +107,16 @@ It does **not** store listings in any DB; it returns them in the API response.
 
 ---
 
-## 3. How iCar Uses the Scraper
+## 3. How CarQ Uses the Scraper
 
-iCar uses the scraper **only for the valuation step** when a dealer lists a vehicle. No other feature calls the scraper.
+CarQ uses the scraper **only for the valuation step** when a dealer lists a vehicle. No other feature calls the scraper.
 
 ### 3.1 Where It’s Used
 
 - **File:** `iCar/src/app/(dealer)/(portal)/list-vehicle/page.tsx`  
 - **Flow:** “List Your Vehicle” is a two-step form:
   - **Step 1 – Vehicle valuation:** Dealer enters region (UAE / Lebanon / Europe), optionally country (Europe), make, model, year, mileage, variant. On “Get Valuation”, the frontend calls the scraper.  
-  - **Step 2 – Listing details:** Price (pre-filled from valuation if available), condition, city, description, features, images. Submit goes to iCar’s own API, not the scraper.
+  - **Step 2 – Listing details:** Price (pre-filled from valuation if available), condition, city, description, features, images. Submit goes to CarQ’s own API, not the scraper.
 
 ### 3.2 Valuation API Call
 
@@ -129,7 +129,7 @@ iCar uses the scraper **only for the valuation step** when a dealer lists a vehi
 
 No auth; CORS in the scraper allows `http://localhost:3000` (Next.js dev).
 
-### 3.3 What iCar Does With the Response
+### 3.3 What CarQ Does With the Response
 
 - On success, the UI shows:
   - Estimated value (from `valuation.estimated_valuation`)
@@ -138,23 +138,23 @@ No auth; CORS in the scraper allows `http://localhost:3000` (Next.js dev).
 - The **price** field in the form is pre-filled with `Math.round(valuation.estimated_valuation)` so the dealer can publish with one click or adjust.
 - If the request fails (network or 5xx), the user sees a message like “Failed to connect to valuation service. Please ensure the Python API is running.”
 
-So: **iCar does not store scraper results**. It only uses them to suggest a price and show a range on the “List Vehicle” page.
+So: **CarQ does not store scraper results**. It only uses them to suggest a price and show a range on the “List Vehicle” page.
 
 ### 3.4 Listing Creation (No Scraper)
 
-- Submitting the listing (Step 2) calls **iCar’s** `POST /api/dealer/listings` (`iCar/src/app/api/dealer/listings/route.ts`).  
+- Submitting the listing (Step 2) calls **CarQ’s** `POST /api/dealer/listings` (`iCar/src/app/api/dealer/listings/route.ts`).  
 - That API:
   - Authenticates the dealer (session).
   - Validates make, model, year, mileage, price, description, condition, city, region, status (DRAFT/ACTIVE).
   - Creates a `Listing` (and optionally `ListingImage`s) in MySQL via Prisma.  
-- No call to the scraper here; listings are entirely internal to iCar.
+- No call to the scraper here; listings are entirely internal to CarQ.
 
 ---
 
 ## 4. End-to-End Data Flow
 
 ```
-[Dealer] → iCar (Next.js) List Vehicle page
+[Dealer] → CarQ (Next.js) List Vehicle page
                 ↓
          Step 1: Enter region, make, model, year, mileage (and country if Europe)
                 ↓
@@ -170,11 +170,11 @@ So: **iCar does not store scraper results**. It only uses them to suggest a pric
                 ↓
          Response: { status, region, currency, valuation: { estimated_valuation, price_range, ... } }
                 ↓
-         iCar shows value + range and pre-fills price field
+         CarQ shows value + range and pre-fills price field
                 ↓
          Step 2: Dealer fills description, city, images, etc. → "Publish" or "Save Draft"
                 ↓
-         Browser → POST /api/dealer/listings (iCar Next.js API)
+         Browser → POST /api/dealer/listings (CarQ Next.js API)
                 ↓
          Prisma → MySQL (Listing + ListingImage). No scraper involved.
 ```
@@ -188,17 +188,17 @@ So: **iCar does not store scraper results**. It only uses them to suggest a pric
 | **What the scraper does** | Fetches car listings from UAE (Dubizzle/Algolia), Lebanon (OLX/ES), Europe (AutoScout24 HTML); normalizes them; computes price stats and estimated valuation. |
 | **How UAE/Lebanon “scrape”** | REST APIs (Algolia, Elasticsearch), not browser or HTML scraping. |
 | **How Europe scrapes** | HTTP GET to AutoScout24, HTML parsed with BeautifulSoup; optional Scrape.do proxy. |
-| **What iCar uses** | Only `POST /api/evaluate` for the “Get Valuation” button on the List Vehicle page. |
-| **Scraper URL in iCar** | Hardcoded `http://localhost:8000`. Scraper must be running (e.g. `uvicorn` on 8000) for valuation to work. |
-| **Where listings are stored** | In iCar’s MySQL DB (Prisma `Listing` / `ListingImage`). The scraper does not persist data. |
+| **What CarQ uses** | Only `POST /api/evaluate` for the “Get Valuation” button on the List Vehicle page. |
+| **Scraper URL in CarQ** | Hardcoded `http://localhost:8000`. Scraper must be running (e.g. `uvicorn` on 8000) for valuation to work. |
+| **Where listings are stored** | In CarQ’s MySQL DB (Prisma `Listing` / `ListingImage`). The scraper does not persist data. |
 
 ---
 
 ## 6. Recommendations (Optional)
 
-- **Environment variable for scraper URL** in iCar (e.g. `NEXT_PUBLIC_VALUATION_API_URL` or server-side `VALUATION_API_URL`) so production can point to a deployed scraper.
+- **Environment variable for scraper URL** in CarQ (e.g. `NEXT_PUBLIC_VALUATION_API_URL` or server-side `VALUATION_API_URL`) so production can point to a deployed scraper.
 - **Error handling:** Differentiate “scraper not running” vs “no listings found” vs “scraper error” so the UI can show clearer messages.
 - **Security:** If the scraper is ever exposed, consider API key or internal-only network; CORS is already restricted to localhost in the snippet you have.
 - **Europe:** Ensure `SCRAPE_DO_TOKEN` is set in the scraper environment when using Europe from regions that need the proxy.
 
-This is how the project is structured and how the scraper and iCar work together end to end.
+This is how the project is structured and how the scraper and CarQ work together end to end.

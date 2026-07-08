@@ -21,7 +21,7 @@ type RangeProps = {
 
 type Props = SingleProps | RangeProps;
 
-const inputClass = "icar-input";
+const inputClass = "carq-input";
 
 function syncFromKm(kmStr: string): string {
   const km = parseInt(kmStr, 10);

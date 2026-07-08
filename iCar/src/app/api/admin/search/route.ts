@@ -1,13 +1,14 @@
 import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-import { requireDealerPortalSession } from "@/lib/require-dealer-portal";
+import { getAdminSession } from "@/lib/auth";
 import { getScraperApiKey, getScraperBaseUrl } from "@/lib/scraper";
 
 export async function POST(request: NextRequest) {
     try {
-        const auth = await requireDealerPortalSession();
-        if (!auth.ok) return auth.response;
-        const session = auth.session;
+        const session = await getAdminSession();
+        if (!session) {
+            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+        }
 
         const body = await request.json();
         const {
@@ -61,7 +62,7 @@ export async function POST(request: NextRequest) {
         });
 
         const internalFormatted = internalListings.map((l) => ({
-            source: 'iCar' as const,
+            source: 'CarQ' as const,
             id: l.id,
             title: `${l.year} ${l.make} ${l.model}${l.variant ? ' ' + l.variant : ''}`,
             make: l.make,
@@ -85,19 +86,6 @@ export async function POST(request: NextRequest) {
         try {
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 120_000);
-
-            const scraperPayload = {
-                make: make || null,
-                model: model || null,
-                variant: variant || null,
-                region,
-                year_min: yearMin ? parseInt(yearMin) : null,
-                year_max: yearMax ? parseInt(yearMax) : null,
-                mileage_max: mileageMax ? parseInt(mileageMax) : null,
-                price_min: priceMin ? parseFloat(priceMin) : null,
-                price_max: priceMax ? parseFloat(priceMax) : null,
-                max_pages: 2,
-            };
 
             const scraperRes = await fetch(`${getScraperBaseUrl()}/api/scrape`, {
                 method: "POST",
@@ -143,7 +131,7 @@ export async function POST(request: NextRequest) {
                 }));
             }
         } catch (err: any) {
-            console.error("Dealer search scraper error:", err.message);
+            console.error("Admin market search scraper error:", err.message);
             // Non-fatal — return internal results even if scraper fails
         }
 
@@ -155,7 +143,7 @@ export async function POST(request: NextRequest) {
         }, { status: 200 });
 
     } catch (error: any) {
-        console.error("Dealer search error:", error);
+        console.error("Admin market search error:", error);
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
 }

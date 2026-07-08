@@ -66,9 +66,11 @@ async function closeAuctionRecord(
     outcome = 'expired';
   }
 
-  await prisma.$transaction(async (tx) => {
-    await tx.auction.update({
-      where: { id: auction.id },
+  // Guarded close: only one concurrent caller (cron, page-load sync, display
+  // poll) actually performs the close and sends notifications.
+  const didClose = await prisma.$transaction(async (tx) => {
+    const res = await tx.auction.updateMany({
+      where: { id: auction.id, status: { notIn: ['CLOSED', 'CANCELLED'] } },
       data: {
         status: 'CLOSED',
         closedAt: new Date(),
@@ -76,6 +78,8 @@ async function closeAuctionRecord(
         winnerDealerId,
       },
     });
+
+    if (res.count === 0) return false;
 
     if (highestBid) {
       await tx.auctionBid.updateMany({
@@ -89,9 +93,10 @@ async function closeAuctionRecord(
         });
       }
     }
+    return true;
   });
 
-  if (outcome === 'sold' && winnerDealerId && highestBid) {
+  if (didClose && outcome === 'sold' && winnerDealerId && highestBid) {
     const winner = await prisma.dealer.findUnique({
       where: { id: winnerDealerId },
     });
@@ -163,10 +168,11 @@ export async function runAuctionScheduler(): Promise<AuctionSchedulerResult> {
   });
 
   for (const auction of scheduledToStart) {
-    await prisma.auction.update({
-      where: { id: auction.id },
+    const res = await prisma.auction.updateMany({
+      where: { id: auction.id, status: 'SCHEDULED' },
       data: { status: 'LIVE' },
     });
+    if (res.count === 0) continue; // another process already started it
     await notifyDealersAuctionStarted(auction);
     result.started += 1;
     console.log(
@@ -223,11 +229,13 @@ export async function syncAuctionById(auctionId: number): Promise<void> {
     auction.startAt <= now &&
     auction.endAt > now
   ) {
-    await prisma.auction.update({
-      where: { id: auction.id },
+    const res = await prisma.auction.updateMany({
+      where: { id: auction.id, status: 'SCHEDULED' },
       data: { status: 'LIVE' },
     });
-    await notifyDealersAuctionStarted(auction);
+    if (res.count > 0) {
+      await notifyDealersAuctionStarted(auction);
+    }
     return;
   }
 

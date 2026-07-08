@@ -5,7 +5,14 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Loader2, ArrowLeft, Save, Upload, X, PlusCircle } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import { MarketRegionSelect } from "@/components/FormElements/MarketRegionSelect";
 import { getAuctionTimezoneLabel } from "@/lib/auction-datetime";
+import {
+  buildStoredRegion,
+  defaultCityForMarket,
+  getCitiesForMarket,
+  type Market,
+} from "@/lib/regions";
 
 export default function CreateAuctionPage() {
   const router = useRouter();
@@ -19,8 +26,9 @@ export default function CreateAuctionPage() {
     year: new Date().getFullYear().toString(),
     mileage: "",
     variant: "",
-    region: "Dubai",
+    region: "UAE",
     city: "Dubai",
+    country: "",
     description: "",
     startingBid: "",
     reservePrice: "",
@@ -28,13 +36,36 @@ export default function CreateAuctionPage() {
     currency: "AED",
     startAt: "",
     endAt: "",
+    auctionType: "ONLINE",
+    venue: "",
   });
 
   const [images, setImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const market = formData.region as Market;
+  const storedRegion = buildStoredRegion(market, formData.country);
+
+  const handleMarketChange = (nextMarket: Market) => {
+    setFormData(prev => ({
+      ...prev,
+      region: nextMarket,
+      country: "",
+      city: defaultCityForMarket(nextMarket),
+    }));
+  };
+
+  const handleCountryChange = (country: string) => {
+    setFormData(prev => ({
+      ...prev,
+      country,
+      city: country || prev.city,
+    }));
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,13 +110,16 @@ export default function CreateAuctionPage() {
       
       const payload = {
         ...formData,
+        region: storedRegion,
+        city: market === "Europe" ? (formData.country || formData.city) : formData.city,
         images: imageData
       };
+      const { country: _country, ...submitPayload } = payload as typeof payload & { country?: string };
 
       const res = await fetch("/api/admin/auctions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(submitPayload),
       });
 
       const data = await res.json();
@@ -195,28 +229,38 @@ export default function CreateAuctionPage() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-300">Region *</label>
-                <select
-                  name="region"
-                  value={formData.region}
-                  onChange={handleChange}
-                  className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
-                >
-                  <option value="Dubai">Dubai</option>
-                  <option value="Abu Dhabi">Abu Dhabi</option>
-                  <option value="Sharjah">Sharjah</option>
-                  <option value="Ajman">Ajman</option>
-                  <option value="Fujairah">Fujairah</option>
-                  <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-                  <option value="Umm Al Quwain">Umm Al Quwain</option>
-                  <option value="Lebanon">Lebanon</option>
-                  <option value="Europe">Europe</option>
-                </select>
-                <p className="text-xs text-gray-500">
-                  Start/end times use the market timezone for the selected region — not your laptop clock.
-                </p>
-              </div>
+              <MarketRegionSelect
+                market={market}
+                country={formData.country}
+                onMarketChange={handleMarketChange}
+                onCountryChange={handleCountryChange}
+                label="Region"
+                selectClassName="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
+                labelClassName="text-sm font-semibold text-gray-300"
+              />
+
+              {market !== "Europe" && (
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-300">
+                    {market === "UAE" ? "Emirate *" : "City *"}
+                  </label>
+                  <select
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
+                  >
+                    {getCitiesForMarket(market).map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              <p className="text-xs text-gray-500 md:col-span-2">
+                Start/end times use the market timezone for the selected region — not your laptop clock ({getAuctionTimezoneLabel(storedRegion)}).
+              </p>
 
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-semibold text-gray-300">Description *</label>
@@ -262,6 +306,36 @@ export default function CreateAuctionPage() {
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-300">Auction Type *</label>
+                <select
+                  name="auctionType"
+                  value={formData.auctionType}
+                  onChange={handleChange}
+                  className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
+                >
+                  <option value="ONLINE">Online only</option>
+                  <option value="PHYSICAL">Physical (venue only)</option>
+                  <option value="HYBRID">Hybrid (venue + online)</option>
+                </select>
+                <p className="text-xs text-gray-500">
+                  Physical/Hybrid auctions get a big-screen display link and floor bid entry.
+                </p>
+              </div>
+
+              {(formData.auctionType === "PHYSICAL" || formData.auctionType === "HYBRID") && (
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-300">Venue</label>
+                  <input
+                    name="venue"
+                    value={formData.venue}
+                    onChange={handleChange}
+                    placeholder="e.g. CarQ Auction Hall, Al Quoz, Dubai"
+                    className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500"
+                  />
+                </div>
+              )}
+
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-300">Starting Bid ({formData.currency}) *</label>
                 <input
@@ -316,7 +390,7 @@ export default function CreateAuctionPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-300">
-                  Start Time * <span className="text-xs font-normal text-gray-500">({getAuctionTimezoneLabel(formData.region)})</span>
+                  Start Time * <span className="text-xs font-normal text-gray-500">({getAuctionTimezoneLabel(storedRegion)})</span>
                 </label>
                 <input
                   required
@@ -330,7 +404,7 @@ export default function CreateAuctionPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-300">
-                  End Time * <span className="text-xs font-normal text-gray-500">({getAuctionTimezoneLabel(formData.region)})</span>
+                  End Time * <span className="text-xs font-normal text-gray-500">({getAuctionTimezoneLabel(storedRegion)})</span>
                 </label>
                 <input
                   required

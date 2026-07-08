@@ -1,4 +1,4 @@
-# iCar Alert System — How It Works
+# CarQ Alert System — How It Works
 
 ## Overview
 
@@ -116,7 +116,7 @@ The Python scraper at `localhost:8000` runs with 4 uvicorn workers to handle con
 
 Uses **Nodemailer** with Gmail SMTP (`smtp.gmail.com:587`). Each email contains up to 10 matches with:
 - Title, price, year, mileage
-- Source badge: **iCar** (purple) for internal listings, **External** (yellow) for scraper results
+- Source badge: **CarQ** (purple) for internal listings, **External** (yellow) for scraper results
 - Internal listings link to `APP_URL/listings/[id]`
 - External listings link to the original site URL
 

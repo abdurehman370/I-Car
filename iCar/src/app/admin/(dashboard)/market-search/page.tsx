@@ -3,16 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-    Search, Car, MapPin, Calendar, Gauge, DollarSign,
+    Search, Car, MapPin, Calendar, Gauge,
     ExternalLink, Loader2, SlidersHorizontal, X,
     ChevronDown, Phone, Building2, Filter, RotateCcw,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
 import { CarTaxonomyDropdowns } from "@/components/FormElements/CarTaxonomyDropdowns";
+import { MarketRegionSelect } from "@/components/FormElements/MarketRegionSelect";
+import { buildStoredRegion, type Market } from "@/lib/regions";
 
 interface SearchResult {
-    source: "iCar" | "External";
+    source: "CarQ" | "External";
     id: string | null;
     title: string;
     make: string | null;
@@ -33,7 +35,8 @@ interface SearchForm {
     make: string;
     model: string;
     variant: string;
-    region: string;
+    market: Market;
+    country: string;
     yearMin: string;
     yearMax: string;
     mileageMax: string;
@@ -50,11 +53,10 @@ interface SearchMeta {
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
-const REGIONS = ["UAE", "Lebanon", "Europe"];
-
 const BLANK_FORM: SearchForm = {
     make: "", model: "", variant: "",
-    region: "UAE",
+    market: "UAE",
+    country: "",
     yearMin: "", yearMax: "",
     mileageMax: "",
     priceMin: "", priceMax: "",
@@ -69,13 +71,13 @@ const CONDITION_COLORS: Record<string, string> = {
 // ---------------------------------------------------------------------------
 // Main Page
 // ---------------------------------------------------------------------------
-export default function DealerToolsPage() {
+export default function MarketSearchPage() {
     const [form, setForm] = useState<SearchForm>(BLANK_FORM);
     const [results, setResults] = useState<SearchResult[]>([]);
     const [meta, setMeta] = useState<SearchMeta | null>(null);
     const [loading, setLoading] = useState(false);
     const [searched, setSearched] = useState(false);
-    const [filterSource, setFilterSource] = useState<"all" | "iCar" | "External">("all");
+    const [filterSource, setFilterSource] = useState<"all" | "CarQ" | "External">("all");
     const [sortBy, setSortBy] = useState<"default" | "price_asc" | "price_desc" | "year_desc" | "mileage_asc">("default");
     const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -95,17 +97,20 @@ export default function DealerToolsPage() {
 
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!form.make && !form.model && !form.region) {
+        if (!form.make && !form.model && !form.market) {
             toast.error("Please enter at least a make, model, or region");
             return;
         }
         setLoading(true);
         setSearched(false);
         try {
-            const res = await fetch("/api/dealer/search", {
+            const res = await fetch("/api/admin/search", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(form),
+                body: JSON.stringify({
+                    ...form,
+                    region: buildStoredRegion(form.market, form.country),
+                }),
             });
             const data = await res.json();
             if (!res.ok) {
@@ -134,7 +139,7 @@ export default function DealerToolsPage() {
             return 0;
         });
 
-    const iCarCount = results.filter((r) => r.source === "iCar").length;
+    const carQCount = results.filter((r) => r.source === "CarQ").length;
     const externalCount = results.filter((r) => r.source === "External").length;
 
     return (
@@ -145,13 +150,13 @@ export default function DealerToolsPage() {
                 <div>
                     <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-cyan-400/30 text-[10px] font-mono tracking-[0.25em] text-cyan-400 mb-4">
                         <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-glow" />
-                        GLOBAL SEARCH · DEALER TOOLS
+                        GLOBAL SEARCH · MARKET SEARCH
                     </span>
                     <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
                         Market <span className="text-gradient">Intelligence</span>
                     </h1>
                     <p className="text-gray-400 mt-2 max-w-lg text-sm">
-                        Search vehicle listings across iCar inventory and aggregated live market sources worldwide.
+                        Search vehicle listings across CarQ inventory and aggregated live market sources worldwide.
                     </p>
                 </div>
 
@@ -169,20 +174,17 @@ export default function DealerToolsPage() {
                         />
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {/* Region */}
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-mono uppercase tracking-[0.15em] text-gray-500 ml-1">
-                                    Region *
-                                </label>
-                                <select
-                                    name="region"
-                                    value={form.region}
-                                    onChange={handleChange}
-                                    className="icar-select"
-                                >
-                                    {REGIONS.map((r) => <option key={r} value={r}>{r}</option>)}
-                                </select>
-                            </div>
+                            <MarketRegionSelect
+                                market={form.market}
+                                country={form.country}
+                                onMarketChange={(market) =>
+                                    setForm((prev) => ({ ...prev, market, country: "" }))
+                                }
+                                onCountryChange={(country) =>
+                                    setForm((prev) => ({ ...prev, country }))
+                                }
+                                labelClassName="text-[10px] font-mono uppercase tracking-[0.15em] text-gray-500 ml-1"
+                            />
                         </div>
                     </div>
 
@@ -290,7 +292,7 @@ export default function DealerToolsPage() {
                     <div className="flex flex-col items-center justify-center py-20 gap-4">
                         <Loader2 className="size-12 text-indigo-600 animate-spin" />
                         <p className="text-gray-500 dark:text-gray-400">
-                            Searching iCar inventory and live market sources…
+                            Searching CarQ inventory and live market sources…
                         </p>
                     </div>
                 )}
@@ -305,13 +307,13 @@ export default function DealerToolsPage() {
                                     {meta?.total ?? 0} results
                                 </span>
                                 <span
-                                    onClick={() => setFilterSource("iCar")}
-                                    className={`cursor-pointer px-3 py-1 rounded-full text-xs font-semibold border transition-all ${filterSource === "iCar"
+                                    onClick={() => setFilterSource("CarQ")}
+                                    className={`cursor-pointer px-3 py-1 rounded-full text-xs font-semibold border transition-all ${filterSource === "CarQ"
                                             ? "bg-cyan-500 text-black border-cyan-500"
                                             : "bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600 dark:text-cyan-400 border-cyan-200 dark:border-cyan-800 hover:bg-cyan-100 dark:hover:bg-cyan-900/40"
                                         }`}
                                 >
-                                    iCar: {iCarCount}
+                                    CarQ: {carQCount}
                                 </span>
                                 <span
                                     onClick={() => setFilterSource("External")}
@@ -338,7 +340,7 @@ export default function DealerToolsPage() {
                                 <select
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value as any)}
-                                    className="icar-select !w-auto !h-auto py-2 px-3 text-sm"
+                                    className="carq-select !w-auto !h-auto py-2 px-3 text-sm"
                                 >
                                     <option value="default">Sort: Default</option>
                                     <option value="price_asc">Price: Low → High</option>
@@ -406,8 +408,8 @@ function Field({
 // ---------------------------------------------------------------------------
 function ResultCard({ result }: { result: SearchResult }) {
     const [imgError, setImgError] = useState(false);
-    const isInternal = result.source === "iCar";
-    const href = isInternal && result.id ? `/listings/${result.id}` : (result.url ?? "#");
+    const isInternal = result.source === "CarQ";
+    const href = isInternal && result.id ? `/admin/listings/${result.id}` : (result.url ?? "#");
 
     return (
         <div className="bg-white dark:bg-[#0a1526] rounded-3xl overflow-hidden border border-gray-200 dark:border-white/5 shadow-sm hover:shadow-lg hover:border-cyan-200 dark:hover:border-cyan-500/30 transition-all duration-200 flex flex-col group">
@@ -477,7 +479,7 @@ function ResultCard({ result }: { result: SearchResult }) {
                     )}
                 </div>
 
-                {/* Dealer info (iCar only) */}
+                {/* Dealer info (CarQ only) */}
                 {result.dealer && (
                     <div className="mt-auto pt-3 border-t border-gray-100 dark:border-white/5 space-y-1">
                         <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1.5">

@@ -53,7 +53,23 @@ REGION_CONFIG = {
         "flag": "🇪🇺",
         "api_type": "html",
         "countries": {
-            "Germany": "de"
+            "Germany": "de",
+            "France": "fr",
+            "Italy": "it",
+            "Spain": "es",
+            "Netherlands": "nl",
+            "Belgium": "be",
+            "Austria": "at",
+            "Switzerland": "ch",
+            "Poland": "pl",
+            "Sweden": "se",
+            "Norway": "no",
+            "Denmark": "dk",
+            "Finland": "fi",
+            "Portugal": "pt",
+            "Greece": "gr",
+            "Ireland": "ie",
+            "United Kingdom": "co.uk"
         },
         "base_url_template": "https://www.autoscout24.{tld}",
         # Token for Scrape.do or similar proxy service

@@ -1,48 +1,45 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDealerSession } from "@/lib/auth";
-import prisma from "@/lib/db";
-import { canAccessAuctions } from "@/lib/portal-access";
+import { getAdminSession } from "@/lib/auth";
 import { placeBid, notifyOutbidAsync, BidError } from "@/lib/auction-bidding";
 
+/**
+ * Floor bid entry — used by the admin/IT operator at a physical auction to
+ * record bids placed in the room. Runs through the exact same transactional
+ * validation as online dealer bids (LIVE status, time window, min increment,
+ * anti-sniping extension) and triggers outbid notifications to online dealers.
+ */
 export async function POST(req: NextRequest, context: any) {
   const params = await context.params;
   const id = parseInt(params.id);
 
-  const session = await getDealerSession();
+  const session = await getAdminSession();
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const dealer = await prisma.dealer.findUnique({ where: { id: session.user.id } });
-    if (!dealer || !canAccessAuctions(dealer)) {
-      return NextResponse.json({ error: "Account not approved to bid" }, { status: 403 });
-    }
-
     const body = await req.json();
     const bidAmount = parseFloat(body.amount);
+    const paddleNumber = body.paddleNumber ? String(body.paddleNumber) : null;
+    const bidderName = body.bidderName ? String(body.bidderName) : null;
 
     if (isNaN(bidAmount) || bidAmount <= 0) {
       return NextResponse.json({ error: "Invalid bid amount" }, { status: 400 });
     }
 
     const result = await placeBid(id, {
-      source: "online",
+      source: "floor",
       amount: bidAmount,
-      dealer: {
-        id: dealer.id,
-        role: dealer.role,
-        dealershipName: dealer.dealershipName,
-        contactPerson: dealer.contactPerson,
-        email: dealer.email,
-      },
+      paddleNumber,
+      bidderName,
     });
 
-    // Outbid notifications (email + in-app + push) — fire-and-forget
+    // Notify the outbid online dealer (floor bidders are handled in the room)
     notifyOutbidAsync(result, bidAmount);
 
     return NextResponse.json({
-      message: "Bid placed successfully",
+      message: "Floor bid recorded",
+      bid: result.newBid,
       currentHighestBid: bidAmount,
       extended: result.extended,
       endAt: result.updatedAuction.endAt,
@@ -52,7 +49,7 @@ export async function POST(req: NextRequest, context: any) {
     if (error instanceof BidError) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
-    console.error("Error placing bid:", error);
+    console.error("Error recording floor bid:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

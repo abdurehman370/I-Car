@@ -718,7 +718,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .admin-light .bg-hero { background: var(--gradient-hero) !important; }
 
-.admin-light input:not(.icar-input):not([type="checkbox"]):not([type="radio"]):not([type="file"]) {
+.admin-light input:not(.carq-input):not([type="checkbox"]):not([type="radio"]):not([type="file"]) {
   background-color: hsl(0 0% 100%) !important;
   border-color: hsl(210 32% 82%) !important;
   color: hsl(222 47% 11%) !important;
@@ -824,6 +824,69 @@ table th {
   background-color: hsl(0 0% 100%) !important;
   border-color: hsl(210 32% 82%) !important;
 }
+
+/* ================================================================
+   ADMIN LIGHT THEME — Buttons, chips & arbitrary-value surfaces
+   (used by the auction console and other newer screens)
+   ================================================================ */
+.admin-light .bg-white\/\[0\.01\],
+.admin-light .bg-white\/\[0\.02\],
+.admin-light .bg-white\/\[0\.03\],
+.admin-light .bg-white\/\[0\.04\],
+.admin-light .bg-white\/\[0\.06\] { background-color: hsl(210 30% 94%) !important; }
+
+.admin-light .bg-white\/10 { background-color: hsl(210 30% 90%) !important; }
+.admin-light .hover\:bg-white\/10:hover { background-color: hsl(210 30% 87%) !important; }
+.admin-light .hover\:bg-white\/5:hover { background-color: hsl(210 30% 90%) !important; }
+.admin-light .hover\:bg-white\/\[0\.02\]:hover { background-color: hsl(210 30% 95%) !important; }
+
+.admin-light .text-gray-200,
+.admin-light .text-gray-300 { color: hsl(222 30% 25%) !important; }
+.admin-light .hover\:text-white:hover { color: hsl(222 47% 11%) !important; }
+
+.admin-light .border-white\/25 { border-color: hsl(210 32% 74%) !important; }
+.admin-light .hover\:border-white\/25:hover { border-color: hsl(210 32% 70%) !important; }
+.admin-light .divide-white\/5 > :not([hidden]) ~ :not([hidden]) { border-color: hsl(210 32% 90%) !important; }
+
+/* Colored action buttons — keep readable tints on the pearl background */
+.admin-light .bg-cyan-500\/15 { background-color: hsl(188 90% 42% / 0.14) !important; }
+.admin-light .hover\:bg-cyan-500\/25:hover { background-color: hsl(188 90% 42% / 0.22) !important; }
+.admin-light .bg-amber-500\/15 { background-color: hsl(38 92% 50% / 0.15) !important; }
+.admin-light .bg-amber-500\/\[0\.04\] { background-color: hsl(38 92% 50% / 0.07) !important; }
+.admin-light .bg-green-500\/15 { background-color: hsl(142 70% 45% / 0.13) !important; }
+.admin-light .bg-red-500\/10 { background-color: hsl(0 84% 60% / 0.09) !important; }
+.admin-light .bg-gray-500\/10 { background-color: hsl(215 16% 47% / 0.12) !important; }
+
+.admin-light .text-cyan-400 { color: hsl(188 95% 30%) !important; }
+.admin-light .text-cyan-400\/60 { color: hsl(188 95% 30% / 0.7) !important; }
+.admin-light .text-amber-400 { color: hsl(35 92% 33%) !important; }
+.admin-light .text-green-400 { color: hsl(142 72% 29%) !important; }
+.admin-light .text-red-400 { color: hsl(0 74% 42%) !important; }
+.admin-light .text-red-400\/80 { color: hsl(0 74% 42% / 0.85) !important; }
+
+.admin-light .border-cyan-500\/30 { border-color: hsl(188 90% 38% / 0.4) !important; }
+.admin-light .border-amber-500\/25,
+.admin-light .border-amber-500\/20 { border-color: hsl(38 92% 45% / 0.4) !important; }
+.admin-light .border-amber-500\/30 { border-color: hsl(38 92% 45% / 0.45) !important; }
+.admin-light .border-green-500\/25,
+.admin-light .border-green-500\/40 { border-color: hsl(142 70% 38% / 0.45) !important; }
+.admin-light .border-red-500\/30,
+.admin-light .border-red-500\/40 { border-color: hsl(0 74% 50% / 0.45) !important; }
+.admin-light .border-gray-500\/20,
+.admin-light .border-gray-500\/30 { border-color: hsl(215 16% 60% / 0.45) !important; }
+
+/* Status pill backgrounds */
+.admin-light .bg-gray-500\/15 { background-color: hsl(215 16% 47% / 0.13) !important; }
+.admin-light .bg-red-500\/15 { background-color: hsl(0 84% 60% / 0.12) !important; }
+.admin-light .text-gray-300 { color: hsl(222 30% 30%) !important; }
+
+/* Hover states for outline destructive buttons */
+.admin-light .hover\:bg-red-500\/10:hover { background-color: hsl(0 84% 60% / 0.1) !important; }
+.admin-light .hover\:bg-green-500\/15:hover { background-color: hsl(142 70% 45% / 0.15) !important; }
+.admin-light .hover\:text-red-400:hover { color: hsl(0 74% 42%) !important; }
+.admin-light .hover\:text-cyan-300:hover { color: hsl(188 95% 26%) !important; }
+.admin-light .bg-cyan-500\/10.text-cyan-400,
+.admin-light .bg-cyan-400\/15 { background-color: hsl(188 90% 42% / 0.14) !important; }
 /* ================================================================
    CHART TOOLTIP & DATA READABILITY
    Ensures chart popups are readable in both themes
@@ -1052,7 +1115,7 @@ select option {
 }
 
 /* Shared portal select field (dealer + admin light/dark) */
-.icar-select {
+.carq-select {
   width: 100%;
   max-width: 100%;
   min-width: 0;
@@ -1072,24 +1135,24 @@ select option {
   transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 
-.icar-select:hover:not(:disabled) {
+.carq-select:hover:not(:disabled) {
   background-color: hsl(0 0% 100% / 0.08);
 }
 
-.icar-select:focus {
+.carq-select:focus {
   border-color: hsl(188 95% 55% / 0.5);
   box-shadow: 0 0 0 1px hsl(188 95% 55% / 0.2);
 }
 
-.icar-select:disabled {
+.carq-select:disabled {
   opacity: 0.35;
   cursor: not-allowed;
 }
 
 
-/* Shared portal text inputs — match icar-select */
-.icar-input,
-.icar-textarea {
+/* Shared portal text inputs — match carq-select */
+.carq-input,
+.carq-textarea {
   width: 100%;
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
@@ -1102,72 +1165,72 @@ select option {
   transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 
-.icar-input {
+.carq-input {
   height: 3rem;
 }
 
-.icar-textarea {
+.carq-textarea {
   min-height: 5rem;
   resize: vertical;
 }
 
-.icar-input:hover:not(:disabled),
-.icar-textarea:hover:not(:disabled) {
+.carq-input:hover:not(:disabled),
+.carq-textarea:hover:not(:disabled) {
   background-color: hsl(0 0% 100% / 0.08);
 }
 
-.icar-input:focus,
-.icar-textarea:focus {
+.carq-input:focus,
+.carq-textarea:focus {
   border-color: hsl(188 95% 55% / 0.5);
   box-shadow: 0 0 0 1px hsl(188 95% 55% / 0.2);
 }
 
-.icar-input:disabled,
-.icar-textarea:disabled {
+.carq-input:disabled,
+.carq-textarea:disabled {
   opacity: 0.35;
   cursor: not-allowed;
 }
 
-.icar-input:-webkit-autofill,
-.icar-input:-webkit-autofill:hover,
-.icar-input:-webkit-autofill:focus,
-.icar-textarea:-webkit-autofill,
-.icar-textarea:-webkit-autofill:hover,
-.icar-textarea:-webkit-autofill:focus {
+.carq-input:-webkit-autofill,
+.carq-input:-webkit-autofill:hover,
+.carq-input:-webkit-autofill:focus,
+.carq-textarea:-webkit-autofill,
+.carq-textarea:-webkit-autofill:hover,
+.carq-textarea:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 1000px hsl(222 55% 10%) inset !important;
   -webkit-text-fill-color: hsl(210 40% 96%) !important;
   caret-color: hsl(210 40% 96%);
 }
 
-.admin-light .icar-input:-webkit-autofill,
-.admin-light .icar-input:-webkit-autofill:hover,
-.admin-light .icar-input:-webkit-autofill:focus,
-.admin-light .icar-textarea:-webkit-autofill,
-.admin-light .icar-textarea:-webkit-autofill:hover,
-.admin-light .icar-textarea:-webkit-autofill:focus {
+.admin-light .carq-input:-webkit-autofill,
+.admin-light .carq-input:-webkit-autofill:hover,
+.admin-light .carq-input:-webkit-autofill:focus,
+.admin-light .carq-textarea:-webkit-autofill,
+.admin-light .carq-textarea:-webkit-autofill:hover,
+.admin-light .carq-textarea:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 1000px hsl(0 0% 100%) inset !important;
   -webkit-text-fill-color: hsl(222 47% 11%) !important;
 }
 
-.admin-light .icar-input,
-.admin-light .icar-textarea {
+.admin-light .carq-input,
+.admin-light .carq-textarea {
   background-color: hsl(0 0% 100%) !important;
   border-color: hsl(210 32% 82%) !important;
   color: hsl(222 47% 11%) !important;
 }
 
-.admin-light .icar-input:hover:not(:disabled),
-.admin-light .icar-textarea:hover:not(:disabled) {
+.admin-light .carq-input:hover:not(:disabled),
+.admin-light .carq-textarea:hover:not(:disabled) {
   background-color: hsl(210 40% 98%) !important;
 }
 
-.admin-light .icar-select {
+.admin-light .carq-select {
   background-color: hsl(0 0% 100%) !important;
   border-color: hsl(210 32% 82%) !important;
   color: hsl(222 47% 11%) !important;
 }
 
-.admin-light .icar-select:hover:not(:disabled) {
+.admin-light .carq-select:hover:not(:disabled) {
   background-color: hsl(210 40% 98%) !important;
 }
 

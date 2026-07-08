@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { BrandMark } from "@/components/brand-mark";
 import {
   Eye,
   EyeOff,
@@ -235,7 +236,7 @@ export default function SignupPage() {
           style={{ zIndex: 3 }}
         >
           <h2 className="text-4xl font-bold tracking-tight xl:text-5xl">
-            Join the iCar Network
+            Join the CarQ Network
           </h2>
           <p className="mt-4 text-lg text-gray-200">
             Expand your reach, streamline operations, and grow your dealership
@@ -247,11 +248,9 @@ export default function SignupPage() {
             href="/"
             className="flex items-center gap-2 transition-transform hover:scale-105"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
-              <span className="text-xl font-bold italic text-white">iC</span>
-            </div>
+            <BrandMark />
             <span className="text-2xl font-bold tracking-tight text-white">
-              iCar<span className="text-blue-500">.</span>
+              CarQ<span className="text-blue-500">.</span>
             </span>
           </Link>
         </div>
@@ -266,11 +265,9 @@ export default function SignupPage() {
               href="/"
               className="flex items-center gap-2 transition-transform hover:scale-105"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 font-bold italic text-white">
-                iC
-              </div>
+              <BrandMark />
               <span className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                iCar<span className="text-blue-500">.</span>
+                CarQ<span className="text-blue-500">.</span>
               </span>
             </Link>
           </div>
