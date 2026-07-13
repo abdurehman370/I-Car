@@ -46,6 +46,7 @@
     "react-markdown": "^10.1.0",
     "recharts": "^3.8.1",
     "tailwind-merge": "^2.6.0",
+    "unpdf": "^1.6.2",
     "uuid": "^13.0.0",
     "web-push": "^3.6.7",
     "xlsx": "^0.18.5",

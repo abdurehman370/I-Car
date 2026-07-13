@@ -1,7 +1,7 @@
 import { redisConnection } from '../queue';
 import crypto from 'crypto';
 
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v6'; // bumped after numeric-anchor enforcement + stronger direct-comp clamp
 
 function normalize(value: unknown): string {
     if (value === null || value === undefined || value === '') return 'none';
@@ -95,7 +95,10 @@ export async function saveValuationToCache(key: string, data: any, make: string)
     }
 }
 
-export function buildCacheKey(payload: any): string | null {
+export function buildCacheKey(
+    payload: any,
+    opts?: { ruleVersion?: string | null }
+): string | null {
     const {
         region,
         make,
@@ -119,6 +122,9 @@ export function buildCacheKey(payload: any): string | null {
         'valuation',
         CACHE_VERSION,
         normalize(region),
+        // Lebanon keys include the active import-rule version so cached
+        // valuations are invalidated automatically when rules change.
+        ...(opts?.ruleVersion ? [normalize(opts.ruleVersion)] : []),
         normalize(make),
         normalize(model),
         normalize(variant),

@@ -4,10 +4,10 @@ import { ReactNode, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Search, Bell, Command, LayoutDashboard, Car, 
-  Settings, LogOut, Zap, Menu, X, 
-  User, ShieldCheck, Users, Database, BellRing, List, Sun, Moon, Gavel
+import {
+  Search, Bell, Command, LayoutDashboard, Car,
+  Settings, LogOut, Zap, Menu, X,
+  User, ShieldCheck, Users, Database, BellRing, List, Sun, Moon, Gavel, FileText
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -24,6 +24,7 @@ const adminNavItems = [
     { title: "Auctions", url: "/admin/auctions", icon: Gavel },
     { title: "Alerts", url: "/admin/alerts", icon: Bell },
     { title: "Market Search", url: "/admin/market-search", icon: Search },
+    { title: "Import Rules", url: "/admin/import-rules", icon: FileText },
     { title: "Approvals", url: "/admin/authenticate-dealers", icon: ShieldCheck },
 ];
 

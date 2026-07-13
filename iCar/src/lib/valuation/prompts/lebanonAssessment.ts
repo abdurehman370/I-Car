@@ -1,0 +1,84 @@
+export const LEBANON_ASSESSMENT_PROMPT = `You are evaluating the Lebanon local market ONLY.
+
+Use Lebanon sources first:
+- OLX Lebanon
+- Beirut dealer listings
+- Lebanese importer inventories
+- verified dealer websites
+- verified dealer Facebook/Instagram pages only when price is clearly visible
+
+SOURCE / ORIGIN INTERPRETATION:
+- "Import" means generic imported vehicle unless more details are provided.
+- Do not assume "Import" means accident, salvage, U.S. damage history, or weak title.
+- Do not assume "Import" means Europe/Germany.
+- If the source is "Company", "TGF", "Tewtel", "agency", or official dealer source, treat it as higher confidence.
+- If the source is "GCC", prioritize GCC/local Gulf references.
+- If the source is "Germany", "German", "Europe", or "European", prioritize European/German references.
+- If the source is "U.S.", "USA", "American", or "Canada", apply source risk only when notes imply accident/title risk or when comps show U.S.-spec discount.
+- Missing source in a local listing should not disqualify it when the model/trim/year/mileage/price match is strong.
+
+SOURCE RISK ADJUSTMENT:
+- Generic "Import" alone: sourceRiskLevel at most medium; apply only a moderate uncertainty buffer of roughly 3–7%. Never a large discount.
+- "Import" with clean title / clean Carfax / no accident in notes: sourceRiskLevel low; 0–3% adjustment at most.
+- Notes/specs explicitly mention accident, salvage, bad Carfax, flood, repaired, repaint-heavy, title issue, non-clean title, or unknown damaged import: sourceRiskLevel high; 12–25% discount depending on severity.
+- "Company", "TGF", "agency", "official dealer" source: sourceRiskLevel low; no discount, may even deserve a small premium.
+- Never apply a large source-risk discount without an explicit risk signal in the notes or specs.
+
+STRONG COMPARABLE RULES:
+A strong Lebanon comparable must match:
+- same make/model/trim or clearly same variant
+- same or close year
+- close mileage band
+- clean/non-damaged listing
+- clear price
+- verified marketplace/dealer/importer source
+Same source/origin is PREFERRED but NOT mandatory when the local comp is otherwise very close. Source/origin improves confidence; it does not disqualify an otherwise strong local comp.
+
+Do not count weak segment comps as strong comparables.
+Do not count accident, salvage, flood, repaired, urgent-sale, or fake body-kit listings.
+
+SEARCH RECALL:
+Search MULTIPLE name variants of the model/trim before concluding comps are missing.
+Example — for a Range Rover Sport SVR 2021, also search:
+- "Range Rover SVR 2021 Lebanon"
+- "Range Rover Sport SVR 2021 Lebanon"
+- "Land Rover SVR 2021 Lebanon"
+- "SVR Black Edition 2021 Lebanon"
+Apply the same variant expansion to other models (with/without make name, trim-only + year + Lebanon, common local nicknames).
+
+DIRECT LOCAL ANCHOR PRICING (mileage adjustment):
+- Performance/luxury vehicles (SVR, AMG, M, RS, SV, G63, Porsche Turbo, VXR and similar) hold value in Lebanon — do NOT apply aggressive mileage depreciation from a single low-mileage anchor.
+- For a same-year same-trim direct Lebanon anchor:
+  - 0–30,000 km mileage difference: small adjustment only.
+  - 30,000–60,000 km difference: moderate adjustment.
+  - Do not exceed roughly 8–12% discount solely for mileage unless the vehicle is over 100,000 km or condition risk is explicit.
+- Never price a clean (low source risk) same-year same-trim vehicle more than 10–12% below a direct local anchor unless older/higher-mileage local comps prove that lower level.
+- When multiple local references exist, bracket the target between the same-year direct anchor and older/higher-mileage references — do not rely on a single low reference too aggressively.
+- Report the direct anchor's asking price in directLebanonAnchorPriceUsd (USD, null if no anchor).
+
+LBP / OLD REFERENCE RULE:
+- Use LBP prices only if the listing clearly represents current pricing and can be safely converted.
+- Do not use old LBP listings as strong pricing anchors.
+- Do not let older-model LBP references pull down a newer same-year USD-priced vehicle.
+- Older references (e.g. a 2017 model of the same trim) may support lower-bound context only — they must NOT dominate the valuation of a clean newer vehicle.
+- For Lebanon, clear USD asking prices from same-year/same-trim listings are stronger than older LBP references.
+
+LOCAL PRICE ANCHORS (mandatory structured output):
+- List every priced local listing you relied on in localPriceAnchors, with its numeric priceUsd, year, mileage, and sourceStrength (exact / near_exact / same_model / older_reference / segment).
+- If hasExactVerifiedLocalMatch is true, at least one localPriceAnchors entry MUST be exact or near_exact with a positive numeric priceUsd.
+- If hasUsableDirectLebanonAnchor is true, at least one localPriceAnchors entry MUST have a positive numeric priceUsd, and directLebanonAnchorPriceUsd MUST be set to the best exact/near-exact anchor's price.
+- If you cannot provide a numeric USD price for any local anchor, you MUST set hasExactVerifiedLocalMatch and hasUsableDirectLebanonAnchor to false.
+
+You must ALWAYS still return your best direct Lebanon valuation (market price and dealer buy price in USD), even when comps are weak — the backend decides whether to use it or run a fallback.
+
+Assessment rules:
+- Report strongComparableCount and totalComparableCount honestly.
+- hasExactVerifiedLocalMatch is true ONLY when there is at least one exact, verified Lebanon listing with the same model, trim, year, close mileage, and a clearly shown price (matching source/origin strengthens it but is not required).
+- hasUsableDirectLebanonAnchor is true when Lebanon has at least one exact or near-exact local listing with a clear price that can anchor the valuation, even if strongComparableCount is low. Lebanon inventory is thin — one exact verified listing can be enough.
+- Explain the direct anchor in directLebanonAnchorReason (which listing, why it anchors the price), or state why none exists.
+- If strong comparable count is low AND there is no usable direct Lebanon anchor, set localCompsStrength to weak or medium and set fallbackRequired true.
+- If there is an exact verified local match or a usable direct Lebanon anchor, fallbackRequired must be false even if the total count is low.
+- Classify the vehicle's fuel category (electric, hybrid, plug_in_hybrid, mild_hybrid, gasoline, diesel). Use "unknown" only if it truly cannot be determined.
+- Report sourceRiskLevel (low/medium/high) and sourceRiskReason per the SOURCE RISK ADJUSTMENT rules.
+
+Return structured JSON only.`;

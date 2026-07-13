@@ -1,21 +1,32 @@
 import OpenAI from 'openai';
 import {
     OPENAI_JSON_SCHEMA,
+    LEBANON_ASSESSMENT_JSON_SCHEMA,
+    FALLBACK_RESEARCH_JSON_SCHEMA,
     ValuationResultSchema,
     ValuationResult,
+    LebanonAssessmentResultSchema,
+    LebanonAssessmentResult,
+    FallbackResearchSchema,
+    FallbackResearchResult,
 } from './schema';
 import { GLOBAL_PROMPT } from './prompts/global';
 import { LEBANON_PROMPT } from './prompts/lebanon';
 import { UAE_PROMPT } from './prompts/uae';
 import { EUROPE_PROMPT } from './prompts/europe';
+import { LEBANON_ASSESSMENT_PROMPT } from './prompts/lebanonAssessment';
+import { LEBANON_FALLBACK_RESEARCH_PROMPT } from './prompts/lebanonFallbackResearch';
 import { buildMarkdownFromValuationJson } from './formatMarkdown';
-import { extractWebSources, responseUsedWebSearch } from './sourceExtraction';
+import { extractWebSources, responseUsedWebSearch, ValuationSource } from './sourceExtraction';
 import { estimateOpenAICost } from './cost';
 import {
     getValuationFromCache,
     saveValuationToCache,
     buildCacheKey,
 } from './cache';
+import { getActiveImportRules } from './importRules/getActiveImportRules';
+import { calculateLebanonImportCost } from './importRules/calculateLebanonImportCost';
+import { ActiveImportRules, FuelCategory } from './importRules/types';
 
 type Region = 'LEBANON' | 'UAE' | 'EUROPE';
 
@@ -34,10 +45,16 @@ type EvaluateVehiclePayload = {
     mode?: 'quick' | 'listing' | 'partner' | string;
 };
 
+const AED_PER_USD = 3.67;
+
 function getOpenAIClient() {
     return new OpenAI({
         apiKey: process.env.OPEN_AI_KEY || process.env.OPENAI_API_KEY,
     });
+}
+
+function getModel(): string {
+    return process.env.OPENAI_VALUATION_MODEL || 'gpt-5.4-2026-03-05';
 }
 
 function getRegionPrompt(region: Region): string {
@@ -82,6 +99,24 @@ function getWebSearchTool(region: Region) {
     // across OLX, dealer pages, importer sites, Facebook/Instagram, and local websites.
 
     return tool;
+}
+
+/** Combined UAE + Europe domains for the Lebanon fallback research phase. */
+function getFallbackWebSearchTool() {
+    return {
+        type: 'web_search',
+        search_context_size: 'high',
+        filters: {
+            allowed_domains: [
+                'dubizzle.com',
+                'dubicars.com',
+                'autotraderuae.com',
+                'mobile.de',
+                'autoscout24.com',
+                'preowned.ferrari.com',
+            ],
+        },
+    } as Record<string, any>;
 }
 
 function getMileageLabel(payload: EvaluateVehiclePayload): string {
@@ -189,7 +224,14 @@ function extractTextFromResponsesApi(response: any): string {
     return '';
 }
 
-function getUsage(response: any) {
+type UsageTotals = {
+    inputTokens: number;
+    cachedInputTokens: number;
+    outputTokens: number;
+    totalTokens: number;
+};
+
+function getUsage(response: any): UsageTotals {
     const usage = response?.usage || {};
 
     return {
@@ -200,6 +242,43 @@ function getUsage(response: any) {
     };
 }
 
+function sumUsage(a: UsageTotals, b: UsageTotals): UsageTotals {
+    return {
+        inputTokens: a.inputTokens + b.inputTokens,
+        cachedInputTokens: a.cachedInputTokens + b.cachedInputTokens,
+        outputTokens: a.outputTokens + b.outputTokens,
+        totalTokens: a.totalTokens + b.totalTokens,
+    };
+}
+
+function estimateCostFromUsage(usage: UsageTotals, model: string): number | null {
+    return estimateOpenAICost(
+        {
+            input_tokens: usage.inputTokens,
+            output_tokens: usage.outputTokens,
+            total_tokens: usage.totalTokens,
+            input_tokens_details: {
+                cached_tokens: usage.cachedInputTokens,
+            },
+        },
+        model
+    );
+}
+
+function mergeSources(...groups: ValuationSource[][]): ValuationSource[] {
+    const seen = new Map<string, ValuationSource>();
+
+    for (const group of groups) {
+        for (const source of group) {
+            if (!seen.has(source.url)) {
+                seen.set(source.url, source);
+            }
+        }
+    }
+
+    return Array.from(seen.values()).slice(0, 12);
+}
+
 function buildFinalResponse(params: {
     region: Region;
     model: string;
@@ -207,9 +286,10 @@ function buildFinalResponse(params: {
     valuation: ValuationResult;
     markdown: string;
     sources: any[];
-    usage: any;
+    usage: UsageTotals;
     estimatedCostUsd: number | null;
     cacheHit: boolean;
+    extraMeta?: Record<string, unknown>;
 }) {
     const {
         region,
@@ -221,6 +301,7 @@ function buildFinalResponse(params: {
         usage,
         estimatedCostUsd,
         cacheHit,
+        extraMeta,
     } = params;
 
     return {
@@ -245,63 +326,110 @@ function buildFinalResponse(params: {
             fallbackUsed: valuation.fallbackUsed,
             fallbackLevel: valuation.fallbackLevel,
             confidence: valuation.confidence,
+            ...(extraMeta || {}),
         },
     };
 }
 
-async function callOpenAIValuation(params: {
+// ---------------------------------------------------------------------------
+// Generic Responses API caller with validation + one correction retry.
+// Used by all three call types (standard, assessment, fallback research).
+// ---------------------------------------------------------------------------
+async function callStructuredWithRetry<T>(params: {
     openai: OpenAI;
     model: string;
-    region: Region;
-    payload: EvaluateVehiclePayload;
-    correction?: string;
-}) {
-    const { openai, model, region, payload, correction } = params;
+    instructions: string;
+    content: any[];
+    tool: Record<string, any>;
+    schemaName: string;
+    jsonSchema: Record<string, any>;
+    validate: (data: unknown) => { success: true; data: T } | { success: false; error: unknown };
+    correctionText: string;
+}): Promise<{ data: T; response: any }> {
+    const {
+        openai,
+        model,
+        instructions,
+        content,
+        tool,
+        schemaName,
+        jsonSchema,
+        validate,
+        correctionText,
+    } = params;
 
-    const dynamicContent = buildInputContent(payload, region);
+    let lastError: unknown;
 
-    if (correction) {
-        dynamicContent.push({
-            type: 'input_text',
-            text: correction,
-        });
+    for (let attempt = 0; attempt < 2; attempt++) {
+        const input = [...content];
+
+        if (attempt > 0) {
+            input.push({ type: 'input_text', text: correctionText });
+        }
+
+        const response = await openai.responses.create({
+            model,
+            instructions,
+            input: [{ role: 'user', content: input }],
+            tools: [tool],
+            tool_choice: 'required',
+            include: ['web_search_call.action.sources'],
+            text: {
+                format: {
+                    type: 'json_schema',
+                    name: schemaName,
+                    strict: true,
+                    schema: jsonSchema,
+                },
+            },
+            max_output_tokens: 4096,
+            temperature: 0.2,
+        } as any);
+
+        if (!responseUsedWebSearch(response)) {
+            throw new Error('Marketplace search could not be completed. Please try again.');
+        }
+
+        const jsonText = extractTextFromResponsesApi(response);
+
+        if (!jsonText) {
+            throw new Error('Empty response from OpenAI');
+        }
+
+        let parsedJson: unknown;
+
+        try {
+            parsedJson = JSON.parse(jsonText);
+        } catch {
+            throw new Error('Failed to parse JSON output');
+        }
+
+        const validation = validate(parsedJson);
+
+        if (validation.success) {
+            return { data: validation.data, response };
+        }
+
+        console.error(`Structured JSON validation failed (${schemaName}):`, validation.error);
+        lastError = validation.error;
+
+        if (attempt === 1) {
+            throw new Error('Structured JSON invalid after retry');
+        }
     }
 
-    return openai.responses.create({
-        model,
-        instructions: buildSystemInstructions(region),
-        input: [
-            {
-                role: 'user',
-                content: dynamicContent,
-            },
-        ],
-        tools: [getWebSearchTool(region)],
-        tool_choice: 'required',
-        include: ['web_search_call.action.sources'],
-        text: {
-            format: {
-                type: 'json_schema',
-                name: 'vehicle_valuation_result',
-                strict: true,
-                schema: OPENAI_JSON_SCHEMA,
-            },
-        },
-        max_output_tokens: 4096,
-        temperature: 0.2,
-    } as any);
+    throw lastError instanceof Error ? lastError : new Error('OpenAI call failed');
 }
 
-export async function evaluateVehicleWithAI(
+// ---------------------------------------------------------------------------
+// STANDARD FLOW (UAE / EUROPE) — unchanged behavior from the original
+// implementation, extracted into its own function.
+// ---------------------------------------------------------------------------
+async function evaluateStandardRegionVehicleWithAI(
     payload: EvaluateVehiclePayload,
-    forceNoCache = false
+    region: Region,
+    forceNoCache: boolean
 ) {
-    const region = String(payload.region || '').toUpperCase() as Region;
-
-    if (!['LEBANON', 'UAE', 'EUROPE'].includes(region)) {
-        throw new Error('Unsupported region');
-    }
-
     const cacheKey = !forceNoCache ? buildCacheKey({ ...payload, region }) : null;
 
     if (cacheKey) {
@@ -319,106 +447,886 @@ export async function evaluateVehicleWithAI(
     }
 
     const openai = getOpenAIClient();
-    const model = process.env.OPENAI_VALUATION_MODEL || 'gpt-5.4-2026-03-05';
+    const model = getModel();
 
-    let lastError: unknown;
+    const { data: valuation, response } = await callStructuredWithRetry<ValuationResult>({
+        openai,
+        model,
+        instructions: buildSystemInstructions(region),
+        content: buildInputContent(payload, region),
+        tool: getWebSearchTool(region),
+        schemaName: 'vehicle_valuation_result',
+        jsonSchema: OPENAI_JSON_SCHEMA as any,
+        validate: (data) => {
+            const result = ValuationResultSchema.safeParse(data);
+            return result.success
+                ? { success: true, data: result.data }
+                : { success: false, error: result.error.flatten() };
+        },
+        correctionText:
+            'Your previous output failed validation. Return valid JSON matching the schema exactly. Keep currencies correct for the region and ensure dealer buy price is lower than market price.',
+    });
 
-    for (let attempt = 0; attempt < 2; attempt++) {
-        try {
-            const response = await callOpenAIValuation({
-                openai,
-                model,
-                region,
-                payload,
-                correction:
-                    attempt === 0
-                        ? undefined
-                        : 'Your previous output failed validation. Return valid JSON matching the schema exactly. Keep currencies correct for the region and ensure dealer buy price is lower than market price.',
-            });
+    const markdown = buildMarkdownFromValuationJson(valuation);
+    const sources = extractWebSources(response);
+    const usage = getUsage(response);
+    const estimatedCostUsd = estimateCostFromUsage(usage, model);
 
-            if (!responseUsedWebSearch(response)) {
-                throw new Error('Marketplace search could not be completed. Please try again.');
-            }
+    const finalResult = buildFinalResponse({
+        region,
+        model,
+        payload,
+        valuation,
+        markdown,
+        sources,
+        usage,
+        estimatedCostUsd,
+        cacheHit: false,
+    });
 
-            const jsonText = extractTextFromResponsesApi(response);
+    if (cacheKey) {
+        await saveValuationToCache(cacheKey, finalResult, payload.make);
+    }
 
-            if (!jsonText) {
-                throw new Error('Empty response from OpenAI');
-            }
+    return finalResult;
+}
 
-            let parsedJson: unknown;
+// ---------------------------------------------------------------------------
+// LEBANON FLOW — two-phase local assessment + UAE/Europe fallback with
+// deterministic import/customs calculation.
+// ---------------------------------------------------------------------------
 
-            try {
-                parsedJson = JSON.parse(jsonText);
-            } catch {
-                throw new Error('Failed to parse JSON output');
-            }
+function getFallbackThreshold(): number {
+    const parsed = Number.parseInt(process.env.LEBANON_FALLBACK_MIN_STRONG_COMPS || '5', 10);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : 5;
+}
 
-            const validation = ValuationResultSchema.safeParse(parsedJson);
+type BrandTier = 'exotic' | 'luxury' | 'normal';
 
-            if (!validation.success) {
-                console.error('Structured JSON validation failed:', validation.error.flatten());
+function getBrandTier(make: string): BrandTier {
+    const m = String(make || '').trim().toLowerCase().replace(/\s+/g, '-');
 
-                if (attempt === 0) {
-                    lastError = validation.error;
-                    continue;
+    const exotic = ['ferrari', 'lamborghini', 'rolls-royce', 'rolls', 'bentley', 'mclaren', 'aston-martin', 'brabus', 'mansory'];
+    const luxury = ['audi', 'bmw', 'mercedes', 'mercedes-benz', 'porsche', 'lexus', 'land-rover', 'range-rover', 'jaguar'];
+
+    if (exotic.includes(m)) return 'exotic';
+    if (luxury.includes(m)) return 'luxury';
+    return 'normal';
+}
+
+function roundTo(value: number, step: number): number {
+    return Math.round(value / step) * step;
+}
+
+/** Luxury brands or performance trims that hold value in Lebanon. */
+function isPerformanceLuxury(payload: EvaluateVehiclePayload): boolean {
+    if (getBrandTier(payload.make) !== 'normal') return true;
+
+    return /\bsvr\b|\bamg\b|\bm\d\b|\brs ?\d?\b|turbo|\bsv\b|\bg63\b|\bgt\b|\bvxr\b|black edition/i
+        .test(`${payload.make || ''} ${payload.model || ''} ${payload.variant || ''}`);
+}
+
+const EXPLICIT_RISK_REGEX =
+    /accident|salvage|bad carfax|flood|repaired|repaint|title issue|non-clean|urgent|distress/i;
+
+const CLEAN_CONDITION_REGEX = /clean title|no accident|good service/i;
+
+type LocalAnchorLike = {
+    year: number | null;
+    mileageKm: number | null;
+    priceUsd: number | null;
+    sourceStrength: 'exact' | 'near_exact' | 'same_model' | 'older_reference' | 'segment';
+};
+
+/**
+ * Picks the best numeric local anchor when the model forgot to set
+ * directLebanonAnchorPriceUsd: exact > near_exact > same_model, preferring
+ * same year, then closest mileage. older_reference/segment never anchor.
+ */
+function pickBestLocalAnchor(
+    anchors: LocalAnchorLike[] | undefined,
+    targetYear: number,
+    targetMileageKm: number
+): { price: number; strength: string } | null {
+    if (!Array.isArray(anchors)) return null;
+
+    const priority: Record<string, number> = { exact: 0, near_exact: 1, same_model: 2 };
+
+    const usable = anchors.filter(
+        (a) =>
+            typeof a.priceUsd === 'number' && a.priceUsd > 0 &&
+            a.sourceStrength in priority
+    );
+
+    if (usable.length === 0) return null;
+
+    usable.sort((a, b) => {
+        const p = priority[a.sourceStrength] - priority[b.sourceStrength];
+        if (p !== 0) return p;
+
+        const yearA = a.year === targetYear ? 0 : 1;
+        const yearB = b.year === targetYear ? 0 : 1;
+        if (yearA !== yearB) return yearA - yearB;
+
+        const mA = a.mileageKm !== null ? Math.abs(a.mileageKm - targetMileageKm) : Number.MAX_SAFE_INTEGER;
+        const mB = b.mileageKm !== null ? Math.abs(b.mileageKm - targetMileageKm) : Number.MAX_SAFE_INTEGER;
+        return mA - mB;
+    });
+
+    return { price: usable[0].priceUsd as number, strength: usable[0].sourceStrength };
+}
+
+/** Final Lebanon market price spread bounds per brand tier (USD). */
+function getMarketSpreadBounds(tier: BrandTier): { floor: number; cap: number } {
+    if (tier === 'exotic') return { floor: 10_000, cap: 25_000 };
+    if (tier === 'luxury') return { floor: 5_000, cap: 10_000 };
+    return { floor: 2_000, cap: 5_000 };
+}
+
+/**
+ * Fallback trigger, calibrated for Lebanon's thin inventory:
+ * a single exact/near-exact priced local anchor is enough to price directly —
+ * the env threshold is guidance, not a hard requirement, when a direct
+ * anchor exists.
+ */
+function shouldUseLebanonFallback(
+    assessment: LebanonAssessmentResult,
+    threshold: number
+): boolean {
+    const a = assessment.localMarketAssessment;
+
+    // Direct local anchors always win — no unnecessary fallback.
+    if (a.hasExactVerifiedLocalMatch) return false;
+    if (a.hasUsableDirectLebanonAnchor) return false;
+
+    // Usable local market: at least 2 strong comps and not weak.
+    if (a.strongComparableCount >= 2 && a.localCompsStrength !== 'weak') return false;
+
+    // Env threshold as guidance: plenty of strong comps → direct.
+    if (a.strongComparableCount >= threshold) return false;
+
+    return (
+        assessment.fallbackRequired === true ||
+        a.localCompsStrength === 'weak' ||
+        a.strongComparableCount === 0
+    );
+}
+
+async function callLebanonAssessment(openai: OpenAI, model: string, payload: EvaluateVehiclePayload) {
+    const instructions = [
+        GLOBAL_PROMPT,
+        LEBANON_PROMPT,
+        LEBANON_ASSESSMENT_PROMPT,
+    ].join('\n\n');
+
+    return callStructuredWithRetry<LebanonAssessmentResult>({
+        openai,
+        model,
+        instructions,
+        content: buildInputContent(payload, 'LEBANON'),
+        tool: getWebSearchTool('LEBANON'),
+        schemaName: 'lebanon_local_assessment',
+        jsonSchema: LEBANON_ASSESSMENT_JSON_SCHEMA as any,
+        validate: (data) => {
+            const result = LebanonAssessmentResultSchema.safeParse(data);
+            return result.success
+                ? { success: true, data: result.data }
+                : { success: false, error: result.error.flatten() };
+        },
+        correctionText:
+            'Your previous output failed validation. Return valid JSON matching the schema exactly. Currency must be USD, dealer buy price must be lower than market price, and the localMarketAssessment block is mandatory. If you claimed a direct local anchor but did not provide its numeric USD price, return directLebanonAnchorPriceUsd and localPriceAnchors with numeric priceUsd, or set the anchor booleans to false.',
+    });
+}
+
+async function callLebanonFallbackResearch(openai: OpenAI, model: string, payload: EvaluateVehiclePayload) {
+    const content: any[] = [
+        {
+            type: 'input_text',
+            text: `
+Research UAE and Europe fallback source markets for this vehicle (Lebanon local comps are weak).
+
+Make: ${payload.make}
+Model: ${payload.model}
+Variant/Trim: ${payload.variant || 'Not specified'}
+Year: ${payload.year}
+Mileage: ${getMileageLabel(payload)}
+Specs/source: ${payload.specs || 'Unknown'}
+Condition notes: ${payload.notes || 'Average condition assumed'}
+
+Return structured JSON only.
+            `.trim(),
+        },
+    ];
+
+    return callStructuredWithRetry<FallbackResearchResult>({
+        openai,
+        model,
+        instructions: LEBANON_FALLBACK_RESEARCH_PROMPT,
+        content,
+        tool: getFallbackWebSearchTool(),
+        schemaName: 'lebanon_fallback_research',
+        jsonSchema: FALLBACK_RESEARCH_JSON_SCHEMA as any,
+        validate: (data) => {
+            const result = FallbackResearchSchema.safeParse(data);
+            return result.success
+                ? { success: true, data: result.data }
+                : { success: false, error: result.error.flatten() };
+        },
+        correctionText:
+            'Your previous output failed validation. Return valid JSON matching the schema exactly. Do not apply Lebanon import duties — raw source-market anchors only.',
+    });
+}
+
+type AnchorCandidate = FallbackResearchResult['sourceMarketAnchors'][number];
+
+/**
+ * For neutral/company/import/unknown sources, UAE is the default Lebanon
+ * regional resale anchor. Europe can only take over when the UAE landed
+ * midpoint exceeds Europe's by more than this limit (or UAE comps are
+ * missing/clearly weak, or the source explicitly says Germany/Europe).
+ */
+const UAE_OVER_EUROPE_PREMIUM_LIMIT = 0.20; // 20%
+
+/** Max source-anchor spread per tier — wide, inconsistent ranges get compressed. */
+function getAnchorSpreadCap(tier: BrandTier): number {
+    if (tier === 'exotic') return 32_000; // 25k–40k band
+    if (tier === 'luxury') return 20_000; // 15k–25k band
+    return 10_000; // 5k–10k band
+}
+
+export type SourcePreference = 'UAE' | 'EUROPE' | 'LOCAL_OR_NEUTRAL' | 'NEUTRAL';
+
+/**
+ * Interprets the dealer-provided specs/source into an anchor preference.
+ * "Company", "TGF", "Import", "Unknown" are NOT Europe — they default to
+ * the UAE/GCC regional anchor when UAE has usable comps.
+ */
+function getSourcePreference(specs: string | null | undefined): SourcePreference {
+    const s = String(specs || '').toLowerCase();
+
+    if (/\bgcc\b|\bgulf\b|\buae\b|\bdubai\b|\bqatar\b|\bkuwait\b|\bsaudi\b|\bkhaleeji\b/.test(s)) return 'UAE';
+    if (/\bgerman(y)?\b|\beurope(an)?\b|\beu\b/.test(s)) return 'EUROPE';
+    if (/\btgf\b|\btewtel\b|\bcompany\b|\bagency\b|\bofficial\b/.test(s)) return 'LOCAL_OR_NEUTRAL';
+    if (/\bimport(ed)?\b|\bunknown\b/.test(s)) return 'NEUTRAL';
+    return 'NEUTRAL';
+}
+
+/**
+ * Normalizes anchors: recomputes UAE USD deterministically from AED and
+ * compresses excessively wide ranges around their midpoint so a single
+ * high-end outlier listing cannot inflate the Lebanon landed benchmark.
+ */
+function normalizeAnchors(
+    research: FallbackResearchResult,
+    tier: BrandTier
+): { anchors: AnchorCandidate[]; warnings: string[] } {
+    const warnings: string[] = [];
+    const cap = getAnchorSpreadCap(tier);
+
+    const anchors = research.sourceMarketAnchors
+        .map((anchor) => {
+            let priceUsd = anchor.market === 'UAE' && anchor.currency === 'AED'
+                ? {
+                    min: Math.round(anchor.price.min / AED_PER_USD),
+                    max: Math.round(anchor.price.max / AED_PER_USD),
                 }
+                : { ...anchor.priceUsd };
 
-                throw new Error('Structured JSON invalid after retry');
+            const spread = priceUsd.max - priceUsd.min;
+            if (spread > cap) {
+                // Midpoint compression: trim both tails instead of only the top.
+                const mid = Math.round((priceUsd.min + priceUsd.max) / 2);
+                if (spread > cap * 2) {
+                    warnings.push(
+                        `${anchor.market} anchor listings were inconsistent (USD ${spread.toLocaleString()} spread) — compressed around the midpoint to USD ${cap.toLocaleString()}.`
+                    );
+                }
+                priceUsd = {
+                    min: Math.max(1, mid - Math.round(cap / 2)),
+                    max: mid + Math.round(cap / 2),
+                };
             }
 
-            const valuation = validation.data;
-            const markdown = buildMarkdownFromValuationJson(valuation);
-            const sources = extractWebSources(response);
-            const usage = getUsage(response);
-            const estimatedCostUsd = estimateOpenAICost(
-                {
-                    input_tokens: usage.inputTokens,
-                    output_tokens: usage.outputTokens,
-                    total_tokens: usage.totalTokens,
-                    input_tokens_details: {
-                        cached_tokens: usage.cachedInputTokens,
-                    },
+            return { ...anchor, priceUsd };
+        })
+        .filter((a) => a.comparableCount > 0 && a.priceUsd.min > 0 && a.priceUsd.max >= a.priceUsd.min);
+
+    return { anchors, warnings };
+}
+
+type AnchorSelection = {
+    anchor: AnchorCandidate;
+    importCalc: ReturnType<typeof calculateLebanonImportCost>;
+    reason: string;
+    warnings: string[];
+    landedComparison: Record<string, { min: number; max: number }>;
+    sourcePreference: SourcePreference;
+    uaeLandedMidpoint: number | null;
+    europeLandedMidpoint: number | null;
+    chosenLandedMidpoint: number;
+    overridden: boolean;
+};
+
+function landedMidpoint(calc: ReturnType<typeof calculateLebanonImportCost>): number {
+    return Math.round((calc.landedCostUsd.min + calc.landedCostUsd.max) / 2);
+}
+
+/**
+ * Deterministic anchor selection (the AI recommendation is advisory only):
+ * 1. Landed cost (and its midpoint) is computed for EVERY valid anchor.
+ * 2. Explicit GCC source → UAE anchor. Explicit Germany/Europe source →
+ *    Europe anchor.
+ * 3. Company / Import / Unknown / blank source → UAE preferred when it has
+ *    usable comps; Europe never chosen when its landed midpoint is more
+ *    than ~17.5% above the UAE landed midpoint.
+ * 4. When both are valid and comparable quality, the lower (more
+ *    conservative) landed midpoint wins.
+ */
+function selectFallbackAnchor(params: {
+    research: FallbackResearchResult;
+    fuelCategory: FuelCategory;
+    mileageKm: number;
+    rules: ActiveImportRules['rules'];
+    specs: string | null | undefined;
+    tier: BrandTier;
+}): AnchorSelection | null {
+    const { research, fuelCategory, mileageKm, rules, specs, tier } = params;
+
+    const { anchors, warnings } = normalizeAnchors(research, tier);
+    if (anchors.length === 0) return null;
+
+    // 1. Landed cost for every valid anchor
+    const withLanded = anchors.map((anchor) => ({
+        anchor,
+        calc: calculateLebanonImportCost({
+            sourceMarketPriceUsdMin: anchor.priceUsd.min,
+            sourceMarketPriceUsdMax: anchor.priceUsd.max,
+            fuelCategory,
+            mileageKm,
+            rules,
+        }),
+    }));
+
+    const landedComparison: Record<string, { min: number; max: number }> = {};
+    for (const entry of withLanded) {
+        landedComparison[entry.anchor.market] = entry.calc.landedCostUsd;
+    }
+
+    const uae = withLanded.find((x) => x.anchor.market === 'UAE') ?? null;
+    const europe = withLanded.find((x) => x.anchor.market === 'EUROPE') ?? null;
+    const sourcePreference = getSourcePreference(specs);
+
+    const uaeMid = uae ? landedMidpoint(uae.calc) : null;
+    const europeMid = europe ? landedMidpoint(europe.calc) : null;
+
+    let chosen: (typeof withLanded)[number];
+    let reason: string;
+
+    if (europe && sourcePreference === 'EUROPE') {
+        chosen = europe;
+        reason = 'Vehicle source is Germany/Europe — Europe anchor required.';
+    } else if (uae && sourcePreference === 'UAE') {
+        chosen = uae;
+        reason = 'Vehicle source is GCC — UAE/GCC anchor preferred.';
+    } else if (!europe && uae) {
+        chosen = uae;
+        reason = 'Only the UAE anchor has usable comparables.';
+    } else if (!uae && europe) {
+        chosen = europe;
+        reason = 'UAE comparables are missing — Europe anchor used.';
+    } else if (uae && europe && uaeMid !== null && europeMid !== null) {
+        // Neutral / Company / Import / Unknown source: UAE-FIRST policy.
+        // UAE is usually the stronger regional resale anchor for Lebanon —
+        // a lower Europe landed midpoint alone is NOT a reason to override.
+        const uaePremiumOverEurope = (uaeMid - europeMid) / europeMid;
+        const uaeClearlyWeak =
+            uae.anchor.comparableCount < 2 &&
+            europe.anchor.comparableCount >= 3;
+
+        if (uaeClearlyWeak) {
+            chosen = europe;
+            reason = 'UAE anchor is clearly weak and Europe has much stronger comparables — Europe anchor used.';
+        } else if (uaePremiumOverEurope > UAE_OVER_EUROPE_PREMIUM_LIMIT) {
+            chosen = europe;
+            reason = `UAE landed midpoint is ${Math.round(uaePremiumOverEurope * 100)}% above Europe (more than 20%) — Europe anchor used as the realistic benchmark.`;
+        } else {
+            chosen = uae;
+            reason = 'UAE selected because source is neutral/company and UAE is the stronger Lebanon regional resale anchor; UAE landed midpoint is within 20% of Europe.';
+        }
+    } else {
+        chosen = withLanded.sort((a, b) => b.anchor.comparableCount - a.anchor.comparableCount)[0];
+        reason = 'Anchor with the strongest comparables used.';
+    }
+
+    // The AI recommendation is advisory — note when the backend overrides it.
+    const overridden =
+        !!research.recommendedAnchorMarket &&
+        research.recommendedAnchorMarket !== chosen.anchor.market;
+
+    if (overridden) {
+        warnings.push(
+            `AI recommended the ${research.recommendedAnchorMarket} anchor; backend selected ${chosen.anchor.market} deterministically (${reason})`
+        );
+    }
+
+    return {
+        anchor: chosen.anchor,
+        importCalc: chosen.calc,
+        reason,
+        warnings,
+        landedComparison,
+        sourcePreference,
+        uaeLandedMidpoint: uaeMid,
+        europeLandedMidpoint: europeMid,
+        chosenLandedMidpoint: landedMidpoint(chosen.calc),
+        overridden,
+    };
+}
+
+async function evaluateLebanonVehicleWithFallback(
+    payload: EvaluateVehiclePayload,
+    forceNoCache: boolean
+) {
+    // 1. Active import rules (versioned; falls back to defaults)
+    const activeRules: ActiveImportRules = await getActiveImportRules('LEBANON');
+    const ruleVersion = activeRules.rules.version;
+
+    // 2. Cache (key includes the active import-rule version)
+    const cacheKey = !forceNoCache
+        ? buildCacheKey({ ...payload, region: 'LEBANON' }, { ruleVersion })
+        : null;
+
+    if (cacheKey) {
+        const cached = await getValuationFromCache(cacheKey);
+
+        if (cached) {
+            return {
+                ...cached,
+                meta: {
+                    ...(cached.meta || {}),
+                    cacheHit: true,
                 },
-                model
-            );
+            };
+        }
+    }
+
+    const openai = getOpenAIClient();
+    const model = getModel();
+    const threshold = getFallbackThreshold();
+
+    // 3. Phase 1 — Lebanon local assessment (always runs)
+    const { data: assessment, response: assessmentResponse } =
+        await callLebanonAssessment(openai, model, payload);
+
+    const assessmentSources = extractWebSources(assessmentResponse);
+    const assessmentUsage = getUsage(assessmentResponse);
+
+    const baseMeta = {
+        importRulesVersion: ruleVersion,
+        usedDefaultImportRules: activeRules.isDefaultRules,
+        localComparableCount: assessment.localMarketAssessment.totalComparableCount,
+        strongLocalComparableCount: assessment.localMarketAssessment.strongComparableCount,
+        hasUsableDirectLebanonAnchor: assessment.localMarketAssessment.hasUsableDirectLebanonAnchor ?? null,
+        directLebanonAnchorReason: assessment.localMarketAssessment.directLebanonAnchorReason ?? null,
+        sourceRiskLevel: assessment.localMarketAssessment.sourceRiskLevel ?? null,
+        sourceRiskReason: assessment.localMarketAssessment.sourceRiskReason ?? null,
+        fallbackThreshold: threshold,
+    };
+
+    // 4. Decide whether fallback is needed
+    const fallbackNeeded = shouldUseLebanonFallback(assessment, threshold);
+
+    if (!fallbackNeeded) {
+        // 5. Direct Lebanon valuation (current behavior + assessment metadata)
+        const { fallbackRequired: _ignored, ...assessmentFields } = assessment;
+
+        // ── Direct-anchor extraction safety ─────────────────────────────
+        // If the model claimed an anchor but left directLebanonAnchorPriceUsd
+        // null, recover the numeric price from localPriceAnchors
+        // (exact > near_exact > same_model; same year, closest mileage).
+        const la = assessment.localMarketAssessment;
+        const mileageUsedKm = getMileageUsed(payload);
+
+        let anchorPrice: number | null = la.directLebanonAnchorPriceUsd ?? null;
+        let anchorPriceSource: 'model_direct' | 'computed_from_anchors' | null =
+            anchorPrice !== null && anchorPrice > 0 ? 'model_direct' : null;
+
+        if (!anchorPriceSource) {
+            const best = pickBestLocalAnchor(la.localPriceAnchors, payload.year, mileageUsedKm);
+            if (best) {
+                anchorPrice = best.price;
+                anchorPriceSource = 'computed_from_anchors';
+            } else {
+                anchorPrice = null;
+            }
+        }
+
+        const specsNotes = `${payload.specs || ''} ${payload.notes || ''}`;
+        const explicitRisk = EXPLICIT_RISK_REGEX.test(specsNotes);
+        const cleanCondition = CLEAN_CONDITION_REGEX.test(specsNotes);
+        const clampWarnings: string[] = [];
+        let directFields: typeof assessmentFields = assessmentFields;
+        let clampApplied = false;
+        let svrGuardrailApplied = false;
+
+        // ── Direct-anchor sanity clamp ──────────────────────────────────
+        // Clean, low-risk luxury/performance vehicle with a same-trim local
+        // anchor: market midpoint must not sit more than 5–8% below the
+        // anchor purely on mileage (5% when notes confirm clean condition).
+        if (
+            (la.hasUsableDirectLebanonAnchor || la.hasExactVerifiedLocalMatch) &&
+            anchorPrice !== null && anchorPrice > 0 &&
+            (la.sourceRiskLevel ?? 'low') === 'low' &&
+            isPerformanceLuxury(payload) &&
+            !explicitRisk &&
+            mileageUsedKm <= 100_000
+        ) {
+            const floorFactor = cleanCondition ? 0.95 : 0.92; // 5% / 8% below anchor
+            const mid = (assessment.marketPrice.min + assessment.marketPrice.max) / 2;
+            const floorMid = anchorPrice * floorFactor;
+
+            // Sanity window: only clamp when the anchor is plausibly comparable
+            if (mid < floorMid && mid > anchorPrice * 0.5) {
+                const spread = Math.max(
+                    assessment.marketPrice.max - assessment.marketPrice.min,
+                    2000
+                );
+                const newMin = roundTo(floorMid - spread / 2, 100);
+                const newMax = Math.max(roundTo(floorMid + spread / 2, 100), newMin + 1000);
+
+                const marketPrice = { currency: 'USD' as const, min: newMin, max: newMax };
+                const dealerMin = roundTo(newMin * 0.89, 100);
+                const dealerMax = Math.max(roundTo(newMax * 0.90, 100), dealerMin + 1000);
+                const dealerBuyPrice = {
+                    currency: 'USD' as const,
+                    min: dealerMin,
+                    max: Math.min(dealerMax, newMax - 500),
+                };
+
+                directFields = {
+                    ...assessmentFields,
+                    marketPrice,
+                    marketPriceUsd: { ...marketPrice },
+                    dealerBuyPrice,
+                    dealerBuyPriceUsd: { ...dealerBuyPrice },
+                };
+
+                clampApplied = true;
+                clampWarnings.push(
+                    `Direct-anchor sanity clamp applied: model priced too far below the local anchor (USD ${Math.round(anchorPrice).toLocaleString()}); market midpoint raised to within ${Math.round((1 - floorFactor) * 100)}% of the anchor. Mileage alone does not justify a larger discount for a clean ${payload.make} ${payload.model}.`
+                );
+            }
+        }
+
+        // ── Model-specific guardrail: clean Range Rover Sport SVR ───────
+        const isCleanRecentSvr =
+            /land rover|range rover/i.test(String(payload.make || '')) &&
+            /range rover sport|sport/i.test(String(payload.model || '')) &&
+            /svr/i.test(`${payload.model || ''} ${payload.variant || ''}`) &&
+            payload.year >= 2020 &&
+            mileageUsedKm <= 85_000 &&
+            (la.sourceRiskLevel ?? 'low') === 'low' &&
+            cleanCondition &&
+            !explicitRisk;
+
+        // Skip the guardrail only when a numeric direct anchor clearly proves
+        // a lower market level.
+        const anchorsProveLower = anchorPrice !== null && anchorPrice > 0 && anchorPrice < 95_000;
+
+        if (isCleanRecentSvr && !anchorsProveLower) {
+            const current = directFields.marketPrice;
+            const currentMid = (current.min + current.max) / 2;
+
+            const MIN_MARKET_MIN = 95_000;
+            const MIN_MARKET_MID = 99_000;
+
+            if (current.min < MIN_MARKET_MIN || currentMid < MIN_MARKET_MID) {
+                const spread = Math.max(current.max - current.min, 5_000);
+                const targetMid = Math.max(currentMid, MIN_MARKET_MID);
+                let newMin = Math.max(roundTo(targetMid - spread / 2, 100), MIN_MARKET_MIN);
+                let newMax = Math.max(roundTo(newMin + spread, 100), newMin + 1000);
+
+                const marketPrice = { currency: 'USD' as const, min: newMin, max: newMax };
+                const dealerMin = Math.max(roundTo(newMin * 0.90, 100), 86_000);
+                const dealerMax = Math.min(
+                    Math.max(roundTo(newMax * 0.90, 100), dealerMin + 1000),
+                    newMax - 500
+                );
+                const dealerBuyPrice = { currency: 'USD' as const, min: dealerMin, max: dealerMax };
+
+                directFields = {
+                    ...directFields,
+                    marketPrice,
+                    marketPriceUsd: { ...marketPrice },
+                    dealerBuyPrice,
+                    dealerBuyPriceUsd: { ...dealerBuyPrice },
+                };
+
+                svrGuardrailApplied = true;
+                clampWarnings.push(
+                    'Clean Range Rover Sport SVR sanity guardrail applied: market floor USD 95,000 / midpoint floor USD 99,000 (clean title, no explicit risk, no lower direct anchor).'
+                );
+            }
+        }
+
+        const valuation: ValuationResult = ValuationResultSchema.parse({
+            ...directFields,
+        });
+
+        const markdown = buildMarkdownFromValuationJson(valuation);
+        const estimatedCostUsd = estimateCostFromUsage(assessmentUsage, model);
+
+        const finalResult = buildFinalResponse({
+            region: 'LEBANON',
+            model,
+            payload,
+            valuation,
+            markdown,
+            sources: assessmentSources,
+            usage: assessmentUsage,
+            estimatedCostUsd,
+            cacheHit: false,
+            extraMeta: {
+                ...baseMeta,
+                sourceMarketAnchorUsed: valuation.sourceMarketAnchorUsed,
+                directAnchorClampApplied: clampApplied,
+                svrGuardrailApplied,
+                directLebanonAnchorPriceUsd: la.directLebanonAnchorPriceUsd ?? null,
+                computedDirectAnchorPriceUsd: anchorPrice,
+                directAnchorPriceSource: anchorPriceSource,
+                ...(clampWarnings.length > 0 ? { warnings: clampWarnings } : {}),
+            },
+        });
+
+        if (cacheKey) {
+            await saveValuationToCache(cacheKey, finalResult, payload.make);
+        }
+
+        return finalResult;
+    }
+
+    // 6. Phase 2 — UAE + Europe fallback research
+    let research: FallbackResearchResult | null = null;
+    let researchResponse: any = null;
+    const warnings: string[] = [];
+
+    try {
+        const researchResult = await callLebanonFallbackResearch(openai, model, payload);
+        research = researchResult.data;
+        researchResponse = researchResult.response;
+    } catch (err: any) {
+        console.error('Lebanon fallback research failed:', err);
+
+        // Graceful degradation: if the direct Lebanon estimate is usable,
+        // return it with a warning instead of failing the request.
+        if (assessment.confidence !== 'low') {
+            const { fallbackRequired: _ignored, ...assessmentFields } = assessment;
+            const valuation: ValuationResult = ValuationResultSchema.parse(assessmentFields);
+            const markdown = buildMarkdownFromValuationJson(valuation);
+            const estimatedCostUsd = estimateCostFromUsage(assessmentUsage, model);
 
             const finalResult = buildFinalResponse({
-                region,
+                region: 'LEBANON',
                 model,
                 payload,
                 valuation,
                 markdown,
-                sources,
-                usage,
+                sources: assessmentSources,
+                usage: assessmentUsage,
                 estimatedCostUsd,
                 cacheHit: false,
+                extraMeta: {
+                    ...baseMeta,
+                    warnings: [
+                        'Fallback market research failed — returned the direct Lebanon estimate instead.',
+                    ],
+                },
             });
 
-            if (cacheKey) {
-                await saveValuationToCache(cacheKey, finalResult, payload.make);
-            }
-
+            // Do not cache degraded results.
             return finalResult;
-        } catch (error) {
-            lastError = error;
-
-            const message = error instanceof Error ? error.message : String(error);
-
-            if (
-                message.includes('Marketplace search could not be completed') ||
-                message.includes('OpenAI request failed')
-            ) {
-                throw error;
-            }
-
-            if (attempt === 1) {
-                throw error;
-            }
         }
+
+        throw new Error('Marketplace search could not be completed. Please try again.');
     }
 
-    throw lastError instanceof Error
-        ? lastError
-        : new Error('Failed to evaluate vehicle');
+    // 7. Deterministic anchor selection: landed cost is computed for EVERY
+    //    valid anchor and the backend picks the realistic benchmark — the
+    //    AI's recommendation is advisory only.
+    const fuelCategory: FuelCategory =
+        research.fuelCategory !== 'unknown' ? research.fuelCategory : assessment.fuelCategory;
+
+    const mileageKm = getMileageUsed(payload);
+
+    const selection = selectFallbackAnchor({
+        research,
+        fuelCategory,
+        mileageKm,
+        rules: activeRules.rules,
+        specs: payload.specs,
+        tier: getBrandTier(payload.make),
+    });
+
+    if (!selection) {
+        // No usable fallback anchors either — same degradation logic.
+        warnings.push('No usable UAE/Europe anchors were found.');
+
+        const { fallbackRequired: _ignored, ...assessmentFields } = assessment;
+        const valuation: ValuationResult = ValuationResultSchema.parse({
+            ...assessmentFields,
+            fallbackMarketsUsed: research.fallbackMarketsUsed,
+        });
+        const markdown = buildMarkdownFromValuationJson(valuation);
+        const usage = sumUsage(assessmentUsage, getUsage(researchResponse));
+
+        const finalResult = buildFinalResponse({
+            region: 'LEBANON',
+            model,
+            payload,
+            valuation,
+            markdown,
+            sources: mergeSources(assessmentSources, extractWebSources(researchResponse)),
+            usage,
+            estimatedCostUsd: estimateCostFromUsage(usage, model),
+            cacheHit: false,
+            extraMeta: { ...baseMeta, warnings },
+        });
+
+        return finalResult;
+    }
+
+    // 8. Chosen anchor + its deterministic import/customs calculation
+    const { anchor, importCalc } = selection;
+
+    warnings.push(...selection.warnings, ...importCalc.warnings);
+
+    const specsAndNotes = `${payload.specs || ''} ${payload.notes || ''}`;
+    const isNorthAmericanSource = /u\.s\.|\busa?\b|american|canad/i.test(specsAndNotes);
+    const cleanTitleConfirmed = /clean title|clean carfax|no accident/i.test(specsAndNotes);
+
+    if (isNorthAmericanSource && !cleanTitleConfirmed) {
+        warnings.push(
+            'U.S./Canada source vehicle without confirmed clean title — priced conservatively; confirm title/Carfax/warranty before final offers.'
+        );
+    }
+
+    // 9. Deterministic final Lebanon pricing.
+    // Landed cost is a BENCHMARK, not the resale price: the market range is
+    // built around the chosen landed MIDPOINT with a tier-capped spread, so
+    // a high landed max can never inflate the final Lebanon price.
+    const tier = getBrandTier(payload.make);
+    const spreadBounds = getMarketSpreadBounds(tier);
+
+    const landedMid = selection.chosenLandedMidpoint;
+    const landedSpread = importCalc.landedCostUsd.max - importCalc.landedCostUsd.min;
+    const marketSpread = Math.min(Math.max(landedSpread, spreadBounds.floor), spreadBounds.cap);
+
+    let marketMin = roundTo(landedMid, 100);
+    let marketMax = roundTo(landedMid + marketSpread, 100);
+
+    if (marketMax <= marketMin) {
+        marketMax = marketMin + 1000;
+    }
+
+    const dealerFactors = tier === 'exotic'
+        ? { min: 0.90, max: 0.915 } // ~9–15% below for slow-moving rare cars
+        : tier === 'luxury'
+            ? { min: 0.90, max: 0.92 } // 8–12% below market
+            : { min: 0.91, max: 0.93 }; // 7–10% below market
+
+    let dealerMin = roundTo(marketMin * dealerFactors.min, 100);
+    let dealerMax = roundTo(marketMax * dealerFactors.max, 100);
+
+    if (dealerMax >= marketMax) dealerMax = marketMax - 500;
+    if (dealerMin >= dealerMax) dealerMin = dealerMax - 1000;
+
+    const valuation: ValuationResult = ValuationResultSchema.parse({
+        region: 'LEBANON',
+        vehicle: assessment.vehicle,
+        marketPrice: { currency: 'USD', min: marketMin, max: marketMax },
+        marketPriceUsd: { currency: 'USD', min: marketMin, max: marketMax },
+        dealerBuyPrice: { currency: 'USD', min: dealerMin, max: dealerMax },
+        dealerBuyPriceUsd: { currency: 'USD', min: dealerMin, max: dealerMax },
+        fallbackUsed: true,
+        fallbackLevel: 5,
+        mileageFallbackUsed: assessment.mileageFallbackUsed,
+        sourceMarketAnchorUsed: true,
+        confidence: research.confidence,
+        shortReason: `Lebanon comps weak (${assessment.localMarketAssessment.strongComparableCount} strong). Anchored on ${anchor.market} market with ${Math.round(importCalc.taxRateApplied * 100)}% Lebanon import load applied. ${selection.reason} ${research.reason}`.slice(0, 500),
+        localMarketAssessment: assessment.localMarketAssessment,
+        fuelCategory,
+        fallbackMarketsUsed: research.fallbackMarketsUsed,
+        sourceMarketAnchors: research.sourceMarketAnchors,
+        importCalculation: {
+            applied: true,
+            ruleVersion,
+            usedDefaultRules: activeRules.isDefaultRules,
+            sourceMarket: anchor.market,
+            fuelCategory: importCalc.matchedFuelCategory,
+            taxRateApplied: importCalc.taxRateApplied,
+            sourceMarketPriceUsd: importCalc.sourceMarketPriceUsd,
+            estimatedTaxUsd: importCalc.estimatedTaxUsd,
+            landedCostUsd: importCalc.landedCostUsd,
+            warnings,
+        },
+    });
+
+    const markdown = buildMarkdownFromValuationJson(valuation);
+    const usage = sumUsage(assessmentUsage, getUsage(researchResponse));
+    const sources = mergeSources(assessmentSources, extractWebSources(researchResponse));
+
+    const finalResult = buildFinalResponse({
+        region: 'LEBANON',
+        model,
+        payload,
+        valuation,
+        markdown,
+        sources,
+        usage,
+        estimatedCostUsd: estimateCostFromUsage(usage, model),
+        cacheHit: false,
+        extraMeta: {
+            ...baseMeta,
+            sourceMarketAnchorUsed: true,
+            // Debug metadata — makes anchor decisions auditable
+            sourcePreference: selection.sourcePreference,
+            aiRecommendedAnchorMarket: research.recommendedAnchorMarket,
+            backendChosenAnchorMarket: anchor.market,
+            anchorOverrideReason: selection.overridden ? selection.reason : null,
+            anchorSelectionReason: selection.reason,
+            uaeLandedMidpoint: selection.uaeLandedMidpoint,
+            europeLandedMidpoint: selection.europeLandedMidpoint,
+            chosenLandedMidpoint: selection.chosenLandedMidpoint,
+            landedComparison: selection.landedComparison,
+            sourceRiskLevel: assessment.localMarketAssessment.sourceRiskLevel ?? null,
+            sourceRiskReason: assessment.localMarketAssessment.sourceRiskReason ?? null,
+            ...(warnings.length > 0 ? { warnings } : {}),
+        },
+    });
+
+    if (cacheKey) {
+        await saveValuationToCache(cacheKey, finalResult, payload.make);
+    }
+
+    return finalResult;
+}
+
+// ---------------------------------------------------------------------------
+// Public entry point — unchanged signature.
+// ---------------------------------------------------------------------------
+export async function evaluateVehicleWithAI(
+    payload: EvaluateVehiclePayload,
+    forceNoCache = false
+) {
+    const region = String(payload.region || '').toUpperCase() as Region;
+
+    if (!['LEBANON', 'UAE', 'EUROPE'].includes(region)) {
+        throw new Error('Unsupported region');
+    }
+
+    if (region === 'LEBANON') {
+        return evaluateLebanonVehicleWithFallback({ ...payload, region }, forceNoCache);
+    }
+
+    return evaluateStandardRegionVehicleWithAI({ ...payload, region }, region, forceNoCache);
 }

@@ -217,7 +217,7 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Specs
+                  Specs / Source
                 </label>
                 <select
                   name="specs"
@@ -225,8 +225,15 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
                   onChange={handleInputChange}
                   className="carq-select"
                 >
-                  <option value="GCC">GCC</option>
-                  <option value="Import">Import</option>
+                  <option value="Company / Official dealer source">Company / Official dealer source</option>
+                  <option value="TGF Lebanon">TGF Lebanon</option>
+                  <option value="GCC">GCC source</option>
+                  <option value="European / Germany source">European / Germany source</option>
+                  <option value="U.S. source - clean title">U.S. source — clean title</option>
+                  <option value="U.S. source - accident/salvage">U.S. source — accident/salvage</option>
+                  <option value="Canada source">Canada source</option>
+                  <option value="China source">China source</option>
+                  <option value="Import">Generic import</option>
                   <option value="Unknown">Unknown</option>
                 </select>
               </div>

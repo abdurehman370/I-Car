@@ -15,6 +15,29 @@ model User {
   updatedAt       DateTime  @updatedAt
   createdAuctions Auction[]
   alerts          Alert[]
+  importRuleDocuments ImportRuleDocument[]
+}
+
+// Admin-uploaded customs/import rule documents (e.g. Lebanon import taxes).
+// Only one document per region should be `active` at a time.
+model ImportRuleDocument {
+  id               Int       @id @default(autoincrement())
+  region           String    @default("LEBANON")
+  originalFileName String
+  fileUrl          String
+  mimeType         String
+  sizeBytes        Int
+  extractedText    String    @db.LongText
+  rulesJson        Json?
+  status           String    @default("draft") // draft, active, archived
+  version          String    @unique
+  uploadedById     Int?
+  uploadedBy       User?     @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  activatedAt      DateTime?
+
+  @@index([region, status])
 }
 
 model Dealer {
