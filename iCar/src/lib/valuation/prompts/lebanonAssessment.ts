@@ -24,6 +24,13 @@ SOURCE RISK ADJUSTMENT:
 - "Company", "TGF", "agency", "official dealer" source: sourceRiskLevel low; no discount, may even deserve a small premium.
 - Never apply a large source-risk discount without an explicit risk signal in the notes or specs.
 
+NEW VEHICLE SOURCE HIERARCHY:
+For 0 km or nearly new luxury/performance vehicles in Lebanon, source affects buyer confidence even when title is clean.
+- Company/official dealer/TGF/agency source is strongest and should usually be the highest valuation.
+- European/Germany source is good but normally slightly below company/official source unless local warranty and registration are confirmed.
+- U.S. clean-title source is not accident-risk, but it usually carries lower Lebanon resale confidence than company/official or European/Germany source due to warranty/spec/support perception. Do not price U.S. source above company/official source unless explicit notes prove exceptional local support/options.
+- Clean title removes accident/title penalty; it does not create a premium over company source.
+
 STRONG COMPARABLE RULES:
 A strong Lebanon comparable must match:
 - same make/model/trim or clearly same variant

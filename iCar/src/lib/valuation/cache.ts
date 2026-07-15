@@ -1,7 +1,7 @@
 import { redisConnection } from '../queue';
 import crypto from 'crypto';
 
-const CACHE_VERSION = 'v6'; // bumped after numeric-anchor enforcement + stronger direct-comp clamp
+const CACHE_VERSION = 'v7'; // bumped after new-vehicle source-hierarchy calibration
 
 function normalize(value: unknown): string {
     if (value === null || value === undefined || value === '') return 'none';

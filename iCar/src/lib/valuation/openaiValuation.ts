@@ -531,6 +531,88 @@ const EXPLICIT_RISK_REGEX =
 
 const CLEAN_CONDITION_REGEX = /clean title|no accident|good service/i;
 
+// ---------------------------------------------------------------------------
+// Lebanon NEW-VEHICLE SOURCE HIERARCHY (direct/local path only)
+// Company/official > GCC > Europe/Germany > U.S./Canada clean > generic import.
+// Backend guarantees the ordering for brand-new luxury/exotic vehicles even
+// when the model over-prices a non-company source.
+// ---------------------------------------------------------------------------
+export type SourceHierarchyType =
+    | 'COMPANY' | 'GCC' | 'EUROPE' | 'US_CLEAN' | 'US_RISK'
+    | 'CANADA' | 'GENERIC_IMPORT' | 'UNKNOWN';
+
+function classifySourceHierarchy(
+    specs: string | null | undefined,
+    notes: string | null | undefined
+): SourceHierarchyType {
+    const s = String(specs || '').toLowerCase();
+    const all = `${s} ${String(notes || '').toLowerCase()}`;
+
+    const isUs = /u\.s\.|\busa?\b|american/.test(s);
+
+    if (isUs && /accident|salvage|bad carfax|title issue|non-clean/.test(all)) return 'US_RISK';
+    if (/\btgf\b|\btewtel\b|company|agency|official/.test(s)) return 'COMPANY';
+    if (/\bgcc\b|gulf|uae|dubai|saudi|qatar|kuwait/.test(s)) return 'GCC';
+    if (/german|europe|\beu\b/.test(s)) return 'EUROPE';
+    if (isUs) return 'US_CLEAN';
+    if (/canada|canadian/.test(s)) return 'CANADA';
+    if (/import|china/.test(s)) return 'GENERIC_IMPORT';
+    return 'UNKNOWN';
+}
+
+/** Notes that justify pricing a non-company source at company level. */
+const FULL_LOCAL_SUPPORT_REGEX =
+    /fully registered|duties paid|full warranty|local warranty|official warranty/i;
+
+type HierarchyAdjustment = {
+    marketFactor: number;
+    dealerFactors: { min: number; max: number };
+    reason: string;
+} | null;
+
+/**
+ * Midpoint adjustment per source type, relative to the (approximately
+ * company-equivalent) direct local valuation the model returns.
+ */
+function getSourceHierarchyAdjustment(
+    sourceType: SourceHierarchyType,
+    cleanCondition: boolean
+): HierarchyAdjustment {
+    switch (sourceType) {
+        case 'EUROPE':
+            return {
+                marketFactor: 0.98, // 2–5% below company level
+                dealerFactors: { min: 0.91, max: 0.91 },
+                reason: 'European/Germany source priced slightly below company/official level (no confirmed local warranty/registration).',
+            };
+        case 'US_CLEAN':
+        case 'CANADA':
+            return {
+                marketFactor: 0.94, // 5–10% below company level
+                dealerFactors: { min: 0.90, max: 0.905 },
+                reason: 'U.S./Canada clean-title source priced below company/official and European source — Lebanon resale confidence, warranty/spec/support perception.',
+            };
+        case 'GENERIC_IMPORT':
+            // Clean provenance proven in notes → neutral (model already buffers).
+            return cleanCondition
+                ? null
+                : {
+                    marketFactor: 0.97, // 3–7% conservative buffer
+                    dealerFactors: { min: 0.90, max: 0.91 },
+                    reason: 'Generic import without confirmed clean provenance — conservative source buffer applied.',
+                };
+        case 'US_RISK':
+            // Explicit risk: the assessment prompt already applies 12–25%;
+            // no additional backend discount to avoid double-counting.
+            return null;
+        case 'COMPANY':
+        case 'GCC':
+        case 'UNKNOWN':
+        default:
+            return null;
+    }
+}
+
 type LocalAnchorLike = {
     year: number | null;
     mileageKm: number | null;
@@ -1069,6 +1151,59 @@ async function evaluateLebanonVehicleWithFallback(
             }
         }
 
+        // ── Source-hierarchy calibration (brand-new luxury/exotic) ──────
+        // Guarantees Company/Official ≥ GCC ≥ Europe ≥ U.S./Canada clean for
+        // 0 km / current-model-year luxury vehicles priced from local comps.
+        // Never runs when the anchor clamp or SVR guardrail already adjusted
+        // the price (preserves the Portofino/SVR/GLE behaviors).
+        const sourceHierarchyType = classifySourceHierarchy(payload.specs, payload.notes);
+        let sourceHierarchyCalibrationApplied = false;
+        let sourceHierarchyAdjustmentReason: string | null = null;
+
+        const isNewish =
+            payload.year >= new Date().getFullYear() || mileageUsedKm <= 5000;
+
+        if (
+            !clampApplied &&
+            !svrGuardrailApplied &&
+            directFields.sourceMarketAnchorUsed === false &&
+            isPerformanceLuxury(payload) &&
+            isNewish &&
+            sourceHierarchyType !== 'UNKNOWN' &&
+            !FULL_LOCAL_SUPPORT_REGEX.test(`${payload.specs || ''} ${payload.notes || ''}`)
+        ) {
+            const adjustment = getSourceHierarchyAdjustment(sourceHierarchyType, cleanCondition);
+
+            if (adjustment) {
+                const current = directFields.marketPrice;
+                const newMin = roundTo(current.min * adjustment.marketFactor, 100);
+                const newMax = Math.max(
+                    roundTo(current.max * adjustment.marketFactor, 100),
+                    newMin + 1000
+                );
+
+                const marketPrice = { currency: 'USD' as const, min: newMin, max: newMax };
+                const dealerMin = roundTo(newMin * adjustment.dealerFactors.min, 100);
+                const dealerMax = Math.min(
+                    Math.max(roundTo(newMax * adjustment.dealerFactors.max, 100), dealerMin + 1000),
+                    newMax - 500
+                );
+                const dealerBuyPrice = { currency: 'USD' as const, min: dealerMin, max: dealerMax };
+
+                directFields = {
+                    ...directFields,
+                    marketPrice,
+                    marketPriceUsd: { ...marketPrice },
+                    dealerBuyPrice,
+                    dealerBuyPriceUsd: { ...dealerBuyPrice },
+                };
+
+                sourceHierarchyCalibrationApplied = true;
+                sourceHierarchyAdjustmentReason = adjustment.reason;
+                clampWarnings.push(`Source-hierarchy calibration applied: ${adjustment.reason}`);
+            }
+        }
+
         const valuation: ValuationResult = ValuationResultSchema.parse({
             ...directFields,
         });
@@ -1094,6 +1229,9 @@ async function evaluateLebanonVehicleWithFallback(
                 directLebanonAnchorPriceUsd: la.directLebanonAnchorPriceUsd ?? null,
                 computedDirectAnchorPriceUsd: anchorPrice,
                 directAnchorPriceSource: anchorPriceSource,
+                sourceHierarchyCalibrationApplied,
+                sourceHierarchySourceType: sourceHierarchyType,
+                sourceHierarchyAdjustmentReason,
                 ...(clampWarnings.length > 0 ? { warnings: clampWarnings } : {}),
             },
         });
