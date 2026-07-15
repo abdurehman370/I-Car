@@ -13,8 +13,28 @@ import {
   isUserPortalArea,
 } from "@/lib/portal-access";
 
+// Secret admin-portal gate. When ADMIN_PORTAL_SECRET is set, the admin pages
+// are hidden: visiting /admin_<secret> once sets a gate cookie, after which
+// /admin/* works normally in that browser. Without the cookie (and without an
+// active admin session), /admin/* silently redirects to the homepage.
+const ADMIN_GATE_COOKIE = "admin-portal-key";
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const adminPortalSecret = process.env.ADMIN_PORTAL_SECRET || "";
+
+  // Secret entry URL: /admin_<secret> → set gate cookie → login page
+  if (adminPortalSecret && pathname === `/admin_${adminPortalSecret}`) {
+    const res = NextResponse.redirect(new URL("/admin/login", request.url));
+    res.cookies.set(ADMIN_GATE_COOKIE, adminPortalSecret, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+      path: "/",
+    });
+    return res;
+  }
 
   const isStatic =
     pathname.startsWith("/_next") ||
@@ -49,6 +69,18 @@ export async function middleware(request: NextRequest) {
   if (isAdminRoute || isAdminApiAuth) {
     const adminSessionResponse = await updateAdminSession(request);
     const isAdminAuthenticated = !!adminSessionResponse;
+
+    // Gate: admin PAGES require the secret gate cookie (or an active admin
+    // session). API routes keep their own session auth. Without the gate,
+    // pretend the admin portal doesn't exist.
+    if (adminPortalSecret && !pathname.startsWith("/api/")) {
+      const hasGateCookie =
+        request.cookies.get(ADMIN_GATE_COOKIE)?.value === adminPortalSecret;
+
+      if (!hasGateCookie && !isAdminAuthenticated) {
+        return NextResponse.redirect(new URL("/", request.url));
+      }
+    }
 
     if (!isAdminAuthenticated && !isAdminLoginPage && !isAdminApiAuth) {
       return NextResponse.redirect(new URL("/admin/login", request.url));
