@@ -32,7 +32,22 @@ const nextConfig = {
       { protocol: "https", hostname: "**.imgix.net", port: "" },
       { protocol: "https", hostname: "**.cloudfront.net", port: "" },
     ]
-  }
+  },
+  // Baseline security headers applied to all routes. These are safe defaults
+  // that do not require a Content-Security-Policy (CSP intentionally omitted
+  // to avoid breaking Next inline scripts / third-party image CDNs; add a
+  // scoped CSP separately once script/style sources are inventoried).
+  async headers() {
+    const securityHeaders = [
+      { key: "X-Frame-Options", value: "SAMEORIGIN" },
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "X-DNS-Prefetch-Control", value: "on" },
+      { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+      { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+    ];
+    return [{ source: "/:path*", headers: securityHeaders }];
+  },
 };
 
 export default nextConfig;

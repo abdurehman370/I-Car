@@ -2,6 +2,9 @@ import type { Auction, Prisma } from '@prisma/client';
 import prisma from '@/lib/db';
 import { sendAuctionStartedEmail, sendAuctionWonEmail } from '@/lib/mail';
 import { sendPushToDealer } from '@/lib/web-push';
+import { createLogger } from '@/lib/logger';
+
+const log = createLogger('auction-scheduler');
 
 type AuctionWithTopBid = Auction & {
   bids: { id: number; amount: Prisma.Decimal; dealerId: number | null }[];
@@ -23,7 +26,7 @@ async function notifyDealersAuctionStarted(auction: Auction) {
       dealer.email,
       dealer.contactPerson || dealer.dealershipName || 'User',
       auction
-    ).catch(console.error);
+    ).catch((err) => log.error('auction-started email failed', { err, dealerId: dealer.id, auctionId: auction.id }));
 
     await prisma.auctionNotification.create({
       data: {
@@ -40,7 +43,7 @@ async function notifyDealersAuctionStarted(auction: Auction) {
       body: `${auction.year} ${auction.make} ${auction.model} is now live.`,
       url: `/auctions/${auction.id}`,
       tag: `auction-${auction.id}-started`,
-    }).catch(console.error);
+    }).catch((err) => log.error('auction-started push failed', { err, dealerId: dealer.id, auctionId: auction.id }));
   }
 }
 
@@ -106,7 +109,7 @@ async function closeAuctionRecord(
         winner.contactPerson || winner.dealershipName || 'User',
         auction,
         highestBid.amount.toString()
-      ).catch(console.error);
+      ).catch((err) => log.error('auction-won email failed', { err, dealerId: winner.id, auctionId: auction.id }));
 
       await prisma.auctionNotification.create({
         data: {
@@ -123,7 +126,7 @@ async function closeAuctionRecord(
         body: `You won ${auction.year} ${auction.make} ${auction.model}.`,
         url: `/auctions/${auction.id}`,
         tag: `auction-${auction.id}-won`,
-      }).catch(console.error);
+      }).catch((err) => log.error('auction-won push failed', { err, dealerId: winner.id, auctionId: auction.id }));
     }
   }
 
@@ -154,9 +157,7 @@ export async function runAuctionScheduler(): Promise<AuctionSchedulerResult> {
   for (const auction of liveToClose) {
     const outcome = await closeAuctionRecord(auction);
     result.closed += 1;
-    console.log(
-      `[auction-scheduler] Closed auction #${auction.id} — outcome: ${outcome}`
-    );
+    log.info('Closed auction', { auctionId: auction.id, outcome });
   }
 
   const scheduledToStart = await prisma.auction.findMany({
@@ -175,9 +176,7 @@ export async function runAuctionScheduler(): Promise<AuctionSchedulerResult> {
     if (res.count === 0) continue; // another process already started it
     await notifyDealersAuctionStarted(auction);
     result.started += 1;
-    console.log(
-      `[auction-scheduler] Started auction #${auction.id}: ${auction.title}`
-    );
+    log.info('Started auction', { auctionId: auction.id, title: auction.title });
   }
 
   const scheduledExpired = await prisma.auction.findMany({
@@ -196,9 +195,7 @@ export async function runAuctionScheduler(): Promise<AuctionSchedulerResult> {
   for (const auction of scheduledExpired) {
     const outcome = await closeAuctionRecord(auction);
     result.expired += 1;
-    console.log(
-      `[auction-scheduler] Expired scheduled auction #${auction.id} — outcome: ${outcome}`
-    );
+    log.info('Expired scheduled auction', { auctionId: auction.id, outcome });
   }
 
   return result;

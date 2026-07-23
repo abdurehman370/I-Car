@@ -49,6 +49,22 @@ src/scripts/start-worker.ts  ←  long-running process (npm run worker)
 | `tsx` | Runs TypeScript directly, no build step |
 | `>> logs/cron-push.log` | Appends output to persistent log |
 
+### Auction scheduler cron (optional backup)
+
+The auction status scheduler already runs inside `start-worker.ts` every 30s.
+This cron is an optional backup trigger and **must use the same path
+convention** as above (project root `/home/abdurehman/Desktop/iCar/iCar`,
+absolute nvm `node`):
+
+```
+* * * * * cd /home/abdurehman/Desktop/iCar/iCar && /home/abdurehman/.nvm/versions/node/v20.20.0/bin/node node_modules/.bin/tsx src/scripts/cron-push-auctions.ts >> logs/cron-auctions.log 2>&1
+```
+
+> Deployment note: `/home/abdurehman/Desktop/iCar/iCar` and the nvm `node`
+> path are the single source of truth for cron entries. If you deploy to a
+> different location, update this file, `cron-push-alerts.ts`, and
+> `cron-push-auctions.ts` together so all three stay in sync.
+
 ---
 
 ## Files

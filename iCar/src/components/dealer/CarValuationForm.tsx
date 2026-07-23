@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Car, DollarSign, Loader2 } from "lucide-react";
+import { Car, DollarSign, Loader2, CalendarX2 } from "lucide-react";
 import { CarTaxonomyDropdowns } from "@/components/FormElements/CarTaxonomyDropdowns";
 import { MarketRegionSelect } from "@/components/FormElements/MarketRegionSelect";
 import { MileageFields } from "@/components/dealer/MileageFields";
@@ -55,17 +55,33 @@ const COPY: Record<
   },
 };
 
+interface InvalidVehicleInfo {
+  message: string;
+  correction?: {
+    make?: string;
+    model?: string;
+    submittedYear?: number | null;
+    earliestValidYear?: number | null;
+    latestKnownYear?: number | null;
+    suggestedYearRange?: string | null;
+    suggestedModelsForYear?: string[];
+  } | null;
+}
+
 export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
   const copy = COPY[variant];
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [markdown, setMarkdown] = useState<string | null>(null);
+  const [invalidVehicle, setInvalidVehicle] = useState<InvalidVehicleInfo | null>(null);
+  const [mileageMode, setMileageMode] = useState<"range" | "single">("range");
 
   const [formData, setFormData] = useState({
     make: "",
     model: "",
     variant: "",
     year: "",
+    mileageKm: "",
     mileageMinKm: "",
     mileageMaxKm: "",
     specs: "Unknown",
@@ -90,6 +106,7 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
     setLoading(true);
     setError("");
     setMarkdown(null);
+    setInvalidVehicle(null);
 
     try {
       const regionValue = buildStoredRegion(formData.region, formData.country);
@@ -104,8 +121,12 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
           model: formData.model,
           variant: formData.variant || undefined,
           year: parseInt(formData.year, 10),
-          mileageMin: parseInt(formData.mileageMinKm, 10),
-          mileageMax: parseInt(formData.mileageMaxKm, 10),
+          ...(mileageMode === "single"
+            ? { mileage: parseInt(formData.mileageKm, 10) }
+            : {
+                mileageMin: parseInt(formData.mileageMinKm, 10),
+                mileageMax: parseInt(formData.mileageMaxKm, 10),
+              }),
           specs: formData.specs,
           notes: formData.notes || undefined,
           images: [],
@@ -113,7 +134,12 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
       });
 
       const data = await res.json();
-      if (res.ok && data.markdown) {
+      if (res.ok && data.status === "invalid_vehicle") {
+        setInvalidVehicle({
+          message: data.message || "This vehicle/model-year combination is not valid.",
+          correction: data.correction || null,
+        });
+      } else if (res.ok && data.markdown) {
         setMarkdown(data.markdown);
       } else {
         setError(data.message || "Failed to get valuation");
@@ -217,7 +243,7 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Specs / Source
+                  Source
                 </label>
                 <select
                   name="specs"
@@ -239,18 +265,57 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
               </div>
             </div>
 
-            <MileageFields
-              mode="range"
-              mileageMinKm={formData.mileageMinKm}
-              mileageMaxKm={formData.mileageMaxKm}
-              onMileageMinKmChange={(v) =>
-                setFormData((prev) => ({ ...prev, mileageMinKm: v }))
-              }
-              onMileageMaxKmChange={(v) =>
-                setFormData((prev) => ({ ...prev, mileageMaxKm: v }))
-              }
-              required
-            />
+            <div className="space-y-4">
+              <div className="flex items-center gap-4">
+                <button
+                  type="button"
+                  onClick={() => setMileageMode("range")}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    mileageMode === "range"
+                      ? "bg-cyan-500/20 text-cyan-400 border-cyan-500/30 border"
+                      : "bg-white/5 text-gray-400 border border-transparent hover:bg-white/10"
+                  }`}
+                >
+                  Mileage Range
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMileageMode("single")}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    mileageMode === "single"
+                      ? "bg-cyan-500/20 text-cyan-400 border-cyan-500/30 border"
+                      : "bg-white/5 text-gray-400 border border-transparent hover:bg-white/10"
+                  }`}
+                >
+                  Exact Mileage
+                </button>
+              </div>
+
+              {mileageMode === "range" ? (
+                <MileageFields
+                  mode="range"
+                  mileageMinKm={formData.mileageMinKm}
+                  mileageMaxKm={formData.mileageMaxKm}
+                  onMileageMinKmChange={(v) =>
+                    setFormData((prev) => ({ ...prev, mileageMinKm: v }))
+                  }
+                  onMileageMaxKmChange={(v) =>
+                    setFormData((prev) => ({ ...prev, mileageMaxKm: v }))
+                  }
+                  required
+                />
+              ) : (
+                <MileageFields
+                  mode="single"
+                  mileageKm={formData.mileageKm}
+                  onMileageKmChange={(v) =>
+                    setFormData((prev) => ({ ...prev, mileageKm: v }))
+                  }
+                  label="Exact Mileage *"
+                  required
+                />
+              )}
+            </div>
 
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -280,6 +345,48 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
             </button>
           </form>
         </div>
+
+        {invalidVehicle && (
+          <div className="panel p-8 border-amber-500/25 bg-amber-500/[0.04]">
+            <div className="flex items-start gap-4">
+              <div className="h-11 w-11 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0">
+                <CalendarX2 className="size-5 text-amber-400" />
+              </div>
+              <div className="min-w-0 space-y-3">
+                <h2 className="text-xl font-bold text-foreground tracking-tight">Invalid model year</h2>
+                <p className="text-sm text-gray-300 leading-relaxed">{invalidVehicle.message}</p>
+
+                {invalidVehicle.correction && (
+                  <div className="flex flex-wrap gap-3 pt-1">
+                    {invalidVehicle.correction.submittedYear != null && (
+                      <div className="px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10">
+                        <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest">Submitted year</p>
+                        <p className="text-sm font-bold text-red-400 tabular-nums">{invalidVehicle.correction.submittedYear}</p>
+                      </div>
+                    )}
+                    {invalidVehicle.correction.earliestValidYear != null && (
+                      <div className="px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10">
+                        <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest">Earliest valid year</p>
+                        <p className="text-sm font-bold text-green-400 tabular-nums">{invalidVehicle.correction.earliestValidYear}</p>
+                      </div>
+                    )}
+                    {invalidVehicle.correction.suggestedModelsForYear &&
+                      invalidVehicle.correction.suggestedModelsForYear.length > 0 && (
+                        <div className="px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10">
+                          <p className="text-[9px] font-mono text-gray-500 uppercase tracking-widest">
+                            Valid {invalidVehicle.correction.submittedYear ?? ""} models
+                          </p>
+                          <p className="text-sm font-bold text-gray-200">
+                            {invalidVehicle.correction.suggestedModelsForYear.join(", ")}
+                          </p>
+                        </div>
+                      )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         {markdown && <ValuationReport markdown={markdown} title={copy.reportTitle} />}
       </div>

@@ -3,10 +3,23 @@ import { requiresAdminApproval } from '@/lib/dealer-roles';
 import { getPortalHomeForRole } from '@/lib/portal-access';
 import bcrypt from 'bcryptjs';
 import { loginDealer } from '@/lib/auth';
+import { rateLimit, getClientIp } from '@/lib/rate-limit';
+import { createLogger } from '@/lib/logger';
 import { NextResponse } from 'next/server';
+
+const log = createLogger('auth:dealer-login');
 
 export async function POST(request: Request) {
   try {
+    const ip = getClientIp(request);
+    const limit = await rateLimit(`login:dealer:${ip}`, { limit: 10, windowSec: 300 });
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { message: 'Too many login attempts. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(limit.retryAfterSec) } },
+      );
+    }
+
     const body = await request.json();
     const { email, password } = body;
 
@@ -48,7 +61,7 @@ export async function POST(request: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Login error:', error);
+    log.error('Dealer login error', { err: error });
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }
 }

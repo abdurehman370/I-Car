@@ -63,6 +63,21 @@ DIRECT LOCAL ANCHOR PRICING (mileage adjustment):
 - When multiple local references exist, bracket the target between the same-year direct anchor and older/higher-mileage references — do not rely on a single low reference too aggressively.
 - Report the direct anchor's asking price in directLebanonAnchorPriceUsd (USD, null if no anchor).
 
+LOCAL COMP CLUSTER PRICING:
+- For normal and luxury vehicles with multiple current local listings in a tight price cluster, use the cluster as the main valuation anchor.
+- Do not let one old/high asking listing push the market range above the current cluster.
+- Listings are asking prices, not guaranteed sold prices.
+- If 3+ current exact/near-exact listings are clustered within about 10–15%, the final market range should stay inside or just slightly above that cluster.
+- For European source, do not price above company/TGF/local warranty listings unless the notes confirm stronger warranty, registration, exceptional options, or condition.
+- If the same exact car exists in the marketplace at a lower current price, do not return a market max far above it unless you clearly identify a stronger comp.
+- Filter stale, inflated, duplicate, and old high listings as weaker anchors.
+
+MILEAGE AND IMPORT-DUTY NOTE:
+- Mileage should normally reduce value, but do not apply a hard rule that higher mileage must always produce a lower final price.
+- For Lebanon, hybrid / plug-in hybrid / mild-hybrid vehicles above 5,000 km may move from the reduced hybrid duty class to the gasoline-equivalent 63% duty class.
+- If that tax threshold materially affects the landed benchmark, explain it clearly.
+- Do not override the import-duty calculator with a lower-mileage hard ceiling.
+
 LBP / OLD REFERENCE RULE:
 - Use LBP prices only if the listing clearly represents current pricing and can be safely converted.
 - Do not use old LBP listings as strong pricing anchors.

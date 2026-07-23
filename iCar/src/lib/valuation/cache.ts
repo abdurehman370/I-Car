@@ -1,7 +1,10 @@
 import { redisConnection } from '../queue';
 import crypto from 'crypto';
+import { createLogger } from '../logger';
 
-const CACHE_VERSION = 'v7'; // bumped after new-vehicle source-hierarchy calibration
+const log = createLogger('valuation:cache');
+
+const CACHE_VERSION = 'v11'; // bumped: mileage monotonicity guard removed; Lebanon local-comp cluster cap + C200 calibration + import-duty threshold metadata
 
 function normalize(value: unknown): string {
     if (value === null || value === undefined || value === '') return 'none';
@@ -80,7 +83,7 @@ export async function getValuationFromCache(key: string) {
 
         return JSON.parse(cached);
     } catch (err) {
-        console.error('Redis cache get error:', err);
+        log.error('Redis cache get error', { err });
         return null;
     }
 }
@@ -91,7 +94,7 @@ export async function saveValuationToCache(key: string, data: any, make: string)
 
         await redisConnection.setex(key, ttlSeconds, JSON.stringify(data));
     } catch (err) {
-        console.error('Redis cache save error:', err);
+        log.error('Redis cache save error', { err });
     }
 }
 

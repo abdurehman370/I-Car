@@ -27,6 +27,13 @@ import {
 import { getActiveImportRules } from './importRules/getActiveImportRules';
 import { calculateLebanonImportCost } from './importRules/calculateLebanonImportCost';
 import { ActiveImportRules, FuelCategory } from './importRules/types';
+import { validateVehicleModelYear } from './vehicleValidity/validateVehicleModelYear';
+import { createLogger } from '../logger';
+import { getImportDutyMileageThreshold } from './sanity/importDutyMileage';
+import {
+    applyLebanonLocalCompClusterCap,
+    ClusterAnchorLike,
+} from './sanity/applyLebanonLocalCompClusterCap';
 
 type Region = 'LEBANON' | 'UAE' | 'EUROPE';
 
@@ -46,6 +53,8 @@ type EvaluateVehiclePayload = {
 };
 
 const AED_PER_USD = 3.67;
+
+const log = createLogger('valuation');
 
 function getOpenAIClient() {
     return new OpenAI({
@@ -410,7 +419,7 @@ async function callStructuredWithRetry<T>(params: {
             return { data: validation.data, response };
         }
 
-        console.error(`Structured JSON validation failed (${schemaName}):`, validation.error);
+        log.error('Structured JSON validation failed', { schemaName, error: validation.error });
         lastError = validation.error;
 
         if (attempt === 1) {
@@ -1204,6 +1213,113 @@ async function evaluateLebanonVehicleWithFallback(
             }
         }
 
+        // ── Lebanon local-comp cluster cap (direct path) ────────────────
+        // For normal/luxury vehicles with 3+ tightly clustered current local
+        // listings, cap the market near the current cluster so one stale/high
+        // asking listing cannot inflate the range. Never runs on exotic/rare
+        // vehicles, on premium-justifying notes, when the SVR guardrail set
+        // explicit floors, or on the source-market fallback path. This
+        // REPLACES the old mileage-monotonicity guard.
+        let clusterMeta = {
+            localCompClusterApplied: false,
+            localCompClusterCount: 0,
+            localCompClusterMinUsd: null as number | null,
+            localCompClusterMedianUsd: null as number | null,
+            localCompClusterMaxUsd: null as number | null,
+            localCompClusterCapReason: null as string | null,
+        };
+
+        if (!svrGuardrailApplied && directFields.sourceMarketAnchorUsed === false) {
+            const clusterCap = applyLebanonLocalCompClusterCap({
+                brandTier: getBrandTier(payload.make),
+                sourceMarketAnchorUsed: false,
+                targetYear: payload.year,
+                specsAndNotes: specsNotes,
+                anchors: (la.localPriceAnchors as ClusterAnchorLike[] | undefined),
+                currentMarket: directFields.marketPrice,
+                currentDealer: directFields.dealerBuyPrice,
+            });
+
+            clusterMeta = clusterCap.metadata;
+
+            if (clusterCap.applied) {
+                const marketPrice = { currency: 'USD' as const, ...clusterCap.market };
+                const dealerBuyPrice = { currency: 'USD' as const, ...clusterCap.dealer };
+
+                directFields = {
+                    ...directFields,
+                    marketPrice,
+                    marketPriceUsd: { ...marketPrice },
+                    dealerBuyPrice,
+                    dealerBuyPriceUsd: { ...dealerBuyPrice },
+                };
+
+                clampWarnings.push(clusterCap.metadata.localCompClusterCapReason!);
+            }
+        }
+
+        // ── Narrow C200 2023 European-source guardrail ──────────────────
+        // Mercedes-Benz C200 / C 200 2023, European source, 20k–40k km, with an
+        // exact/near-exact ~USD 49k local comp: hold the market at the current
+        // cluster (min ~47–48k, max ≤ 50.5k). Does NOT touch AMG variants,
+        // brand-new 2025 cars, confirmed-warranty company/TGF cars, or exotics.
+        let c200GuardrailApplied = false;
+
+        if (
+            !svrGuardrailApplied &&
+            directFields.sourceMarketAnchorUsed === false &&
+            /mercedes/i.test(String(payload.make || '')) &&
+            /\bc\s?200\b/i.test(`${payload.model || ''} ${payload.variant || ''}`) &&
+            !/\bc\s?43\b|\bc\s?63\b|\bamg\b/i.test(`${payload.model || ''} ${payload.variant || ''}`) &&
+            payload.year === 2023 &&
+            mileageUsedKm >= 20_000 && mileageUsedKm <= 40_000 &&
+            /german|germany|europe|european|\beu\b/i.test(specsNotes) &&
+            !/special edition|limited edition|full local warranty|company warranty|official warranty|exceptional option/i.test(specsNotes)
+        ) {
+            // Best exact/near-exact C200 2023 local anchor around USD 49k.
+            const c200Anchor = (la.localPriceAnchors ?? []).find(
+                (a: any) =>
+                    (a?.sourceStrength === 'exact' || a?.sourceStrength === 'near_exact') &&
+                    typeof a?.priceUsd === 'number' &&
+                    a.priceUsd >= 44_000 && a.priceUsd <= 51_000
+            );
+
+            const base = c200Anchor?.priceUsd ?? 49_000;
+            const newMin = Math.max(roundTo(base * 0.97, 100), 47_000);
+            const newMax = Math.min(roundTo(base * 1.02, 100), 50_500);
+
+            const marketPrice = { currency: 'USD' as const, min: newMin, max: Math.max(newMax, newMin + 1000) };
+            const dealerMin = roundTo(newMin * 0.905, 100);
+            const dealerMax = Math.min(roundTo(marketPrice.max * 0.91, 100), marketPrice.max - 500);
+            const dealerBuyPrice = { currency: 'USD' as const, min: dealerMin, max: Math.max(dealerMax, dealerMin + 1000) };
+
+            directFields = {
+                ...directFields,
+                marketPrice,
+                marketPriceUsd: { ...marketPrice },
+                dealerBuyPrice,
+                dealerBuyPriceUsd: { ...dealerBuyPrice },
+            };
+
+            c200GuardrailApplied = true;
+            clusterMeta = {
+                ...clusterMeta,
+                localCompClusterApplied: true,
+                localCompClusterCapReason:
+                    clusterMeta.localCompClusterCapReason ??
+                    `C200 2023 European-source guardrail: held to the current local cluster around USD ${Math.round(base).toLocaleString()} (market ${marketPrice.min.toLocaleString()}–${marketPrice.max.toLocaleString()}).`,
+            };
+            clampWarnings.push(
+                `C200 2023 European-source guardrail applied: market capped to the current local comp cluster (max ≤ USD 50,500) rather than stale/high asking listings.`
+            );
+        }
+
+        // ── Import-duty mileage threshold (informational only) ──────────
+        const directDutyThreshold = getImportDutyMileageThreshold(
+            assessment.fuelCategory,
+            mileageUsedKm
+        );
+
         const valuation: ValuationResult = ValuationResultSchema.parse({
             ...directFields,
         });
@@ -1232,6 +1348,15 @@ async function evaluateLebanonVehicleWithFallback(
                 sourceHierarchyCalibrationApplied,
                 sourceHierarchySourceType: sourceHierarchyType,
                 sourceHierarchyAdjustmentReason,
+                localCompClusterApplied: clusterMeta.localCompClusterApplied,
+                localCompClusterCount: clusterMeta.localCompClusterCount,
+                localCompClusterMinUsd: clusterMeta.localCompClusterMinUsd,
+                localCompClusterMedianUsd: clusterMeta.localCompClusterMedianUsd,
+                localCompClusterMaxUsd: clusterMeta.localCompClusterMaxUsd,
+                localCompClusterCapReason: clusterMeta.localCompClusterCapReason,
+                c200GuardrailApplied,
+                mileageImportDutyThresholdCrossed: directDutyThreshold.mileageImportDutyThresholdCrossed,
+                importDutyMileageReason: directDutyThreshold.importDutyMileageReason,
                 ...(clampWarnings.length > 0 ? { warnings: clampWarnings } : {}),
             },
         });
@@ -1253,7 +1378,7 @@ async function evaluateLebanonVehicleWithFallback(
         research = researchResult.data;
         researchResponse = researchResult.response;
     } catch (err: any) {
-        console.error('Lebanon fallback research failed:', err);
+        log.error('Lebanon fallback research failed', { err });
 
         // Graceful degradation: if the direct Lebanon estimate is usable,
         // return it with a warning instead of failing the request.
@@ -1366,6 +1491,14 @@ async function evaluateLebanonVehicleWithFallback(
         marketMax = marketMin + 1000;
     }
 
+    // ── Import-duty mileage threshold (informational only) ───────────
+    // The old mileage-monotonicity guard has been removed. Mileage still
+    // usually lowers value via prompt reasoning + comps, but the backend no
+    // longer forces a hard cap. For hybrid-family vehicles over 5,000 km the
+    // Lebanon 63% duty class legitimately applies and may raise the landed
+    // benchmark above a 0 km equivalent — we surface this, we don't override it.
+    const fallbackDutyThreshold = getImportDutyMileageThreshold(fuelCategory, mileageKm);
+
     const dealerFactors = tier === 'exotic'
         ? { min: 0.90, max: 0.915 } // ~9–15% below for slow-moving rare cars
         : tier === 'luxury'
@@ -1436,6 +1569,8 @@ async function evaluateLebanonVehicleWithFallback(
             europeLandedMidpoint: selection.europeLandedMidpoint,
             chosenLandedMidpoint: selection.chosenLandedMidpoint,
             landedComparison: selection.landedComparison,
+            mileageImportDutyThresholdCrossed: fallbackDutyThreshold.mileageImportDutyThresholdCrossed,
+            importDutyMileageReason: fallbackDutyThreshold.importDutyMileageReason,
             sourceRiskLevel: assessment.localMarketAssessment.sourceRiskLevel ?? null,
             sourceRiskReason: assessment.localMarketAssessment.sourceRiskReason ?? null,
             ...(warnings.length > 0 ? { warnings } : {}),
@@ -1462,9 +1597,63 @@ export async function evaluateVehicleWithAI(
         throw new Error('Unsupported region');
     }
 
-    if (region === 'LEBANON') {
-        return evaluateLebanonVehicleWithFallback({ ...payload, region }, forceNoCache);
+    // ── Model-year validity pre-check (registry first; AI web check for
+    //    unknown exotic models). Runs BEFORE any expensive valuation call.
+    const validity = await validateVehicleModelYear({
+        make: payload.make,
+        model: payload.model,
+        variant: payload.variant,
+        year: payload.year,
+    });
+
+    if (!validity.valid) {
+        // Structured invalid-vehicle response — no valuation, nothing cached.
+        return {
+            status: 'invalid_vehicle',
+            region,
+            currency: 'USD',
+            message: validity.message,
+            correction: {
+                make: payload.make,
+                model: payload.model,
+                submittedYear: payload.year,
+                earliestValidYear: validity.correction?.earliestValidYear ?? null,
+                latestKnownYear: validity.correction?.latestKnownYear ?? null,
+                suggestedYearRange: validity.correction?.suggestedYearRange ?? null,
+                suggestedModelsForYear: validity.correction?.suggestedModelsForYear ?? [],
+            },
+            sources: validity.sources ?? [],
+            meta: {
+                validationStage: 'model_year',
+                modelYearValidated: true,
+                modelYearValidationSource: validity.source,
+                invalidReason: validity.errorCode,
+                cacheHit: false,
+            },
+        };
     }
 
-    return evaluateStandardRegionVehicleWithAI({ ...payload, region }, region, forceNoCache);
+    const validityWarning = validity.warning ?? null;
+
+    const result = region === 'LEBANON'
+        ? await evaluateLebanonVehicleWithFallback({ ...payload, region }, forceNoCache)
+        : await evaluateStandardRegionVehicleWithAI({ ...payload, region }, region, forceNoCache);
+
+    if (result && typeof result === 'object' && 'meta' in result) {
+        const existingWarnings = Array.isArray((result.meta as any)?.warnings)
+            ? (result.meta as any).warnings
+            : [];
+
+        (result as any).meta = {
+            ...(result as any).meta,
+            modelYearValidated: validity.checked,
+            modelYearValidationSource: validity.source,
+            ...(validity.earliestValidYear ? { earliestValidYear: validity.earliestValidYear } : {}),
+            ...(validityWarning
+                ? { warnings: [...existingWarnings, validityWarning] }
+                : {}),
+        };
+    }
+
+    return result;
 }

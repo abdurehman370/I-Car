@@ -10,6 +10,8 @@ Use uploaded images only to verify visible condition, color, trim badges, body k
 Do not use images as price sources.
 If images show damage, repaint, heavy wear, missing parts, fake body kit, or trim mismatch, adjust valuation conservatively.
 
+Only return a valuation for a vehicle/model-year combination that exists. If a pre-validation step marks the vehicle invalid, do not value it.
+
 CORE RULE:
 Always produce:
 1. Market Price

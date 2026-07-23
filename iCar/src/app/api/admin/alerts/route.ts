@@ -1,14 +1,12 @@
 import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth";
-
 export async function GET(request: NextRequest) {
     try {
         const session = await getAdminSession();
         if (!session) {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
-
         const alerts = await prisma.alert.findMany({
             orderBy: { createdAt: 'desc' },
             include: {

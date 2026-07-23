@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import {
-  TrendingUp, TrendingDown, Car, DollarSign, Bell, Sparkles,
-  ArrowUpRight, MapPin, Gauge, Calendar, Eye, MoreHorizontal, Activity, Plus,
-  PlusCircle, Edit2, Trash2, Loader2, CheckCircle, AlertCircle, ChevronRight
+  TrendingUp, TrendingDown, Car, Sparkles,
+  ArrowUpRight, MapPin, Gauge, Calendar, Eye, Activity,
+  PlusCircle, Edit2, Trash2, Loader2, CheckCircle, AlertCircle
 } from "lucide-react";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
 import { AnimatedNumber } from "@/components/ui/animated-number";
@@ -16,7 +16,18 @@ import ListingEditModal, {
   type ListingEditForm,
   listingToEditForm,
 } from "@/components/dealer/ListingEditModal";
-import { activity, trendData } from "@/lib/mock-data";
+
+function relativeTime(iso: string): string {
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60_000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `${days}d ago`;
+  return `${Math.floor(days / 30)}mo ago`;
+}
 
 interface ListingImage {
   id: string;
@@ -134,6 +145,59 @@ export default function DealerDashboard() {
   const activeListings = listings.filter(l => l.status === 'ACTIVE');
   const totalValue = activeListings.reduce((sum, l) => sum + l.price, 0);
 
+  // Real dashboard analytics derived from the dealer's own listings
+  // (replaces the previous hardcoded mock activity/trend data).
+  const { trendData, activityFeed, addedLast7, avgDaysListed } = useMemo(() => {
+    const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const now = new Date();
+
+    // 12 rolling month buckets ending with the current month.
+    const buckets = Array.from({ length: 12 }, (_, idx) => {
+      const d = new Date(now.getFullYear(), now.getMonth() - (11 - idx), 1);
+      return {
+        month: MONTHS[d.getMonth()],
+        start: d.getTime(),
+        end: new Date(d.getFullYear(), d.getMonth() + 1, 1).getTime(),
+        added: 0,
+      };
+    });
+
+    for (const l of listings) {
+      const t = new Date(l.createdAt).getTime();
+      const b = buckets.find(bk => t >= bk.start && t < bk.end);
+      if (b) b.added += 1;
+    }
+
+    const trend = buckets.map(b => ({
+      month: b.month,
+      added: b.added,
+      // cumulative inventory: listings created on or before the end of this month
+      total: listings.filter(l => new Date(l.createdAt).getTime() < b.end).length,
+    }));
+
+    const feed = [...listings]
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, 5)
+      .map(l => ({
+        id: l.id,
+        type: l.status === 'ACTIVE' ? 'valuation' : 'edit',
+        text: `${l.make} ${l.model} ${l.year} · ${l.currency} ${l.price.toLocaleString()}`,
+        time: relativeTime(l.createdAt),
+      }));
+
+    const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    const added7 = listings.filter(l => new Date(l.createdAt).getTime() >= weekAgo).length;
+
+    const active = listings.filter(l => l.status === 'ACTIVE');
+    const avgDays = active.length
+      ? Math.round(active.reduce((s, l) => s + (Date.now() - new Date(l.createdAt).getTime()) / 86_400_000, 0) / active.length)
+      : 0;
+
+    return { trendData: trend, activityFeed: feed, addedLast7: added7, avgDaysListed: avgDays };
+  }, [listings]);
+
+  const inactiveCount = listings.length - activeListings.length;
+
   return (
     <div className="space-y-8 max-w-[1600px] mx-auto p-4 md:p-8">
       {/* HERO INTELLIGENCE PANEL */}
@@ -160,8 +224,12 @@ export default function DealerDashboard() {
                 <span className="text-gradient capitalize">Dealer</span>
               </h1>
               <p className="text-muted-foreground mt-3 max-w-lg text-sm">
-                Your inventory is up <span className="text-success font-medium">12.4%</span> this week.
-                3 new market matches arrived overnight.
+                {loading
+                  ? "Loading your inventory…"
+                  : listings.length === 0
+                    ? "No listings yet — add your first vehicle to get started."
+                    : <>You have <span className="text-success font-medium">{activeListings.length}</span> active {activeListings.length === 1 ? "listing" : "listings"}
+                      {addedLast7 > 0 ? <> · <span className="text-success font-medium">{addedLast7}</span> added this week</> : null}.</>}
               </p>
             </div>
 
@@ -181,10 +249,10 @@ export default function DealerDashboard() {
 
           {/* Right — hero KPI cluster */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-3">
-            <HeroKpi label="ACTIVE LISTINGS" value={loading ? 0 : activeListings.length} delta="+8" trend="up" />
-            <HeroKpi label="PORTFOLIO VALUE" value={loading ? 0 : totalValue} prefix="AED " delta="+12.4%" trend="up" />
-            <HeroKpi label="ALERTS TODAY" value={7} delta="3 new" trend="up" />
-            <HeroKpi label="AVG. DAYS LISTED" value={18} suffix="d" delta="-3" trend="down" />
+            <HeroKpi label="ACTIVE LISTINGS" value={loading ? 0 : activeListings.length} delta={addedLast7 > 0 ? `+${addedLast7} · 7d` : ""} trend="up" />
+            <HeroKpi label="PORTFOLIO VALUE" value={loading ? 0 : totalValue} prefix="AED " delta={activeListings.length > 0 ? `${activeListings.length} active` : ""} trend="up" />
+            <HeroKpi label="TOTAL LISTINGS" value={loading ? 0 : listings.length} delta={inactiveCount > 0 ? `${inactiveCount} inactive` : ""} trend="up" />
+            <HeroKpi label="AVG. DAYS LISTED" value={loading ? 0 : avgDaysListed} suffix="d" delta="" trend="up" />
           </div>
         </div>
       </motion.section>
@@ -198,12 +266,12 @@ export default function DealerDashboard() {
         >
           <div className="flex items-start justify-between mb-6">
             <div>
-              <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground uppercase">Performance · 12M</p>
-              <h3 className="text-xl font-semibold mt-1">Listings & Valuations</h3>
+              <p className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground uppercase">Inventory · 12M</p>
+              <h3 className="text-xl font-semibold mt-1">Listings Growth</h3>
             </div>
             <div className="flex items-center gap-4 text-xs">
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-primary" /> Listings</span>
-              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent" /> Valuations</span>
+              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-primary" /> Added</span>
+              <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent" /> Total</span>
             </div>
           </div>
           <div className="h-64">
@@ -223,8 +291,8 @@ export default function DealerDashboard() {
                 <XAxis dataKey="month" stroke="#6B7280" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis stroke="#6B7280" fontSize={11} tickLine={false} axisLine={false} />
                 <Tooltip />
-                <Area type="monotone" dataKey="listings" stroke="#22d3ee" strokeWidth={3} fill="url(#g1)" />
-                <Area type="monotone" dataKey="valuations" stroke="#2dd4bf" strokeWidth={3} fill="url(#g2)" />
+                <Area type="monotone" dataKey="added" stroke="#22d3ee" strokeWidth={3} fill="url(#g1)" />
+                <Area type="monotone" dataKey="total" stroke="#2dd4bf" strokeWidth={3} fill="url(#g2)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -243,7 +311,12 @@ export default function DealerDashboard() {
             <Activity className="h-4 w-4 text-primary animate-glow" />
           </div>
           <div className="space-y-3 flex-1 overflow-y-auto max-h-[250px] no-scrollbar">
-            {activity.map((a, i) => (
+            {activityFeed.length === 0 && (
+              <p className="text-sm text-muted-foreground py-8 text-center">
+                {loading ? "Loading activity…" : "No recent activity yet."}
+              </p>
+            )}
+            {activityFeed.map((a, i) => (
               <motion.div
                 key={a.id}
                 initial={{ opacity: 0, x: 10 }}
@@ -350,10 +423,12 @@ function HeroKpi({ label, value, delta, trend, prefix, suffix }: any) {
       <p className="text-3xl font-bold tracking-tight text-foreground group-hover:text-cyan-400 transition-colors">
         <AnimatedNumber value={value} prefix={prefix} suffix={suffix} />
       </p>
-      <div className={`mt-2 inline-flex items-center gap-1 text-[11px] font-mono ${trend === "up" ? "text-cyan-400" : "text-red-400"}`}>
-        {trend === "up" ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-        {delta}
-      </div>
+      {delta ? (
+        <div className={`mt-2 inline-flex items-center gap-1 text-[11px] font-mono ${trend === "up" ? "text-cyan-400" : "text-red-400"}`}>
+          {trend === "up" ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+          {delta}
+        </div>
+      ) : null}
       <div className="absolute -right-4 -bottom-4 h-16 w-16 rounded-full bg-cyan-400/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
     </div>
   );

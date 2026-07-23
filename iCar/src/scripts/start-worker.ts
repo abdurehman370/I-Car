@@ -22,6 +22,9 @@ import { ExpressAdapter } from '@bull-board/express';
 import { createAlertWorker } from '../lib/alert-worker';
 import { runAuctionScheduler } from '../lib/auction-scheduler';
 import { alertQueue } from '../lib/queue';
+import { createLogger } from '../lib/logger';
+
+const log = createLogger('worker');
 
 const BOARD_PORT = parseInt(process.env.BULL_BOARD_PORT || '3001');
 const AUCTION_TICK_MS = parseInt(process.env.AUCTION_SCHEDULER_INTERVAL_MS || '30000', 10);
@@ -30,7 +33,7 @@ const AUCTION_TICK_MS = parseInt(process.env.AUCTION_SCHEDULER_INTERVAL_MS || '3
 // 1. Start the BullMQ worker
 // ---------------------------------------------------------------------------
 const worker = createAlertWorker();
-console.log(`[${new Date().toISOString()}] [worker] Alert worker started (concurrency=5)`);
+log.info('Alert worker started', { concurrency: 5 });
 
 // ---------------------------------------------------------------------------
 // 1b. Auction scheduler — auto start/close without relying on system cron
@@ -39,20 +42,16 @@ async function tickAuctionScheduler() {
   try {
     const result = await runAuctionScheduler();
     if (result.started > 0 || result.closed > 0 || result.expired > 0) {
-      console.log(
-        `[${new Date().toISOString()}] [worker] Auction scheduler — started: ${result.started}, closed: ${result.closed}, expired: ${result.expired}`
-      );
+      log.info('Auction scheduler tick', result);
     }
   } catch (error) {
-    console.error(`[${new Date().toISOString()}] [worker] Auction scheduler error:`, error);
+    log.error('Auction scheduler error', { err: error });
   }
 }
 
 void tickAuctionScheduler();
 const auctionSchedulerTimer = setInterval(tickAuctionScheduler, AUCTION_TICK_MS);
-console.log(
-  `[${new Date().toISOString()}] [worker] Auction scheduler running every ${AUCTION_TICK_MS / 1000}s`
-);
+log.info('Auction scheduler running', { everySeconds: AUCTION_TICK_MS / 1000 });
 
 // ---------------------------------------------------------------------------
 // 2. Bull Board dashboard (Express)
@@ -74,18 +73,18 @@ app.get('/health', (_req, res) => {
 });
 
 app.listen(BOARD_PORT, () => {
-    console.log(`[${new Date().toISOString()}] [worker] Bull Board running at http://localhost:${BOARD_PORT}/admin/queues`);
+    log.info('Bull Board running', { url: `http://localhost:${BOARD_PORT}/admin/queues` });
 });
 
 // ---------------------------------------------------------------------------
 // Graceful shutdown — wait for active jobs to finish before exiting
 // ---------------------------------------------------------------------------
 async function shutdown(signal: string) {
-    console.log(`[${new Date().toISOString()}] [worker] Received ${signal} — shutting down gracefully...`);
+    log.info('Received signal — shutting down gracefully', { signal });
     clearInterval(auctionSchedulerTimer);
     await worker.close();
     await alertQueue.close();
-    console.log(`[${new Date().toISOString()}] [worker] Shutdown complete`);
+    log.info('Shutdown complete');
     process.exit(0);
 }
 

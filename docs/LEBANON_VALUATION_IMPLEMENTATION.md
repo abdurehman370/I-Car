@@ -10,8 +10,12 @@ original single-call flow.
 
 ```
 Dealer/Partner form (CarValuationForm)
-   fields: market/region, make, model, variant, year, mileage min–max,
-           specs/source dropdown, notes
+   fields: market (UAE/Lebanon/Europe + Europe country via regions.ts),
+           make, model, variant, year,
+           mileage MODE TOGGLE: range (min–max) OR exact single km,
+           specs/source dropdown (Company/Official, TGF Lebanon, GCC,
+           European/Germany, U.S. clean, U.S. accident/salvage, Canada,
+           China, Generic import, Unknown), notes
       │  POST /api/dealer/evaluate  (requireValuationSession)
       ▼
 evaluateVehicleWithAI()                     src/lib/valuation/openaiValuation.ts

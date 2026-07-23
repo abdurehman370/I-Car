@@ -1,6 +1,9 @@
 import 'dotenv/config';
 import { Queue, QueueEvents } from 'bullmq';
 import IORedis from 'ioredis';
+import { createLogger } from './logger';
+
+const log = createLogger('queue');
 
 // ---------------------------------------------------------------------------
 // Redis connection
@@ -13,7 +16,7 @@ export const redisConnection = new IORedis(process.env.REDIS_URL || 'redis://127
 });
 
 redisConnection.on('error', (err) => {
-    console.error('[Redis] Connection error:', err.message);
+    log.error('Redis connection error', { message: err.message });
 });
 
 // ---------------------------------------------------------------------------

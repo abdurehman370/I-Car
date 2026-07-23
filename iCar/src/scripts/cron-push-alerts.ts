@@ -15,9 +15,12 @@
 import 'dotenv/config';
 import prisma from '../lib/db';
 import { alertQueue, AlertJobData } from '../lib/queue';
+import { createLogger } from '../lib/logger';
+
+const log = createLogger('cron-push-alerts');
 
 async function pushAlertJobs(): Promise<void> {
-    console.log(`[${new Date().toISOString()}] [cron-push] Starting alert job enqueue...`);
+    log.info('Starting alert job enqueue');
 
     try {
         // Fetch only enabled alerts (toggle off = cron skips)
@@ -26,7 +29,7 @@ async function pushAlertJobs(): Promise<void> {
             include: { dealer: true },
         });
 
-        console.log(`[${new Date().toISOString()}] [cron-push] Found ${alerts.length} alert(s) to enqueue`);
+        log.info('Found alerts to enqueue', { count: alerts.length });
 
         for (const alert of alerts) {
             const jobData: AlertJobData = {
@@ -54,12 +57,12 @@ async function pushAlertJobs(): Promise<void> {
                 jobId, // BullMQ ignores duplicate jobIds — idempotent enqueue
             });
 
-            console.log(`[${new Date().toISOString()}] [cron-push] Enqueued job ${jobId}`);
+            log.info('Enqueued job', { jobId });
         }
 
-        console.log(`[${new Date().toISOString()}] [cron-push] Done — ${alerts.length} job(s) enqueued`);
-    } catch (err: any) {
-        console.error(`[${new Date().toISOString()}] [cron-push] ERROR: ${err.message}`);
+        log.info('Done — jobs enqueued', { count: alerts.length });
+    } catch (err) {
+        log.error('cron-push-alerts failed', { err });
         process.exit(1);
     } finally {
         await prisma.$disconnect();
