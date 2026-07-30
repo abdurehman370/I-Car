@@ -3,6 +3,12 @@ import { getImportDutyMileageThreshold } from '../src/lib/valuation/sanity/impor
 import { calculateLebanonImportCost } from '../src/lib/valuation/importRules/calculateLebanonImportCost';
 import { DEFAULT_LEBANON_IMPORT_RULES } from '../src/lib/valuation/importRules/defaultRules';
 import { findRegistryEntry } from '../src/lib/valuation/vehicleValidity/modelYearRegistry';
+import { selectTrustedDirectAnchor, isNonSpecificListingUrl, anchorStats } from '../src/lib/valuation/sanity/anchorTrust';
+import {
+    classifySubmittedVehicleSource,
+    applyLebanonFallbackSourceHierarchy,
+    getModelYearAgingFactor,
+} from '../src/lib/valuation/sanity/applyLebanonSourceHierarchyCalibration';
 
 let pass = 0;
 let fail = 0;
@@ -148,6 +154,128 @@ console.log('\n== Test 2 basis: Revuelto registry blocks 2020 ==');
     ok('earliestValidYear 2024', entry?.earliestValidYear === 2024, entry);
     ok('2020 < earliest => invalid', !!entry && 2020 < (entry.earliestValidYear as number));
     ok('2026 >= earliest => valid', !!entry && 2026 >= (entry.earliestValidYear as number));
+}
+
+console.log('\n== Anchor trust: PROD C200 case (2 anchors: 46.9k + fabricated 54.5k) ==');
+{
+  // Exactly what the model returned in production: a near_exact $46,900 and a
+  // lone "exact" $54,500 (>15% above), both from search-page URLs.
+  const anchors = [
+    { year: 2023, mileageKm: 30000, priceUsd: 54500, sourceStrength: 'exact', url: 'https://www.olx.com.lb/vehicles/cars-for-sale/beirut/q-c200-200/' },
+    { year: 2023, mileageKm: 19056, priceUsd: 46900, sourceStrength: 'near_exact', url: 'https://www.olx.com.lb/en/vehicles/cars-for-sale/q-c200-mercedes/' },
+  ] as any;
+  const t = selectTrustedDirectAnchor(anchors, 2023, 30000);
+  ok('trusted anchor chosen', !!t, t);
+  ok('54,500 distrusted as high outlier (>15% above 46,900)', t?.distrustedOutlierUsd === 54500, t);
+  ok('re-anchored to the real 46,900 comp', t?.priceUsd === 46900, t);
+}
+
+console.log('\n== Anchor trust: legit 49k present → 54.5k NOT distrusted, prefer specific-url exact ==');
+{
+  // If a real $49k exact exists, $54.5k is only ~11% above it → within tolerance,
+  // and the specific-ad-url $49k should win over a search-page $54.5k.
+  const anchors = [
+    { year: 2023, mileageKm: 30000, priceUsd: 49000, sourceStrength: 'exact', url: 'https://www.olx.com.lb/ad/mercedes-c200-2023-iid1234567' },
+    { year: 2023, mileageKm: 30000, priceUsd: 54500, sourceStrength: 'exact', url: 'https://www.olx.com.lb/vehicles/cars-for-sale/beirut/q-c200-200/' },
+    { year: 2023, mileageKm: 19056, priceUsd: 46900, sourceStrength: 'near_exact', url: 'https://x/ad/2' },
+  ] as any;
+  const t = selectTrustedDirectAnchor(anchors, 2023, 30000);
+  ok('no distrust when a legit mid comp exists', t?.distrustedOutlierUsd === null, t);
+  ok('prefers specific-ad-url exact ($49k)', t?.priceUsd === 49000, t);
+}
+
+console.log('\n== Anchor trust: tight cluster (GLE 53 98–103k) is NOT distrusted ==');
+{
+  const anchors = [
+    { year: 2023, mileageKm: 20000, priceUsd: 98000, sourceStrength: 'exact', url: 'https://x/ad/1' },
+    { year: 2023, mileageKm: 25000, priceUsd: 101000, sourceStrength: 'near_exact', url: 'https://x/ad/2' },
+    { year: 2023, mileageKm: 30000, priceUsd: 103000, sourceStrength: 'same_model', url: 'https://x/ad/3' },
+  ] as any;
+  const t = selectTrustedDirectAnchor(anchors, 2023, 22000);
+  ok('no outlier distrusted (tight cluster)', t?.distrustedOutlierUsd === null, t);
+  ok('keeps a top-of-cluster anchor', (t?.priceUsd ?? 0) >= 98000, t);
+}
+
+console.log('\n== Anchor trust: single anchor returned unchanged ==');
+{
+  const t = selectTrustedDirectAnchor([{ year: 2023, mileageKm: 10000, priceUsd: 99000, sourceStrength: 'exact', url: 'https://x/ad/1' }] as any, 2023, 10000);
+  ok('single anchor used as-is', t?.priceUsd === 99000 && t?.distrustedOutlierUsd === null, t);
+}
+
+console.log('\n== URL classification ==');
+{
+  ok('search q- URL is non-specific', isNonSpecificListingUrl('https://www.olx.com.lb/vehicles/cars-for-sale/beirut/q-c200-200/') === true);
+  ok('?q= URL is non-specific', isNonSpecificListingUrl('https://site/search?q=c200') === true);
+  ok('individual ad URL is specific', isNonSpecificListingUrl('https://www.olx.com.lb/ad/mercedes-c200-iid1234567') === false);
+  ok('null URL treated as non-specific', isNonSpecificListingUrl(null) === true);
+}
+
+console.log('\n== anchorStats: never null when count>0 ==');
+{
+  const s = anchorStats([46900]);
+  ok('count 1 populated (no null with data)', s.count === 1 && s.minUsd === 46900 && s.medianUsd === 46900 && s.maxUsd === 46900, s);
+  const empty = anchorStats([]);
+  ok('empty → count 0 + nulls', empty.count === 0 && empty.minUsd === null, empty);
+}
+
+console.log('\n== Submitted-source classifier ==');
+{
+  ok('Company source → COMPANY', classifySubmittedVehicleSource('Company source', '') === 'COMPANY');
+  ok('GCC source → GCC', classifySubmittedVehicleSource('GCC source', '') === 'GCC');
+  ok('European source → EUROPE', classifySubmittedVehicleSource('European source', '') === 'EUROPE');
+  ok('US clean (no accident) → US_CLEAN (not risk)', classifySubmittedVehicleSource('US source clean title no accident clean Carfax', '') === 'US_CLEAN');
+  ok('US salvage → US_RISK', classifySubmittedVehicleSource('US source salvage or accident history', '') === 'US_RISK');
+  ok('Canada → CANADA', classifySubmittedVehicleSource('Canadian source', '') === 'CANADA');
+  ok('Import clean → GENERIC_IMPORT_CLEAN', classifySubmittedVehicleSource('Import, clean carfax', '') === 'GENERIC_IMPORT_CLEAN');
+  ok('Import unknown → GENERIC_IMPORT_UNKNOWN', classifySubmittedVehicleSource('Imported', '') === 'GENERIC_IMPORT_UNKNOWN');
+  ok('blank → UNKNOWN', classifySubmittedVehicleSource('', '') === 'UNKNOWN');
+}
+
+console.log('\n== Revuelto 2024 0km fallback source hierarchy (base 822k, exotic) ==');
+{
+  const base = 822_000;
+  const run = (specs: string) => applyLebanonFallbackSourceHierarchy({
+    specs, notes: '', tier: 'exotic', isPerformanceLuxury: true,
+    modelYear: 2024, currentYear: 2026, mileageKm: 0,
+    regionalBaseMid: base, marketSpread: 25_000, companyMarketMaxCap: 780_000,
+  });
+  const company = run('Company source');
+  const gcc = run('GCC source');
+  const europe = run('European source');
+  const usClean = run('US source clean title no accident clean Carfax');
+  const usRisk = run('US source salvage');
+
+  const inRange = (r: any, lo: number, hi: number) => r.market.min >= lo - 3000 && r.market.max <= hi + 3000 && r.market.max > r.market.min;
+
+  ok('Company applied + path fallback', company.applied && company.submittedVehicleSourceType === 'COMPANY', company);
+  ok('Company market ~745–775k, not 847k', inRange(company, 745_000, 775_000) && company.market.max <= 780_000, company.market);
+  ok('GCC market ~735–765k', gcc.submittedVehicleSourceType === 'GCC' && inRange(gcc, 735_000, 765_000), gcc.market);
+  ok('Europe market ~710–740k', europe.submittedVehicleSourceType === 'EUROPE' && inRange(europe, 710_000, 740_000), europe.market);
+  ok('US clean market ~685–720k', usClean.submittedVehicleSourceType === 'US_CLEAN' && inRange(usClean, 685_000, 720_000), usClean.market);
+  ok('US risk heavily discounted (<640k)', usRisk.submittedVehicleSourceType === 'US_RISK' && usRisk.market.max < 640_000, usRisk.market);
+
+  ok('Company / GCC / US_CLEAN are NOT identical', company.market.min !== gcc.market.min && gcc.market.min !== usClean.market.min && company.market.min !== usClean.market.min, { c: company.market, g: gcc.market, u: usClean.market });
+  ok('hierarchy ordered Company>GCC>Europe>US_CLEAN>US_RISK',
+    company.market.min > gcc.market.min && gcc.market.min > europe.market.min && europe.market.min > usClean.market.min && usClean.market.min > usRisk.market.min,
+    { company: company.market.min, gcc: gcc.market.min, europe: europe.market.min, usClean: usClean.market.min, usRisk: usRisk.market.min });
+  ok('model-year aging applied for 2024-in-2026', company.modelYearAgingAdjustmentApplied === true, company);
+}
+
+console.log('\n== Model-year aging edge cases ==');
+{
+  ok('current-year 2026 0km → no aging', getModelYearAgingFactor({ modelYear: 2026, currentYear: 2026, mileageKm: 0, exceptionalSpec: false }) === null);
+  ok('2024-in-2026 0km → ~7.5% aging', Math.abs((getModelYearAgingFactor({ modelYear: 2024, currentYear: 2026, mileageKm: 0, exceptionalSpec: false })?.factor ?? 1) - 0.925) < 0.001);
+  ok('exceptional spec → no aging', getModelYearAgingFactor({ modelYear: 2024, currentYear: 2026, mileageKm: 0, exceptionalSpec: true }) === null);
+  ok('high mileage → no new-old-stock aging', getModelYearAgingFactor({ modelYear: 2024, currentYear: 2026, mileageKm: 40000, exceptionalSpec: false }) === null);
+}
+
+console.log('\n== Calibration does NOT run for normal (non-exotic, non-performance) fallback ==');
+{
+  const r = applyLebanonFallbackSourceHierarchy({
+    specs: 'US source', notes: '', tier: 'normal', isPerformanceLuxury: false,
+    modelYear: 2024, currentYear: 2026, mileageKm: 0, regionalBaseMid: 30_000, marketSpread: 3000,
+  });
+  ok('normal fallback vehicle not calibrated', r.applied === false, r);
 }
 
 console.log(`\n==== RESULT: ${pass} passed, ${fail} failed ====`);

@@ -4,7 +4,7 @@ import { createLogger } from '../logger';
 
 const log = createLogger('valuation:cache');
 
-const CACHE_VERSION = 'v11'; // bumped: mileage monotonicity guard removed; Lebanon local-comp cluster cap + C200 calibration + import-duty threshold metadata
+const CACHE_VERSION = 'v13'; // bumped: Lebanon fallback submitted-source hierarchy calibration + model-year aging
 
 function normalize(value: unknown): string {
     if (value === null || value === undefined || value === '') return 'none';

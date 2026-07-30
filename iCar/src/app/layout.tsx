@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     default: "CarQ",
   },
   description:
-    "AI-powered automotive intelligence platform for dealers, banking partners, and industry professionals.",
+    "AI-powered automotive intelligence platform for dealers, banking partners, and industry professionals"
 };
 
 export default function RootLayout({ children }: PropsWithChildren) {

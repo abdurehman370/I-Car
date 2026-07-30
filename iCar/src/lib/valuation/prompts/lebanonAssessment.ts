@@ -85,11 +85,19 @@ LBP / OLD REFERENCE RULE:
 - Older references (e.g. a 2017 model of the same trim) may support lower-bound context only — they must NOT dominate the valuation of a clean newer vehicle.
 - For Lebanon, clear USD asking prices from same-year/same-trim listings are stronger than older LBP references.
 
+ANCHOR PRICE INTEGRITY (critical — do not fabricate or blend prices):
+- Every priceUsd you report MUST be the actual asking price shown on ONE specific individual listing that you opened. Never invent, estimate, round to a "typical" price, or blend/average the prices of two or more listings into a single anchor.
+- An anchor's url MUST point to a single individual car advertisement (a specific ad page), NOT a search-results or category page. Reject URLs that are search queries — e.g. anything containing "q-", "?q=", "/search", or a bare "/cars-for-sale/" category root. If the only URL you have is a search page, you have NOT verified a specific price.
+- sourceStrength "exact" or "near_exact" is ONLY allowed when the price comes from a specific individual listing with its own ad URL. If you cannot open a specific ad and read its price, downgrade to "same_model" or "older_reference", or omit the anchor — do NOT label it exact/near_exact.
+- If a search page shows several different prices for the same model (e.g. a $49,000 used car and a $59,000 brand-new one), treat them as SEPARATE listings. Do not merge them. The exact-match anchor is the one whose year/trim/mileage matches the target vehicle — use that listing's own price verbatim.
+- directLebanonAnchorPriceUsd MUST equal the exact-match listing's real asking price, copied from that one ad — never a computed midpoint of multiple asks.
+- When in doubt about a price, prefer reporting fewer, verified anchors over more, unverified ones.
+
 LOCAL PRICE ANCHORS (mandatory structured output):
 - List every priced local listing you relied on in localPriceAnchors, with its numeric priceUsd, year, mileage, and sourceStrength (exact / near_exact / same_model / older_reference / segment).
-- If hasExactVerifiedLocalMatch is true, at least one localPriceAnchors entry MUST be exact or near_exact with a positive numeric priceUsd.
-- If hasUsableDirectLebanonAnchor is true, at least one localPriceAnchors entry MUST have a positive numeric priceUsd, and directLebanonAnchorPriceUsd MUST be set to the best exact/near-exact anchor's price.
-- If you cannot provide a numeric USD price for any local anchor, you MUST set hasExactVerifiedLocalMatch and hasUsableDirectLebanonAnchor to false.
+- If hasExactVerifiedLocalMatch is true, at least one localPriceAnchors entry MUST be exact or near_exact with a positive numeric priceUsd AND a specific individual-ad url (not a search page).
+- If hasUsableDirectLebanonAnchor is true, at least one localPriceAnchors entry MUST have a positive numeric priceUsd, and directLebanonAnchorPriceUsd MUST be set to the best exact/near-exact anchor's real asking price.
+- If you cannot provide a verified numeric USD price from a specific listing for any local anchor, you MUST set hasExactVerifiedLocalMatch and hasUsableDirectLebanonAnchor to false.
 
 You must ALWAYS still return your best direct Lebanon valuation (market price and dealer buy price in USD), even when comps are weak — the backend decides whether to use it or run a fallback.
 

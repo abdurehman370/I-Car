@@ -30,6 +30,11 @@ import { ActiveImportRules, FuelCategory } from './importRules/types';
 import { validateVehicleModelYear } from './vehicleValidity/validateVehicleModelYear';
 import { createLogger } from '../logger';
 import { getImportDutyMileageThreshold } from './sanity/importDutyMileage';
+import { selectTrustedDirectAnchor, anchorStats } from './sanity/anchorTrust';
+import {
+    applyLebanonFallbackSourceHierarchy,
+    classifySubmittedVehicleSource,
+} from './sanity/applyLebanonSourceHierarchyCalibration';
 import {
     applyLebanonLocalCompClusterCap,
     ClusterAnchorLike,
@@ -1038,18 +1043,50 @@ async function evaluateLebanonVehicleWithFallback(
         const la = assessment.localMarketAssessment;
         const mileageUsedKm = getMileageUsed(payload);
 
+        // ── Direct anchor with outlier distrust ─────────────────────────
+        // A lone high "exact" asking price that diverges >15% above the next
+        // local comp is treated as a stale/high/blended outlier and re-anchored
+        // to the trusted comp, so it can't inflate the valuation. Tight anchor
+        // sets (e.g. GLE 53 98–103k) and single-anchor cases are unaffected.
+        const trustedAnchor = selectTrustedDirectAnchor(
+            la.localPriceAnchors,
+            payload.year,
+            mileageUsedKm,
+        );
+
         let anchorPrice: number | null = la.directLebanonAnchorPriceUsd ?? null;
-        let anchorPriceSource: 'model_direct' | 'computed_from_anchors' | null =
-            anchorPrice !== null && anchorPrice > 0 ? 'model_direct' : null;
+        let anchorPriceSource:
+            | 'model_direct'
+            | 'computed_from_anchors'
+            | 'trusted_comp'
+            | null = anchorPrice !== null && anchorPrice > 0 ? 'model_direct' : null;
+        let directAnchorOutlierDistrusted = false;
+        let directAnchorTrustReason: string | null = null;
 
         if (!anchorPriceSource) {
-            const best = pickBestLocalAnchor(la.localPriceAnchors, payload.year, mileageUsedKm);
-            if (best) {
-                anchorPrice = best.price;
+            // Model gave no numeric direct anchor — use the trusted comp
+            // (already excludes high outliers), else the legacy picker.
+            if (trustedAnchor) {
+                anchorPrice = trustedAnchor.priceUsd;
                 anchorPriceSource = 'computed_from_anchors';
             } else {
-                anchorPrice = null;
+                const best = pickBestLocalAnchor(la.localPriceAnchors, payload.year, mileageUsedKm);
+                anchorPrice = best ? best.price : null;
+                anchorPriceSource = best ? 'computed_from_anchors' : null;
             }
+        } else if (
+            trustedAnchor &&
+            trustedAnchor.distrustedOutlierUsd !== null &&
+            anchorPrice !== null &&
+            anchorPrice > trustedAnchor.priceUsd * 1.15
+        ) {
+            // Model anchored on a high outlier (stale/blended/fabricated ask);
+            // re-anchor to the trusted local comp.
+            directAnchorOutlierDistrusted = true;
+            directAnchorTrustReason =
+                `Model direct anchor USD ${Math.round(anchorPrice).toLocaleString()} diverges >15% above the next-best local comp (USD ${trustedAnchor.priceUsd.toLocaleString()}); treated as a stale/high asking outlier and re-anchored.`;
+            anchorPrice = trustedAnchor.priceUsd;
+            anchorPriceSource = 'trusted_comp';
         }
 
         const specsNotes = `${payload.specs || ''} ${payload.notes || ''}`;
@@ -1059,6 +1096,10 @@ async function evaluateLebanonVehicleWithFallback(
         let directFields: typeof assessmentFields = assessmentFields;
         let clampApplied = false;
         let svrGuardrailApplied = false;
+
+        if (directAnchorOutlierDistrusted && directAnchorTrustReason) {
+            clampWarnings.push(directAnchorTrustReason);
+        }
 
         // ── Direct-anchor sanity clamp ──────────────────────────────────
         // Clean, low-risk luxury/performance vehicle with a same-trim local
@@ -1276,15 +1317,19 @@ async function evaluateLebanonVehicleWithFallback(
             /german|germany|europe|european|\beu\b/i.test(specsNotes) &&
             !/special edition|limited edition|full local warranty|company warranty|official warranty|exceptional option/i.test(specsNotes)
         ) {
-            // Best exact/near-exact C200 2023 local anchor around USD 49k.
+            // Base on the trusted local comp (outlier-distrusted, ~USD 47–49k),
+            // then the best exact/near-exact C200 2023 anchor, else USD 49k.
             const c200Anchor = (la.localPriceAnchors ?? []).find(
-                (a: any) =>
+                (a) =>
                     (a?.sourceStrength === 'exact' || a?.sourceStrength === 'near_exact') &&
                     typeof a?.priceUsd === 'number' &&
                     a.priceUsd >= 44_000 && a.priceUsd <= 51_000
             );
 
-            const base = c200Anchor?.priceUsd ?? 49_000;
+            const base =
+                (trustedAnchor && trustedAnchor.priceUsd >= 44_000 && trustedAnchor.priceUsd <= 51_000
+                    ? trustedAnchor.priceUsd
+                    : c200Anchor?.priceUsd) ?? 49_000;
             const newMin = Math.max(roundTo(base * 0.97, 100), 47_000);
             const newMax = Math.min(roundTo(base * 1.02, 100), 50_500);
 
@@ -1301,12 +1346,28 @@ async function evaluateLebanonVehicleWithFallback(
                 dealerBuyPriceUsd: { ...dealerBuyPrice },
             };
 
+            // Populate real cluster stats from the trusted comps (excluding the
+            // distrusted high outlier) so localCompClusterApplied is never true
+            // with a null/zero cluster.
+            const c200ClusterPrices = (la.localPriceAnchors ?? [])
+                .filter(
+                    (a) =>
+                        ['exact', 'near_exact', 'same_model'].includes(a.sourceStrength) &&
+                        typeof a.priceUsd === 'number' &&
+                        (a.priceUsd as number) > 0 &&
+                        (a.priceUsd as number) <= base * 1.15,
+                )
+                .map((a) => a.priceUsd as number);
+            const c200Stats = anchorStats(c200ClusterPrices);
+
             c200GuardrailApplied = true;
             clusterMeta = {
-                ...clusterMeta,
                 localCompClusterApplied: true,
+                localCompClusterCount: c200Stats.count,
+                localCompClusterMinUsd: c200Stats.minUsd,
+                localCompClusterMedianUsd: c200Stats.medianUsd,
+                localCompClusterMaxUsd: c200Stats.maxUsd,
                 localCompClusterCapReason:
-                    clusterMeta.localCompClusterCapReason ??
                     `C200 2023 European-source guardrail: held to the current local cluster around USD ${Math.round(base).toLocaleString()} (market ${marketPrice.min.toLocaleString()}–${marketPrice.max.toLocaleString()}).`,
             };
             clampWarnings.push(
@@ -1345,9 +1406,15 @@ async function evaluateLebanonVehicleWithFallback(
                 directLebanonAnchorPriceUsd: la.directLebanonAnchorPriceUsd ?? null,
                 computedDirectAnchorPriceUsd: anchorPrice,
                 directAnchorPriceSource: anchorPriceSource,
+                trustedDirectAnchorPriceUsd: trustedAnchor?.priceUsd ?? null,
+                directAnchorOutlierDistrusted,
+                directAnchorTrustReason,
                 sourceHierarchyCalibrationApplied,
                 sourceHierarchySourceType: sourceHierarchyType,
                 sourceHierarchyAdjustmentReason,
+                submittedVehicleSourceType: classifySubmittedVehicleSource(payload.specs, payload.notes),
+                sourceHierarchyCalibrationPath: sourceHierarchyCalibrationApplied ? 'direct' : 'skipped',
+                fallbackAnchorMarketUsed: 'LOCAL',
                 localCompClusterApplied: clusterMeta.localCompClusterApplied,
                 localCompClusterCount: clusterMeta.localCompClusterCount,
                 localCompClusterMinUsd: clusterMeta.localCompClusterMinUsd,
@@ -1491,6 +1558,45 @@ async function evaluateLebanonVehicleWithFallback(
         marketMax = marketMin + 1000;
     }
 
+    // ── Fallback source-hierarchy + model-year aging calibration ─────
+    // The final Lebanon price must adjust for the SUBMITTED vehicle source
+    // (Company/GCC/Europe/U.S./…), NOT just the UAE/Europe anchor market.
+    // Base the calibration on the UAE-preferred landed midpoint so the result
+    // is independent of which anchor market was chosen — otherwise Company,
+    // GCC and U.S. sources (all UAE-anchored) return identical valuations.
+    const currentYear = new Date().getFullYear();
+    const regionalBaseMid =
+        selection.uaeLandedMidpoint ??
+        selection.europeLandedMidpoint ??
+        selection.chosenLandedMidpoint;
+
+    const sourceCal = applyLebanonFallbackSourceHierarchy({
+        specs: payload.specs,
+        notes: payload.notes,
+        tier,
+        isPerformanceLuxury: isPerformanceLuxury(payload),
+        modelYear: payload.year,
+        currentYear,
+        mileageKm,
+        regionalBaseMid,
+        marketSpread,
+        // Safety cap for exotic/new-luxury: don't exceed ~USD 780k company
+        // market without exceptional spec (Revuelto guidance).
+        companyMarketMaxCap: tier === 'exotic' ? 780_000 : undefined,
+    });
+
+    const submittedVehicleSourceType = sourceCal.submittedVehicleSourceType;
+
+    if (sourceCal.applied) {
+        marketMin = sourceCal.market.min;
+        marketMax = sourceCal.market.max;
+        if (sourceCal.sourceHierarchyAdjustmentReason) {
+            warnings.push(
+                `Fallback source-hierarchy calibration (${submittedVehicleSourceType}): ${sourceCal.sourceHierarchyAdjustmentReason}`,
+            );
+        }
+    }
+
     // ── Import-duty mileage threshold (informational only) ───────────
     // The old mileage-monotonicity guard has been removed. Mileage still
     // usually lowers value via prompt reasoning + comps, but the backend no
@@ -1569,6 +1675,15 @@ async function evaluateLebanonVehicleWithFallback(
             europeLandedMidpoint: selection.europeLandedMidpoint,
             chosenLandedMidpoint: selection.chosenLandedMidpoint,
             landedComparison: selection.landedComparison,
+            // Submitted-source hierarchy calibration (distinct from anchor market)
+            submittedVehicleSourceType,
+            sourceHierarchyCalibrationApplied: sourceCal.applied,
+            sourceHierarchyCalibrationPath: sourceCal.applied ? 'fallback' : 'skipped',
+            sourceHierarchyAdjustmentFactor: sourceCal.sourceHierarchyAdjustmentFactor,
+            sourceHierarchyAdjustmentReason: sourceCal.sourceHierarchyAdjustmentReason,
+            modelYearAgingAdjustmentApplied: sourceCal.modelYearAgingAdjustmentApplied,
+            modelYearAgingAdjustmentReason: sourceCal.modelYearAgingAdjustmentReason,
+            fallbackAnchorMarketUsed: anchor.market,
             mileageImportDutyThresholdCrossed: fallbackDutyThreshold.mileageImportDutyThresholdCrossed,
             importDutyMileageReason: fallbackDutyThreshold.importDutyMileageReason,
             sourceRiskLevel: assessment.localMarketAssessment.sourceRiskLevel ?? null,
