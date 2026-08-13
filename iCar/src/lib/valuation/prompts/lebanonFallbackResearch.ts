@@ -47,6 +47,11 @@ AUDI R8 SPECIFIC:
 - A normal Audi R8 V10 must NOT be benchmarked against R8 GT, Final Edition, Spyder, Decennium, collector edition, Mansory, ABT, or modified listings unless explicitly provided.
 - If the variant only says V10, assume a normal R8 V10 coupe/performance class and use the normal-trim median.
 
+COMPANY/OFFICIAL SOURCE NEW CARS (already sold locally):
+- A Company/official/TGF/agency-source, current or last-model-year, near-0 km car is already sold by a local official dealer. Its true value is the local official-dealer price, which already includes Lebanon duty.
+- Do NOT price such a car as a UAE import (UAE retail price + full Lebanon import duty on top) — that double-counts and overstates it.
+- For a normal AMG G63 (not Brabus/Mansory/special edition), use the local/regional new-car price, not an inflated top-spec UAE ask.
+
 SOURCE HIERARCHY FOR LEBANON FINAL PRICE:
 - The market anchor source and the submitted vehicle source are DIFFERENT concepts. A UAE fallback anchor may be used to estimate regional value, but the final Lebanon price must still adjust for the submitted vehicle source.
 - Company/official/TGF source is strongest.

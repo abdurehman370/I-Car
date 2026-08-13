@@ -11,7 +11,7 @@ import {
 } from '../src/lib/valuation/sanity/applyLebanonSourceHierarchyCalibration';
 import { detectFallbackAnchorOutlier } from '../src/lib/valuation/sanity/filterFallbackAnchorOutliers';
 import { classifyAnchorTrim, submittedRequestsSpecialTrim } from '../src/lib/valuation/sanity/filterSpecialTrimAnchors';
-import { applyCrossSourceParityGuard, applyAudiR8Guardrail } from '../src/lib/valuation/sanity/applyCrossSourceParityGuard';
+import { applyCrossSourceParityGuard, applyAudiR8Guardrail, reconcileCompanySourceNewCar, applyMercedesG63Guardrail } from '../src/lib/valuation/sanity/applyCrossSourceParityGuard';
 
 let pass = 0;
 let fail = 0;
@@ -356,6 +356,69 @@ console.log('\n== Audi R8 V10 2024 guardrail (per source) + hierarchy ==');
   ok('R8 Spyder not guardrailed', !applyAudiR8Guardrail({ make: 'Audi', model: 'R8', variant: 'Spyder', year: 2024, mileageKm: 1000, fuelCategory: 'gasoline', specsNotes: 'Spyder', submittedSource: 'GCC' }).applied);
   ok('R8 2025 not guardrailed', !applyAudiR8Guardrail({ make: 'Audi', model: 'R8', variant: 'V10', year: 2025, mileageKm: 1000, fuelCategory: 'gasoline', specsNotes: '', submittedSource: 'GCC' }).applied);
   ok('Audi RS6 not guardrailed', !applyAudiR8Guardrail({ make: 'Audi', model: 'RS6', variant: '', year: 2024, mileageKm: 1000, fuelCategory: 'gasoline', specsNotes: '', submittedSource: 'GCC' }).applied);
+}
+
+console.log('\n== Company-source new-car reconciliation (G63 2026 import-landed too high) ==');
+{
+  // Fallback ballooned to ~473k (UAE + 63% duty); local official estimate ~330k.
+  const g63 = reconcileCompanySourceNewCar({
+    submittedSource: 'COMPANY', isExoticPerformanceLuxury: true,
+    modelYear: 2026, currentYear: 2026, mileageKm: 0,
+    localEstimateMid: 330_000, currentMarket: { min: 468_000, max: 478_000 },
+    spread: 20_000, notesJustifySpecial: false,
+  });
+  ok('reconciliation fires (company new car, fallback >> local)', g63.applied === true, g63);
+  ok('re-based to local ~330k (not 473k)', ((g63.market.min + g63.market.max) / 2) <= 340_000 && g63.market.max < 468_000, g63.market);
+
+  // Revuelto 2024 (2 model years old) → NOT reconciled (uses fallback hierarchy).
+  const rev = reconcileCompanySourceNewCar({
+    submittedSource: 'COMPANY', isExoticPerformanceLuxury: true,
+    modelYear: 2024, currentYear: 2026, mileageKm: 0,
+    localEstimateMid: 500_000, currentMarket: { min: 745_000, max: 775_000 },
+    spread: 25_000, notesJustifySpecial: false,
+  });
+  ok('Revuelto 2024 NOT reconciled (older model year)', rev.applied === false, rev);
+
+  // Absurdly-low local estimate → ignored (bounded downside).
+  const low = reconcileCompanySourceNewCar({
+    submittedSource: 'COMPANY', isExoticPerformanceLuxury: true,
+    modelYear: 2026, currentYear: 2026, mileageKm: 0,
+    localEstimateMid: 90_000, currentMarket: { min: 468_000, max: 478_000 },
+    spread: 20_000, notesJustifySpecial: false,
+  });
+  ok('absurdly-low local estimate ignored', low.applied === false, low);
+
+  // GCC source (imported) → NOT reconciled (import-landed is appropriate).
+  const gcc = reconcileCompanySourceNewCar({
+    submittedSource: 'GCC', isExoticPerformanceLuxury: true,
+    modelYear: 2026, currentYear: 2026, mileageKm: 0,
+    localEstimateMid: 330_000, currentMarket: { min: 468_000, max: 478_000 },
+    spread: 20_000, notesJustifySpecial: false,
+  });
+  ok('GCC source NOT reconciled (car is imported)', gcc.applied === false, gcc);
+}
+
+console.log('\n== Mercedes G63 2026 guardrail (per source) + hierarchy ==');
+{
+  const g = (specs: string, src: any, year = 2026, variant = 'AMG') => applyMercedesG63Guardrail({
+    make: 'Mercedes-Benz', model: 'G63', variant, year, mileageKm: 0,
+    fuelCategory: 'gasoline', specsNotes: specs, submittedSource: src,
+  });
+  const company = g('Company source', 'COMPANY');
+  const gcc = g('GCC source', 'GCC');
+  const europe = g('European source', 'EUROPE');
+  const us = g('US source clean title', 'US_CLEAN');
+
+  ok('G63 company ~320-340k (not 468-478k)', company.applied && company.market!.min === 320_000 && company.market!.max === 340_000, company.market);
+  ok('G63 GCC below company', gcc.applied && gcc.market!.max <= company.market!.max);
+  const m = (r: any) => (r.market.min + r.market.max) / 2;
+  ok('G63 hierarchy Company>GCC>Europe>US', m(company) > m(gcc) && m(gcc) > m(europe) && m(europe) > m(us),
+    { c: m(company), g: m(gcc), e: m(europe), u: m(us) });
+
+  // Exclusions
+  ok('G63 Brabus not guardrailed', !g('Brabus G800', 'COMPANY', 2026, 'Brabus').applied);
+  ok('G63 2023 (used) not guardrailed', !g('Company source', 'COMPANY', 2023).applied);
+  ok('normal GLE not guardrailed', !applyMercedesG63Guardrail({ make: 'Mercedes-Benz', model: 'GLE 53', variant: '', year: 2026, mileageKm: 0, fuelCategory: 'gasoline', specsNotes: '', submittedSource: 'COMPANY' }).applied);
 }
 
 console.log(`\n==== RESULT: ${pass} passed, ${fail} failed ====`);

@@ -202,3 +202,151 @@ export function applyAudiR8Guardrail(params: {
             `Audi R8 V10 2024 (${submittedSource}) narrow guardrail: held to the normal-trim ${submittedSource} band USD ${target.min.toLocaleString()}–${target.max.toLocaleString()} rather than special-edition/inflated UAE asks (e.g. R8 GT/Spyder).`,
     };
 }
+
+// ---------------------------------------------------------------------------
+// Company/official-source new-car reconciliation (general).
+//
+// A COMPANY/official-source, current-model-year, ~0 km car is ALREADY sold by a
+// local official dealer — so the import-landed fallback (UAE price + Lebanon
+// duty) overstates it. When the fallback market balloons above the Phase-1
+// local (official-dealer) estimate, pull it back to the local price. Bounded so
+// an implausibly LOW local estimate can't crater the valuation.
+// ---------------------------------------------------------------------------
+
+export type CompanyLocalReconciliationResult = {
+    applied: boolean;
+    market: UsdRange;
+    companyLocalReconciliationApplied: boolean;
+    companyLocalReconciliationReason: string | null;
+};
+
+export function reconcileCompanySourceNewCar(params: {
+    submittedSource: SubmittedVehicleSourceType;
+    isExoticPerformanceLuxury: boolean;
+    modelYear: number;
+    currentYear: number;
+    mileageKm: number;
+    /** Phase-1 local (official-dealer) market midpoint. */
+    localEstimateMid: number | null;
+    currentMarket: UsdRange;
+    spread: number;
+    notesJustifySpecial: boolean;
+}): CompanyLocalReconciliationResult {
+    const {
+        submittedSource,
+        isExoticPerformanceLuxury,
+        modelYear,
+        currentYear,
+        mileageKm,
+        localEstimateMid,
+        currentMarket,
+        spread,
+        notesJustifySpecial,
+    } = params;
+
+    const noop: CompanyLocalReconciliationResult = {
+        applied: false,
+        market: currentMarket,
+        companyLocalReconciliationApplied: false,
+        companyLocalReconciliationReason: null,
+    };
+
+    if (submittedSource !== 'COMPANY') return noop;
+    if (!isExoticPerformanceLuxury) return noop;
+    if (notesJustifySpecial) return noop;
+    // Only current or last model year, effectively unused (locally sold new car).
+    if (modelYear < currentYear - 1 || mileageKm > 5_000) return noop;
+    if (localEstimateMid === null || localEstimateMid <= 0) return noop;
+
+    const currentMid = mid(currentMarket);
+
+    // Fallback must be materially higher than the local price, and the local
+    // estimate must be plausible (not an absurd low guess).
+    if (currentMid <= localEstimateMid * 1.1) return noop;
+    if (localEstimateMid < currentMid * 0.5) return noop;
+
+    const corrected = rebuildRange(localEstimateMid, spread);
+
+    return {
+        applied: true,
+        market: corrected,
+        companyLocalReconciliationApplied: true,
+        companyLocalReconciliationReason:
+            `Company/official source is sold locally, so the import-landed fallback (midpoint USD ${currentMid.toLocaleString()}) overstates it; re-based on the local official-dealer estimate (USD ${Math.round(localEstimateMid).toLocaleString()}).`,
+    };
+}
+
+// ---------------------------------------------------------------------------
+// Narrow Mercedes-AMG G63 2025/2026 guardrail (analogous to C200 / R8).
+// ---------------------------------------------------------------------------
+
+/** Per-source target market ranges for a normal AMG G63 2025/2026, 0–5,000 km. */
+const G63_TARGETS: Partial<Record<SubmittedVehicleSourceType, UsdRange>> = {
+    COMPANY: { min: 320_000, max: 340_000 },
+    GCC: { min: 312_000, max: 332_000 },
+    EUROPE: { min: 300_000, max: 320_000 },
+    US_CLEAN: { min: 285_000, max: 305_000 },
+    CANADA: { min: 285_000, max: 305_000 },
+    GENERIC_IMPORT_CLEAN: { min: 300_000, max: 320_000 },
+    GENERIC_IMPORT_UNKNOWN: { min: 292_000, max: 312_000 },
+    US_RISK: { min: 250_000, max: 275_000 },
+};
+
+export type MercedesG63GuardrailResult = {
+    applied: boolean;
+    market: UsdRange | null;
+    mercedesG63GuardrailApplied: boolean;
+    mercedesG63GuardrailReason: string | null;
+};
+
+export function applyMercedesG63Guardrail(params: {
+    make: string;
+    model: string;
+    variant: string | null | undefined;
+    year: number;
+    mileageKm: number;
+    fuelCategory: string;
+    specsNotes: string;
+    submittedSource: SubmittedVehicleSourceType;
+}): MercedesG63GuardrailResult {
+    const { make, model, variant, year, mileageKm, fuelCategory, specsNotes, submittedSource } = params;
+
+    const noop: MercedesG63GuardrailResult = {
+        applied: false,
+        market: null,
+        mercedesG63GuardrailApplied: false,
+        mercedesG63GuardrailReason: null,
+    };
+
+    const modelVariant = `${model || ''} ${variant || ''}`;
+    const all = `${modelVariant} ${specsNotes}`;
+
+    const isMercedes = /mercedes|amg/i.test(String(make || '')) || /mercedes|amg/i.test(modelVariant);
+    const isG63 = /\bg ?63\b/i.test(modelVariant);
+    // Exclude tuned / special / higher-output derivatives.
+    const isSpecial =
+        /\bbrabus\b|\bmansory\b|4x4|6x6|grand edition|edition 55|\bg800\b|\bg700\b|\btuned\b|\bmodified\b|\bwidebody\b/i.test(all);
+
+    if (
+        !isMercedes ||
+        !isG63 ||
+        isSpecial ||
+        year < 2025 ||
+        mileageKm < 0 ||
+        mileageKm > 5_000 ||
+        fuelCategory !== 'gasoline'
+    ) {
+        return noop;
+    }
+
+    const target = G63_TARGETS[submittedSource];
+    if (!target) return noop;
+
+    return {
+        applied: true,
+        market: { ...target },
+        mercedesG63GuardrailApplied: true,
+        mercedesG63GuardrailReason:
+            `Mercedes-AMG G63 ${year} (${submittedSource}) narrow guardrail: an official-source new G63 is sold locally, so it is held to the ${submittedSource} band USD ${target.min.toLocaleString()}–${target.max.toLocaleString()} rather than a UAE import-landed benchmark (UAE price + 63% duty).`,
+    };
+}

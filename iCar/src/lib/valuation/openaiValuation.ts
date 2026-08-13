@@ -40,6 +40,8 @@ import { submittedRequestsSpecialTrim } from './sanity/filterSpecialTrimAnchors'
 import {
     applyCrossSourceParityGuard,
     applyAudiR8Guardrail,
+    reconcileCompanySourceNewCar,
+    applyMercedesG63Guardrail,
 } from './sanity/applyCrossSourceParityGuard';
 import {
     applyLebanonLocalCompClusterCap,
@@ -1658,6 +1660,51 @@ async function evaluateLebanonVehicleWithFallback(
         if (audiR8.audiR8GuardrailReason) warnings.push(audiR8.audiR8GuardrailReason);
     }
 
+    // ── Company/official-source new-car reconciliation (general) ─────
+    // An official-source current-model-year 0 km car is sold locally, so the
+    // import-landed fallback overstates it — pull it back to the Phase-1 local
+    // (official-dealer) estimate when the fallback ballooned above it.
+    const localEstimateMid = Math.round(
+        (assessment.marketPrice.min + assessment.marketPrice.max) / 2,
+    );
+    const companyReco = reconcileCompanySourceNewCar({
+        submittedSource: submittedVehicleSourceType,
+        isExoticPerformanceLuxury: tier === 'exotic' || isPerformanceLuxury(payload),
+        modelYear: payload.year,
+        currentYear,
+        mileageKm,
+        localEstimateMid,
+        currentMarket: { min: marketMin, max: marketMax },
+        spread: marketSpread,
+        notesJustifySpecial,
+    });
+
+    if (companyReco.applied) {
+        marketMin = companyReco.market.min;
+        marketMax = companyReco.market.max;
+        if (companyReco.companyLocalReconciliationReason) {
+            warnings.push(companyReco.companyLocalReconciliationReason);
+        }
+    }
+
+    // ── Narrow Mercedes-AMG G63 2025/2026 guardrail ──────────────────
+    const g63 = applyMercedesG63Guardrail({
+        make: payload.make,
+        model: payload.model,
+        variant: payload.variant,
+        year: payload.year,
+        mileageKm,
+        fuelCategory,
+        specsNotes: specsNotesVariant,
+        submittedSource: submittedVehicleSourceType,
+    });
+
+    if (g63.applied && g63.market) {
+        marketMin = g63.market.min;
+        marketMax = g63.market.max;
+        if (g63.mercedesG63GuardrailReason) warnings.push(g63.mercedesG63GuardrailReason);
+    }
+
     // ── Import-duty mileage threshold (informational only) ───────────
     // The old mileage-monotonicity guard has been removed. Mileage still
     // usually lowers value via prompt reasoning + comps, but the backend no
@@ -1760,6 +1807,13 @@ async function evaluateLebanonVehicleWithFallback(
             // Narrow Audi R8 guardrail
             audiR8GuardrailApplied: audiR8.audiR8GuardrailApplied,
             audiR8GuardrailReason: audiR8.audiR8GuardrailReason,
+            // Company/official-source new-car local reconciliation
+            companyLocalReconciliationApplied: companyReco.companyLocalReconciliationApplied,
+            companyLocalReconciliationReason: companyReco.companyLocalReconciliationReason,
+            localOfficialEstimateUsd: localEstimateMid,
+            // Narrow Mercedes G63 guardrail
+            mercedesG63GuardrailApplied: g63.mercedesG63GuardrailApplied,
+            mercedesG63GuardrailReason: g63.mercedesG63GuardrailReason,
             mileageImportDutyThresholdCrossed: fallbackDutyThreshold.mileageImportDutyThresholdCrossed,
             importDutyMileageReason: fallbackDutyThreshold.importDutyMileageReason,
             sourceRiskLevel: assessment.localMarketAssessment.sourceRiskLevel ?? null,
