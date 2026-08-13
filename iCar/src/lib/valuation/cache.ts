@@ -4,7 +4,7 @@ import { createLogger } from '../logger';
 
 const log = createLogger('valuation:cache');
 
-const CACHE_VERSION = 'v13'; // bumped: Lebanon fallback submitted-source hierarchy calibration + model-year aging
+const CACHE_VERSION = 'v14'; // bumped: fallback anchor outlier/wrong-trim correction + cross-source parity guard + Audi R8 guardrail
 
 function normalize(value: unknown): string {
     if (value === null || value === undefined || value === '') return 'none';

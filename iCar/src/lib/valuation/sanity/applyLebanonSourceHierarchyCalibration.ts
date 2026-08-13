@@ -143,6 +143,8 @@ export function getModelYearAgingFactor(params: {
 export type FallbackSourceCalibrationResult = {
     applied: boolean;
     market: UsdRange;
+    /** Source-independent company-level baseline midpoint (aged, pre source multiplier). */
+    companyBaselineMid: number | null;
     submittedVehicleSourceType: SubmittedVehicleSourceType;
     sourceHierarchyAdjustmentFactor: number | null;
     sourceHierarchyAdjustmentReason: string | null;
@@ -189,6 +191,7 @@ export function applyLebanonFallbackSourceHierarchy(params: {
     const noop: FallbackSourceCalibrationResult = {
         applied: false,
         market: { min: 0, max: 0 },
+        companyBaselineMid: null,
         submittedVehicleSourceType,
         sourceHierarchyAdjustmentFactor: null,
         sourceHierarchyAdjustmentReason: null,
@@ -241,6 +244,7 @@ export function applyLebanonFallbackSourceHierarchy(params: {
     return {
         applied: true,
         market: { min, max },
+        companyBaselineMid: Math.round(companyBaselineMid),
         submittedVehicleSourceType,
         sourceHierarchyAdjustmentFactor: Number(overallFactor.toFixed(4)),
         sourceHierarchyAdjustmentReason: reasonParts.join(' ') || null,

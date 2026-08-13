@@ -9,6 +9,9 @@ import {
     applyLebanonFallbackSourceHierarchy,
     getModelYearAgingFactor,
 } from '../src/lib/valuation/sanity/applyLebanonSourceHierarchyCalibration';
+import { detectFallbackAnchorOutlier } from '../src/lib/valuation/sanity/filterFallbackAnchorOutliers';
+import { classifyAnchorTrim, submittedRequestsSpecialTrim } from '../src/lib/valuation/sanity/filterSpecialTrimAnchors';
+import { applyCrossSourceParityGuard, applyAudiR8Guardrail } from '../src/lib/valuation/sanity/applyCrossSourceParityGuard';
 
 let pass = 0;
 let fail = 0;
@@ -276,6 +279,83 @@ console.log('\n== Calibration does NOT run for normal (non-exotic, non-performan
     modelYear: 2024, currentYear: 2026, mileageKm: 0, regionalBaseMid: 30_000, marketSpread: 3000,
   });
   ok('normal fallback vehicle not calibrated', r.applied === false, r);
+}
+
+console.log('\n== Special-trim classification ==');
+{
+  ok('R8 GT flagged special (V10 submitted)', classifyAnchorTrim('Audi R8 GT RWD 2024', false) === 'special_edition');
+  ok('R8 Spyder Mansory flagged special', classifyAnchorTrim('Audi R8 Spyder Mansory', false) === 'special_edition');
+  ok('normal R8 V10 not special', classifyAnchorTrim('Audi R8 V10 Performance Coupe 2024', false) === 'normal_trim');
+  ok('submitted special → special anchor is normal comparable', classifyAnchorTrim('Audi R8 GT', true) === 'normal_trim');
+  ok('submittedRequestsSpecialTrim detects GT in specs', submittedRequestsSpecialTrim('Audi R8 GT, GCC source') === true);
+  ok('submittedRequestsSpecialTrim false for plain V10', submittedRequestsSpecialTrim('V10 GCC source') === false);
+}
+
+console.log('\n== Fallback anchor outlier: R8 GCC (UAE 544k vs EU 230k) rebased; Revuelto not ==');
+{
+  const r8 = detectFallbackAnchorOutlier({
+    uaeLandedMid: 544_000, europeLandedMid: 230_000, chosenLandedMid: 544_000,
+    chosenMarket: 'UAE', chosenReason: 'Based on UAE R8 GT listings', submittedSpecsNotesVariant: 'GCC source V10',
+  });
+  ok('R8 UAE outlier filtered', r8.gccAnchorOutlierFiltered === true, r8);
+  ok('R8 baseline rebased well below 544k (~276k)', r8.baselineMid <= 300_000 && r8.baselineMid >= 230_000, r8);
+
+  const revuelto = detectFallbackAnchorOutlier({
+    uaeLandedMid: 822_000, europeLandedMid: 755_000, chosenLandedMid: 822_000,
+    chosenMarket: 'UAE', chosenReason: 'UAE Revuelto listings', submittedSpecsNotesVariant: 'GCC source',
+  });
+  ok('Revuelto NOT filtered (UAE ~1.09x EU)', revuelto.gccAnchorOutlierFiltered === false, revuelto);
+  ok('Revuelto baseline stays UAE 822k', revuelto.baselineMid === 822_000, revuelto);
+}
+
+console.log('\n== Cross-source parity guard ==');
+{
+  // GCC result absurdly above company-equivalent → corrected down.
+  const over = applyCrossSourceParityGuard({
+    submittedSource: 'GCC', isExoticPerformanceLuxury: true,
+    currentMarket: { min: 531_200, max: 541_200 }, companyEquivalentMid: 249_000,
+    spread: 12_000, notesJustifySpecial: false,
+  });
+  ok('parity guard fires for GCC >> company', over.crossSourceParityGuardApplied === true, over);
+  ok('corrected GCC below company-equivalent', ((over.market.min + over.market.max) / 2) < 249_000, over.market);
+
+  // GCC just below company → no correction.
+  const ok2 = applyCrossSourceParityGuard({
+    submittedSource: 'GCC', isExoticPerformanceLuxury: true,
+    currentMarket: { min: 240_000, max: 250_000 }, companyEquivalentMid: 249_000,
+    spread: 12_000, notesJustifySpecial: false,
+  });
+  ok('parity guard does NOT fire when GCC ≤ company', ok2.crossSourceParityGuardApplied === false, ok2);
+}
+
+console.log('\n== Audi R8 V10 2024 guardrail (per source) + hierarchy ==');
+{
+  const g = (specs: string, src: any) => applyAudiR8Guardrail({
+    make: 'Audi', model: 'R8', variant: 'V10', year: 2024, mileageKm: 1000,
+    fuelCategory: 'gasoline', specsNotes: specs, submittedSource: src,
+  });
+  const company = g('Company source', 'COMPANY');
+  const gcc = g('GCC source', 'GCC');
+  const europe = g('European source', 'EUROPE');
+  const us = g('US source clean title no accident', 'US_CLEAN');
+
+  ok('R8 company applied ~243-255k', company.applied && company.market!.min === 243_000 && company.market!.max === 255_000);
+  ok('R8 GCC ~235-250k, max ≤ 270k, not 531k', gcc.applied && gcc.market!.max <= 270_000 && gcc.market!.min === 235_000);
+  ok('R8 europe ~220-232k', europe.market!.min === 220_000);
+  ok('R8 us clean ~198-212k', us.market!.min === 198_000);
+
+  const m = (r: any) => (r.market.min + r.market.max) / 2;
+  ok('hierarchy Company>GCC>Europe>US', m(company) > m(gcc) && m(gcc) > m(europe) && m(europe) > m(us),
+    { c: m(company), g: m(gcc), e: m(europe), u: m(us) });
+  const ratio = m(gcc) / m(company);
+  ok('GCC/Company ratio in [0.92, 0.995]', ratio >= 0.92 && ratio <= 0.995, ratio);
+  ok('GCC midpoint < Company midpoint', m(gcc) < m(company));
+
+  // Must NOT touch special editions / other models / other years
+  ok('R8 GT not guardrailed', !g('R8 GT', 'GCC').applied);
+  ok('R8 Spyder not guardrailed', !applyAudiR8Guardrail({ make: 'Audi', model: 'R8', variant: 'Spyder', year: 2024, mileageKm: 1000, fuelCategory: 'gasoline', specsNotes: 'Spyder', submittedSource: 'GCC' }).applied);
+  ok('R8 2025 not guardrailed', !applyAudiR8Guardrail({ make: 'Audi', model: 'R8', variant: 'V10', year: 2025, mileageKm: 1000, fuelCategory: 'gasoline', specsNotes: '', submittedSource: 'GCC' }).applied);
+  ok('Audi RS6 not guardrailed', !applyAudiR8Guardrail({ make: 'Audi', model: 'RS6', variant: '', year: 2024, mileageKm: 1000, fuelCategory: 'gasoline', specsNotes: '', submittedSource: 'GCC' }).applied);
 }
 
 console.log(`\n==== RESULT: ${pass} passed, ${fail} failed ====`);

@@ -35,6 +35,12 @@ import {
     applyLebanonFallbackSourceHierarchy,
     classifySubmittedVehicleSource,
 } from './sanity/applyLebanonSourceHierarchyCalibration';
+import { detectFallbackAnchorOutlier } from './sanity/filterFallbackAnchorOutliers';
+import { submittedRequestsSpecialTrim } from './sanity/filterSpecialTrimAnchors';
+import {
+    applyCrossSourceParityGuard,
+    applyAudiR8Guardrail,
+} from './sanity/applyCrossSourceParityGuard';
 import {
     applyLebanonLocalCompClusterCap,
     ClusterAnchorLike,
@@ -1565,10 +1571,28 @@ async function evaluateLebanonVehicleWithFallback(
     // is independent of which anchor market was chosen — otherwise Company,
     // GCC and U.S. sources (all UAE-anchored) return identical valuations.
     const currentYear = new Date().getFullYear();
-    const regionalBaseMid =
-        selection.uaeLandedMidpoint ??
-        selection.europeLandedMidpoint ??
-        selection.chosenLandedMidpoint;
+    const specsNotesVariant = `${payload.specs || ''} ${payload.notes || ''} ${payload.variant || ''}`;
+    const notesJustifySpecial = submittedRequestsSpecialTrim(specsNotesVariant);
+
+    // ── Anchor outlier / wrong-trim correction (source-independent base) ─
+    // `selectFallbackAnchor` forces the UAE anchor for GCC-sourced cars, which
+    // bypasses the normal UAE-vs-Europe outlier check. If that UAE anchor was a
+    // wrong-trim/special-edition/inflated listing, it must not dominate. This
+    // re-bases the calibration on the Europe/normal-trim benchmark.
+    const anchorOutlier = detectFallbackAnchorOutlier({
+        uaeLandedMid: selection.uaeLandedMidpoint,
+        europeLandedMid: selection.europeLandedMidpoint,
+        chosenLandedMid: selection.chosenLandedMidpoint,
+        chosenMarket: anchor.market,
+        chosenReason: anchor.reason,
+        submittedSpecsNotesVariant: specsNotesVariant,
+    });
+
+    if (anchorOutlier.gccAnchorOutlierFiltered && anchorOutlier.gccAnchorOutlierReason) {
+        warnings.push(anchorOutlier.gccAnchorOutlierReason);
+    }
+
+    const regionalBaseMid = anchorOutlier.baselineMid;
 
     const sourceCal = applyLebanonFallbackSourceHierarchy({
         specs: payload.specs,
@@ -1595,6 +1619,43 @@ async function evaluateLebanonVehicleWithFallback(
                 `Fallback source-hierarchy calibration (${submittedVehicleSourceType}): ${sourceCal.sourceHierarchyAdjustmentReason}`,
             );
         }
+    }
+
+    // ── Cross-source parity guard ───────────────────────────────────
+    // Enforce Company ≥ GCC ≥ Europe ≥ U.S. against the source-independent
+    // company-equivalent baseline, so a submitted source can never sit above
+    // the company-equivalent value (the Audi R8 GCC bug).
+    const parity = applyCrossSourceParityGuard({
+        submittedSource: submittedVehicleSourceType,
+        isExoticPerformanceLuxury: tier === 'exotic' || isPerformanceLuxury(payload),
+        currentMarket: { min: marketMin, max: marketMax },
+        companyEquivalentMid: sourceCal.companyBaselineMid,
+        spread: marketSpread,
+        notesJustifySpecial,
+    });
+
+    if (parity.applied) {
+        marketMin = parity.market.min;
+        marketMax = parity.market.max;
+        if (parity.crossSourceParityReason) warnings.push(parity.crossSourceParityReason);
+    }
+
+    // ── Narrow Audi R8 V10 2024 guardrail (analogous to C200) ────────
+    const audiR8 = applyAudiR8Guardrail({
+        make: payload.make,
+        model: payload.model,
+        variant: payload.variant,
+        year: payload.year,
+        mileageKm,
+        fuelCategory,
+        specsNotes: specsNotesVariant,
+        submittedSource: submittedVehicleSourceType,
+    });
+
+    if (audiR8.applied && audiR8.market) {
+        marketMin = audiR8.market.min;
+        marketMax = audiR8.market.max;
+        if (audiR8.audiR8GuardrailReason) warnings.push(audiR8.audiR8GuardrailReason);
     }
 
     // ── Import-duty mileage threshold (informational only) ───────────
@@ -1684,6 +1745,21 @@ async function evaluateLebanonVehicleWithFallback(
             modelYearAgingAdjustmentApplied: sourceCal.modelYearAgingAdjustmentApplied,
             modelYearAgingAdjustmentReason: sourceCal.modelYearAgingAdjustmentReason,
             fallbackAnchorMarketUsed: anchor.market,
+            // Anchor outlier / wrong-trim correction
+            gccAnchorOutlierFiltered: anchorOutlier.gccAnchorOutlierFiltered,
+            gccAnchorOutlierReason: anchorOutlier.gccAnchorOutlierReason,
+            normalTrimAnchorMedianUsd: anchorOutlier.normalTrimAnchorMedianUsd,
+            rejectedFallbackAnchors: anchorOutlier.rejectedFallbackAnchors,
+            // Cross-source parity guard
+            crossSourceParityGuardApplied: parity.crossSourceParityGuardApplied,
+            crossSourceParityReason: parity.crossSourceParityReason,
+            crossSourceParityOriginalMarket: parity.crossSourceParityOriginalMarket,
+            crossSourceParityCorrectedMarket: parity.crossSourceParityCorrectedMarket,
+            companyEquivalentBaselineUsd: parity.companyEquivalentBaselineUsd,
+            gccEquivalentMaxAllowedUsd: parity.gccEquivalentMaxAllowedUsd,
+            // Narrow Audi R8 guardrail
+            audiR8GuardrailApplied: audiR8.audiR8GuardrailApplied,
+            audiR8GuardrailReason: audiR8.audiR8GuardrailReason,
             mileageImportDutyThresholdCrossed: fallbackDutyThreshold.mileageImportDutyThresholdCrossed,
             importDutyMileageReason: fallbackDutyThreshold.importDutyMileageReason,
             sourceRiskLevel: assessment.localMarketAssessment.sourceRiskLevel ?? null,

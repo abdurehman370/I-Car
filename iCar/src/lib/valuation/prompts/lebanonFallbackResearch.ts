@@ -35,6 +35,18 @@ ANCHOR RECOMMENDATION FOR LEBANON:
 - Explain the recommendation briefly.
 - If a market has no usable comparables, return it with comparableCount 0 and explain.
 
+GCC/UAE ANCHOR OUTLIER FILTERING:
+- UAE/GCC listings are strong anchors, but do NOT use the highest UAE asking price blindly.
+- Match exact model, year, trim, variant, and body style.
+- For an Audi R8 V10, do NOT use R8 GT, GT RWD, Final Edition, Spyder, Decennium, collector, modified, Mansory, ABT, or any special-edition listing unless the submitted vehicle explicitly says that trim.
+- If one UAE/GCC listing is far above the normal cluster, treat it as a special-edition or inflated ask and downweight it.
+- Use the MEDIAN cluster of current normal-trim listings, not the highest ask.
+- GCC source should usually be close to company source, not dramatically above it.
+
+AUDI R8 SPECIFIC:
+- A normal Audi R8 V10 must NOT be benchmarked against R8 GT, Final Edition, Spyder, Decennium, collector edition, Mansory, ABT, or modified listings unless explicitly provided.
+- If the variant only says V10, assume a normal R8 V10 coupe/performance class and use the normal-trim median.
+
 SOURCE HIERARCHY FOR LEBANON FINAL PRICE:
 - The market anchor source and the submitted vehicle source are DIFFERENT concepts. A UAE fallback anchor may be used to estimate regional value, but the final Lebanon price must still adjust for the submitted vehicle source.
 - Company/official/TGF source is strongest.
@@ -42,8 +54,10 @@ SOURCE HIERARCHY FOR LEBANON FINAL PRICE:
 - European/Germany source is good but usually below company/GCC unless local warranty/registration is confirmed.
 - U.S. clean-title source should NOT equal company/GCC; apply a resale/warranty/title-perception discount even when the title is clean.
 - U.S. accident/salvage/rebuilt/flood/bad-Carfax source requires a major discount.
+- For the SAME vehicle/year/mileage: Company highest, then GCC, then European, then U.S. clean, then U.S. risk (heavily discounted).
+- Do NOT return a GCC valuation more than ~5% above the company-equivalent value unless the submitted vehicle explicitly has a stronger special edition / rare spec / local warranty. Do not let wrong-trim or special-edition anchors drive normal-vehicle pricing.
 - Do not return identical value for company, GCC, Europe, and U.S. sources unless the evidence explicitly proves equal buyer preference, which is rare.
-- ALWAYS return a UAE anchor with its comparableCount whenever usable UAE listings exist (even when the submitted source is Europe), because the backend uses the UAE regional benchmark as the source-independent baseline. Only omit the UAE anchor (comparableCount 0) when UAE genuinely has no usable comparables.
+- ALWAYS return BOTH a UAE anchor and a Europe anchor with their comparableCount whenever usable listings exist for each (even when the submitted source is only one region), because the backend cross-checks them and uses the normal-trim regional benchmark as the source-independent baseline. Only omit a market (comparableCount 0) when it genuinely has no usable comparables.
 
 MODEL-YEAR AGING FOR NEW-OLD-STOCK:
 - A valid older model-year 0 km car can still be new/unused, but it should not automatically price like the newest model year.
