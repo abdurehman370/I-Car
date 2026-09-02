@@ -157,7 +157,6 @@ export async function POST(request: Request) {
         };
 
         const result = await evaluateVehicleWithAI(normalizedPayload);
-
         return NextResponse.json(result);
     } catch (error: any) {
         console.error('Valuation API error:', error);
