@@ -251,15 +251,12 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
                   onChange={handleInputChange}
                   className="carq-select"
                 >
-                  <option value="Company / Official dealer source">Company / Official dealer source</option>
+                  <option value="Company source">Company source</option>
                   <option value="TGF Lebanon">TGF Lebanon</option>
                   <option value="GCC">GCC source</option>
                   <option value="European / Germany source">European / Germany source</option>
                   <option value="U.S. source - clean title">U.S. source — clean title</option>
                   <option value="U.S. source - accident/salvage">U.S. source — accident/salvage</option>
-                  <option value="Canada source">Canada source</option>
-                  <option value="China source">China source</option>
-                  <option value="Import">Generic import</option>
                   <option value="Unknown">Unknown</option>
                 </select>
               </div>
