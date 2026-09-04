@@ -86,6 +86,84 @@ export function classifySubmittedVehicleSource(
 }
 
 /**
+ * Classifies the source/origin of ONE local Lebanon listing anchor from its
+ * title / reason / sourceName text — same rules as the submitted source.
+ */
+export function classifyAnchorSourceType(text: string | null | undefined): SubmittedVehicleSourceType {
+    return classifySubmittedVehicleSource(text, '');
+}
+
+type LocalAnchorSourceInput = {
+    title?: string | null;
+    reason?: string | null;
+    sourceName?: string | null;
+    priceUsd?: number | null;
+    sourceStrength?: 'exact' | 'near_exact' | 'same_model' | 'older_reference' | 'segment';
+};
+
+export type SourceMatchedLocalAnchors = {
+    /** A priced local Lebanon anchor whose source/origin matches the submitted source. */
+    found: boolean;
+    count: number;
+    bestPriceUsd: number | null;
+    bestStrength: string | null;
+    /** Source type of the matched anchor, else the strongest usable local anchor. */
+    localAnchorSourceType: SubmittedVehicleSourceType | null;
+};
+
+const STRENGTH_RANK: Record<string, number> = {
+    exact: 0, near_exact: 1, same_model: 2, older_reference: 3, segment: 4,
+};
+
+/**
+ * Detects Lebanon local anchors whose ORIGIN matches the submitted source (e.g.
+ * a European-source request matched to European/German-source Lebanon listings).
+ * Used to keep the valuation on the direct (local) path — no import duty — when
+ * the car is already priced in Lebanon.
+ */
+export function detectSourceMatchedLocalAnchors(
+    anchors: LocalAnchorSourceInput[] | undefined,
+    submittedSource: SubmittedVehicleSourceType,
+): SourceMatchedLocalAnchors {
+    const usable = (anchors ?? []).filter(
+        (a) => typeof a.priceUsd === 'number' && (a.priceUsd as number) > 0,
+    );
+
+    if (usable.length === 0) {
+        return { found: false, count: 0, bestPriceUsd: null, bestStrength: null, localAnchorSourceType: null };
+    }
+
+    let count = 0;
+    let best: LocalAnchorSourceInput | null = null;
+
+    for (const a of usable) {
+        const t = classifyAnchorSourceType(`${a.title || ''} ${a.reason || ''} ${a.sourceName || ''}`);
+        if (submittedSource !== 'UNKNOWN' && t === submittedSource) {
+            count++;
+            const rank = STRENGTH_RANK[a.sourceStrength ?? 'segment'] ?? 5;
+            const bestRank = best ? (STRENGTH_RANK[best.sourceStrength ?? 'segment'] ?? 5) : 99;
+            if (rank < bestRank) best = a;
+        }
+    }
+
+    // Fallback source type: strongest usable local anchor's classified origin.
+    const strongest = [...usable].sort(
+        (a, b) => (STRENGTH_RANK[a.sourceStrength ?? 'segment'] ?? 5) - (STRENGTH_RANK[b.sourceStrength ?? 'segment'] ?? 5),
+    )[0];
+    const fallbackType = strongest
+        ? classifyAnchorSourceType(`${strongest.title || ''} ${strongest.reason || ''} ${strongest.sourceName || ''}`)
+        : null;
+
+    return {
+        found: count > 0,
+        count,
+        bestPriceUsd: best ? (best.priceUsd as number) : null,
+        bestStrength: best ? (best.sourceStrength ?? null) : null,
+        localAnchorSourceType: best ? submittedSource : fallbackType,
+    };
+}
+
+/**
  * Source multiplier relative to the COMPANY baseline (company = 1.00).
  * Returns null for UNKNOWN (no source adjustment applied).
  */

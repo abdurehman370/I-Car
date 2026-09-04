@@ -7,6 +7,20 @@ Use Lebanon sources first:
 - verified dealer websites
 - verified dealer Facebook/Instagram pages only when price is clearly visible
 
+SUBMITTED SOURCE IS A LEBANON SEARCH FILTER:
+- If the user says European/German/GCC/US/Company source, first search for that source type INSIDE the Lebanon market.
+- Do not immediately jump to European, UAE, or US marketplaces.
+- A request like "European source in Lebanon" means the car is being valued in Lebanon and the source/origin is European.
+- Search Lebanese marketplaces and dealer listings for the same source/origin first, e.g.:
+  "Porsche Cayenne GTS 2022 European source Lebanon", "... German source OLX Lebanon", "... import Lebanon", "... Beirut dealer".
+- Use foreign marketplaces only if Lebanon local comps are missing or weak and fallback is required.
+- If a visible USD listing exists in Lebanon, do NOT apply import duty again — the local price already reflects the vehicle being in Lebanon.
+- If no source-matched Lebanon listing exists, use other same-car Lebanon listings as local anchors and apply source hierarchy/risk adjustment (do not immediately go foreign).
+Examples:
+- "Mercedes G63 2026 Lebanon GCC source" → search Lebanon listings for G63 2026 GCC/import/source first.
+- "Porsche Cayenne GTS 2022 Lebanon European source" → search Lebanon listings for Cayenne GTS European/German source first.
+- "Mercedes C200 2023 Lebanon European source" → search Lebanon C200 European/German source listings first.
+
 SOURCE / ORIGIN INTERPRETATION:
 - "Import" means generic imported vehicle unless more details are provided.
 - Do not assume "Import" means accident, salvage, U.S. damage history, or weak title.

@@ -4,7 +4,7 @@ import { createLogger } from '../logger';
 
 const log = createLogger('valuation:cache');
 
-const CACHE_VERSION = 'v15'; // bumped: company/official-source new-car local reconciliation + Mercedes G63 guardrail
+const CACHE_VERSION = 'v16'; // bumped: submitted source = Lebanon search filter (source-matched local anchors, no double tax on local price)
 
 function normalize(value: unknown): string {
     if (value === null || value === undefined || value === '') return 'none';

@@ -8,6 +8,8 @@ import {
     classifySubmittedVehicleSource,
     applyLebanonFallbackSourceHierarchy,
     getModelYearAgingFactor,
+    classifyAnchorSourceType,
+    detectSourceMatchedLocalAnchors,
 } from '../src/lib/valuation/sanity/applyLebanonSourceHierarchyCalibration';
 import { detectFallbackAnchorOutlier } from '../src/lib/valuation/sanity/filterFallbackAnchorOutliers';
 import { classifyAnchorTrim, submittedRequestsSpecialTrim } from '../src/lib/valuation/sanity/filterSpecialTrimAnchors';
@@ -419,6 +421,42 @@ console.log('\n== Mercedes G63 2026 guardrail (per source) + hierarchy ==');
   ok('G63 Brabus not guardrailed', !g('Brabus G800', 'COMPANY', 2026, 'Brabus').applied);
   ok('G63 2023 (used) not guardrailed', !g('Company source', 'COMPANY', 2023).applied);
   ok('normal GLE not guardrailed', !applyMercedesG63Guardrail({ make: 'Mercedes-Benz', model: 'GLE 53', variant: '', year: 2026, mileageKm: 0, fuelCategory: 'gasoline', specsNotes: '', submittedSource: 'COMPANY' }).applied);
+}
+
+console.log('\n== Submitted source = Lebanon search filter: anchor source classification ==');
+{
+  ok('European anchor text → EUROPE', classifyAnchorSourceType('Porsche Cayenne GTS 2022 German source, Beirut') === 'EUROPE');
+  ok('GCC anchor text → GCC', classifyAnchorSourceType('G63 2026 GCC import, Dubai spec') === 'GCC');
+  ok('Company anchor text → COMPANY', classifyAnchorSourceType('C200 2023 TGF company source, official dealer') === 'COMPANY');
+  ok('US salvage anchor → US_RISK', classifyAnchorSourceType('Mustang US salvage accident') === 'US_RISK');
+}
+
+console.log('\n== Source-matched local anchors detection ==');
+{
+  const anchors = [
+    { title: 'Porsche Cayenne GTS 2022 German source', reason: 'European origin, Beirut', sourceName: 'OLX Lebanon', priceUsd: 62000, sourceStrength: 'exact' },
+    { title: 'Cayenne GTS 2022 GCC', reason: 'Gulf import', sourceName: 'OLX', priceUsd: 66000, sourceStrength: 'near_exact' },
+    { title: 'Cayenne 2021', reason: 'US clean carfax', sourceName: 'dealer', priceUsd: 55000, sourceStrength: 'same_model' },
+  ] as any;
+
+  const eu = detectSourceMatchedLocalAnchors(anchors, 'EUROPE');
+  ok('European request matches the German-source local anchor', eu.found === true && eu.count === 1, eu);
+  ok('matched anchor price is the European one ($62k)', eu.bestPriceUsd === 62000, eu);
+  ok('matched strength exact', eu.bestStrength === 'exact', eu);
+  ok('localAnchorSourceType = EUROPE', eu.localAnchorSourceType === 'EUROPE', eu);
+
+  const gcc = detectSourceMatchedLocalAnchors(anchors, 'GCC');
+  ok('GCC request matches the GCC local anchor', gcc.found === true && gcc.bestPriceUsd === 66000, gcc);
+
+  const none = detectSourceMatchedLocalAnchors(anchors, 'CANADA');
+  ok('no Canada-source local anchor → not found', none.found === false, none);
+  ok('unmatched still reports a fallback source type', none.localAnchorSourceType !== null, none);
+
+  const empty = detectSourceMatchedLocalAnchors([], 'EUROPE');
+  ok('no anchors → not found, null', empty.found === false && empty.bestPriceUsd === null && empty.localAnchorSourceType === null, empty);
+
+  const unknown = detectSourceMatchedLocalAnchors(anchors, 'UNKNOWN');
+  ok('UNKNOWN submitted source never claims a match', unknown.found === false, unknown);
 }
 
 console.log(`\n==== RESULT: ${pass} passed, ${fail} failed ====`);

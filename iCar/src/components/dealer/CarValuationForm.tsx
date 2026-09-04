@@ -10,6 +10,112 @@ import { buildStoredRegion, type Market } from "@/lib/regions";
 
 export type ValuationVariant = "dealer" | "partner";
 
+// Rough client-side cost estimate — ADJUST to your real model pricing.
+// (The server also returns usage.estimatedCostUsd computed from actual tokens.)
+const COST_RATES = {
+  inputPer1M: 1.25,
+  cachedInputPer1M: 0.125,
+  outputPer1M: 10,
+  webSearchPerCall: 0.025,
+};
+
+function roughClientCost(u: Record<string, number> | undefined): number {
+  if (!u) return 0;
+  const inp = Number(u.inputTokens ?? (u as Record<string, number>).input_tokens ?? 0);
+  const cached = Number(u.cachedInputTokens ?? 0);
+  const out = Number(u.outputTokens ?? (u as Record<string, number>).output_tokens ?? 0);
+  const nonCached = Math.max(inp - cached, 0);
+  return (
+    (nonCached / 1e6) * COST_RATES.inputPer1M +
+    (cached / 1e6) * COST_RATES.cachedInputPer1M +
+    (out / 1e6) * COST_RATES.outputPer1M +
+    COST_RATES.webSearchPerCall
+  );
+}
+
+/**
+ * Developer console logging: prints the full request, response, prices, meta,
+ * sources, token usage and estimated search cost for every valuation.
+ * Wrapped so logging can never break the UI.
+ */
+function logValuationToConsole(
+  requestPayload: unknown,
+  res: Response,
+  data: any,
+  elapsedMs: number,
+) {
+  try {
+    const u = data?.usage ?? {};
+    const title = `🚗 CarQ Valuation — ${data?.valuation?.vehicle?.make ?? ""} ${
+      data?.valuation?.vehicle?.model ?? ""
+    } ${data?.valuation?.vehicle?.year ?? ""}`.trim();
+
+    /* eslint-disable no-console */
+    console.groupCollapsed(`%c${title}`, "color:#22d3ee;font-weight:bold;");
+    console.log("⏱  HTTP:", res.status, res.ok ? "OK" : "ERROR", `· ${Math.round(elapsedMs)}ms`);
+    console.log("🧠 Model:", data?.meta?.model ?? "(unknown)");
+    console.log(
+      "🔎 Web search used:", data?.meta?.webSearchUsed,
+      "| Cache hit:", data?.meta?.cacheHit,
+      "| Fallback used:", data?.valuation?.fallbackUsed ?? data?.meta?.fallbackUsed,
+    );
+    console.log("📤 Request payload:", requestPayload);
+
+    if (data?.status === "invalid_vehicle") {
+      console.warn("🚫 Invalid vehicle:", data?.message);
+    }
+
+    if (data?.valuation) {
+      console.log("💰 Market price (USD):", data.valuation.marketPriceUsd ?? data.valuation.marketPrice);
+      console.log("🏷  Dealer buy (USD):", data.valuation.dealerBuyPriceUsd ?? data.valuation.dealerBuyPrice);
+      console.log(
+        "📊 Confidence:", data.valuation.confidence,
+        "| sourceMarketAnchorUsed:", data.valuation.sourceMarketAnchorUsed,
+      );
+    }
+
+    console.log(
+      "🌍 Submitted source:", data?.meta?.submittedVehicleSourceType,
+      "| Source-matched local anchor:", data?.meta?.sourceMatchedLocalAnchorFound,
+      "| Import duty applied:", data?.meta?.importCalculationApplied,
+    );
+    if (data?.meta?.importDutySkippedReason) {
+      console.log("🧾 Import duty skipped:", data.meta.importDutySkippedReason);
+    }
+
+    console.log("📈 Token usage:");
+    console.table({
+      inputTokens: u.inputTokens ?? u.input_tokens,
+      cachedInputTokens: u.cachedInputTokens,
+      outputTokens: u.outputTokens ?? u.output_tokens,
+      totalTokens: u.totalTokens ?? u.total_tokens,
+    });
+
+    const serverCost = u.estimatedCostUsd;
+    console.log(
+      "💵 Estimated cost (server):",
+      serverCost != null ? `$${Number(serverCost).toFixed(4)}` : "null (set OPENAI_*_PRICE_PER_1M envs)",
+    );
+    console.log(
+      "💵 Estimated cost (client, rough):",
+      `$${roughClientCost(u).toFixed(4)}`,
+      "· rates:", COST_RATES,
+    );
+
+    console.log("🌐 Sources:", data?.sources);
+    console.groupCollapsed("🧾 Full meta");
+    console.log(data?.meta);
+    console.groupEnd();
+    console.groupCollapsed("📦 Full response");
+    console.log(data);
+    console.groupEnd();
+    console.groupEnd();
+    /* eslint-enable no-console */
+  } catch {
+    /* logging must never break the UI */
+  }
+}
+
 const COPY: Record<
   ValuationVariant,
   {
@@ -111,29 +217,33 @@ export function CarValuationForm({ variant }: { variant: ValuationVariant }) {
     try {
       const regionValue = buildStoredRegion(formData.region, formData.country);
 
+      const requestPayload = {
+        mode: copy.evaluateMode,
+        region: regionValue,
+        make: formData.make,
+        model: formData.model,
+        variant: formData.variant || undefined,
+        year: parseInt(formData.year, 10),
+        ...(mileageMode === "single"
+          ? { mileage: parseInt(formData.mileageKm, 10) }
+          : {
+              mileageMin: parseInt(formData.mileageMinKm, 10),
+              mileageMax: parseInt(formData.mileageMaxKm, 10),
+            }),
+        specs: formData.specs,
+        notes: formData.notes || undefined,
+        images: [],
+      };
+
+      const startedAt = performance.now();
       const res = await fetch("/api/dealer/evaluate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          mode: copy.evaluateMode,
-          region: regionValue,
-          make: formData.make,
-          model: formData.model,
-          variant: formData.variant || undefined,
-          year: parseInt(formData.year, 10),
-          ...(mileageMode === "single"
-            ? { mileage: parseInt(formData.mileageKm, 10) }
-            : {
-                mileageMin: parseInt(formData.mileageMinKm, 10),
-                mileageMax: parseInt(formData.mileageMaxKm, 10),
-              }),
-          specs: formData.specs,
-          notes: formData.notes || undefined,
-          images: [],
-        }),
+        body: JSON.stringify(requestPayload),
       });
 
       const data = await res.json();
+      logValuationToConsole(requestPayload, res, data, performance.now() - startedAt);
       if (res.ok && data.status === "invalid_vehicle") {
         setInvalidVehicle({
           message: data.message || "This vehicle/model-year combination is not valid.",

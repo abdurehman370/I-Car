@@ -34,6 +34,7 @@ import { selectTrustedDirectAnchor, anchorStats } from './sanity/anchorTrust';
 import {
     applyLebanonFallbackSourceHierarchy,
     classifySubmittedVehicleSource,
+    detectSourceMatchedLocalAnchors,
 } from './sanity/applyLebanonSourceHierarchyCalibration';
 import { detectFallbackAnchorOutlier } from './sanity/filterFallbackAnchorOutliers';
 import { submittedRequestsSpecialTrim } from './sanity/filterSpecialTrimAnchors';
@@ -405,7 +406,9 @@ async function callStructuredWithRetry<T>(params: {
                 },
             },
             max_output_tokens: 4096,
-            temperature: 0.2,
+            // NOTE: `temperature` is intentionally omitted — GPT-5+/reasoning
+            // models reject it ("Unsupported parameter: 'temperature'"), and the
+            // valuation never relied on it.
         } as any);
 
         if (!responseUsedWebSearch(response)) {
@@ -1025,6 +1028,16 @@ async function evaluateLebanonVehicleWithFallback(
     const assessmentSources = extractWebSources(assessmentResponse);
     const assessmentUsage = getUsage(assessmentResponse);
 
+    // Submitted source is a LEBANON SEARCH FILTER, not a foreign-market trigger.
+    // Detect Lebanon local anchors whose origin matches the submitted source so
+    // we can stay on the direct (local) path — and skip import duty — when the
+    // car is already priced in Lebanon.
+    const submittedVehicleSourceType = classifySubmittedVehicleSource(payload.specs, payload.notes);
+    const sourceMatch = detectSourceMatchedLocalAnchors(
+        assessment.localMarketAssessment.localPriceAnchors,
+        submittedVehicleSourceType,
+    );
+
     const baseMeta = {
         importRulesVersion: ruleVersion,
         usedDefaultImportRules: activeRules.isDefaultRules,
@@ -1035,10 +1048,30 @@ async function evaluateLebanonVehicleWithFallback(
         sourceRiskLevel: assessment.localMarketAssessment.sourceRiskLevel ?? null,
         sourceRiskReason: assessment.localMarketAssessment.sourceRiskReason ?? null,
         fallbackThreshold: threshold,
+        submittedVehicleSourceType,
+        sourceMatchedLocalAnchorFound: sourceMatch.found,
+        sourceMatchedLocalAnchorPriceUsd: sourceMatch.bestPriceUsd,
+        sourceMatchedLocalAnchorCount: sourceMatch.count,
+        localAnchorSourceType: sourceMatch.localAnchorSourceType,
+        // Defaults; the fallback success path overrides importCalculationApplied=true.
+        importCalculationApplied: false,
+        importDutySkippedReason: null as string | null,
     };
 
-    // 4. Decide whether fallback is needed
-    const fallbackNeeded = shouldUseLebanonFallback(assessment, threshold);
+    // 4. Decide whether fallback is needed. A source-matched exact/near-exact
+    //    priced Lebanon listing means the car is already valued locally → stay
+    //    on the direct path (no foreign anchor, no import duty), even if the
+    //    model under-flagged the direct anchor.
+    let fallbackNeeded = shouldUseLebanonFallback(assessment, threshold);
+
+    if (
+        fallbackNeeded &&
+        sourceMatch.found &&
+        (sourceMatch.bestStrength === 'exact' || sourceMatch.bestStrength === 'near_exact') &&
+        (sourceMatch.bestPriceUsd ?? 0) > 0
+    ) {
+        fallbackNeeded = false;
+    }
 
     if (!fallbackNeeded) {
         // 5. Direct Lebanon valuation (current behavior + assessment metadata)
@@ -1420,9 +1453,12 @@ async function evaluateLebanonVehicleWithFallback(
                 sourceHierarchyCalibrationApplied,
                 sourceHierarchySourceType: sourceHierarchyType,
                 sourceHierarchyAdjustmentReason,
-                submittedVehicleSourceType: classifySubmittedVehicleSource(payload.specs, payload.notes),
                 sourceHierarchyCalibrationPath: sourceHierarchyCalibrationApplied ? 'direct' : 'skipped',
                 fallbackAnchorMarketUsed: 'LOCAL',
+                // Local pricing → import duty NOT applied (car already priced in Lebanon)
+                importCalculationApplied: false,
+                importDutySkippedReason:
+                    'Usable Lebanon local price anchor found; import duty was not applied because the vehicle is already priced in Lebanon.',
                 localCompClusterApplied: clusterMeta.localCompClusterApplied,
                 localCompClusterCount: clusterMeta.localCompClusterCount,
                 localCompClusterMinUsd: clusterMeta.localCompClusterMinUsd,
@@ -1611,7 +1647,8 @@ async function evaluateLebanonVehicleWithFallback(
         companyMarketMaxCap: tier === 'exotic' ? 780_000 : undefined,
     });
 
-    const submittedVehicleSourceType = sourceCal.submittedVehicleSourceType;
+    // submittedVehicleSourceType is already computed once after Phase 1 (shared
+    // via baseMeta); sourceCal returns the same classification.
 
     if (sourceCal.applied) {
         marketMin = sourceCal.market.min;
@@ -1814,6 +1851,9 @@ async function evaluateLebanonVehicleWithFallback(
             // Narrow Mercedes G63 guardrail
             mercedesG63GuardrailApplied: g63.mercedesG63GuardrailApplied,
             mercedesG63GuardrailReason: g63.mercedesG63GuardrailReason,
+            // Foreign source-market anchor path → import duty WAS applied
+            importCalculationApplied: true,
+            importDutySkippedReason: null,
             mileageImportDutyThresholdCrossed: fallbackDutyThreshold.mileageImportDutyThresholdCrossed,
             importDutyMileageReason: fallbackDutyThreshold.importDutyMileageReason,
             sourceRiskLevel: assessment.localMarketAssessment.sourceRiskLevel ?? null,
