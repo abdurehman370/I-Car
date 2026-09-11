@@ -55,6 +55,10 @@ function logValuationToConsole(
     console.log("⏱  HTTP:", res.status, res.ok ? "OK" : "ERROR", `· ${Math.round(elapsedMs)}ms`);
     console.log("🧠 Model:", data?.meta?.model ?? "(unknown)");
     console.log(
+      "⚡ Service tier — requested:", data?.meta?.serviceTierRequested ?? "(n/a)",
+      "| actually used:", data?.meta?.serviceTierUsed ?? "(n/a)",
+    );
+    console.log(
       "🔎 Web search used:", data?.meta?.webSearchUsed,
       "| Cache hit:", data?.meta?.cacheHit,
       "| Fallback used:", data?.valuation?.fallbackUsed ?? data?.meta?.fallbackUsed,

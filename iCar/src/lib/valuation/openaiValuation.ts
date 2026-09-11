@@ -383,6 +383,11 @@ async function callStructuredWithRetry<T>(params: {
 
     let lastError: unknown;
 
+    // Fast mode / priority processing — only applied when SERVICE_TIER is set
+    // in .env (e.g. SERVICE_TIER=fast). Remove that line and nothing is sent,
+    // so the request uses OpenAI's standard tier. Same model/output either way.
+    const serviceTier = process.env.SERVICE_TIER?.trim().replace(/^["']|["']$/g, '') || undefined;
+
     for (let attempt = 0; attempt < 2; attempt++) {
         const input = [...content];
 
@@ -406,6 +411,10 @@ async function callStructuredWithRetry<T>(params: {
                 },
             },
             max_output_tokens: 4096,
+            // Fast mode / priority processing (~2.5x faster on gpt-5.6-sol, ~2x
+            // price) — same model/output, only faster. Sent ONLY when the
+            // SERVICE_TIER env var is set (e.g. SERVICE_TIER=fast).
+            ...(serviceTier ? { service_tier: serviceTier } : {}),
             // NOTE: `temperature` is intentionally omitted — GPT-5+/reasoning
             // models reject it ("Unsupported parameter: 'temperature'"), and the
             // valuation never relied on it.
@@ -1048,6 +1057,11 @@ async function evaluateLebanonVehicleWithFallback(
         sourceRiskLevel: assessment.localMarketAssessment.sourceRiskLevel ?? null,
         sourceRiskReason: assessment.localMarketAssessment.sourceRiskReason ?? null,
         fallbackThreshold: threshold,
+        // Fast mode visibility: what we asked OpenAI for vs what it actually
+        // used. If requested='fast' but used='default', your account isn't
+        // enabled for priority/fast processing (so no speed-up, no extra charge).
+        serviceTierRequested: process.env.SERVICE_TIER?.trim().replace(/^["']|["']$/g, '') || 'default',
+        serviceTierUsed: (assessmentResponse as { service_tier?: string })?.service_tier ?? null,
         submittedVehicleSourceType,
         sourceMatchedLocalAnchorFound: sourceMatch.found,
         sourceMatchedLocalAnchorPriceUsd: sourceMatch.bestPriceUsd,
