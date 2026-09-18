@@ -120,7 +120,7 @@ export async function extractImportRulesFromText(params: {
             },
         },
         max_output_tokens: 4096,
-        temperature: 0,
+        // `temperature` omitted — GPT-5+/reasoning models reject it.
     } as any);
 
     const raw =

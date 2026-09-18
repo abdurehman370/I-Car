@@ -80,6 +80,14 @@ function getModel(): string {
     return process.env.OPENAI_VALUATION_MODEL || 'gpt-5.4-2026-03-05';
 }
 
+// Web-search depth. 'high' pulls the most content (best recall, slowest/costliest);
+// 'medium'/'low' are faster + cheaper with some recall risk. Default 'high'.
+function getSearchContextSize(): string {
+    return (
+        process.env.OPENAI_SEARCH_CONTEXT_SIZE?.trim().replace(/^["']|["']$/g, '') || 'high'
+    );
+}
+
 function getRegionPrompt(region: Region): string {
     if (region === 'LEBANON') return LEBANON_PROMPT;
     if (region === 'UAE') return UAE_PROMPT;
@@ -91,7 +99,7 @@ function getRegionPrompt(region: Region): string {
 function getWebSearchTool(region: Region) {
     const tool: Record<string, any> = {
         type: 'web_search',
-        search_context_size: 'high',
+        search_context_size: getSearchContextSize(),
     };
 
     if (region === 'UAE') {
@@ -128,7 +136,7 @@ function getWebSearchTool(region: Region) {
 function getFallbackWebSearchTool() {
     return {
         type: 'web_search',
-        search_context_size: 'high',
+        search_context_size: getSearchContextSize(),
         filters: {
             allowed_domains: [
                 'dubizzle.com',
@@ -387,6 +395,10 @@ async function callStructuredWithRetry<T>(params: {
     // in .env (e.g. SERVICE_TIER=fast). Remove that line and nothing is sent,
     // so the request uses OpenAI's standard tier. Same model/output either way.
     const serviceTier = process.env.SERVICE_TIER?.trim().replace(/^["']|["']$/g, '') || undefined;
+    // Speed/cost dial for reasoning models — lower effort = faster + cheaper,
+    // with some accuracy risk. Off by default (uses the model's own default).
+    //   OPENAI_REASONING_EFFORT = minimal | low | medium | high | xhigh | max
+    const reasoningEffort = process.env.OPENAI_REASONING_EFFORT?.trim().replace(/^["']|["']$/g, '') || undefined;
 
     for (let attempt = 0; attempt < 2; attempt++) {
         const input = [...content];
@@ -415,6 +427,10 @@ async function callStructuredWithRetry<T>(params: {
             // price) — same model/output, only faster. Sent ONLY when the
             // SERVICE_TIER env var is set (e.g. SERVICE_TIER=fast).
             ...(serviceTier ? { service_tier: serviceTier } : {}),
+            // Reasoning effort — lower = faster + cheaper (fewer reasoning
+            // tokens), with some accuracy risk. Sent ONLY when
+            // OPENAI_REASONING_EFFORT is set (e.g. =low). Off → model default.
+            ...(reasoningEffort ? { reasoning: { effort: reasoningEffort } } : {}),
             // NOTE: `temperature` is intentionally omitted — GPT-5+/reasoning
             // models reject it ("Unsupported parameter: 'temperature'"), and the
             // valuation never relied on it.
@@ -1030,7 +1046,22 @@ async function evaluateLebanonVehicleWithFallback(
     const model = getModel();
     const threshold = getFallbackThreshold();
 
-    // 3. Phase 1 — Lebanon local assessment (always runs)
+    // 3. Phase 1 — Lebanon local assessment (always runs).
+    //    For likely-fallback cars (exotic, or very high mileage where no local
+    //    mileage-match exists), speculatively start Phase 2 IN PARALLEL — it only
+    //    needs the payload, so overlapping the two slow web-search calls roughly
+    //    HALVES fallback latency. If the car resolves on the direct path, the
+    //    speculative result is simply discarded (a wasted call — hence the gate).
+    const mileageForSpec = getMileageUsed(payload);
+    const speculateFallback =
+        getBrandTier(payload.make) === 'exotic' || mileageForSpec >= 150_000;
+
+    const speculativeResearch = speculateFallback
+        ? callLebanonFallbackResearch(openai, model, payload)
+              .then((result) => ({ ok: true as const, result }))
+              .catch((err) => ({ ok: false as const, err }))
+        : null;
+
     const { data: assessment, response: assessmentResponse } =
         await callLebanonAssessment(openai, model, payload);
 
@@ -1493,13 +1524,24 @@ async function evaluateLebanonVehicleWithFallback(
         return finalResult;
     }
 
-    // 6. Phase 2 — UAE + Europe fallback research
+    // 6. Phase 2 — UAE + Europe fallback research. Reuse the speculative call
+    //    if we started one in parallel with Phase 1 (near-instant here); else
+    //    run it now.
     let research: FallbackResearchResult | null = null;
     let researchResponse: any = null;
+    let fallbackResearchParallelized = false;
     const warnings: string[] = [];
 
     try {
-        const researchResult = await callLebanonFallbackResearch(openai, model, payload);
+        let researchResult;
+        if (speculativeResearch) {
+            const settled = await speculativeResearch;
+            if (!settled.ok) throw settled.err;
+            researchResult = settled.result;
+            fallbackResearchParallelized = true;
+        } else {
+            researchResult = await callLebanonFallbackResearch(openai, model, payload);
+        }
         research = researchResult.data;
         researchResponse = researchResult.response;
     } catch (err: any) {
@@ -1868,6 +1910,7 @@ async function evaluateLebanonVehicleWithFallback(
             // Foreign source-market anchor path → import duty WAS applied
             importCalculationApplied: true,
             importDutySkippedReason: null,
+            fallbackResearchParallelized,
             mileageImportDutyThresholdCrossed: fallbackDutyThreshold.mileageImportDutyThresholdCrossed,
             importDutyMileageReason: fallbackDutyThreshold.importDutyMileageReason,
             sourceRiskLevel: assessment.localMarketAssessment.sourceRiskLevel ?? null,

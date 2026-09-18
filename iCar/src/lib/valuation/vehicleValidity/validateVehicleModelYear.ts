@@ -175,7 +175,7 @@ async function runAiValidation(params: {
                 },
             },
             max_output_tokens: 1024,
-            temperature: 0,
+            // `temperature` omitted — GPT-5+/reasoning models reject it.
         } as any);
 
         const raw = typeof (response as any)?.output_text === 'string'
