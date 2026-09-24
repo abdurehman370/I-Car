@@ -15,6 +15,7 @@ import {
   Gavel,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PortalBrand } from "@/components/app-logo";
 
 interface Props {
   children: ReactNode;
@@ -101,23 +102,14 @@ export default function UserPortalLayout({ children }: Props) {
           isSidebarOpen ? "w-64" : "w-0 lg:w-20 overflow-hidden lg:overflow-visible"
         )}
       >
-        <div
-          className={cn(
-            "flex items-center gap-3 px-6 py-8",
-            !isSidebarOpen && "lg:justify-center lg:px-0"
-          )}
-        >
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.35)] shrink-0">
-            <Gavel className="h-5 w-5 text-white" strokeWidth={2.5} />
-          </div>
-          {isSidebarOpen && (
-            <div className="leading-tight">
-              <p className="text-lg font-bold tracking-tight text-white">CarQ</p>
-              <p className="font-mono text-[9px] tracking-[0.3em] text-violet-400/80 uppercase">
-                User Portal
-              </p>
-            </div>
-          )}
+        <div className={cn("px-6 py-8", !isSidebarOpen && "lg:px-0")}>
+          <PortalBrand
+            href="/user/auctions"
+            subtitle="User Portal"
+            tone={isLight ? "on-light" : "on-dark"}
+            compact={!isSidebarOpen && !isMobile}
+            subtitleClassName="text-violet-400/80"
+          />
         </div>
 
         <div className="px-3 py-2">

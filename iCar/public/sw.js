@@ -10,8 +10,8 @@ self.addEventListener('push', (event) => {
   event.waitUntil(
     self.registration.showNotification(data.title, {
       body: data.body,
-      icon: '/images/logo/logo.svg',
-      badge: '/images/logo/logo.svg',
+      icon: '/images/logo/logo-black.svg',
+      badge: '/images/logo/logo-black.svg',
       tag: data.tag || 'carq-notification',
       data: { url: data.url || '/' },
     }),

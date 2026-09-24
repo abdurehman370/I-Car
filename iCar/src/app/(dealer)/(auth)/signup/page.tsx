@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { BrandMark } from "@/components/brand-mark";
+import { AppLogo } from "@/components/app-logo";
 import {
   Eye,
   EyeOff,
@@ -243,16 +243,8 @@ export default function SignupPage() {
             with our intelligent platform.
           </p>
         </div>
-        <div className="left-logo absolute left-12 top-12">
-          <Link
-            href="/"
-            className="flex items-center gap-2 transition-transform hover:scale-105"
-          >
-            <BrandMark />
-            <span className="text-2xl font-bold tracking-tight text-white">
-              CarQ<span className="text-blue-500">.</span>
-            </span>
-          </Link>
+        <div className="left-logo absolute left-12 top-10 overflow-visible pt-1">
+          <AppLogo href="/" tone="on-dark" height={44} priority className="transition-transform hover:scale-[1.02]" />
         </div>
       </div>
 
@@ -261,15 +253,7 @@ export default function SignupPage() {
         <div className="flex min-h-full px-6 py-12 lg:px-12">
           <div className="m-auto w-full max-w-[640px] animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="mb-8 flex justify-center lg:hidden">
-            <Link
-              href="/"
-              className="flex items-center gap-2 transition-transform hover:scale-105"
-            >
-              <BrandMark />
-              <span className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                CarQ<span className="text-blue-500">.</span>
-              </span>
-            </Link>
+            <AppLogo href="/" tone="auto" height={36} priority className="transition-transform hover:scale-[1.02]" />
           </div>
 
           <div className="mb-10 text-center lg:text-left">

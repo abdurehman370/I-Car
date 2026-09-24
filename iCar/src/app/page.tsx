@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { AppLogo } from "@/components/app-logo";
 import { ArrowRight, BarChart3, Building2, ShieldCheck } from "lucide-react";
 import { getPortalHomeForRole } from "@/lib/portal-access";
 import { dealerDisplayName } from "@/lib/dealer-roles";
@@ -109,11 +110,10 @@ export default function LandingPage() {
 
       <div className="relative z-10 flex min-h-screen flex-col">
         {/* Top bar */}
-        <header className="flex items-center justify-between px-6 py-6 md:px-12">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-2">
-            <div className="h-2.5 w-2.5 rounded-full bg-cyan-300 shadow-[0_0_24px_rgba(34,211,238,0.35)]" />
-            <span className="text-lg font-semibold tracking-tight">CarQ</span>
-            <span className="ml-2 hidden font-mono text-[10px] tracking-[0.2em] text-white/55 sm:block">
+        <header className="flex items-center justify-between overflow-visible px-6 py-6 md:px-12">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 overflow-visible">
+            <AppLogo href="/" tone="on-dark" height={40} priority />
+            <span className="hidden font-mono text-[10px] tracking-[0.2em] text-white/55 sm:block">
               INTELLIGENCE
             </span>
           </motion.div>

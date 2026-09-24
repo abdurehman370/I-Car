@@ -18,7 +18,6 @@ export function Sidebar() {
   // Detect context
   const isAdminContext = pathname.startsWith('/admin');
   const NAV_DATA = isAdminContext ? ADMIN_NAV_DATA : DEALER_NAV_DATA;
-  const portalTitle = isAdminContext ? "Admin Portal" : "Dealer Portal";
   const homeUrl = isAdminContext ? "/admin" : "/dashboard";
 
   const toggleExpanded = (title: string) => {
@@ -71,9 +70,7 @@ export function Sidebar() {
               onClick={() => isMobile && toggleSidebar()}
               className="px-0 py-2.5 min-[850px]:py-0"
             >
-              <span className="text-4xl text-center text-black font-bold dark:text-white leading-tight">
-                {portalTitle}
-              </span>
+              <Logo />
             </Link>
 
             {isMobile && (

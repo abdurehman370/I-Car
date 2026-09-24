@@ -15,6 +15,7 @@ import {
   Building2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PortalBrand } from "@/components/app-logo";
 
 interface Props {
   children: ReactNode;
@@ -94,23 +95,14 @@ export default function PartnerPortalLayout({ children }: Props) {
           isSidebarOpen ? "w-64" : "w-0 lg:w-20 overflow-hidden lg:overflow-visible"
         )}
       >
-        <div
-          className={cn(
-            "flex items-center gap-3 px-6 py-8",
-            !isSidebarOpen && "lg:justify-center lg:px-0"
-          )}
-        >
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.35)] shrink-0">
-            <Building2 className="h-5 w-5 text-white" strokeWidth={2.5} />
-          </div>
-          {isSidebarOpen && (
-            <div className="leading-tight">
-              <p className="text-lg font-bold tracking-tight text-white">CarQ</p>
-              <p className="font-mono text-[9px] tracking-[0.3em] text-purple-400/80 uppercase">
-                Partner Portal
-              </p>
-            </div>
-          )}
+        <div className={cn("px-6 py-8", !isSidebarOpen && "lg:px-0")}>
+          <PortalBrand
+            href="/car-valuation"
+            subtitle="Partner Portal"
+            tone={isLight ? "on-light" : "on-dark"}
+            compact={!isSidebarOpen && !isMobile}
+            subtitleClassName="text-purple-400/80"
+          />
         </div>
 
         <div className="px-3 py-2">

@@ -2,7 +2,8 @@
 
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
-import { Zap, Gavel, MapPin, Gauge, Calendar, Wifi, WifiOff } from "lucide-react";
+import { AppLogo } from "@/components/app-logo";
+import { Gavel, MapPin, Gauge, Calendar, Wifi, WifiOff } from "lucide-react";
 
 interface DisplayBid {
     id: number;
@@ -161,12 +162,12 @@ function DisplayInner() {
         <div className="fixed inset-0 bg-[#020d1a] text-white flex flex-col overflow-hidden select-none">
             {/* Header */}
             <header className="flex items-center justify-between px-10 py-5 border-b border-white/10 bg-white/[0.02] shrink-0">
-                <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-cyan-400 to-teal-500 flex items-center justify-center shadow-[0_0_30px_rgba(34,211,238,0.45)]">
-                        <Zap className="h-7 w-7 text-black" strokeWidth={2.5} />
-                    </div>
+                <div className="flex items-center gap-5">
+                    <AppLogo tone="on-dark" height={40} />
                     <div>
-                        <p className="text-2xl font-black tracking-tight leading-none">CarQ <span className="bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">Live Auction</span></p>
+                        <p className="text-lg font-black tracking-tight leading-none">
+                            <span className="bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">Live Auction</span>
+                        </p>
                         {auction.venue && (
                             <p className="mt-1.5 text-xs font-mono text-gray-500 uppercase tracking-[0.3em]">{auction.venue}</p>
                         )}

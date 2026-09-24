@@ -1,7 +1,7 @@
 "use client";
 
 import { SearchIcon } from "@/assets/icons";
-import Image from "next/image";
+import { AppLogo } from "@/components/app-logo";
 import Link from "next/link";
 import { useSidebarContext } from "../sidebar/sidebar-context";
 import { MenuIcon } from "./icons";
@@ -23,15 +23,7 @@ export function Header() {
       </button>
 
       {isMobile && (
-        <Link href={"/"} className="ml-2 max-[430px]:hidden min-[375px]:ml-4">
-          <Image
-            src={"/images/logo/logo-icon.svg"}
-            width={32}
-            height={32}
-            alt=""
-            role="presentation"
-          />
-        </Link>
+        <AppLogo href="/" tone="auto" height={28} className="ml-2 max-[430px]:hidden min-[375px]:ml-4" />
       )}
 
       <div className="max-xl:hidden">

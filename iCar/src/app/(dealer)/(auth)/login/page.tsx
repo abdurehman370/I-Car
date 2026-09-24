@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Eye, EyeOff, Lock, Mail, Loader2 } from "lucide-react";
-import { BrandMark } from "@/components/brand-mark";
+import { AppLogo } from "@/components/app-logo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -73,13 +73,8 @@ export default function LoginPage() {
           </p>
         </div>
         {/* Brand/Logo Area */}
-        <div className="absolute left-12 top-12 left-logo">
-          <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-105">
-            <BrandMark />
-            <span className="text-2xl font-bold tracking-tight text-white">
-              CarQ<span className="text-blue-500">.</span>
-            </span>
-          </Link>
+        <div className="absolute left-12 top-10 left-logo overflow-visible pt-1">
+          <AppLogo href="/" tone="on-dark" height={44} priority className="transition-transform hover:scale-[1.02]" />
         </div>
       </div>
 
@@ -88,12 +83,7 @@ export default function LoginPage() {
         <div className="w-full max-w-[440px] animate-in fade-in slide-in-from-bottom-4 duration-700">
           {/* Mobile Logo */}
           <div className="mb-8 flex justify-center lg:hidden">
-            <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-105">
-              <BrandMark />
-              <span className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                CarQ<span className="text-blue-500">.</span>
-              </span>
-            </Link>
+            <AppLogo href="/" tone="auto" height={40} priority className="transition-transform hover:scale-[1.02]" />
           </div>
 
           <div className="mb-10 text-center lg:text-left">

@@ -6,10 +6,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, Bell, Command, LayoutDashboard, Car,
-  Settings, LogOut, Zap, Menu, X,
+  Settings, LogOut, Menu, X,
   User, ShieldCheck, Users, Database, BellRing, List, Sun, Moon, Gavel, FileText
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PortalBrand } from "@/components/app-logo";
 
 interface Props {
   children: ReactNode;
@@ -96,16 +97,13 @@ export default function AdminPortalLayout({ children }: Props) {
         isSidebarOpen ? "w-64" : "w-0 lg:w-20 overflow-hidden lg:overflow-visible"
       )}>
         {/* Brand */}
-        <div className={cn("flex items-center gap-3 px-6 py-8", !isSidebarOpen && "lg:justify-center lg:px-0")}>
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-600 flex items-center justify-center shadow-[0_0_20px_rgba(34,211,238,0.3)] shrink-0">
-            <ShieldCheck className="h-5 w-5 text-white" strokeWidth={2.5} />
-          </div>
-          {isSidebarOpen && (
-            <div className="leading-tight">
-              <p className="text-lg font-bold tracking-tight text-white">CarQ</p>
-              <p className="font-mono text-[9px] tracking-[0.3em] text-cyan-400 uppercase">Admin Portal</p>
-            </div>
-          )}
+        <div className={cn("px-6 py-8", !isSidebarOpen && "lg:px-0")}>
+          <PortalBrand
+            href="/admin"
+            subtitle="Admin Portal"
+            tone={isLight ? "on-light" : "on-dark"}
+            compact={!isSidebarOpen && !isMobile}
+          />
         </div>
 
         <div className="px-3 py-2">

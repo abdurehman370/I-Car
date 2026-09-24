@@ -730,6 +730,53 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .admin-light ::-webkit-scrollbar-thumb { background-color: hsl(210 32% 80%) !important; }
 
+/* Dealer portal — cyber midnight surfaces → pearl cards in light mode */
+.admin-light [class*="bg-gradient-to-"][class*="border-cyan"] {
+  background: linear-gradient(
+    160deg,
+    hsl(0 0% 100% / 0.98) 0%,
+    hsl(210 45% 97% / 1) 100%
+  ) !important;
+  border-color: hsl(210 32% 86%) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.admin-light [class*="030914"]:not([class*="bg-gradient"]) {
+  background-color: hsl(210 32% 93%) !important;
+}
+
+.admin-light input[class*="061426"],
+.admin-light input[class*="030914"] {
+  background-color: hsl(0 0% 100%) !important;
+  border-color: hsl(210 32% 82%) !important;
+  color: hsl(222 47% 11%) !important;
+}
+
+.admin-light .text-slate-100 { color: hsl(222 47% 14%) !important; }
+.admin-light .text-slate-200 { color: hsl(222 47% 16%) !important; }
+.admin-light .text-slate-300 { color: hsl(222 47% 22%) !important; }
+.admin-light .text-slate-400 { color: hsl(215 16% 38%) !important; }
+.admin-light .text-slate-500 { color: hsl(215 16% 45%) !important; }
+.admin-light .text-slate-600 { color: hsl(215 16% 50%) !important; }
+.admin-light .text-cyan-200,
+.admin-light .text-cyan-200\/90 { color: hsl(188 95% 28%) !important; }
+.admin-light .text-cyan-300 { color: hsl(188 95% 30%) !important; }
+.admin-light .text-teal-300 { color: hsl(174 70% 30%) !important; }
+.admin-light .hover\:text-slate-100:hover { color: hsl(222 47% 11%) !important; }
+.admin-light .hover\:text-slate-200:hover { color: hsl(222 47% 16%) !important; }
+
+.admin-light aside .border-white\/\[0\.06\] { border-color: hsl(210 32% 88%) !important; }
+
+.admin-light div[class*="07162b"]:not([class*="gradient"]) {
+  background-color: hsl(0 0% 100%) !important;
+  color: hsl(222 47% 11%) !important;
+  border-color: hsl(210 32% 86%) !important;
+  box-shadow: var(--shadow-elevated) !important;
+}
+
+.admin-light .recharts-cartesian-axis-tick-value { fill: hsl(215 16% 42%) !important; }
+.admin-light .recharts-cartesian-grid line { stroke: hsl(210 32% 88%) !important; }
+
 /* ================================================================
    GLOBAL TEXT READABILITY IMPROVEMENTS
    Applies to both Admin and Dealer portals
@@ -797,7 +844,7 @@ table th {
 }
 
 .admin-light p,
-.admin-light span:not(.text-cyan-400):not(.text-cyan-500):not(.text-emerald-400):not(.text-red-400):not(.text-amber-400) {
+.admin-light span:not(.text-cyan-400):not(.text-cyan-500):not(.text-cyan-300):not(.text-teal-300):not(.text-emerald-400):not(.text-red-400):not(.text-amber-400):not(.text-rose-400) {
   color: hsl(222 47% 20%);
 }
 
@@ -1244,4 +1291,98 @@ select option {
 .auth-form-input::placeholder {
   color: hsl(215 16% 58%) !important;
   opacity: 1;
+}
+
+/* ================================================================
+   CYBER-LUXURY DESIGN SYSTEM UTILITIES
+   Deep midnight surfaces with neon cyan & teal luminous accents
+   ================================================================ */
+
+.cyber-glass {
+  background: linear-gradient(135deg, rgba(7, 21, 38, 0.72) 0%, rgba(3, 11, 22, 0.88) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(34, 211, 238, 0.12);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  position: relative;
+}
+
+.cyber-glass-strong {
+  background: linear-gradient(145deg, rgba(8, 26, 44, 0.85) 0%, rgba(3, 10, 20, 0.95) 100%);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(34, 211, 238, 0.08) inset;
+}
+
+.cyber-card-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: rgba(34, 211, 238, 0.35);
+  box-shadow: 0 12px 36px -6px rgba(0, 0, 0, 0.7), 0 0 24px -4px rgba(34, 211, 238, 0.2);
+}
+
+.cyber-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(34, 211, 238, 0.06);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  color: #a5f3fc;
+  text-transform: uppercase;
+}
+
+.cyber-btn-primary {
+  background: linear-gradient(135deg, #06b6d4 0%, #14b8a6 100%);
+  color: #020d1a;
+  font-weight: 700;
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-btn-primary:hover {
+  background: linear-gradient(135deg, #22d3ee 0%, #2dd4bf 100%);
+  box-shadow: 0 0 36px rgba(34, 211, 238, 0.55);
+  transform: translateY(-1px);
+}
+
+.cyber-btn-secondary {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+  transition: all 0.25s ease;
+}
+
+.cyber-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(34, 211, 238, 0.3);
+  color: #ffffff;
+}
+
+.cyber-stat-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: linear-gradient(145deg, rgba(8, 22, 39, 0.75) 0%, rgba(3, 11, 20, 0.85) 100%);
+  border: 1px solid rgba(34, 211, 238, 0.14);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+}
+
+.cyber-stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(34, 211, 238, 0.7) 40%, rgba(45, 212, 191, 0.5) 80%, transparent 100%);
+  pointer-events: none;
 }

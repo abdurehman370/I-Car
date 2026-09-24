@@ -2,7 +2,7 @@ import AdminLoginForm from "@/components/Auth/AdminLoginForm";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ShieldCheck } from "lucide-react";
+import { PortalBrand } from "@/components/app-logo";
 
 export const metadata: Metadata = {
   title: "Admin Sign In",
@@ -44,20 +44,13 @@ export default function AdminSignIn() {
         />
 
         {/* Brand */}
-        <div className="absolute left-10 top-10 z-10">
-          <Link href="/" className="group flex items-center gap-3 transition-transform hover:scale-[1.02]">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-teal-600 shadow-[0_0_20px_rgba(34,211,238,0.35)]">
-              <ShieldCheck className="h-5 w-5 text-white" strokeWidth={2.5} />
-            </div>
-            <div className="leading-tight">
-              <span className="text-2xl font-bold tracking-tight text-white">
-                CarQ<span className="text-cyan-400">.</span>
-              </span>
-              <p className="font-mono text-[9px] tracking-[0.3em] text-cyan-400/80 uppercase">
-                Admin Portal
-              </p>
-            </div>
-          </Link>
+        <div className="absolute left-10 top-8 z-10 overflow-visible pt-1">
+          <PortalBrand
+            href="/"
+            subtitle="Admin Portal"
+            tone="on-dark"
+            subtitleClassName="text-cyan-400/80"
+          />
         </div>
 
         {/* Hero copy */}
@@ -83,19 +76,12 @@ export default function AdminSignIn() {
         <div className="w-full max-w-[420px]">
           {/* Mobile brand */}
           <div className="mb-10 flex justify-center lg:hidden">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-teal-600 shadow-[0_0_20px_rgba(34,211,238,0.35)]">
-                <ShieldCheck className="h-5 w-5 text-white" strokeWidth={2.5} />
-              </div>
-              <div className="leading-tight">
-                <span className="text-2xl font-bold tracking-tight text-white">
-                  CarQ<span className="text-cyan-400">.</span>
-                </span>
-                <p className="font-mono text-[9px] tracking-[0.3em] text-cyan-400/80 uppercase">
-                  Admin Portal
-                </p>
-              </div>
-            </Link>
+            <PortalBrand
+              href="/"
+              subtitle="Admin Portal"
+              tone="on-dark"
+              subtitleClassName="text-cyan-400/80"
+            />
           </div>
 
           <div className="mb-8 text-center lg:text-left">
