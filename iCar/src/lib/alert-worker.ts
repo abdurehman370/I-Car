@@ -166,13 +166,17 @@ async function processAlertJob(job: Job<AlertJobData>): Promise<void> {
     // configured (ADMIN_ALERT_EMAIL), otherwise matches are simply
     // available in the admin panel under /admin/alerts/<id>/results.
     // ------------------------------------------------------------------
+    let emailSent = false;
+    const preview = allMatches.slice(0, 10);
+
     if (freshAlert.dealerId && dealerEmail) {
         await sendAlertNotificationEmail(
             dealerEmail,
             dealerName ?? 'Dealer',
             freshAlert,
-            allMatches.slice(0, 10),
+            preview,
         );
+        emailSent = true;
 
         await sendPushToDealer(freshAlert.dealerId, {
             title: `Car alert: ${allMatches.length} matches`,
@@ -187,21 +191,29 @@ async function processAlertJob(job: Job<AlertJobData>): Promise<void> {
             process.env.ADMIN_ALERT_EMAIL,
             'Admin',
             freshAlert,
-            allMatches.slice(0, 10),
+            preview,
         );
+        emailSent = true;
+        log('INFO', job.id, `Admin alert #${alertId}: emailed ${preview.length} matches to ${process.env.ADMIN_ALERT_EMAIL}`);
     } else {
-        log('INFO', job.id, `Admin alert #${alertId}: ${allMatches.length} matches found (no ADMIN_ALERT_EMAIL configured — view in admin panel)`);
+        log('WARN', job.id, `Admin alert #${alertId}: ${allMatches.length} matches found but ADMIN_ALERT_EMAIL is not set — no email sent (view in admin panel)`);
     }
 
     // ------------------------------------------------------------------
-    // 4. Stamp lastRun — only after successful email send
+    // 4. Stamp lastRun after notify attempt
     // ------------------------------------------------------------------
     await prisma.alert.update({
         where: { id: alertId },
         data: { lastRun: new Date() },
     });
 
-    log('INFO', job.id, `Done — sent email with ${Math.min(allMatches.length, 10)} matches`);
+    log(
+        'INFO',
+        job.id,
+        emailSent
+            ? `Done — sent email with ${preview.length} matches`
+            : `Done — ${allMatches.length} matches saved; email skipped`,
+    );
 }
 
 // ---------------------------------------------------------------------------

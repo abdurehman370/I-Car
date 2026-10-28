@@ -87,6 +87,5 @@ async function shutdown(signal: string) {
     log.info('Shutdown complete');
     process.exit(0);
 }
-
 process.on('SIGTERM', () => shutdown('SIGTERM'));
 process.on('SIGINT',  () => shutdown('SIGINT'));
